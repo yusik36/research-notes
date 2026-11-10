@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="ko" dir="ltr"><head><title>2026-01-19</title><meta charset="utf-8"/><link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com"/><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto Sans KR:wght@400;700&amp;family=Noto Sans KR:ital,wght@0,400;0,600;1,400;1,600&amp;family=IBM Plex Mono:wght@400;600&amp;display=swap"/><link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin="anonymous"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta name="og:site_name" content="LabNote"/><meta property="og:title" content="2026-01-19"/><meta property="og:type" content="website"/><meta name="twitter:card" content="summary_large_image"/><meta name="twitter:title" content="2026-01-19"/><meta name="twitter:description" content="Weekly Study Report — 2026-01-19 Source C:\LabNote\90_Archive\ANSL-Undergrad-Research\내용정리PDF\Weekly Study Report_26.01.19_전유식.pdf · 22 pages · 30 images ANSL Undergraduate Research → Research Direction PDF에서 복원한 노트 같은 날짜의 PPT는 이후 다른 주차 작업 중 덮어써져 내용이 유실됐습니다."/><meta property="og:description" content="Weekly Study Report — 2026-01-19 Source C:\LabNote\90_Archive\ANSL-Undergrad-Research\내용정리PDF\Weekly Study Report_26.01.19_전유식.pdf · 22 pages · 30 images ANSL Undergraduate Research → Research Direction PDF에서 복원한 노트 같은 날짜의 PPT는 이후 다른 주차 작업 중 덮어써져 내용이 유실됐습니다."/><meta property="og:image:alt" content="Weekly Study Report — 2026-01-19 Source C:\LabNote\90_Archive\ANSL-Undergrad-Research\내용정리PDF\Weekly Study Report_26.01.19_전유식.pdf · 22 pages · 30 images ANSL Undergraduate Research → Research Direction PDF에서 복원한 노트 같은 날짜의 PPT는 이후 다른 주차 작업 중 덮어써져 내용이 유실됐습니다."/><meta property="og:image" content="https://yusik36.github.io/research-notes/static/og-image.png"/><meta property="og:image:url" content="https://yusik36.github.io/research-notes/static/og-image.png"/><meta name="twitter:image" content="https://yusik36.github.io/research-notes/static/og-image.png"/><meta property="og:image:type" content="image/.png"/><meta property="twitter:domain" content="yusik36.github.io/research-notes"/><meta property="og:url" content="https://yusik36.github.io/research-notes/20_Projects/ANSL-Undergrad-Research/weekly/2026-01-19"/><meta property="twitter:url" content="https://yusik36.github.io/research-notes/20_Projects/ANSL-Undergrad-Research/weekly/2026-01-19"/><link rel="icon" href="../../../static/icon.png"/><meta name="description" content="Weekly Study Report — 2026-01-19 Source C:\LabNote\90_Archive\ANSL-Undergrad-Research\내용정리PDF\Weekly Study Report_26.01.19_전유식.pdf · 22 pages · 30 images ANSL Undergraduate Research → Research Direction PDF에서 복원한 노트 같은 날짜의 PPT는 이후 다른 주차 작업 중 덮어써져 내용이 유실됐습니다."/><meta name="generator" content="Quartz"/><link href="../../../index.css" rel="stylesheet" type="text/css" spa-preserve/><style>.expand-button {
+  position: absolute;
+  display: flex;
+  float: right;
+  padding: 0.4rem;
+  margin: 0.3rem;
+  right: 0;
+  color: var(--gray);
+  border-color: var(--dark);
+  background-color: var(--light);
+  border: 1px solid;
+  border-radius: 5px;
+  opacity: 0;
+  transition: 0.2s;
+}
+.expand-button > svg {
+  fill: var(--light);
+  filter: contrast(0.3);
+}
+.expand-button:hover {
+  cursor: pointer;
+  border-color: var(--secondary);
+}
+.expand-button:focus {
+  outline: 0;
+}
+
+pre:hover > .expand-button {
+  opacity: 1;
+  transition: 0.2s;
+}
+
+#mermaid-container {
+  position: fixed;
+  contain: layout;
+  z-index: 999;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  display: none;
+  backdrop-filter: blur(4px);
+  background: rgba(0, 0, 0, 0.5);
+}
+#mermaid-container.active {
+  display: inline-block;
+}
+#mermaid-container > #mermaid-space {
+  border: 1px solid var(--lightgray);
+  background-color: var(--light);
+  border-radius: 5px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 80vh;
+  width: 80vw;
+  overflow: hidden;
+}
+#mermaid-container > #mermaid-space > .mermaid-content {
+  padding: 2rem;
+  position: relative;
+  transform-origin: 0 0;
+  transition: transform 0.1s ease;
+  overflow: visible;
+  min-height: 200px;
+  min-width: 200px;
+}
+#mermaid-container > #mermaid-space > .mermaid-content pre {
+  margin: 0;
+  border: none;
+}
+#mermaid-container > #mermaid-space > .mermaid-content svg {
+  max-width: none;
+  height: auto;
+}
+#mermaid-container > #mermaid-space > .mermaid-controls {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  gap: 8px;
+  padding: 8px;
+  background: var(--light);
+  border: 1px solid var(--lightgray);
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 2;
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 1px solid var(--lightgray);
+  background: var(--light);
+  color: var(--dark);
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  font-family: var(--bodyFont);
+  transition: all 0.2s ease;
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button:hover {
+  background: var(--lightgray);
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button:active {
+  transform: translateY(1px);
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button:nth-child(2) {
+  width: auto;
+  padding: 0 12px;
+  font-size: 14px;
+}
+/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VSb290IjoiQzpcXEFyY2hpdmVcXOyeoeuLpOq1rOumrFxcVVNU7J247YS0X+yngOybkOyEnFxcc2l0ZVxccXVhcnR6XFxjb21wb25lbnRzXFxzdHlsZXMiLCJzb3VyY2VzIjpbIm1lcm1haWQuaW5saW5lLnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDRTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTs7QUFFQTtFQUNFO0VBQ0E7O0FBR0Y7RUFDRTtFQUNBOztBQUdGO0VBQ0U7OztBQUtGO0VBQ0U7RUFDQTs7O0FBSUo7RUFDRTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBOztBQUVBO0VBQ0U7O0FBR0Y7RUFDRTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTs7QUFFQTtFQUNFO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBOztBQUVBO0VBQ0U7RUFDQTs7QUFHRjtFQUNFO0VBQ0E7O0FBSUo7RUFDRTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBOztBQUVBO0VBQ0U7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTs7QUFFQTtFQUNFOztBQUdGO0VBQ0U7O0FBSUY7RUFDRTtFQUNBO0VBQ0EiLCJzb3VyY2VzQ29udGVudCI6WyIuZXhwYW5kLWJ1dHRvbiB7XG4gIHBvc2l0aW9uOiBhYnNvbHV0ZTtcbiAgZGlzcGxheTogZmxleDtcbiAgZmxvYXQ6IHJpZ2h0O1xuICBwYWRkaW5nOiAwLjRyZW07XG4gIG1hcmdpbjogMC4zcmVtO1xuICByaWdodDogMDsgLy8gTk9URTogcmlnaHQgd2lsbCBiZSBzZXQgaW4gbWVybWFpZC5pbmxpbmUudHNcbiAgY29sb3I6IHZhcigtLWdyYXkpO1xuICBib3JkZXItY29sb3I6IHZhcigtLWRhcmspO1xuICBiYWNrZ3JvdW5kLWNvbG9yOiB2YXIoLS1saWdodCk7XG4gIGJvcmRlcjogMXB4IHNvbGlkO1xuICBib3JkZXItcmFkaXVzOiA1cHg7XG4gIG9wYWNpdHk6IDA7XG4gIHRyYW5zaXRpb246IDAuMnM7XG5cbiAgJiA+IHN2ZyB7XG4gICAgZmlsbDogdmFyKC0tbGlnaHQpO1xuICAgIGZpbHRlcjogY29udHJhc3QoMC4zKTtcbiAgfVxuXG4gICY6aG92ZXIge1xuICAgIGN1cnNvcjogcG9pbnRlcjtcbiAgICBib3JkZXItY29sb3I6IHZhcigtLXNlY29uZGFyeSk7XG4gIH1cblxuICAmOmZvY3VzIHtcbiAgICBvdXRsaW5lOiAwO1xuICB9XG59XG5cbnByZSB7XG4gICY6aG92ZXIgPiAuZXhwYW5kLWJ1dHRvbiB7XG4gICAgb3BhY2l0eTogMTtcbiAgICB0cmFuc2l0aW9uOiAwLjJzO1xuICB9XG59XG5cbiNtZXJtYWlkLWNvbnRhaW5lciB7XG4gIHBvc2l0aW9uOiBmaXhlZDtcbiAgY29udGFpbjogbGF5b3V0O1xuICB6LWluZGV4OiA5OTk7XG4gIGxlZnQ6IDA7XG4gIHRvcDogMDtcbiAgd2lkdGg6IDEwMHZ3O1xuICBoZWlnaHQ6IDEwMHZoO1xuICBvdmVyZmxvdzogaGlkZGVuO1xuICBkaXNwbGF5OiBub25lO1xuICBiYWNrZHJvcC1maWx0ZXI6IGJsdXIoNHB4KTtcbiAgYmFja2dyb3VuZDogcmdiYSgwLCAwLCAwLCAwLjUpO1xuXG4gICYuYWN0aXZlIHtcbiAgICBkaXNwbGF5OiBpbmxpbmUtYmxvY2s7XG4gIH1cblxuICAmID4gI21lcm1haWQtc3BhY2Uge1xuICAgIGJvcmRlcjogMXB4IHNvbGlkIHZhcigtLWxpZ2h0Z3JheSk7XG4gICAgYmFja2dyb3VuZC1jb2xvcjogdmFyKC0tbGlnaHQpO1xuICAgIGJvcmRlci1yYWRpdXM6IDVweDtcbiAgICBwb3NpdGlvbjogZml4ZWQ7XG4gICAgdG9wOiA1MCU7XG4gICAgbGVmdDogNTAlO1xuICAgIHRyYW5zZm9ybTogdHJhbnNsYXRlKC01MCUsIC01MCUpO1xuICAgIGhlaWdodDogODB2aDtcbiAgICB3aWR0aDogODB2dztcbiAgICBvdmVyZmxvdzogaGlkZGVuO1xuXG4gICAgJiA+IC5tZXJtYWlkLWNvbnRlbnQge1xuICAgICAgcGFkZGluZzogMnJlbTtcbiAgICAgIHBvc2l0aW9uOiByZWxhdGl2ZTtcbiAgICAgIHRyYW5zZm9ybS1vcmlnaW46IDAgMDtcbiAgICAgIHRyYW5zaXRpb246IHRyYW5zZm9ybSAwLjFzIGVhc2U7XG4gICAgICBvdmVyZmxvdzogdmlzaWJsZTtcbiAgICAgIG1pbi1oZWlnaHQ6IDIwMHB4O1xuICAgICAgbWluLXdpZHRoOiAyMDBweDtcblxuICAgICAgcHJlIHtcbiAgICAgICAgbWFyZ2luOiAwO1xuICAgICAgICBib3JkZXI6IG5vbmU7XG4gICAgICB9XG5cbiAgICAgIHN2ZyB7XG4gICAgICAgIG1heC13aWR0aDogbm9uZTtcbiAgICAgICAgaGVpZ2h0OiBhdXRvO1xuICAgICAgfVxuICAgIH1cblxuICAgICYgPiAubWVybWFpZC1jb250cm9scyB7XG4gICAgICBwb3NpdGlvbjogYWJzb2x1dGU7XG4gICAgICBib3R0b206IDIwcHg7XG4gICAgICByaWdodDogMjBweDtcbiAgICAgIGRpc3BsYXk6IGZsZXg7XG4gICAgICBnYXA6IDhweDtcbiAgICAgIHBhZGRpbmc6IDhweDtcbiAgICAgIGJhY2tncm91bmQ6IHZhcigtLWxpZ2h0KTtcbiAgICAgIGJvcmRlcjogMXB4IHNvbGlkIHZhcigtLWxpZ2h0Z3JheSk7XG4gICAgICBib3JkZXItcmFkaXVzOiA2cHg7XG4gICAgICBib3gtc2hhZG93OiAwIDJweCA0cHggcmdiYSgwLCAwLCAwLCAwLjEpO1xuICAgICAgei1pbmRleDogMjtcblxuICAgICAgLm1lcm1haWQtY29udHJvbC1idXR0b24ge1xuICAgICAgICBkaXNwbGF5OiBmbGV4O1xuICAgICAgICBhbGlnbi1pdGVtczogY2VudGVyO1xuICAgICAgICBqdXN0aWZ5LWNvbnRlbnQ6IGNlbnRlcjtcbiAgICAgICAgd2lkdGg6IDMycHg7XG4gICAgICAgIGhlaWdodDogMzJweDtcbiAgICAgICAgcGFkZGluZzogMDtcbiAgICAgICAgYm9yZGVyOiAxcHggc29saWQgdmFyKC0tbGlnaHRncmF5KTtcbiAgICAgICAgYmFja2dyb3VuZDogdmFyKC0tbGlnaHQpO1xuICAgICAgICBjb2xvcjogdmFyKC0tZGFyayk7XG4gICAgICAgIGJvcmRlci1yYWRpdXM6IDRweDtcbiAgICAgICAgY3Vyc29yOiBwb2ludGVyO1xuICAgICAgICBmb250LXNpemU6IDE2cHg7XG4gICAgICAgIGZvbnQtZmFtaWx5OiB2YXIoLS1ib2R5Rm9udCk7XG4gICAgICAgIHRyYW5zaXRpb246IGFsbCAwLjJzIGVhc2U7XG5cbiAgICAgICAgJjpob3ZlciB7XG4gICAgICAgICAgYmFja2dyb3VuZDogdmFyKC0tbGlnaHRncmF5KTtcbiAgICAgICAgfVxuXG4gICAgICAgICY6YWN0aXZlIHtcbiAgICAgICAgICB0cmFuc2Zvcm06IHRyYW5zbGF0ZVkoMXB4KTtcbiAgICAgICAgfVxuXG4gICAgICAgIC8vIFN0eWxlIHRoZSByZXNldCBidXR0b24gZGlmZmVyZW50bHlcbiAgICAgICAgJjpudGgtY2hpbGQoMikge1xuICAgICAgICAgIHdpZHRoOiBhdXRvO1xuICAgICAgICAgIHBhZGRpbmc6IDAgMTJweDtcbiAgICAgICAgICBmb250LXNpemU6IDE0cHg7XG4gICAgICAgIH1cbiAgICAgIH1cbiAgICB9XG4gIH1cbn1cbiJdfQ== */</style><link href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" rel="stylesheet" type="text/css" spa-preserve/><script src="../../../prescript.js" type="application/javascript" spa-preserve></script><script type="application/javascript" spa-preserve>const fetchData = fetch("../../../static/contentIndex.json").then(data => data.json())</script></head><body data-slug="20_Projects/ANSL-Undergrad-Research/weekly/2026-01-19"><div id="quartz-root" class="page"><div id="quartz-body"><div class="left sidebar"><h2 class="page-title"><a href="../../..">LabNote</a></h2><div class="spacer mobile-only"></div><div class="flex-component" style="flex-direction: row; flex-wrap: nowrap; gap: 1rem;"><div style="flex-grow: 1; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><div class="search"><button class="search-button"><svg role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19.9 19.7"><title>Search</title><g class="search-path" fill="none"><path stroke-linecap="square" d="M18.5 18.3l-5.4-5.4"></path><circle cx="8" cy="8" r="7"></circle></g></svg><p>검색</p></button><div class="search-container"><div class="search-space"><input autocomplete="off" class="search-bar" name="search" type="text" aria-label="검색어를 입력하세요" placeholder="검색어를 입력하세요"/><div class="search-layout" data-preview="true"></div></div></div></div></div><div style="flex-grow: 0; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><button class="darkmode"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="dayIcon" x="0px" y="0px" viewBox="0 0 35 35" style="enable-background:new 0 0 35 35" xml:space="preserve" aria-label="다크 모드"><title>다크 모드</title><path d="M6,17.5C6,16.672,5.328,16,4.5,16h-3C0.672,16,0,16.672,0,17.5    S0.672,19,1.5,19h3C5.328,19,6,18.328,6,17.5z M7.5,26c-0.414,0-0.789,0.168-1.061,0.439l-2,2C4.168,28.711,4,29.086,4,29.5    C4,30.328,4.671,31,5.5,31c0.414,0,0.789-0.168,1.06-0.44l2-2C8.832,28.289,9,27.914,9,27.5C9,26.672,8.329,26,7.5,26z M17.5,6    C18.329,6,19,5.328,19,4.5v-3C19,0.672,18.329,0,17.5,0S16,0.672,16,1.5v3C16,5.328,16.671,6,17.5,6z M27.5,9    c0.414,0,0.789-0.168,1.06-0.439l2-2C30.832,6.289,31,5.914,31,5.5C31,4.672,30.329,4,29.5,4c-0.414,0-0.789,0.168-1.061,0.44    l-2,2C26.168,6.711,26,7.086,26,7.5C26,8.328,26.671,9,27.5,9z M6.439,8.561C6.711,8.832,7.086,9,7.5,9C8.328,9,9,8.328,9,7.5    c0-0.414-0.168-0.789-0.439-1.061l-2-2C6.289,4.168,5.914,4,5.5,4C4.672,4,4,4.672,4,5.5c0,0.414,0.168,0.789,0.439,1.06    L6.439,8.561z M33.5,16h-3c-0.828,0-1.5,0.672-1.5,1.5s0.672,1.5,1.5,1.5h3c0.828,0,1.5-0.672,1.5-1.5S34.328,16,33.5,16z     M28.561,26.439C28.289,26.168,27.914,26,27.5,26c-0.828,0-1.5,0.672-1.5,1.5c0,0.414,0.168,0.789,0.439,1.06l2,2    C28.711,30.832,29.086,31,29.5,31c0.828,0,1.5-0.672,1.5-1.5c0-0.414-0.168-0.789-0.439-1.061L28.561,26.439z M17.5,29    c-0.829,0-1.5,0.672-1.5,1.5v3c0,0.828,0.671,1.5,1.5,1.5s1.5-0.672,1.5-1.5v-3C19,29.672,18.329,29,17.5,29z M17.5,7    C11.71,7,7,11.71,7,17.5S11.71,28,17.5,28S28,23.29,28,17.5S23.29,7,17.5,7z M17.5,25c-4.136,0-7.5-3.364-7.5-7.5    c0-4.136,3.364-7.5,7.5-7.5c4.136,0,7.5,3.364,7.5,7.5C25,21.636,21.636,25,17.5,25z"></path></svg><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="nightIcon" x="0px" y="0px" viewBox="0 0 100 100" style="enable-background:new 0 0 100 100" xml:space="preserve" aria-label="라이트 모드"><title>라이트 모드</title><path d="M96.76,66.458c-0.853-0.852-2.15-1.064-3.23-0.534c-6.063,2.991-12.858,4.571-19.655,4.571  C62.022,70.495,50.88,65.88,42.5,57.5C29.043,44.043,25.658,23.536,34.076,6.47c0.532-1.08,0.318-2.379-0.534-3.23  c-0.851-0.852-2.15-1.064-3.23-0.534c-4.918,2.427-9.375,5.619-13.246,9.491c-9.447,9.447-14.65,22.008-14.65,35.369  c0,13.36,5.203,25.921,14.65,35.368s22.008,14.65,35.368,14.65c13.361,0,25.921-5.203,35.369-14.65  c3.872-3.871,7.064-8.328,9.491-13.246C97.826,68.608,97.611,67.309,96.76,66.458z"></path></svg></button></div><div style="flex-grow: 0; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><button class="readermode"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="readerIcon" fill="currentColor" stroke="currentColor" stroke-width="0.2" stroke-linecap="round" stroke-linejoin="round" width="64px" height="64px" viewBox="0 0 24 24" aria-label="리더 모드"><title>리더 모드</title><g transform="translate(-1.8, -1.8) scale(1.15, 1.2)"><path d="M8.9891247,2.5 C10.1384702,2.5 11.2209868,2.96705384 12.0049645,3.76669482 C12.7883914,2.96705384 13.8709081,2.5 15.0202536,2.5 L18.7549359,2.5 C19.1691495,2.5 19.5049359,2.83578644 19.5049359,3.25 L19.5046891,4.004 L21.2546891,4.00457396 C21.6343849,4.00457396 21.9481801,4.28672784 21.9978425,4.6528034 L22.0046891,4.75457396 L22.0046891,20.25 C22.0046891,20.6296958 21.7225353,20.943491 21.3564597,20.9931534 L21.2546891,21 L2.75468914,21 C2.37499337,21 2.06119817,20.7178461 2.01153575,20.3517706 L2.00468914,20.25 L2.00468914,4.75457396 C2.00468914,4.37487819 2.28684302,4.061083 2.65291858,4.01142057 L2.75468914,4.00457396 L4.50368914,4.004 L4.50444233,3.25 C4.50444233,2.87030423 4.78659621,2.55650904 5.15267177,2.50684662 L5.25444233,2.5 L8.9891247,2.5 Z M4.50368914,5.504 L3.50468914,5.504 L3.50468914,19.5 L10.9478955,19.4998273 C10.4513189,18.9207296 9.73864328,18.5588115 8.96709342,18.5065584 L8.77307039,18.5 L5.25444233,18.5 C4.87474657,18.5 4.56095137,18.2178461 4.51128895,17.8517706 L4.50444233,17.75 L4.50368914,5.504 Z M19.5049359,17.75 C19.5049359,18.1642136 19.1691495,18.5 18.7549359,18.5 L15.2363079,18.5 C14.3910149,18.5 13.5994408,18.8724714 13.0614828,19.4998273 L20.5046891,19.5 L20.5046891,5.504 L19.5046891,5.504 L19.5049359,17.75 Z M18.0059359,3.999 L15.0202536,4 L14.8259077,4.00692283 C13.9889509,4.06666544 13.2254227,4.50975805 12.7549359,5.212 L12.7549359,17.777 L12.7782651,17.7601316 C13.4923805,17.2719483 14.3447024,17 15.2363079,17 L18.0059359,16.999 L18.0056891,4.798 L18.0033792,4.75457396 L18.0056891,4.71 L18.0059359,3.999 Z M8.9891247,4 L6.00368914,3.999 L6.00599909,4.75457396 L6.00599909,4.75457396 L6.00368914,4.783 L6.00368914,16.999 L8.77307039,17 C9.57551536,17 10.3461406,17.2202781 11.0128313,17.6202194 L11.2536891,17.776 L11.2536891,5.211 C10.8200889,4.56369974 10.1361548,4.13636104 9.37521067,4.02745763 L9.18347055,4.00692283 L8.9891247,4 Z"></path></g></svg></button></div></div><div class="explorer" data-behavior="link" data-collapsed="collapsed" data-savestate="true" data-data-fns="{&quot;order&quot;:[&quot;filter&quot;,&quot;map&quot;,&quot;sort&quot;],&quot;sortFn&quot;:&quot;(a,b)=>!a.isFolder&amp;&amp;!b.isFolder||a.isFolder&amp;&amp;b.isFolder?a.displayName.localeCompare(b.displayName,void 0,{numeric:!0,sensitivity:\&quot;base\&quot;}):!a.isFolder&amp;&amp;b.isFolder?1:-1&quot;,&quot;filterFn&quot;:&quot;node=>node.slugSegment!==\&quot;tags\&quot;&quot;,&quot;mapFn&quot;:&quot;node=>node&quot;}"><button type="button" class="explorer-toggle mobile-explorer hide-until-loaded" data-mobile="true" aria-controls="explorer-84"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide-menu"><line x1="4" x2="20" y1="12" y2="12"></line><line x1="4" x2="20" y1="6" y2="6"></line><line x1="4" x2="20" y1="18" y2="18"></line></svg></button><button type="button" class="title-button explorer-toggle desktop-explorer" data-mobile="false" aria-expanded="true"><h2>탐색기</h2><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="5 8 14 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fold"><polyline points="6 9 12 15 18 9"></polyline></svg></button><div id="explorer-84" class="explorer-content" aria-expanded="false" role="group"><ul class="explorer-ul overflow" id="list-0"><li class="overflow-end"></li></ul></div><template id="template-file"><li><a href="#"></a></li></template><template id="template-folder"><li><div class="folder-container"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="5 8 14 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="folder-icon"><polyline points="6 9 12 15 18 9"></polyline></svg><div><button class="folder-button"><span class="folder-title"></span></button></div></div><div class="folder-outer"><ul class="content"></ul></div></li></template></div></div><div class="center"><div class="page-header"><div class="popover-hint"><nav class="breadcrumb-container" aria-label="breadcrumbs"><div class="breadcrumb-element"><a href="../../../">Home</a><p> ❯ </p></div><div class="breadcrumb-element"><a href="../../../20_Projects/">20_Projects</a><p> ❯ </p></div><div class="breadcrumb-element"><a href="../../../20_Projects/ANSL-Undergrad-Research/">ANSL Undergrad Research</a><p> ❯ </p></div><div class="breadcrumb-element"><a href="../../../20_Projects/ANSL-Undergrad-Research/weekly/">weekly</a><p> ❯ </p></div><div class="breadcrumb-element"><a href>2026 01 19</a></div></nav><h1 class="article-title">2026-01-19</h1><p show-comma="true" class="content-meta"><time datetime="2026-01-18T15:00:00.000Z">2026년 1월 19일</time><span>24 min read</span></p><ul class="tags"><li><a href="../../../tags/control-theory" class="internal tag-link">control-theory</a></li><li><a href="../../../tags/simulink" class="internal tag-link">simulink</a></li></ul></div></div><article class="popover-hint"><h1 id="weekly-study-report--2026-01-19">Weekly Study Report — 2026-01-19<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#weekly-study-report--2026-01-19" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h1>
+<blockquote class="callout info" data-callout="info">
+<div class="callout-title">
+                  <div class="callout-icon"></div>
+                  <div class="callout-title-inner"><p>Source </p></div>
+                  
+                </div>
+<div class="callout-content">
+<p><code>C:\LabNote\90_Archive\ANSL-Undergrad-Research\내용정리PDF\Weekly Study Report_26.01.19_전유식.pdf</code> · 22 pages · 30 images</p>
+</div>
+</blockquote>
+<p><a href="../../../20_Projects/ANSL-Undergrad-Research/ANSL-Undergraduate-Research" class="internal alias" data-slug="20_Projects/ANSL-Undergrad-Research/ANSL-Undergraduate-Research">ANSL Undergraduate Research</a> → <a href="../../../Research-Direction" class="internal alias" data-slug="Research-Direction">Research Direction</a></p>
+<blockquote class="callout info" data-callout="info">
+<div class="callout-title">
+                  <div class="callout-icon"></div>
+                  <div class="callout-title-inner"><p>PDF에서 복원한 노트 </p></div>
+                  
+                </div>
+<div class="callout-content">
+<p>같은 날짜의 PPT는 이후 다른 주차 작업 중 덮어써져 내용이 유실됐습니다.
+<strong>PDF가 원본</strong>이며 이 노트는 PDF에서 추출했습니다.</p>
+</div>
+</blockquote>
+<h2 id="한일--what-i-did">한일 / What I did<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#한일--what-i-did" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>PI / PID 제어기와 Anti-windup — 3월 스러스터 포화 대응의 이론적 바탕</p>
+<h2 id="목차--contents">목차 / Contents<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#목차--contents" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<ul>
+<li>캡스톤 디자인 Simulink</li>
+<li>PI Control</li>
+<li>PID Control</li>
+<li>Anti-windup</li>
+</ul>
+<h2 id="기록--notes">기록 / Notes<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#기록--notes" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<h3 id="캡스톤-디자인-simulink">캡스톤 디자인 Simulink<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#캡스톤-디자인-simulink" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<h4 id="simulink에서-벡터신호-보내기와-인덱싱">Simulink에서 벡터신호 보내기와 인덱싱<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#simulink에서-벡터신호-보내기와-인덱싱" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h4>
+<ul>
+<li>mux를 이용해서 벡터를 만들수 있다.</li>
+<li>demux를 이용해서 벡터를 한 벡터를 여러 벡터로 분리할수있다. 하지만 인자 순서대로가 아니라 벡터를 인덱싱하고 싶다면? ➔ select 블록을 이용해서 [1 4] 이런식으로 인덱싱이 가능하다.</li>
+<li>요소합은 sum 블록으로 가능하지만 합치려는 인자가 많은경우 sum of elements블록을 이용해서 요소합을 구할수 있다.</li>
+</ul>
+<p><img src="../../../_attachments/ANSL-Undergrad-Research/2026-01-19/2026-01-19-p03-Image56.png" width="auto" height="auto" alt/></p>
+<h4 id="subsystem">Subsystem<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#subsystem" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h4>
+<ul>
+<li>subsystem을이용해 같은 시스템을 모델링한 모습</li>
+</ul>
+<p><img src="../../../_attachments/ANSL-Undergrad-Research/2026-01-19/2026-01-19-p04-Image65.png" width="auto" height="auto" alt/></p>
+<p><img src="../../../_attachments/ANSL-Undergrad-Research/2026-01-19/2026-01-19-p04-Image74.png" width="auto" height="auto" alt/></p>
+<h4 id="샘플링과-최적-ts">샘플링과 최적 Ts<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#샘플링과-최적-ts" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h4>
+<blockquote>
+<p>개념 정리: <a href="../../../30_Knowledge/Solver-Step-Size" class="internal alias" data-slug="30_Knowledge/Solver-Step-Size">Solver Step Size</a></p>
+<p>손상된 <code>01-05</code> PPT에 들어 있던 샘플링 내용이 사실 이 주차 것이었다. 그 PPT 표지 날짜가 <code>2026.01.19</code>로 찍혀 있던 것과 일치한다.</p>
+</blockquote>
+<ul>
+<li>샘플링이란? : 연속신호 <span>→</span> 이산신호로 바꾸는 것 (가변스탭, 고정스탭과 무관, 하지만 제어성격에 따라 궁합이 존재할순 있음)</li>
+<li>왜 하는가? : 디지털제어기는 연속신호를 계속 계산 할 수 없음. 연속시간이 아니라 매 ‘틱’을 계산한다</li>
+<li>그럼 미분해서 미소시간으로 샘플링하면  연속신호랑 똑같이 나오는 것 아닌가? : 다양한 문제들이 발생함 i) 계산량이 늘어나므로 최적화에 불리 ii) 노이즈 문제 발생</li>
+<li>노이즈란? : 신호가 들어올 때 원래신호에 섞여서 흔들림 또는 오차성분이 들어온다. (센서측정값, 전압, 계산신호 무관하게) 수식으로 보면 y(t) = x(t) + n(t) 이고, 미분을 하게 되면 수식은 다음과 같다. 미분을 하면 Ts가 매우 작아지게 되므로 마지막항 (노이즈항)이 커지므로 정확한 결과를 얻을 수 없다. 정리하면 Ts 감소 <span>→</span>  미분 근사는 좋아지지만 노이즈 증폭으로 인한 정확도 감소 Ts증가 <span>→</span> 노이즈는 감소하지만 미분 근사 정확도 저하</li>
+</ul>
+<h4 id="연속시스템과이산시스템">연속시스템과이산시스템<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#연속시스템과이산시스템" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h4>
+<ul>
+<li>연속시스템과 이산시스템디지털제어는 연속신호를 받을 수 없기 때문에 이산신호로 변환해서 입력해야 한다.</li>
+<li>정보 오버레이를 이용해 색으로 이산시스템과 연속시스템을 구 분 할 수 있고, 위상 지연이 포함된 이산시스템 사인함수를 나타냈 다.</li>
+</ul>
+<p><img src="../../../_attachments/ANSL-Undergrad-Research/2026-01-19/2026-01-19-p06-Image93.png" width="auto" height="auto" alt/></p>
+<h4 id="matlab에서-전달함수를-입력하여-보드-플롯-만들기">MATLAB에서 전달함수를 입력하여 보드 플롯 만들기<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#matlab에서-전달함수를-입력하여-보드-플롯-만들기" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h4>
+<ul>
+<li>Sys1과 비교 했을때 sys2의 시간상수(10)가 더 크기 때문에 step response에서 더 빠르게 반응 하는것을 볼 수 있다.</li>
+<li>1차 시스템에서 대역폭은 bw = 1/(시간상수)로 나타낼 수 있고 각시스템의 시간상수는 1,10 이므로 sys2의 대역폭이 더 크다. 따라서 sys2의 반응속도가 더 큰것을 검증 할 수 있다.</li>
+<li>tr은 2.2/(bw) 로 정의되므로 sys1은 2.2 / 1 = 2.2s, sys2는 2.2 / 10 = 0.22s, 10배 차이가 나는 것을수식으로 확인할 수 있고 step response에 표시 하였다. tr(sys1)tr(sys2)</li>
+</ul>
+<blockquote class="callout warning" data-callout="warning">
+<div class="callout-title">
+                  <div class="callout-icon"></div>
+                  <div class="callout-title-inner"><p>정정 (2026-08-10) — &quot;시간상수 10&quot;은 시간상수가 아니라 대역폭 </p></div>
+                  
+                </div>
+<div class="callout-content">
+<p><strong>시간상수 <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.1132em;">τ</span></span></span></span> 가 크면 반응은 느려진다.</strong> 원문의 “sys2의 시간상수(10)가 더 크기 때문에 더 빠르게 반응한다”는 앞뒤가 맞지 않는다.</p>
+<p>뒤 계산이 답을 알려준다. <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal">b</span><span class="mord mathnormal" style="margin-right:0.02691em;">w</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1/</span><span class="mord mathnormal" style="margin-right:0.1132em;">τ</span></span></span></span> 인데 sys2의 <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal">b</span><span class="mord mathnormal" style="margin-right:0.02691em;">w</span></span></span></span> 를 10으로 놓고 <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7651em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">t</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.02778em;">r</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">2.2/10</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">0.22</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord text"><span class="mord">s</span></span></span></span></span> 를 구했다. 즉 sys2는 <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.1132em;">τ</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">0.1</span></span></span></span>, <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal">b</span><span class="mord mathnormal" style="margin-right:0.02691em;">w</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">10</span></span></span></span> 이다.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th></th><th><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.1132em;">τ</span></span></span></span></th><th><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal">b</span><span class="mord mathnormal" style="margin-right:0.02691em;">w</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1/</span><span class="mord mathnormal" style="margin-right:0.1132em;">τ</span></span></span></span></th><th><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7651em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">t</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.02778em;">r</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">2.2</span><span class="mord mathnormal" style="margin-right:0.1132em;">τ</span></span></span></span></th></tr></thead><tbody><tr><td>sys1</td><td>1</td><td>1 rad/s</td><td>2.2 s</td></tr><tr><td>sys2</td><td><strong>0.1</strong></td><td><strong>10 rad/s</strong></td><td>0.22 s</td></tr></tbody></table></div>
+<p><strong>“sys2가 빠르다”는 결론은 맞다.</strong> 이유를 시간상수가 아니라 대역폭으로 말해야 했다.
+아마 <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">G</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:2.0908em;vertical-align:-0.7693em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3214em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal">s</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord">10</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">10</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.7693em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span> 형태였을 것이고, 분모의 극점 10을 시간상수로 잘못 부른 것으로 보인다.</p>
+</div>
+</blockquote>
+<p><img src="../../../_attachments/ANSL-Undergrad-Research/2026-01-19/2026-01-19-p07-Image102.png" width="auto" height="auto" alt/></p>
+<p><img src="../../../_attachments/ANSL-Undergrad-Research/2026-01-19/2026-01-19-p07-Image103.png" width="auto" height="auto" alt/></p>
+<p><img src="../../../_attachments/ANSL-Undergrad-Research/2026-01-19/2026-01-19-p07-Image104.png" width="auto" height="auto" alt/></p>
+<h3 id="pi-control">PI Control<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#pi-control" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<blockquote>
+<p>“오차가크면 크게밀고 오차가작으면작게 민다” 따라서 반응이빠르고오차가 생기는즉시 대응</p>
+</blockquote>
+<ul>
+<li>비례항만을이용해서제어하는것을P제어라고한다</li>
+<li>이를PI제어 라고 한다.</li>
+<li>
+<blockquote>
+<p>시뮬링크에서saturation 블록으로설정</p>
+</blockquote>
+</li>
+</ul>
+<p>PI 제어란? 제어기의목적<span>→</span> 오차(e)를0으로 만드는것. PI제어: 컨트롤러출력y(k) = 비례항출력yp(k) + 적분항출력yi(k) i) 비례항 yp(k) : yp(k) = Kp e(k) (이때Kp는비례이득) 즉, 오차에비례이득을곱한 것 할수 있다. 하지만 현실에서는마찰, 저항, 부하등 버티는힘이 있어비례항만으로는 오차가0이 아니 라어떤 값에수렴한다.(정상상태오차) ii) 적분항yi(k) : 오차를 시간에따라서 누적하고남아있는 오차를없애는역할 Yi(k-1) : 바로 직전샘플에서의 적분값(누적된결과) + 샘플시간x비례이득x오차 어떻게정상상태오차를 없애는가? 0보다 큰e(k)가남아있음<span>→</span> yi가증가<span>→</span>출력이 커짐 <span>→</span> 시스템이움직임<span>→</span> 오차가0이 될때 까지반 복 iii) 상한,하한 제어기출력이 현실의구동기한계(스로틀범위, 전압등)를넘지못하게 설정해놓는것.</p>
+<p><img src="../../../_attachments/ANSL-Undergrad-Research/2026-01-19/2026-01-19-p08-Image113.png" width="auto" height="auto" alt/></p>
+<blockquote class="callout warning" data-callout="warning">
+<div class="callout-title">
+                  <div class="callout-icon"></div>
+                  <div class="callout-title-inner"><p>정정 (2026-08-10) — 적분항 수식과 기호 </p></div>
+                  
+                </div>
+<div class="callout-content">
+<p><strong>① 적분항에 곱하는 것은 적분이득이다.</strong>
+원문: “Yi(k-1) : 바로 직전 샘플에서의 적분값 + 샘플시간 × <strong>비례이득</strong> × 오차”
+올바른 식:
+<span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.0359em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.0359em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.07153em;">K</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.0715em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:-0.1389em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">s</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">e</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span><span class="mclose">)</span></span></span></span>
+<span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9694em;vertical-align:-0.2861em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.07153em;">K</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:-0.0715em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">p</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span></span></span></span> 가 아니라 <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.07153em;">K</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.0715em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> 다. 실제로 뒤의 모델링 결과분석에서는 “Ki = 2, Ts = 0.01 이므로 매 틱 0.02”라고 <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.07153em;">K</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.0715em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> 로 계산하고 있으므로, 서술만 잘못 적힌 것으로 보인다.</p>
+<p><strong>② 제어기 출력은 보통 <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">u</span></span></span></span> 로 쓴다.</strong>
+원문은 제어기 출력을 <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span><span class="mclose">)</span></span></span></span> 로 적었는데, 관례상 <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span></span></span></span> 는 플랜트 출력이다. 뒤쪽 anti-windup 절에서는 <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">u</span></span></span></span>, <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5806em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">u</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2806em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">s</span><span class="mord mathnormal mtight">a</span><span class="mord mathnormal mtight">t</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> 을 쓰고 있어 표기가 섞였다.
+<span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">u</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1.0361em;vertical-align:-0.2861em;"></span><span class="mord"><span class="mord mathnormal">u</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">p</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathnormal">u</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span><span class="mclose">)</span></span></span></span></p>
+<p><strong>③ “매 틱 0.02 증가”는 <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">e</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span></span></span></span> 일 때만.</strong>
+<span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.07153em;">K</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.0715em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:-0.1389em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">s</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord mathnormal">e</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">2</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">0.01</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">e</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">0.02</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">e</span></span></span></span> 이므로, 단위 계단 입력이라 <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4831em;"></span><span class="mord mathnormal">e</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">≈</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span></span></span></span> 인 구간에서만 0.02다.</p>
+</div>
+</blockquote>
+<h4 id="pi-control-모델링논리분석">PI Control 모델링논리분석<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#pi-control-모델링논리분석" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h4>
+<p><img src="../../../_attachments/ANSL-Undergrad-Research/2026-01-19/2026-01-19-p09-Image122.png" width="auto" height="auto" alt/></p>
+<h4 id="pi-control-모델링결과분석">PI Control 모델링결과분석<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#pi-control-모델링결과분석" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h4>
+<ul>
+<li>Ki = 2, Ts = 0.01 이므로 적분항은 매 틱 마다 =0.02만큼증가 하는것을 볼수 있다.</li>
+<li>왜 입력(scope에선 e(k)로 표시)에 수렴하지 못하고 계속 증가하는가? :실제 폐루프 제어라면 y가 커지면서 플랜트가 움직이고 그 결과 e가 줄어들 어 0으로 수렴하고 적분 누적이 멈춰야 하지만 플랜트를 모델링하지 않고 제 어기만 모델링 했기 때문에 e가 줄어들지 않아 적분 누적이 멈추지 않았기 때문임을 알 수 있다.</li>
+<li>플랜트 모델링을 추가했다면 출력이 입력에 수렴 했을 것 이라 예상된다.</li>
+</ul>
+<p><img src="../../../_attachments/ANSL-Undergrad-Research/2026-01-19/2026-01-19-p10-Image132.png" width="auto" height="auto" alt/></p>
+<h3 id="pid-control">PID Control<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#pid-control" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ul>
+<li>PID 제어란? : 위에 설명했던 PI제어에서 미분항 D 가 추가된 형태로 D항은 오차의 변화를 보고 미리 브레이크를 걸어서 오버슈트를 줄이는 역할을 한다.</li>
+<li>수식에서 D항이 작동하는 원리 : PID제어 방정식은 다음과 같다. D항은 미분항이므로 오차 e(t)가 감소중이라면 D항의 부호는 음수가 되고 거기에 미분이득을 곱해 시스템에 제동을 걸어준다. ex) smd시스템의 댐퍼 역할</li>
+<li>실무에서는 D항을 어떻게 이용하는가 : 미분은 고주파를 증폭시키기 때문에 입력신호에 센서 노이즈와 같은 고주파 신호가 있으면 de/dt가 엄청 튄다. 따라서 실무에서는 미분항에 저역 통과 필터를 적용한다. 즉 D항은 다음과 같다. .</li>
+</ul>
+<h4 id="pid-각-항이-시스템에-미치는-영향">PID 각 항이 시스템에 미치는 영향<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#pid-각-항이-시스템에-미치는-영향" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h4>
+<blockquote>
+<p>개념 정리: <a href="../../../30_Knowledge/PID-Tuning" class="internal alias" data-slug="30_Knowledge/PID-Tuning">PID Tuning</a></p>
+</blockquote>
+<p>원본 PDF에서 표가 텍스트로 흩어져 나와 아래와 같이 재구성했다.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th>이득 ↑</th><th>상승시간 tr</th><th>오버슈트</th><th>정착시간 ts</th><th>정상상태오차</th><th>안정도</th></tr></thead><tbody><tr><td><strong>Kp</strong></td><td>감소</td><td>증가</td><td>작은 변화</td><td>감소 (제거 아님)</td><td>나빠짐</td></tr><tr><td><strong>Ki</strong></td><td>감소</td><td>증가</td><td>증가</td><td><strong>제거</strong></td><td>나빠짐, wind up 문제</td></tr><tr><td><strong>Kd</strong></td><td>작은 변화</td><td>감소</td><td>감소</td><td>영향 없음</td><td>Kd 작을 때 개선</td></tr></tbody></table></div>
+<ul>
+<li>이상적인 PID 제어에서는 D항과 ess는 상호작용하지 않는다. D항은 오차의 <em>변화율</em>을 보는데 정상상태에서는 오차가 변하지 않으므로 기여가 0이다.</li>
+</ul>
+<blockquote class="callout warning" data-callout="warning">
+<div class="callout-title">
+                  <div class="callout-icon"></div>
+                  <div class="callout-title-inner"><p>정정 (2026-08-10) — 표준 표와 다른 두 곳 </p></div>
+                  
+                </div>
+<div class="callout-content">
+<p>원본은 <code>Kp 증가 → 정착시간 증가</code>, <code>Kd 증가 → tr 증가</code> 로 적혀 있었다. 표준 표는 둘 다 <strong>“작은 변화”</strong> 로 본다.
+반면 <code>Ki 증가 → tr 감소</code> 는 원본이 맞다.
+→ <a href="../../../30_Knowledge/PID-Tuning" class="internal alias" data-slug="30_Knowledge/PID-Tuning">PID Tuning</a></p>
+</div>
+</blockquote>
+<p><strong>PI vs PD — 빠름 vs 정확함</strong></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th></th><th>강점</th><th>약점</th><th>용도</th></tr></thead><tbody><tr><td>PD</td><td>반응이 빠르고 오버슈트·진동이 적음</td><td>ess가 남아 정확도가 떨어짐</td><td>로봇, 위치 제어</td></tr><tr><td>PI</td><td>ess를 0으로 만듦</td><td>D항이 없어 오버슈트·진동에 약함</td><td>온도, 압력 제어</td></tr></tbody></table></div>
+<p>위치 제어는 목표에 <strong>빨리, 흔들리지 않고</strong> 가는 게 중요하다 → D항.
+온도·압력 제어는 느려도 되지만 <strong>설정값에 정확히</strong> 맞아야 한다 → I항.</p>
+<ul>
+<li>시스템의 관성, 진동 등 출렁임이 있다면 D항의 비중을 늘려 PID 제어로 간다</li>
+</ul>
+<h4 id="pid-control-모델링논리분석">PID Control 모델링논리분석<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#pid-control-모델링논리분석" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h4>
+<ul>
+<li>Simlink에서 다음과 같이 PID제어기를 모델링 했고 각항이 출력에 어떤 영향을 미치는지 확인해 보겠다.</li>
+</ul>
+<p><img src="../../../_attachments/ANSL-Undergrad-Research/2026-01-19/2026-01-19-p13-Image164.png" width="auto" height="auto" alt/></p>
+<h4 id="모델링-결과분석--kp-변화">모델링 결과분석 — Kp 변화<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#모델링-결과분석--kp-변화" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h4>
+<p>Ki, Kd를 1로 고정시키고 Kp를 바꾸며 결과를 비교.</p>
+<ul>
+<li>Kp =500 Kp =10000</li>
+<li>ess는 매우 작은 것을 볼 수 있지만 오버슈트와 진동이 매우 큰 것을 볼 수 있다. 미분항을 이용해 오버슈트과 진동을 낮출 수는 있지만 너무 큰 비례 상수를 쓰면 시스템이 불안정해진다. 또한 요구출력 이 현실의 사양을 넘을 경우 제어는 실패 할 것으로 예상된다.</li>
+<li>kp=1000과 비교했을때 ess는 더 크지만 오버슈 트가 더 작은 것을 확인할 수 있다. 적분항을 이용해 ess를 줄이면 안정적이고 정확한 시스템이 될 것이라 예상된다.</li>
+</ul>
+<p><img src="../../../_attachments/ANSL-Undergrad-Research/2026-01-19/2026-01-19-p14-Image173.png" width="auto" height="auto" alt/></p>
+<p><img src="../../../_attachments/ANSL-Undergrad-Research/2026-01-19/2026-01-19-p14-Image174.png" width="auto" height="auto" alt/></p>
+<p><img src="../../../_attachments/ANSL-Undergrad-Research/2026-01-19/2026-01-19-p14-Image175.png" width="auto" height="auto" alt/></p>
+<h4 id="모델링-결과분석--ki-변화">모델링 결과분석 — Ki 변화<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#모델링-결과분석--ki-변화" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h4>
+<p>Kp = 500, Kd = 1로 고정시키고 Ki를 바꾸며 결과를 비교.</p>
+<ul>
+<li>Ki =1000 Ki = 3000, 4000</li>
+<li>기존의 Kp = 500 (반응속도, 진동이 양호하지만 ess존재) 에서 적분이득 1000을 적용하니 시간이 지남에 따라 시스템이 목표값에 수렴하는 모습을 볼 수 있다</li>
+<li>처음엔 windup문제를 잘못이해해서 Ki = 4000 에서 포화 때문에 windup문제가 발생했고 saturation 블록으로 상한과 하한을 설정 하므로써 해결 가능하다고 이해했지만 windup 문제는 saturation블록으로 인한 포화 때문에 발생하므로 saturation블록이 없는 이 모델에서는 windup 문 제가 발생 할 수 없음을 알 수 있었다. 발산이유는 단지 KI를과도하게 올려서 임계값을 넘었고, 발산했다고 분석할 수 있다.</li>
+</ul>
+<p><img src="../../../_attachments/ANSL-Undergrad-Research/2026-01-19/2026-01-19-p15-Image184.png" width="auto" height="auto" alt/></p>
+<p><img src="../../../_attachments/ANSL-Undergrad-Research/2026-01-19/2026-01-19-p15-Image175.png" width="auto" height="auto" alt/></p>
+<p><img src="../../../_attachments/ANSL-Undergrad-Research/2026-01-19/2026-01-19-p15-Image185.png" width="auto" height="auto" alt/></p>
+<p><img src="../../../_attachments/ANSL-Undergrad-Research/2026-01-19/2026-01-19-p15-Image186.png" width="auto" height="auto" alt/></p>
+<h4 id="모델링-결과분석--kd-변화">모델링 결과분석 — Kd 변화<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#모델링-결과분석--kd-변화" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h4>
+<p>Kp = 500, Ki = 1000으로 고정시키고 Kd를 바꾸며 결과를 비교.</p>
+<ul>
+<li>Kd =50 Kd = 1000</li>
+<li>적절한 Kp, Ki, Kd를 설정해 반응속도가 빠르고 오버슈트가 작은 동시에 ess가 0 인 이상적인 제어 기를 모델링한 모습</li>
+<li>너무 큰 미분이득을 설정해 과도한 감쇠가 걸린 모습이다. 또한 스탭에서 u(t)와 e(t)에 스파이크가 일어난 것도 확인 할 수 있다. 저역 통과 필터를 적용해 해결 할 수 있을 것으로 예상 된다.</li>
+</ul>
+<p><img src="../../../_attachments/ANSL-Undergrad-Research/2026-01-19/2026-01-19-p16-Image195.png" width="auto" height="auto" alt/></p>
+<p><img src="../../../_attachments/ANSL-Undergrad-Research/2026-01-19/2026-01-19-p16-Image184.png" width="auto" height="auto" alt/></p>
+<p><img src="../../../_attachments/ANSL-Undergrad-Research/2026-01-19/2026-01-19-p16-Image196.png" width="auto" height="auto" alt/></p>
+<h4 id="pid-controller-블록--pid-tuner-파라미터">PID Controller 블록 · PID Tuner 파라미터<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#pid-controller-블록--pid-tuner-파라미터" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h4>
+<p>Simulink <code>PID Controller</code> 블록으로 모델링하고, <strong>PID Tuner</strong>가 자동 산출한 파라미터 값과 결과.</p>
+<blockquote>
+<p>원문의 “조종기”는 RC 조종기가 아니라 <strong>PID Tuner</strong>를 가리킨다 (2026-08-10 확인).
+같은 도구를 <a href="../../../20_Projects/ANSL-Undergrad-Research/weekly/2026-03-27" class="internal" data-slug="20_Projects/ANSL-Undergrad-Research/weekly/2026-03-27">2026-03-27</a> 에서 surge 제어기 튜닝에 다시 쓴다.</p>
+</blockquote>
+<p><img src="../../../_attachments/ANSL-Undergrad-Research/2026-01-19/2026-01-19-p17-Image206.png" width="auto" height="auto" alt/></p>
+<p><img src="../../../_attachments/ANSL-Undergrad-Research/2026-01-19/2026-01-19-p17-Image207.png" width="auto" height="auto" alt/></p>
+<h3 id="anti-windup">Anti-windup<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#anti-windup" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<blockquote>
+<p>개념 정리: <a href="../../../30_Knowledge/Anti-windup" class="internal" data-slug="30_Knowledge/Anti-windup">Anti-windup</a> — 이 주차 내용이 <a href="../../../20_Projects/ANSL-Undergrad-Research/weekly/2026-03-27" class="internal" data-slug="20_Projects/ANSL-Undergrad-Research/weekly/2026-03-27">2026-03-27</a> 스러스터 포화 대응으로 이어진다</p>
+</blockquote>
+<blockquote>
+<p>적분 항 계속 누적 되는 중 <span>→</span> 목표에 도달(짐을 포기함)한 뒤에도 누적된 적분 항 때문에 오차가 빚 처럼 남아서 회복하는데 ‘시간이 오래 걸림’ (목표고도에 도달 했음에도 커진 출력이 줄어들지 않고</p>
+</blockquote>
+<ul>
+<li>
+<p>back-calculating : 포화전후 차이를 적분기에 다시 입력해 차이에 비례하여 반대부호로 적분기출력에 보정하는 방법.</p>
+</li>
+<li>
+<p>포화가 없으면 u(sat) <span>←</span>> u 는0 <span>→</span> 원래PID처럼 동작</p>
+</li>
+<li>
+<p>포화가 있으면 차이가 커짐 <span>→</span>부호차이로 인해 xI를 줄여 보정</p>
+</li>
+<li>
+<p>windup 문제는 왜 생기는가? : 현실의 액추에이터에는 물리적 한계가 있어서 상한과 하한이 걸린다. (모델에서는 saturation으로 표현) 이때 요구출력이 상한보다 크지만 상한에 걸려 누적된 적분이 해소 될때 까지 최대출력(상한)이 요구 되는 것을 포화 라고 한다. 포화 <span>→</span> e가 y보다 낮아서 같은 방향 (예를 들면 드론이 능력보다 무거운 짐을 들고 목표고도에 도달하려고 하는 상황, 목표고도에 도달하지 못해 출력은 계속 커지지만 짐 때문에 고도에 도달하지는 못함) 고도상승) 이것이 wind up이다.</p>
+</li>
+<li>
+<p>어떻게 해결하는가? clamping : 포화에 도달 했을때 e의 부호를 판별해 부호가 같다면 적분기를 중지시키는 방법 out-limting : 적분 항 또는 제어출력 자체에 제한을 거는 방법</p>
+</li>
+<li>
+<p>역 계산 anti-windup 논리 : 포화 전후의 차이를 적분기에 다시 입력하여 적분기가 현실의 보정치와 포화를 구분하도록 만든다. 적분항은 다음과 같다.Ki * xI, 이때 xI = e + Kaw( u(sat) - u), 모델링에서는 xI = e - Kaw( u - u(sat)) 각 항의 의미를 해석하면 e: 원래 적분기가 해야 할 일 ( u(sat) - u) : 원래 내보내고 싶던 값과 실제로 내보낸 값의 차이</p>
+</li>
+</ul>
+<h4 id="anti-windup이-적용된-pi-control-모델링논리분석">Anti-windup이 적용된 PI Control 모델링논리분석<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#anti-windup이-적용된-pi-control-모델링논리분석" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h4>
+<p><img src="../../../_attachments/ANSL-Undergrad-Research/2026-01-19/2026-01-19-p19-Image224.png" width="auto" height="auto" alt/></p>
+<h4 id="anti-windup이-적용된-pi-control-모델링결과분석">Anti-windup이 적용된 PI Control 모델링결과분석<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#anti-windup이-적용된-pi-control-모델링결과분석" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h4>
+<ul>
+<li>기존모델링에 To workspace블록을 이용해서 다음과 같이 플롯 하였다.</li>
+</ul>
+<p>Anti-windup 유무에 따른 제어기, 시스템 출력비교 Anti-windup 유무에 따른 e, u, up, ui, y 신호 비교</p>
+<p><img src="../../../_attachments/ANSL-Undergrad-Research/2026-01-19/2026-01-19-p20-Image234.png" width="auto" height="auto" alt/></p>
+<p><img src="../../../_attachments/ANSL-Undergrad-Research/2026-01-19/2026-01-19-p20-Image236.png" width="auto" height="auto" alt/></p>
+<ul>
+<li>
+<p>Anti-windup 유무에 따른 제어기, 시스템 출력비교</p>
+</li>
+<li>
+<p>1에 상한이 걸려 출력은 1이상의 출력은 1로 제한 된다. Anti-windup이 적용된 모델은 적용되지 않은 모델보다 포화기간이 짧은것을 볼수 있다.</p>
+</li>
+<li>
+<p>시스템 출력은Anti-windup이 적용된 모델이 그 렇지 않은 모델보다 오버슈트가 적은것을 볼 수 있다.</p>
+</li>
+</ul>
+<p><img src="../../../_attachments/ANSL-Undergrad-Research/2026-01-19/2026-01-19-p21-Image245.png" width="auto" height="auto" alt/></p>
+<p><img src="../../../_attachments/ANSL-Undergrad-Research/2026-01-19/2026-01-19-p21-Image246.png" width="auto" height="auto" alt/></p>
+<ul>
+<li>
+<p>Anti-windup 유무에 따른 e, u, up, ui, y 신호 비교</p>
+</li>
+<li>
+<p>step입력이 크지 않고 saturation 범위가 좁지 않기 때문에 포화가 극적으로 일어나지 않았다. 따라서 anti-windup 적용 전후에 적분 항 보정효과와 y(t)의오버슈트 감쇠효과가 도드라지진 않았지만 ui(보라) 신호를 분석해 보면 anti-windup이 적용된 모델의 경우 u신호 가 포화를 발생시키는 기간동안 반대신호를 만들어서 적분항을 보정하는 것을 확인할 수 있다.</p>
+</li>
+</ul>
+<p><img src="../../../_attachments/ANSL-Undergrad-Research/2026-01-19/2026-01-19-p22-Image255.png" width="auto" height="auto" alt/></p>
+<p><img src="../../../_attachments/ANSL-Undergrad-Research/2026-01-19/2026-01-19-p22-Image256.png" width="auto" height="auto" alt/></p>
+<h2 id="막힌-것--blockers">막힌 것 / Blockers<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#막힌-것--blockers" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p><strong>① windup을 잘못 이해하고 있었다</strong></p>
+<p>Ki = 4000에서 발산하는 것을 보고 “포화 때문에 windup이 발생했으니 <code>Saturation</code> 블록으로 상하한을 걸면 해결된다”고 이해했다.</p>
+<p>거꾸로였다. <strong>windup은 saturation으로 인한 포화 때문에 발생한다.</strong> saturation 블록이 없는 이 모델에서는 windup 자체가 생길 수 없다. Ki = 4000의 발산은 단지 이득을 과도하게 올려 임계값을 넘긴 것 — 그냥 불안정이다.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th>증상</th><th>원인</th><th>처방</th></tr></thead><tbody><tr><td>포화 후 회복이 느림, 큰 오버슈트</td><td>windup</td><td>anti-windup</td></tr><tr><td>그냥 발산</td><td>이득 과다 → 불안정</td><td>이득을 낮춘다</td></tr></tbody></table></div>
+<p>→ <a href="../../../30_Knowledge/Anti-windup" class="internal" data-slug="30_Knowledge/Anti-windup">Anti-windup</a></p>
+<p><strong>② 적분항이 수렴하지 않고 계속 증가했다</strong></p>
+<p>PI 제어기 모델링 결과에서 출력이 입력에 수렴하지 못하고 계속 증가했다.</p>
+<p>원인: <strong>플랜트를 모델링하지 않고 제어기만 모델링했기 때문.</strong> 실제 폐루프라면 y가 커지면서 플랜트가 움직이고 그 결과 e가 줄어들어 0으로 수렴하며 적분 누적이 멈춰야 한다. 제어기만 있으니 e가 줄어들 경로가 없어 적분이 무한히 쌓였다.</p>
+<p>Ki = 2, Ts = 0.01 이므로 적분항이 매 틱 0.02씩 증가하는 것이 그대로 보인다.</p>
+<h2 id="할일--next">할일 / Next<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#할일--next" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" checked disabled/> Anti-windup 개념 분리 → <a href="../../../30_Knowledge/Anti-windup" class="internal" data-slug="30_Knowledge/Anti-windup">Anti-windup</a></li>
+<li class="task-list-item"><input type="checkbox" checked disabled/> PID 이득별 영향 정리 → <a href="../../../30_Knowledge/PID-Tuning" class="internal alias" data-slug="30_Knowledge/PID-Tuning">PID Tuning</a></li>
+<li class="task-list-item"><input type="checkbox" disabled/> D항 저역통과 필터 — Kd = 1000에서 본 스파이크를 실제로 잡아보기</li>
+</ul></article><hr/><div class="page-footer"></div></div><div class="right sidebar"><div class="graph"><h3>그래프 뷰</h3><div class="graph-outer"><div class="graph-container" data-cfg="{&quot;drag&quot;:true,&quot;zoom&quot;:true,&quot;depth&quot;:1,&quot;scale&quot;:1.1,&quot;repelForce&quot;:0.5,&quot;centerForce&quot;:0.3,&quot;linkDistance&quot;:30,&quot;fontSize&quot;:0.6,&quot;opacityScale&quot;:1,&quot;showTags&quot;:true,&quot;removeTags&quot;:[],&quot;focusOnHover&quot;:false,&quot;enableRadial&quot;:false}"></div><button class="global-graph-icon" aria-label="Global Graph"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 55 55" fill="currentColor" xml:space="preserve"><path d="M49,0c-3.309,0-6,2.691-6,6c0,1.035,0.263,2.009,0.726,2.86l-9.829,9.829C32.542,17.634,30.846,17,29,17
+                s-3.542,0.634-4.898,1.688l-7.669-7.669C16.785,10.424,17,9.74,17,9c0-2.206-1.794-4-4-4S9,6.794,9,9s1.794,4,4,4
+                c0.74,0,1.424-0.215,2.019-0.567l7.669,7.669C21.634,21.458,21,23.154,21,25s0.634,3.542,1.688,4.897L10.024,42.562
+                C8.958,41.595,7.549,41,6,41c-3.309,0-6,2.691-6,6s2.691,6,6,6s6-2.691,6-6c0-1.035-0.263-2.009-0.726-2.86l12.829-12.829
+                c1.106,0.86,2.44,1.436,3.898,1.619v10.16c-2.833,0.478-5,2.942-5,5.91c0,3.309,2.691,6,6,6s6-2.691,6-6c0-2.967-2.167-5.431-5-5.91
+                v-10.16c1.458-0.183,2.792-0.759,3.898-1.619l7.669,7.669C41.215,39.576,41,40.26,41,41c0,2.206,1.794,4,4,4s4-1.794,4-4
+                s-1.794-4-4-4c-0.74,0-1.424,0.215-2.019,0.567l-7.669-7.669C36.366,28.542,37,26.846,37,25s-0.634-3.542-1.688-4.897l9.665-9.665
+                C46.042,11.405,47.451,12,49,12c3.309,0,6-2.691,6-6S52.309,0,49,0z M11,9c0-1.103,0.897-2,2-2s2,0.897,2,2s-0.897,2-2,2
+                S11,10.103,11,9z M6,51c-2.206,0-4-1.794-4-4s1.794-4,4-4s4,1.794,4,4S8.206,51,6,51z M33,49c0,2.206-1.794,4-4,4s-4-1.794-4-4
+                s1.794-4,4-4S33,46.794,33,49z M29,31c-3.309,0-6-2.691-6-6s2.691-6,6-6s6,2.691,6,6S32.309,31,29,31z M47,41c0,1.103-0.897,2-2,2
+                s-2-0.897-2-2s0.897-2,2-2S47,39.897,47,41z M49,10c-2.206,0-4-1.794-4-4s1.794-4,4-4s4,1.794,4,4S51.206,10,49,10z"></path></svg></button></div><div class="global-graph-outer"><div class="global-graph-container" data-cfg="{&quot;drag&quot;:true,&quot;zoom&quot;:true,&quot;depth&quot;:-1,&quot;scale&quot;:0.9,&quot;repelForce&quot;:0.5,&quot;centerForce&quot;:0.2,&quot;linkDistance&quot;:30,&quot;fontSize&quot;:0.6,&quot;opacityScale&quot;:1,&quot;showTags&quot;:true,&quot;removeTags&quot;:[],&quot;focusOnHover&quot;:true,&quot;enableRadial&quot;:true}"></div></div></div><div class="toc desktop-only"><button type="button" class="toc-header" aria-controls="toc-26" aria-expanded="true"><h3>목차</h3><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fold"><polyline points="6 9 12 15 18 9"></polyline></svg></button><ul id="list-1" class="toc-content overflow"><li class="depth-0"><a href="#weekly-study-report--2026-01-19" data-for="weekly-study-report--2026-01-19">Weekly Study Report — 2026-01-19</a></li><li class="depth-1"><a href="#한일--what-i-did" data-for="한일--what-i-did">한일 / What I did</a></li><li class="depth-1"><a href="#목차--contents" data-for="목차--contents">목차 / Contents</a></li><li class="depth-1"><a href="#기록--notes" data-for="기록--notes">기록 / Notes</a></li><li class="depth-2"><a href="#캡스톤-디자인-simulink" data-for="캡스톤-디자인-simulink">캡스톤 디자인 Simulink</a></li><li class="depth-2"><a href="#pi-control" data-for="pi-control">PI Control</a></li><li class="depth-2"><a href="#pid-control" data-for="pid-control">PID Control</a></li><li class="depth-2"><a href="#anti-windup" data-for="anti-windup">Anti-windup</a></li><li class="depth-1"><a href="#막힌-것--blockers" data-for="막힌-것--blockers">막힌 것 / Blockers</a></li><li class="depth-1"><a href="#할일--next" data-for="할일--next">할일 / Next</a></li><li class="overflow-end"></li></ul></div><div class="backlinks"><h3>백링크</h3><ul id="list-2" class="overflow"><li><a href="../../../30_Knowledge/Anti-windup" class="internal">Anti-windup</a></li><li><a href="../../../30_Knowledge/PID-Tuning" class="internal">PID Tuning</a></li><li><a href="../../../30_Knowledge/Transfer-Function" class="internal">Transfer Function</a></li><li class="overflow-end"></li></ul></div></div><footer class><p>Created with <a href="https://quartz.jzhao.xyz/">Quartz v4.5.2</a> © 2026</p><ul></ul></footer></div></div></body><script type="application/javascript">function n(){let t=this.parentElement;t.classList.toggle("is-collapsed");let e=t.getElementsByClassName("callout-content")[0];if(!e)return;let l=t.classList.contains("is-collapsed");e.style.gridTemplateRows=l?"0fr":"1fr"}function c(){let t=document.getElementsByClassName("callout is-collapsible");for(let e of t){let l=e.getElementsByClassName("callout-title")[0],s=e.getElementsByClassName("callout-content")[0];if(!l||!s)continue;l.addEventListener("click",n),window.addCleanup(()=>l.removeEventListener("click",n));let o=e.classList.contains("is-collapsed");s.style.gridTemplateRows=o?"0fr":"1fr"}}document.addEventListener("nav",c);
+</script><script type="module">function f(i,e){if(!i)return;function r(o){o.target===this&&(o.preventDefault(),o.stopPropagation(),e())}function t(o){o.key.startsWith("Esc")&&(o.preventDefault(),e())}i?.addEventListener("click",r),window.addCleanup(()=>i?.removeEventListener("click",r)),document.addEventListener("keydown",t),window.addCleanup(()=>document.removeEventListener("keydown",t))}function y(i){for(;i.firstChild;)i.removeChild(i.firstChild)}var h=class{constructor(e,r){this.container=e;this.content=r;this.setupEventListeners(),this.setupNavigationControls(),this.resetTransform()}isDragging=!1;startPan={x:0,y:0};currentPan={x:0,y:0};scale=1;MIN_SCALE=.5;MAX_SCALE=3;cleanups=[];setupEventListeners(){let e=this.onMouseDown.bind(this),r=this.onMouseMove.bind(this),t=this.onMouseUp.bind(this),o=this.resetTransform.bind(this);this.container.addEventListener("mousedown",e),document.addEventListener("mousemove",r),document.addEventListener("mouseup",t),window.addEventListener("resize",o),this.cleanups.push(()=>this.container.removeEventListener("mousedown",e),()=>document.removeEventListener("mousemove",r),()=>document.removeEventListener("mouseup",t),()=>window.removeEventListener("resize",o))}cleanup(){for(let e of this.cleanups)e()}setupNavigationControls(){let e=document.createElement("div");e.className="mermaid-controls";let r=this.createButton("+",()=>this.zoom(.1)),t=this.createButton("-",()=>this.zoom(-.1)),o=this.createButton("Reset",()=>this.resetTransform());e.appendChild(t),e.appendChild(o),e.appendChild(r),this.container.appendChild(e)}createButton(e,r){let t=document.createElement("button");return t.textContent=e,t.className="mermaid-control-button",t.addEventListener("click",r),window.addCleanup(()=>t.removeEventListener("click",r)),t}onMouseDown(e){e.button===0&&(this.isDragging=!0,this.startPan={x:e.clientX-this.currentPan.x,y:e.clientY-this.currentPan.y},this.container.style.cursor="grabbing")}onMouseMove(e){this.isDragging&&(e.preventDefault(),this.currentPan={x:e.clientX-this.startPan.x,y:e.clientY-this.startPan.y},this.updateTransform())}onMouseUp(){this.isDragging=!1,this.container.style.cursor="grab"}zoom(e){let r=Math.min(Math.max(this.scale+e,this.MIN_SCALE),this.MAX_SCALE),t=this.content.getBoundingClientRect(),o=t.width/2,n=t.height/2,c=r-this.scale;this.currentPan.x-=o*c,this.currentPan.y-=n*c,this.scale=r,this.updateTransform()}updateTransform(){this.content.style.transform=`translate(${this.currentPan.x}px, ${this.currentPan.y}px) scale(${this.scale})`}resetTransform(){this.scale=1;let e=this.content.querySelector("svg");this.currentPan={x:e.getBoundingClientRect().width/2,y:e.getBoundingClientRect().height/2},this.updateTransform()}},C=["--secondary","--tertiary","--gray","--light","--lightgray","--highlight","--dark","--darkgray","--codeFont"],E;document.addEventListener("nav",async()=>{let e=document.querySelector(".center").querySelectorAll("code.mermaid");if(e.length===0)return;E||=await import("https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.4.0/mermaid.esm.min.mjs");let r=E.default,t=new WeakMap;for(let n of e)t.set(n,n.innerText);async function o(){for(let s of e){s.removeAttribute("data-processed");let a=t.get(s);a&&(s.innerHTML=a)}let n=C.reduce((s,a)=>(s[a]=window.getComputedStyle(document.documentElement).getPropertyValue(a),s),{}),c=document.documentElement.getAttribute("saved-theme")==="dark";r.initialize({startOnLoad:!1,securityLevel:"loose",theme:c?"dark":"base",themeVariables:{fontFamily:n["--codeFont"],primaryColor:n["--light"],primaryTextColor:n["--darkgray"],primaryBorderColor:n["--tertiary"],lineColor:n["--darkgray"],secondaryColor:n["--secondary"],tertiaryColor:n["--tertiary"],clusterBkg:n["--light"],edgeLabelBackground:n["--highlight"]}}),await r.run({nodes:e})}await o(),document.addEventListener("themechange",o),window.addCleanup(()=>document.removeEventListener("themechange",o));for(let n=0;n<e.length;n++){let v=function(){let g=l.querySelector("#mermaid-space"),m=l.querySelector(".mermaid-content");if(!m)return;y(m);let w=c.querySelector("svg").cloneNode(!0);m.appendChild(w),l.classList.add("active"),g.style.cursor="grab",u=new h(g,m)},M=function(){l.classList.remove("active"),u?.cleanup(),u=null},c=e[n],s=c.parentElement,a=s.querySelector(".clipboard-button"),d=s.querySelector(".expand-button"),p=window.getComputedStyle(a),L=a.offsetWidth+parseFloat(p.marginLeft||"0")+parseFloat(p.marginRight||"0");d.style.right=`calc(${L}px + 0.3rem)`,s.prepend(d);let l=s.querySelector("#mermaid-container");if(!l)return;let u=null;d.addEventListener("click",v),f(l,M),window.addCleanup(()=>{u?.cleanup(),d.removeEventListener("click",v)})}});
+</script><script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/copy-tex.min.js" type="application/javascript"></script><script src="../../../postscript.js" type="module"></script></html>

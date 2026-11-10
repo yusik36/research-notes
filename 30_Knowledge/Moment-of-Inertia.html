@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="ko" dir="ltr"><head><title>Moment of Inertia</title><meta charset="utf-8"/><link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com"/><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto Sans KR:wght@400;700&amp;family=Noto Sans KR:ital,wght@0,400;0,600;1,400;1,600&amp;family=IBM Plex Mono:wght@400;600&amp;display=swap"/><link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin="anonymous"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta name="og:site_name" content="LabNote"/><meta property="og:title" content="Moment of Inertia"/><meta property="og:type" content="website"/><meta name="twitter:card" content="summary_large_image"/><meta name="twitter:title" content="Moment of Inertia"/><meta name="twitter:description" content="Moment of Inertia 한 줄로 관성모멘트 I 와 관성 텐서 I_g = 회전판 질량, “돌리기 싫어하는 정도”. F = ma 의 m 자리에 앉는 물건이고, 방향마다 값이 달라서 스칼라가 아니라 3×3이다."/><meta property="og:description" content="Moment of Inertia 한 줄로 관성모멘트 I 와 관성 텐서 I_g = 회전판 질량, “돌리기 싫어하는 정도”. F = ma 의 m 자리에 앉는 물건이고, 방향마다 값이 달라서 스칼라가 아니라 3×3이다."/><meta property="og:image:alt" content="Moment of Inertia 한 줄로 관성모멘트 I 와 관성 텐서 I_g = 회전판 질량, “돌리기 싫어하는 정도”. F = ma 의 m 자리에 앉는 물건이고, 방향마다 값이 달라서 스칼라가 아니라 3×3이다."/><meta property="og:image" content="https://yusik36.github.io/research-notes/static/og-image.png"/><meta property="og:image:url" content="https://yusik36.github.io/research-notes/static/og-image.png"/><meta name="twitter:image" content="https://yusik36.github.io/research-notes/static/og-image.png"/><meta property="og:image:type" content="image/.png"/><meta property="twitter:domain" content="yusik36.github.io/research-notes"/><meta property="og:url" content="https://yusik36.github.io/research-notes/30_Knowledge/Moment-of-Inertia"/><meta property="twitter:url" content="https://yusik36.github.io/research-notes/30_Knowledge/Moment-of-Inertia"/><link rel="icon" href="../static/icon.png"/><meta name="description" content="Moment of Inertia 한 줄로 관성모멘트 I 와 관성 텐서 I_g = 회전판 질량, “돌리기 싫어하는 정도”. F = ma 의 m 자리에 앉는 물건이고, 방향마다 값이 달라서 스칼라가 아니라 3×3이다."/><meta name="generator" content="Quartz"/><link href="../index.css" rel="stylesheet" type="text/css" spa-preserve/><style>.expand-button {
+  position: absolute;
+  display: flex;
+  float: right;
+  padding: 0.4rem;
+  margin: 0.3rem;
+  right: 0;
+  color: var(--gray);
+  border-color: var(--dark);
+  background-color: var(--light);
+  border: 1px solid;
+  border-radius: 5px;
+  opacity: 0;
+  transition: 0.2s;
+}
+.expand-button > svg {
+  fill: var(--light);
+  filter: contrast(0.3);
+}
+.expand-button:hover {
+  cursor: pointer;
+  border-color: var(--secondary);
+}
+.expand-button:focus {
+  outline: 0;
+}
+
+pre:hover > .expand-button {
+  opacity: 1;
+  transition: 0.2s;
+}
+
+#mermaid-container {
+  position: fixed;
+  contain: layout;
+  z-index: 999;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  display: none;
+  backdrop-filter: blur(4px);
+  background: rgba(0, 0, 0, 0.5);
+}
+#mermaid-container.active {
+  display: inline-block;
+}
+#mermaid-container > #mermaid-space {
+  border: 1px solid var(--lightgray);
+  background-color: var(--light);
+  border-radius: 5px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 80vh;
+  width: 80vw;
+  overflow: hidden;
+}
+#mermaid-container > #mermaid-space > .mermaid-content {
+  padding: 2rem;
+  position: relative;
+  transform-origin: 0 0;
+  transition: transform 0.1s ease;
+  overflow: visible;
+  min-height: 200px;
+  min-width: 200px;
+}
+#mermaid-container > #mermaid-space > .mermaid-content pre {
+  margin: 0;
+  border: none;
+}
+#mermaid-container > #mermaid-space > .mermaid-content svg {
+  max-width: none;
+  height: auto;
+}
+#mermaid-container > #mermaid-space > .mermaid-controls {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  gap: 8px;
+  padding: 8px;
+  background: var(--light);
+  border: 1px solid var(--lightgray);
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 2;
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 1px solid var(--lightgray);
+  background: var(--light);
+  color: var(--dark);
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  font-family: var(--bodyFont);
+  transition: all 0.2s ease;
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button:hover {
+  background: var(--lightgray);
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button:active {
+  transform: translateY(1px);
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button:nth-child(2) {
+  width: auto;
+  padding: 0 12px;
+  font-size: 14px;
+}
+/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VSb290IjoiQzpcXEFyY2hpdmVcXOyeoeuLpOq1rOumrFxcVVNU7J247YS0X+yngOybkOyEnFxcc2l0ZVxccXVhcnR6XFxjb21wb25lbnRzXFxzdHlsZXMiLCJzb3VyY2VzIjpbIm1lcm1haWQuaW5saW5lLnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDRTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTs7QUFFQTtFQUNFO0VBQ0E7O0FBR0Y7RUFDRTtFQUNBOztBQUdGO0VBQ0U7OztBQUtGO0VBQ0U7RUFDQTs7O0FBSUo7RUFDRTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBOztBQUVBO0VBQ0U7O0FBR0Y7RUFDRTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTs7QUFFQTtFQUNFO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBOztBQUVBO0VBQ0U7RUFDQTs7QUFHRjtFQUNFO0VBQ0E7O0FBSUo7RUFDRTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBOztBQUVBO0VBQ0U7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTs7QUFFQTtFQUNFOztBQUdGO0VBQ0U7O0FBSUY7RUFDRTtFQUNBO0VBQ0EiLCJzb3VyY2VzQ29udGVudCI6WyIuZXhwYW5kLWJ1dHRvbiB7XG4gIHBvc2l0aW9uOiBhYnNvbHV0ZTtcbiAgZGlzcGxheTogZmxleDtcbiAgZmxvYXQ6IHJpZ2h0O1xuICBwYWRkaW5nOiAwLjRyZW07XG4gIG1hcmdpbjogMC4zcmVtO1xuICByaWdodDogMDsgLy8gTk9URTogcmlnaHQgd2lsbCBiZSBzZXQgaW4gbWVybWFpZC5pbmxpbmUudHNcbiAgY29sb3I6IHZhcigtLWdyYXkpO1xuICBib3JkZXItY29sb3I6IHZhcigtLWRhcmspO1xuICBiYWNrZ3JvdW5kLWNvbG9yOiB2YXIoLS1saWdodCk7XG4gIGJvcmRlcjogMXB4IHNvbGlkO1xuICBib3JkZXItcmFkaXVzOiA1cHg7XG4gIG9wYWNpdHk6IDA7XG4gIHRyYW5zaXRpb246IDAuMnM7XG5cbiAgJiA+IHN2ZyB7XG4gICAgZmlsbDogdmFyKC0tbGlnaHQpO1xuICAgIGZpbHRlcjogY29udHJhc3QoMC4zKTtcbiAgfVxuXG4gICY6aG92ZXIge1xuICAgIGN1cnNvcjogcG9pbnRlcjtcbiAgICBib3JkZXItY29sb3I6IHZhcigtLXNlY29uZGFyeSk7XG4gIH1cblxuICAmOmZvY3VzIHtcbiAgICBvdXRsaW5lOiAwO1xuICB9XG59XG5cbnByZSB7XG4gICY6aG92ZXIgPiAuZXhwYW5kLWJ1dHRvbiB7XG4gICAgb3BhY2l0eTogMTtcbiAgICB0cmFuc2l0aW9uOiAwLjJzO1xuICB9XG59XG5cbiNtZXJtYWlkLWNvbnRhaW5lciB7XG4gIHBvc2l0aW9uOiBmaXhlZDtcbiAgY29udGFpbjogbGF5b3V0O1xuICB6LWluZGV4OiA5OTk7XG4gIGxlZnQ6IDA7XG4gIHRvcDogMDtcbiAgd2lkdGg6IDEwMHZ3O1xuICBoZWlnaHQ6IDEwMHZoO1xuICBvdmVyZmxvdzogaGlkZGVuO1xuICBkaXNwbGF5OiBub25lO1xuICBiYWNrZHJvcC1maWx0ZXI6IGJsdXIoNHB4KTtcbiAgYmFja2dyb3VuZDogcmdiYSgwLCAwLCAwLCAwLjUpO1xuXG4gICYuYWN0aXZlIHtcbiAgICBkaXNwbGF5OiBpbmxpbmUtYmxvY2s7XG4gIH1cblxuICAmID4gI21lcm1haWQtc3BhY2Uge1xuICAgIGJvcmRlcjogMXB4IHNvbGlkIHZhcigtLWxpZ2h0Z3JheSk7XG4gICAgYmFja2dyb3VuZC1jb2xvcjogdmFyKC0tbGlnaHQpO1xuICAgIGJvcmRlci1yYWRpdXM6IDVweDtcbiAgICBwb3NpdGlvbjogZml4ZWQ7XG4gICAgdG9wOiA1MCU7XG4gICAgbGVmdDogNTAlO1xuICAgIHRyYW5zZm9ybTogdHJhbnNsYXRlKC01MCUsIC01MCUpO1xuICAgIGhlaWdodDogODB2aDtcbiAgICB3aWR0aDogODB2dztcbiAgICBvdmVyZmxvdzogaGlkZGVuO1xuXG4gICAgJiA+IC5tZXJtYWlkLWNvbnRlbnQge1xuICAgICAgcGFkZGluZzogMnJlbTtcbiAgICAgIHBvc2l0aW9uOiByZWxhdGl2ZTtcbiAgICAgIHRyYW5zZm9ybS1vcmlnaW46IDAgMDtcbiAgICAgIHRyYW5zaXRpb246IHRyYW5zZm9ybSAwLjFzIGVhc2U7XG4gICAgICBvdmVyZmxvdzogdmlzaWJsZTtcbiAgICAgIG1pbi1oZWlnaHQ6IDIwMHB4O1xuICAgICAgbWluLXdpZHRoOiAyMDBweDtcblxuICAgICAgcHJlIHtcbiAgICAgICAgbWFyZ2luOiAwO1xuICAgICAgICBib3JkZXI6IG5vbmU7XG4gICAgICB9XG5cbiAgICAgIHN2ZyB7XG4gICAgICAgIG1heC13aWR0aDogbm9uZTtcbiAgICAgICAgaGVpZ2h0OiBhdXRvO1xuICAgICAgfVxuICAgIH1cblxuICAgICYgPiAubWVybWFpZC1jb250cm9scyB7XG4gICAgICBwb3NpdGlvbjogYWJzb2x1dGU7XG4gICAgICBib3R0b206IDIwcHg7XG4gICAgICByaWdodDogMjBweDtcbiAgICAgIGRpc3BsYXk6IGZsZXg7XG4gICAgICBnYXA6IDhweDtcbiAgICAgIHBhZGRpbmc6IDhweDtcbiAgICAgIGJhY2tncm91bmQ6IHZhcigtLWxpZ2h0KTtcbiAgICAgIGJvcmRlcjogMXB4IHNvbGlkIHZhcigtLWxpZ2h0Z3JheSk7XG4gICAgICBib3JkZXItcmFkaXVzOiA2cHg7XG4gICAgICBib3gtc2hhZG93OiAwIDJweCA0cHggcmdiYSgwLCAwLCAwLCAwLjEpO1xuICAgICAgei1pbmRleDogMjtcblxuICAgICAgLm1lcm1haWQtY29udHJvbC1idXR0b24ge1xuICAgICAgICBkaXNwbGF5OiBmbGV4O1xuICAgICAgICBhbGlnbi1pdGVtczogY2VudGVyO1xuICAgICAgICBqdXN0aWZ5LWNvbnRlbnQ6IGNlbnRlcjtcbiAgICAgICAgd2lkdGg6IDMycHg7XG4gICAgICAgIGhlaWdodDogMzJweDtcbiAgICAgICAgcGFkZGluZzogMDtcbiAgICAgICAgYm9yZGVyOiAxcHggc29saWQgdmFyKC0tbGlnaHRncmF5KTtcbiAgICAgICAgYmFja2dyb3VuZDogdmFyKC0tbGlnaHQpO1xuICAgICAgICBjb2xvcjogdmFyKC0tZGFyayk7XG4gICAgICAgIGJvcmRlci1yYWRpdXM6IDRweDtcbiAgICAgICAgY3Vyc29yOiBwb2ludGVyO1xuICAgICAgICBmb250LXNpemU6IDE2cHg7XG4gICAgICAgIGZvbnQtZmFtaWx5OiB2YXIoLS1ib2R5Rm9udCk7XG4gICAgICAgIHRyYW5zaXRpb246IGFsbCAwLjJzIGVhc2U7XG5cbiAgICAgICAgJjpob3ZlciB7XG4gICAgICAgICAgYmFja2dyb3VuZDogdmFyKC0tbGlnaHRncmF5KTtcbiAgICAgICAgfVxuXG4gICAgICAgICY6YWN0aXZlIHtcbiAgICAgICAgICB0cmFuc2Zvcm06IHRyYW5zbGF0ZVkoMXB4KTtcbiAgICAgICAgfVxuXG4gICAgICAgIC8vIFN0eWxlIHRoZSByZXNldCBidXR0b24gZGlmZmVyZW50bHlcbiAgICAgICAgJjpudGgtY2hpbGQoMikge1xuICAgICAgICAgIHdpZHRoOiBhdXRvO1xuICAgICAgICAgIHBhZGRpbmc6IDAgMTJweDtcbiAgICAgICAgICBmb250LXNpemU6IDE0cHg7XG4gICAgICAgIH1cbiAgICAgIH1cbiAgICB9XG4gIH1cbn1cbiJdfQ== */</style><link href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" rel="stylesheet" type="text/css" spa-preserve/><script src="../prescript.js" type="application/javascript" spa-preserve></script><script type="application/javascript" spa-preserve>const fetchData = fetch("../static/contentIndex.json").then(data => data.json())</script></head><body data-slug="30_Knowledge/Moment-of-Inertia"><div id="quartz-root" class="page"><div id="quartz-body"><div class="left sidebar"><h2 class="page-title"><a href="..">LabNote</a></h2><div class="spacer mobile-only"></div><div class="flex-component" style="flex-direction: row; flex-wrap: nowrap; gap: 1rem;"><div style="flex-grow: 1; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><div class="search"><button class="search-button"><svg role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19.9 19.7"><title>Search</title><g class="search-path" fill="none"><path stroke-linecap="square" d="M18.5 18.3l-5.4-5.4"></path><circle cx="8" cy="8" r="7"></circle></g></svg><p>검색</p></button><div class="search-container"><div class="search-space"><input autocomplete="off" class="search-bar" name="search" type="text" aria-label="검색어를 입력하세요" placeholder="검색어를 입력하세요"/><div class="search-layout" data-preview="true"></div></div></div></div></div><div style="flex-grow: 0; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><button class="darkmode"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="dayIcon" x="0px" y="0px" viewBox="0 0 35 35" style="enable-background:new 0 0 35 35" xml:space="preserve" aria-label="다크 모드"><title>다크 모드</title><path d="M6,17.5C6,16.672,5.328,16,4.5,16h-3C0.672,16,0,16.672,0,17.5    S0.672,19,1.5,19h3C5.328,19,6,18.328,6,17.5z M7.5,26c-0.414,0-0.789,0.168-1.061,0.439l-2,2C4.168,28.711,4,29.086,4,29.5    C4,30.328,4.671,31,5.5,31c0.414,0,0.789-0.168,1.06-0.44l2-2C8.832,28.289,9,27.914,9,27.5C9,26.672,8.329,26,7.5,26z M17.5,6    C18.329,6,19,5.328,19,4.5v-3C19,0.672,18.329,0,17.5,0S16,0.672,16,1.5v3C16,5.328,16.671,6,17.5,6z M27.5,9    c0.414,0,0.789-0.168,1.06-0.439l2-2C30.832,6.289,31,5.914,31,5.5C31,4.672,30.329,4,29.5,4c-0.414,0-0.789,0.168-1.061,0.44    l-2,2C26.168,6.711,26,7.086,26,7.5C26,8.328,26.671,9,27.5,9z M6.439,8.561C6.711,8.832,7.086,9,7.5,9C8.328,9,9,8.328,9,7.5    c0-0.414-0.168-0.789-0.439-1.061l-2-2C6.289,4.168,5.914,4,5.5,4C4.672,4,4,4.672,4,5.5c0,0.414,0.168,0.789,0.439,1.06    L6.439,8.561z M33.5,16h-3c-0.828,0-1.5,0.672-1.5,1.5s0.672,1.5,1.5,1.5h3c0.828,0,1.5-0.672,1.5-1.5S34.328,16,33.5,16z     M28.561,26.439C28.289,26.168,27.914,26,27.5,26c-0.828,0-1.5,0.672-1.5,1.5c0,0.414,0.168,0.789,0.439,1.06l2,2    C28.711,30.832,29.086,31,29.5,31c0.828,0,1.5-0.672,1.5-1.5c0-0.414-0.168-0.789-0.439-1.061L28.561,26.439z M17.5,29    c-0.829,0-1.5,0.672-1.5,1.5v3c0,0.828,0.671,1.5,1.5,1.5s1.5-0.672,1.5-1.5v-3C19,29.672,18.329,29,17.5,29z M17.5,7    C11.71,7,7,11.71,7,17.5S11.71,28,17.5,28S28,23.29,28,17.5S23.29,7,17.5,7z M17.5,25c-4.136,0-7.5-3.364-7.5-7.5    c0-4.136,3.364-7.5,7.5-7.5c4.136,0,7.5,3.364,7.5,7.5C25,21.636,21.636,25,17.5,25z"></path></svg><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="nightIcon" x="0px" y="0px" viewBox="0 0 100 100" style="enable-background:new 0 0 100 100" xml:space="preserve" aria-label="라이트 모드"><title>라이트 모드</title><path d="M96.76,66.458c-0.853-0.852-2.15-1.064-3.23-0.534c-6.063,2.991-12.858,4.571-19.655,4.571  C62.022,70.495,50.88,65.88,42.5,57.5C29.043,44.043,25.658,23.536,34.076,6.47c0.532-1.08,0.318-2.379-0.534-3.23  c-0.851-0.852-2.15-1.064-3.23-0.534c-4.918,2.427-9.375,5.619-13.246,9.491c-9.447,9.447-14.65,22.008-14.65,35.369  c0,13.36,5.203,25.921,14.65,35.368s22.008,14.65,35.368,14.65c13.361,0,25.921-5.203,35.369-14.65  c3.872-3.871,7.064-8.328,9.491-13.246C97.826,68.608,97.611,67.309,96.76,66.458z"></path></svg></button></div><div style="flex-grow: 0; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><button class="readermode"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="readerIcon" fill="currentColor" stroke="currentColor" stroke-width="0.2" stroke-linecap="round" stroke-linejoin="round" width="64px" height="64px" viewBox="0 0 24 24" aria-label="리더 모드"><title>리더 모드</title><g transform="translate(-1.8, -1.8) scale(1.15, 1.2)"><path d="M8.9891247,2.5 C10.1384702,2.5 11.2209868,2.96705384 12.0049645,3.76669482 C12.7883914,2.96705384 13.8709081,2.5 15.0202536,2.5 L18.7549359,2.5 C19.1691495,2.5 19.5049359,2.83578644 19.5049359,3.25 L19.5046891,4.004 L21.2546891,4.00457396 C21.6343849,4.00457396 21.9481801,4.28672784 21.9978425,4.6528034 L22.0046891,4.75457396 L22.0046891,20.25 C22.0046891,20.6296958 21.7225353,20.943491 21.3564597,20.9931534 L21.2546891,21 L2.75468914,21 C2.37499337,21 2.06119817,20.7178461 2.01153575,20.3517706 L2.00468914,20.25 L2.00468914,4.75457396 C2.00468914,4.37487819 2.28684302,4.061083 2.65291858,4.01142057 L2.75468914,4.00457396 L4.50368914,4.004 L4.50444233,3.25 C4.50444233,2.87030423 4.78659621,2.55650904 5.15267177,2.50684662 L5.25444233,2.5 L8.9891247,2.5 Z M4.50368914,5.504 L3.50468914,5.504 L3.50468914,19.5 L10.9478955,19.4998273 C10.4513189,18.9207296 9.73864328,18.5588115 8.96709342,18.5065584 L8.77307039,18.5 L5.25444233,18.5 C4.87474657,18.5 4.56095137,18.2178461 4.51128895,17.8517706 L4.50444233,17.75 L4.50368914,5.504 Z M19.5049359,17.75 C19.5049359,18.1642136 19.1691495,18.5 18.7549359,18.5 L15.2363079,18.5 C14.3910149,18.5 13.5994408,18.8724714 13.0614828,19.4998273 L20.5046891,19.5 L20.5046891,5.504 L19.5046891,5.504 L19.5049359,17.75 Z M18.0059359,3.999 L15.0202536,4 L14.8259077,4.00692283 C13.9889509,4.06666544 13.2254227,4.50975805 12.7549359,5.212 L12.7549359,17.777 L12.7782651,17.7601316 C13.4923805,17.2719483 14.3447024,17 15.2363079,17 L18.0059359,16.999 L18.0056891,4.798 L18.0033792,4.75457396 L18.0056891,4.71 L18.0059359,3.999 Z M8.9891247,4 L6.00368914,3.999 L6.00599909,4.75457396 L6.00599909,4.75457396 L6.00368914,4.783 L6.00368914,16.999 L8.77307039,17 C9.57551536,17 10.3461406,17.2202781 11.0128313,17.6202194 L11.2536891,17.776 L11.2536891,5.211 C10.8200889,4.56369974 10.1361548,4.13636104 9.37521067,4.02745763 L9.18347055,4.00692283 L8.9891247,4 Z"></path></g></svg></button></div></div><div class="explorer" data-behavior="link" data-collapsed="collapsed" data-savestate="true" data-data-fns="{&quot;order&quot;:[&quot;filter&quot;,&quot;map&quot;,&quot;sort&quot;],&quot;sortFn&quot;:&quot;(a,b)=>!a.isFolder&amp;&amp;!b.isFolder||a.isFolder&amp;&amp;b.isFolder?a.displayName.localeCompare(b.displayName,void 0,{numeric:!0,sensitivity:\&quot;base\&quot;}):!a.isFolder&amp;&amp;b.isFolder?1:-1&quot;,&quot;filterFn&quot;:&quot;node=>node.slugSegment!==\&quot;tags\&quot;&quot;,&quot;mapFn&quot;:&quot;node=>node&quot;}"><button type="button" class="explorer-toggle mobile-explorer hide-until-loaded" data-mobile="true" aria-controls="explorer-128"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide-menu"><line x1="4" x2="20" y1="12" y2="12"></line><line x1="4" x2="20" y1="6" y2="6"></line><line x1="4" x2="20" y1="18" y2="18"></line></svg></button><button type="button" class="title-button explorer-toggle desktop-explorer" data-mobile="false" aria-expanded="true"><h2>탐색기</h2><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="5 8 14 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fold"><polyline points="6 9 12 15 18 9"></polyline></svg></button><div id="explorer-128" class="explorer-content" aria-expanded="false" role="group"><ul class="explorer-ul overflow" id="list-0"><li class="overflow-end"></li></ul></div><template id="template-file"><li><a href="#"></a></li></template><template id="template-folder"><li><div class="folder-container"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="5 8 14 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="folder-icon"><polyline points="6 9 12 15 18 9"></polyline></svg><div><button class="folder-button"><span class="folder-title"></span></button></div></div><div class="folder-outer"><ul class="content"></ul></div></li></template></div></div><div class="center"><div class="page-header"><div class="popover-hint"><nav class="breadcrumb-container" aria-label="breadcrumbs"><div class="breadcrumb-element"><a href="../">Home</a><p> ❯ </p></div><div class="breadcrumb-element"><a href="../30_Knowledge/">30_Knowledge</a><p> ❯ </p></div><div class="breadcrumb-element"><a href>Moment of Inertia</a></div></nav><h1 class="article-title">Moment of Inertia</h1><p show-comma="true" class="content-meta"><time datetime="2026-09-02T15:00:00.000Z">2026년 9월 03일</time><span>12 min read</span></p><ul class="tags"><li><a href="../tags/modeling" class="internal tag-link">modeling</a></li><li><a href="../tags/naval-architecture" class="internal tag-link">naval-architecture</a></li></ul></div></div><article class="popover-hint"><h1 id="moment-of-inertia">Moment of Inertia<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#moment-of-inertia" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h1>
+<blockquote class="callout abstract" data-callout="abstract">
+<div class="callout-title">
+                  <div class="callout-icon"></div>
+                  <div class="callout-title-inner"><p>한 줄로 </p></div>
+                  
+                </div>
+<div class="callout-content">
+<p>관성모멘트 <code>I</code> 와 관성 텐서 <code>I_g</code> = <strong>회전판 질량, “돌리기 싫어하는 정도”.</strong>
+<code>F = ma</code> 의 <code>m</code> 자리에 앉는 물건이고, 방향마다 값이 달라서 스칼라가 아니라 3×3이다.</p>
+</div>
+</blockquote>
+<pre><code>직진 :   F  =  m  · a
+회전 :   τ  =  I  · α
+              └┬┘
+        m 자리에 앉는 것
+</code></pre>
+<p><strong>어디에 앉는가</strong> — <a href="../30_Knowledge/6-DOF-Marine-Craft-Model" class="internal alias" data-slug="30_Knowledge/6-DOF-Marine-Craft-Model">6-DOF Marine Craft Model</a> 의 <code>M</code> 오른쪽 아래 블록. <code>Mν̇ + C(ν)ν = τ</code> 에서 <code>M</code> 아래쪽 절반이 무엇인지에 대한 답.</p>
+<h2 id="왜-필요한가">왜 필요한가<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#왜-필요한가" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p><strong>질량만으로는 회전 난이도를 말할 수 없기 때문.</strong></p>
+<p>빗자루 하나를 두 가지로 휘둘러보면 즉시 확인된다. <strong>같은 빗자루, 같은 질량이다.</strong></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th>잡는 위치</th><th>느낌</th></tr></thead><tbody><tr><td>솔 쪽을 쥐고 휘두르기</td><td>가볍게 휙휙 돈다</td></tr><tr><td>손잡이 끝을 쥐고 휘두르기</td><td>무겁고 굼뜨다</td></tr></tbody></table></div>
+<p>→ 질량이 <strong>회전축에서 얼마나 멀리 퍼져 있는가</strong>가 결정한다.</p>
+<p>같은 현상들 — 문 손잡이가 경첩 반대편에 있다 / 피겨스케이터가 팔을 오므리면 빨라진다 / 줄타기 곡예사가 긴 장대를 든다(일부러 <code>I</code> 를 키움) / 야구 배트를 짧게 잡으면 빠르게 휘둘러진다.</p>
+<h2 id="거리가-제곱으로-들어오는-이유는-두-개다">거리가 제곱으로 들어오는 이유는 두 개다<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#거리가-제곱으로-들어오는-이유는-두-개다" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<pre><code>I = Σ mᵢ · rᵢ²          r = 각 조각에서 회전축까지의 수직거리
+</code></pre>
+<p>거리가 <strong>두 번</strong> 들어오고, 이유가 서로 다르다.</p>
+<pre><code>① 멀리 있는 조각은 더 빨리 움직여야 한다
+   축에서 1 m 조각은 0.1 m/s, 20 m 조각은 2 m/s      ← 거리 한 번
+② 멀리 있는 조각은 지렛대가 길다
+   그 조각의 힘이 축에 만드는 토크는 거리에 비례       ← 거리 또 한 번
+</code></pre>
+<blockquote class="callout tip" data-callout="tip">
+<div class="callout-title">
+                  <div class="callout-icon"></div>
+                  <div class="callout-title-inner"><p>제곱이라 거리에 매우 민감하다. 거리 2배 → 관성 4배. 강의 Practice에서 기준점을 20 m 옮겼더니 <code>I_zz</code> 가 25,000 → 425,000 으로 <strong>17배</strong>가 됐다.</p></div>
+                  
+                </div>
+</blockquote>
+<h2 id="질량은-방향이-없지만-관성은-방향마다-다르다">질량은 방향이 없지만 관성은 방향마다 다르다<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#질량은-방향이-없지만-관성은-방향마다-다르다" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<pre><code>질량 m  :  숫자 하나. 어느 방향으로 밀든 똑같이 저항.
+관성 I  :  ★ 방향마다 다르다. 숫자 하나로는 못 적는다.
+</code></pre>
+<p>그래서 x축으로 토크를 줬는데 y축으로도 돌 수 있다.</p>
+<pre><code>        ⎡  Iₓ    −I_xy  −I_xz ⎤       Iₓ  = ∫(y²+z²)ρdV    ← 관성모멘트 (대각)
+I_g =   ⎢ −I_xy   I_y   −I_yz ⎥       I_xy = ∫ xy ρdV       ← 관성곱  (비대각)
+        ⎣ −I_xz  −I_yz   I_z  ⎦
+</code></pre>
+<p><strong>대각선 = 관성모멘트.</strong> <code>Iₓ = ∫(y²+z²)ρdV</code> 에 <strong>x 성분이 없다</strong> — x축을 중심으로 돌릴 때 x축 위에 놓인 질량은 저항하지 않는다.</p>
+<p><strong>비대각선 = 관성곱 = 커플링.</strong> “이 축으로 돌리면 저 축으로도 돌려고 한다”의 크기.</p>
+<h2 id="관성곱은-세탁기-탈수다">관성곱은 세탁기 탈수다<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#관성곱은-세탁기-탈수다" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>빨래가 골고루 퍼져 있으면 조용히 돌고, 한쪽으로 뭉치면 통이 쿵쾅거린다. <strong>같은 질량, 같은 축, 같은 속도인데 결과가 다르다.</strong></p>
+<pre><code>대칭   →  관성곱 = 0  →  z축으로 돌리면 z축으로만 돈다
+비대칭 →  관성곱 ≠ 0  →  z축으로 도는데 x·y 방향 흔들림이 생긴다
+</code></pre>
+<p>자동차 <strong>휠 밸런싱</strong>이 정확히 관성곱을 0으로 만드는 작업이다. 안 하면 고속에서 핸들이 떨린다.</p>
+<blockquote class="callout tip" data-callout="tip">
+<div class="callout-title">
+                  <div class="callout-icon"></div>
+                  <div class="callout-title-inner"><p>배는 좌우대칭(xz 평면)이라 보통 <code>I_xy = I_yz = 0</code>. 그런데 <strong>위아래로는 대칭이 아니다</strong> (갑판 구조물은 위, 밸러스트는 아래) → <strong><code>I_xz</code> 는 실선에서 거의 항상 0이 아니다.</strong> roll–yaw 커플링이 실제로 존재하는 이유.</p></div>
+                  
+                </div>
+</blockquote>
+<h2 id="body-좌표계를-쓰는-진짜-이유는-m-이-아니라-i-다">BODY 좌표계를 쓰는 진짜 이유는 <code>m</code> 이 아니라 <code>I</code> 다<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#body-좌표계를-쓰는-진짜-이유는-m-이-아니라-i-다" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>길이 2 m, 1 kg 연필. 길이 방향으로 돌리기는 쉽고(<code>I ≈ 0</code>), 수직축으로 돌리기는 어렵다(<code>mL²/12 = 0.333</code>).</p>
+<p><strong>BODY 기준 (x축 = 연필 방향):</strong></p>
+<pre><code>I^b = diag( 0, 0.333, 0.333 )        ← 어떻게 돌리든 영원히 안 변한다
+</code></pre>
+<p><strong>NED 기준:</strong></p>
+<pre><code>연필이 북쪽을 향할 때 :  diag( 0, 0.333, 0.333 )
+연필이 동쪽을 향할 때 :  diag( 0.333, 0, 0.333 )      ← 값이 뒤바뀐다
+
+               ⎡ 0.167  −0.167    0   ⎤
+45° 에서는    ⎢ −0.167  0.167    0   ⎥      ← 비대각 성분까지 생긴다
+               ⎣   0       0    0.333 ⎦
+</code></pre>
+<blockquote class="callout tip" data-callout="tip">
+<div class="callout-title">
+                  <div class="callout-icon"></div>
+                  <div class="callout-title-inner"><p> <strong>연필은 아무것도 안 변했다. 자르지도 붙이지도 않았다. 그런데 NED 기준 숫자는 매 순간 변한다.</strong></p></div>
+                  
+                </div>
+</blockquote>
+<pre><code>I^n(t) = R^n_b(t) · I^b · R^n_b(t)ᵀ         R 이 시간의 함수 → I^n 도 시간의 함수
+</code></pre>
+<p><strong>그래서 NED로 쓰면 재앙이다:</strong></p>
+<pre><code>BODY :  I^b ω̇ + (보정항)                    I^b 상수 → 미분 안 함
+NED  :  d/dt(I^n ω) = I^n ω̇ + İ^n ω        ← İ^n 이라는 괴물이 추가
+</code></pre>
+<p>BODY로 쓰면 <code>İ</code> 항이 통째로 사라지고 대신 <code>ω × (Iω)</code> 하나가 붙는다. <strong>훨씬 남는 거래.</strong> → <a href="../30_Knowledge/Transport-Theorem" class="internal alias" data-slug="30_Knowledge/Transport-Theorem">Transport Theorem</a></p>
+<h2 id="i_g-는-새로운-물건이-아니라-s-를-두-번-곱한-것"><code>I_g</code> 는 새로운 물건이 아니라 <code>S(·)</code> 를 두 번 곱한 것<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#i_g-는-새로운-물건이-아니라-s-를-두-번-곱한-것" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p><a href="../30_Knowledge/Transport-Theorem" class="internal alias" data-slug="30_Knowledge/Transport-Theorem">Transport Theorem</a> 에서 배운 skew-symmetric matrix를 두 번 곱해 적분한 것이다.</p>
+<pre><code>I_g = − ∫ S²(r) ρ dV       ( = ∫ Sᵀ(r)S(r) ρ dV )
+        V
+</code></pre>
+<p><strong>유도</strong> — 조각 하나의 속도는 <code>v = ω × r = S(ω)r</code>. 각운동량은 <code>r × (v ρdV)</code> 를 전부 더한 것:</p>
+<pre><code>h_g = ∫ S(r)S(ω)r ρdV
+    = ∫ −S²(r) ω ρdV              ← S(ω)r = −S(r)ω 이용
+    = [−∫S²(r)ρdV] ω              ← ω 는 배 전체가 공유 → 적분 밖으로
+    = I_g · ω
+</code></pre>
+<p><code>−S²(r) = (rᵀr)I₃ − r rᵀ</code> 를 전개하면 위의 3×3 성분이 그대로 나온다.</p>
+<blockquote class="callout tip" data-callout="tip">
+<div class="callout-title">
+                  <div class="callout-icon"></div>
+                  <div class="callout-title-inner"><p> <strong><code>I_g</code> 의 정체 = 각속도를 각운동량으로 바꾸는 환율표.</strong> <code>p = mv</code> 의 <code>m</code> 자리.</p></div>
+                  
+                </div>
+</blockquote>
+<h2 id="대칭--양정치라서-시뮬레이션-루프가-항상-풀린다">대칭 + 양정치라서 시뮬레이션 루프가 항상 풀린다<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#대칭--양정치라서-시뮬레이션-루프가-항상-풀린다" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th>성질</th><th>실전에서 뜻하는 것</th></tr></thead><tbody><tr><td><code>I_g = I_gᵀ</code> (대칭)</td><td>독립 성분이 9개가 아니라 <strong>6개</strong></td></tr><tr><td><code>I_g > 0</code> (양정치)</td><td><code>ωᵀI_gω = 2×회전운동에너지 > 0</code> → <strong>역행렬이 항상 존재</strong></td></tr></tbody></table></div>
+<p>두 번째가 중요하다. 시뮬레이션 루프의 <code>ν̇ = M⁻¹(τ − …)</code> 가 <strong>항상 풀린다는 보장</strong>이 여기서 온다.</p>
+<h2 id="수식">수식<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#수식" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p><strong>회전반경 (Radii of Gyration)</strong> — MSS <code>rbody.m</code> 이 <code>I</code> 대신 받는 값.</p>
+<pre><code>Iₓ = m · R44²      →     R44 = √(Iₓ/m)
+</code></pre>
+<p><strong>“질량 전부가 축에서 R만큼 떨어진 얇은 고리에 몰려 있다고 쳐도 같은 관성”</strong> 인 거리. 관성모멘트를 길이 단위로 바꿔주니 감이 온다.</p>
+<p><strong>평행축 정리 (Parallel-Axis Theorem)</strong> — 기준점을 CG에서 CO로 옮길 때.</p>
+<pre><code>I_o = I_g − m S²(r_g) = I_g + m [ (r_gᵀr_g)I₃ − r_g r_gᵀ ]
+
+성분으로:  I_xx|CO = I_xx|CG + m(y_g² + z_g²)        ← 스칼라판  I = I_cm + m d²
+           I_xy|CO = I_xy|CG + m·x_g·y_g             ← 관성곱도 같이 옮겨간다
+</code></pre>
+<p><strong>읽는 법</strong></p>
+<ul>
+<li><strong>관성은 항상 커진다.</strong> CG에서 멀어질수록 돌리기 어려워진다. 빗자루 손잡이 끝을 잡는 것.</li>
+<li><strong>축 방향 거리는 영향이 없다.</strong> <code>I_xx</code> 에 <code>x_g</code> 가 안 들어간다.</li>
+</ul>
+<h2 id="검산">검산<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#검산" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>강의 Practice: <code>m=1000, Ixx=100000, Iyy=400000, Izz=25000</code></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th>확인 항목</th><th>결과</th><th>맞는 이유</th></tr></thead><tbody><tr><td>회전반경</td><td><code>R44=10, R55=20, R66=5</code></td><td><code>R = √(I/m)</code></td></tr><tr><td><code>R55 = 20 m</code> 로 추정한 선박 크기</td><td>대략 배 길이의 1/4 → <strong>80 m급</strong></td><td>실선의 <code>R55 ≈ 0.25L</code></td></tr><tr><td><code>R66 = 5 m</code></td><td><strong>현실적이지 않음</strong></td><td>실선은 <code>R66 ≈ R55 ≈ 0.25L</code> 로 둘이 비슷하다 (yaw도 pitch도 결국 배의 <strong>길이</strong>가 지배). 연습용으로 구분되게 넣은 숫자로 보임</td></tr><tr><td>기준점 20 m 이동 시 <code>I_zz</code></td><td>25,000 → 425,000 (<strong>17배</strong>)</td><td><code>I = Σmr²</code> 의 제곱 때문. 평행축 정리로도 확인됨</td></tr><tr><td><code>I_g</code> 역행렬 존재 여부</td><td>항상 존재</td><td>양정치이므로. <code>ν̇ = M⁻¹(…)</code> 가 안 터진다는 보장</td></tr></tbody></table></div>
+<h2 id="헷갈렸던-점">헷갈렸던 점<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#헷갈렸던-점" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<h3 id="body를-쓰는-건-질량을-상수로-만들기-위해서다">”BODY를 쓰는 건 질량을 상수로 만들기 위해서다”<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#body를-쓰는-건-질량을-상수로-만들기-위해서다" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p><strong>질문이 맞았고 설명이 부정확했다.</strong> <code>m</code> 은 스칼라라 어느 좌표계에서든 1000 kg이다. <strong>BODY 좌표계를 쓰는 이유는 <code>m</code> 이 아니라 <code>I</code> 때문이다.</strong> (덧붙여 추력·유체력이 원래 BODY에 걸리고, added mass도 “어느 방향으로 움직이냐”가 배 기준이라 BODY에서만 상수다.)</p>
+<h3 id="이-배의-관성모멘트는-얼마인가">”이 배의 관성모멘트는 얼마인가?”<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#이-배의-관성모멘트는-얼마인가" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p><strong>축을 말하지 않으면 답할 수 없는 질문이다.</strong> <code>I</code> 는 “물체의 성질”이 아니라 <strong>“물체 + 축”의 성질</strong>이다. 같은 연필도 어느 축으로 돌리느냐에 따라 값이 완전히 다르다.</p>
+<h3 id="dyadic이라는-건-뭔가-어려운-물건이다">”Dyadic이라는 건 뭔가 어려운 물건이다”<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#dyadic이라는-건-뭔가-어려운-물건이다" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>겁먹을 필요 없다. <code>r rᵀ</code> 처럼 벡터 둘을 나란히 곱해 만든 행렬을 dyad라 부르고, 좌표계를 정하기 전의 좌표무관 표현이 dyadic이다. 좌표계를 정해 3×3 숫자판으로 적으면 그냥 <strong>inertia matrix</strong>. 강의 슬라이드 제목만 dyadic이고 실제로 쓰는 건 행렬.</p>
+<h2 id="내가-실제로-써본-곳">내가 실제로 써본 곳<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#내가-실제로-써본-곳" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<ul>
+<li><a href="../30_Knowledge/6-DOF-Marine-Craft-Model" class="internal alias" data-slug="30_Knowledge/6-DOF-Marine-Craft-Model">6-DOF Marine Craft Model</a> — <code>M</code> 의 오른쪽 아래 블록</li>
+<li><a href="../30_Knowledge/Transport-Theorem" class="internal alias" data-slug="30_Knowledge/Transport-Theorem">Transport Theorem</a> — 회전 방정식 <code>I_gω̇ − S(I_gω)ω = m_g</code> 의 <code>I_g</code></li>
+<li>아직 코드로 직접 쓴 적 없음. MSS <code>rbody.m</code> 으로 확인 예정</li>
+</ul>
+<h2 id="참고">참고<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#참고" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<ul>
+<li>강의 : 제어공학특론 — Inertia Dyadic (슬라이드 63), Parallel-Axis Theorem (슬라이드 71)</li>
+<li>교재 : Fossen, <em>Handbook</em>, Ch.3.3 Rigid-Body Kinetics</li>
+<li>툴박스 : MSS Toolbox <code>rbody.m</code> — <code>I_g = m * diag([R44^2, R55^2, R66^2])</code></li>
+</ul></article><hr/><div class="page-footer"></div></div><div class="right sidebar"><div class="graph"><h3>그래프 뷰</h3><div class="graph-outer"><div class="graph-container" data-cfg="{&quot;drag&quot;:true,&quot;zoom&quot;:true,&quot;depth&quot;:1,&quot;scale&quot;:1.1,&quot;repelForce&quot;:0.5,&quot;centerForce&quot;:0.3,&quot;linkDistance&quot;:30,&quot;fontSize&quot;:0.6,&quot;opacityScale&quot;:1,&quot;showTags&quot;:true,&quot;removeTags&quot;:[],&quot;focusOnHover&quot;:false,&quot;enableRadial&quot;:false}"></div><button class="global-graph-icon" aria-label="Global Graph"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 55 55" fill="currentColor" xml:space="preserve"><path d="M49,0c-3.309,0-6,2.691-6,6c0,1.035,0.263,2.009,0.726,2.86l-9.829,9.829C32.542,17.634,30.846,17,29,17
+                s-3.542,0.634-4.898,1.688l-7.669-7.669C16.785,10.424,17,9.74,17,9c0-2.206-1.794-4-4-4S9,6.794,9,9s1.794,4,4,4
+                c0.74,0,1.424-0.215,2.019-0.567l7.669,7.669C21.634,21.458,21,23.154,21,25s0.634,3.542,1.688,4.897L10.024,42.562
+                C8.958,41.595,7.549,41,6,41c-3.309,0-6,2.691-6,6s2.691,6,6,6s6-2.691,6-6c0-1.035-0.263-2.009-0.726-2.86l12.829-12.829
+                c1.106,0.86,2.44,1.436,3.898,1.619v10.16c-2.833,0.478-5,2.942-5,5.91c0,3.309,2.691,6,6,6s6-2.691,6-6c0-2.967-2.167-5.431-5-5.91
+                v-10.16c1.458-0.183,2.792-0.759,3.898-1.619l7.669,7.669C41.215,39.576,41,40.26,41,41c0,2.206,1.794,4,4,4s4-1.794,4-4
+                s-1.794-4-4-4c-0.74,0-1.424,0.215-2.019,0.567l-7.669-7.669C36.366,28.542,37,26.846,37,25s-0.634-3.542-1.688-4.897l9.665-9.665
+                C46.042,11.405,47.451,12,49,12c3.309,0,6-2.691,6-6S52.309,0,49,0z M11,9c0-1.103,0.897-2,2-2s2,0.897,2,2s-0.897,2-2,2
+                S11,10.103,11,9z M6,51c-2.206,0-4-1.794-4-4s1.794-4,4-4s4,1.794,4,4S8.206,51,6,51z M33,49c0,2.206-1.794,4-4,4s-4-1.794-4-4
+                s1.794-4,4-4S33,46.794,33,49z M29,31c-3.309,0-6-2.691-6-6s2.691-6,6-6s6,2.691,6,6S32.309,31,29,31z M47,41c0,1.103-0.897,2-2,2
+                s-2-0.897-2-2s0.897-2,2-2S47,39.897,47,41z M49,10c-2.206,0-4-1.794-4-4s1.794-4,4-4s4,1.794,4,4S51.206,10,49,10z"></path></svg></button></div><div class="global-graph-outer"><div class="global-graph-container" data-cfg="{&quot;drag&quot;:true,&quot;zoom&quot;:true,&quot;depth&quot;:-1,&quot;scale&quot;:0.9,&quot;repelForce&quot;:0.5,&quot;centerForce&quot;:0.2,&quot;linkDistance&quot;:30,&quot;fontSize&quot;:0.6,&quot;opacityScale&quot;:1,&quot;showTags&quot;:true,&quot;removeTags&quot;:[],&quot;focusOnHover&quot;:true,&quot;enableRadial&quot;:true}"></div></div></div><div class="toc desktop-only"><button type="button" class="toc-header" aria-controls="toc-70" aria-expanded="true"><h3>목차</h3><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fold"><polyline points="6 9 12 15 18 9"></polyline></svg></button><ul id="list-1" class="toc-content overflow"><li class="depth-0"><a href="#moment-of-inertia" data-for="moment-of-inertia">Moment of Inertia</a></li><li class="depth-1"><a href="#왜-필요한가" data-for="왜-필요한가">왜 필요한가</a></li><li class="depth-1"><a href="#거리가-제곱으로-들어오는-이유는-두-개다" data-for="거리가-제곱으로-들어오는-이유는-두-개다">거리가 제곱으로 들어오는 이유는 두 개다</a></li><li class="depth-1"><a href="#질량은-방향이-없지만-관성은-방향마다-다르다" data-for="질량은-방향이-없지만-관성은-방향마다-다르다">질량은 방향이 없지만 관성은 방향마다 다르다</a></li><li class="depth-1"><a href="#관성곱은-세탁기-탈수다" data-for="관성곱은-세탁기-탈수다">관성곱은 세탁기 탈수다</a></li><li class="depth-1"><a href="#body-좌표계를-쓰는-진짜-이유는-m-이-아니라-i-다" data-for="body-좌표계를-쓰는-진짜-이유는-m-이-아니라-i-다">BODY 좌표계를 쓰는 진짜 이유는 m 이 아니라 I 다</a></li><li class="depth-1"><a href="#i_g-는-새로운-물건이-아니라-s-를-두-번-곱한-것" data-for="i_g-는-새로운-물건이-아니라-s-를-두-번-곱한-것">I_g 는 새로운 물건이 아니라 S(·) 를 두 번 곱한 것</a></li><li class="depth-1"><a href="#대칭--양정치라서-시뮬레이션-루프가-항상-풀린다" data-for="대칭--양정치라서-시뮬레이션-루프가-항상-풀린다">대칭 + 양정치라서 시뮬레이션 루프가 항상 풀린다</a></li><li class="depth-1"><a href="#수식" data-for="수식">수식</a></li><li class="depth-1"><a href="#검산" data-for="검산">검산</a></li><li class="depth-1"><a href="#헷갈렸던-점" data-for="헷갈렸던-점">헷갈렸던 점</a></li><li class="depth-2"><a href="#body를-쓰는-건-질량을-상수로-만들기-위해서다" data-for="body를-쓰는-건-질량을-상수로-만들기-위해서다">”BODY를 쓰는 건 질량을 상수로 만들기 위해서다”</a></li><li class="depth-2"><a href="#이-배의-관성모멘트는-얼마인가" data-for="이-배의-관성모멘트는-얼마인가">”이 배의 관성모멘트는 얼마인가?”</a></li><li class="depth-2"><a href="#dyadic이라는-건-뭔가-어려운-물건이다" data-for="dyadic이라는-건-뭔가-어려운-물건이다">”Dyadic이라는 건 뭔가 어려운 물건이다”</a></li><li class="depth-1"><a href="#내가-실제로-써본-곳" data-for="내가-실제로-써본-곳">내가 실제로 써본 곳</a></li><li class="depth-1"><a href="#참고" data-for="참고">참고</a></li><li class="overflow-end"></li></ul></div><div class="backlinks"><h3>백링크</h3><ul id="list-2" class="overflow"><li><a href="../10_Daily/2026-09-03" class="internal">2026-09-03</a></li><li><a href="../10_Daily/2026-11-03" class="internal">2026-11-03</a></li><li><a href="../30_Knowledge/6-DOF-Marine-Craft-Model" class="internal">6-DOF Marine Craft Model</a></li><li><a href="../30_Knowledge/Rigid-Body-Kinetics" class="internal">Rigid-Body Kinetics</a></li><li><a href="../30_Knowledge/Transport-Theorem" class="internal">Transport Theorem</a></li><li class="overflow-end"></li></ul></div></div><footer class><p>Created with <a href="https://quartz.jzhao.xyz/">Quartz v4.5.2</a> © 2026</p><ul></ul></footer></div></div></body><script type="application/javascript">function n(){let t=this.parentElement;t.classList.toggle("is-collapsed");let e=t.getElementsByClassName("callout-content")[0];if(!e)return;let l=t.classList.contains("is-collapsed");e.style.gridTemplateRows=l?"0fr":"1fr"}function c(){let t=document.getElementsByClassName("callout is-collapsible");for(let e of t){let l=e.getElementsByClassName("callout-title")[0],s=e.getElementsByClassName("callout-content")[0];if(!l||!s)continue;l.addEventListener("click",n),window.addCleanup(()=>l.removeEventListener("click",n));let o=e.classList.contains("is-collapsed");s.style.gridTemplateRows=o?"0fr":"1fr"}}document.addEventListener("nav",c);
+</script><script type="module">function f(i,e){if(!i)return;function r(o){o.target===this&&(o.preventDefault(),o.stopPropagation(),e())}function t(o){o.key.startsWith("Esc")&&(o.preventDefault(),e())}i?.addEventListener("click",r),window.addCleanup(()=>i?.removeEventListener("click",r)),document.addEventListener("keydown",t),window.addCleanup(()=>document.removeEventListener("keydown",t))}function y(i){for(;i.firstChild;)i.removeChild(i.firstChild)}var h=class{constructor(e,r){this.container=e;this.content=r;this.setupEventListeners(),this.setupNavigationControls(),this.resetTransform()}isDragging=!1;startPan={x:0,y:0};currentPan={x:0,y:0};scale=1;MIN_SCALE=.5;MAX_SCALE=3;cleanups=[];setupEventListeners(){let e=this.onMouseDown.bind(this),r=this.onMouseMove.bind(this),t=this.onMouseUp.bind(this),o=this.resetTransform.bind(this);this.container.addEventListener("mousedown",e),document.addEventListener("mousemove",r),document.addEventListener("mouseup",t),window.addEventListener("resize",o),this.cleanups.push(()=>this.container.removeEventListener("mousedown",e),()=>document.removeEventListener("mousemove",r),()=>document.removeEventListener("mouseup",t),()=>window.removeEventListener("resize",o))}cleanup(){for(let e of this.cleanups)e()}setupNavigationControls(){let e=document.createElement("div");e.className="mermaid-controls";let r=this.createButton("+",()=>this.zoom(.1)),t=this.createButton("-",()=>this.zoom(-.1)),o=this.createButton("Reset",()=>this.resetTransform());e.appendChild(t),e.appendChild(o),e.appendChild(r),this.container.appendChild(e)}createButton(e,r){let t=document.createElement("button");return t.textContent=e,t.className="mermaid-control-button",t.addEventListener("click",r),window.addCleanup(()=>t.removeEventListener("click",r)),t}onMouseDown(e){e.button===0&&(this.isDragging=!0,this.startPan={x:e.clientX-this.currentPan.x,y:e.clientY-this.currentPan.y},this.container.style.cursor="grabbing")}onMouseMove(e){this.isDragging&&(e.preventDefault(),this.currentPan={x:e.clientX-this.startPan.x,y:e.clientY-this.startPan.y},this.updateTransform())}onMouseUp(){this.isDragging=!1,this.container.style.cursor="grab"}zoom(e){let r=Math.min(Math.max(this.scale+e,this.MIN_SCALE),this.MAX_SCALE),t=this.content.getBoundingClientRect(),o=t.width/2,n=t.height/2,c=r-this.scale;this.currentPan.x-=o*c,this.currentPan.y-=n*c,this.scale=r,this.updateTransform()}updateTransform(){this.content.style.transform=`translate(${this.currentPan.x}px, ${this.currentPan.y}px) scale(${this.scale})`}resetTransform(){this.scale=1;let e=this.content.querySelector("svg");this.currentPan={x:e.getBoundingClientRect().width/2,y:e.getBoundingClientRect().height/2},this.updateTransform()}},C=["--secondary","--tertiary","--gray","--light","--lightgray","--highlight","--dark","--darkgray","--codeFont"],E;document.addEventListener("nav",async()=>{let e=document.querySelector(".center").querySelectorAll("code.mermaid");if(e.length===0)return;E||=await import("https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.4.0/mermaid.esm.min.mjs");let r=E.default,t=new WeakMap;for(let n of e)t.set(n,n.innerText);async function o(){for(let s of e){s.removeAttribute("data-processed");let a=t.get(s);a&&(s.innerHTML=a)}let n=C.reduce((s,a)=>(s[a]=window.getComputedStyle(document.documentElement).getPropertyValue(a),s),{}),c=document.documentElement.getAttribute("saved-theme")==="dark";r.initialize({startOnLoad:!1,securityLevel:"loose",theme:c?"dark":"base",themeVariables:{fontFamily:n["--codeFont"],primaryColor:n["--light"],primaryTextColor:n["--darkgray"],primaryBorderColor:n["--tertiary"],lineColor:n["--darkgray"],secondaryColor:n["--secondary"],tertiaryColor:n["--tertiary"],clusterBkg:n["--light"],edgeLabelBackground:n["--highlight"]}}),await r.run({nodes:e})}await o(),document.addEventListener("themechange",o),window.addCleanup(()=>document.removeEventListener("themechange",o));for(let n=0;n<e.length;n++){let v=function(){let g=l.querySelector("#mermaid-space"),m=l.querySelector(".mermaid-content");if(!m)return;y(m);let w=c.querySelector("svg").cloneNode(!0);m.appendChild(w),l.classList.add("active"),g.style.cursor="grab",u=new h(g,m)},M=function(){l.classList.remove("active"),u?.cleanup(),u=null},c=e[n],s=c.parentElement,a=s.querySelector(".clipboard-button"),d=s.querySelector(".expand-button"),p=window.getComputedStyle(a),L=a.offsetWidth+parseFloat(p.marginLeft||"0")+parseFloat(p.marginRight||"0");d.style.right=`calc(${L}px + 0.3rem)`,s.prepend(d);let l=s.querySelector("#mermaid-container");if(!l)return;let u=null;d.addEventListener("click",v),f(l,M),window.addCleanup(()=>{u?.cleanup(),d.removeEventListener("click",v)})}});
+</script><script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/copy-tex.min.js" type="application/javascript"></script><script src="../postscript.js" type="module"></script></html>

@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="ko" dir="ltr"><head><title>2026-10-18 AUV 정위치 유지 자세</title><meta charset="utf-8"/><link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com"/><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto Sans KR:wght@400;700&amp;family=Noto Sans KR:ital,wght@0,400;0,600;1,400;1,600&amp;family=IBM Plex Mono:wght@400;600&amp;display=swap"/><link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin="anonymous"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta name="og:site_name" content="LabNote"/><meta property="og:title" content="2026-10-18 AUV 정위치 유지 자세"/><meta property="og:type" content="website"/><meta name="twitter:card" content="summary_large_image"/><meta name="twitter:title" content="2026-10-18 AUV 정위치 유지 자세"/><meta name="twitter:description" content="AUV 정위치 유지 자세 — ChatGPT 대화 전문 Source ChatGPT 공유 링크 · 메시지 5개 (공유된 구간만) · 원 대화 제목 “프로펠러 반작용 토크 비교” chatgpt.com/share/6ad49fba-19b8-83ee-b1a7-e4c4566a4a3f 원문 그대로 보존."/><meta property="og:description" content="AUV 정위치 유지 자세 — ChatGPT 대화 전문 Source ChatGPT 공유 링크 · 메시지 5개 (공유된 구간만) · 원 대화 제목 “프로펠러 반작용 토크 비교” chatgpt.com/share/6ad49fba-19b8-83ee-b1a7-e4c4566a4a3f 원문 그대로 보존."/><meta property="og:image:alt" content="AUV 정위치 유지 자세 — ChatGPT 대화 전문 Source ChatGPT 공유 링크 · 메시지 5개 (공유된 구간만) · 원 대화 제목 “프로펠러 반작용 토크 비교” chatgpt.com/share/6ad49fba-19b8-83ee-b1a7-e4c4566a4a3f 원문 그대로 보존."/><meta property="og:image" content="https://yusik36.github.io/research-notes/static/og-image.png"/><meta property="og:image:url" content="https://yusik36.github.io/research-notes/static/og-image.png"/><meta name="twitter:image" content="https://yusik36.github.io/research-notes/static/og-image.png"/><meta property="og:image:type" content="image/.png"/><meta property="twitter:domain" content="yusik36.github.io/research-notes"/><meta property="og:url" content="https://yusik36.github.io/research-notes/90_Archive/Direction/2026-10-18-AUV-정위치-유지-자세"/><meta property="twitter:url" content="https://yusik36.github.io/research-notes/90_Archive/Direction/2026-10-18-AUV-정위치-유지-자세"/><link rel="icon" href="../../static/icon.png"/><meta name="description" content="AUV 정위치 유지 자세 — ChatGPT 대화 전문 Source ChatGPT 공유 링크 · 메시지 5개 (공유된 구간만) · 원 대화 제목 “프로펠러 반작용 토크 비교” chatgpt.com/share/6ad49fba-19b8-83ee-b1a7-e4c4566a4a3f 원문 그대로 보존."/><meta name="generator" content="Quartz"/><link href="../../index.css" rel="stylesheet" type="text/css" spa-preserve/><style>.expand-button {
+  position: absolute;
+  display: flex;
+  float: right;
+  padding: 0.4rem;
+  margin: 0.3rem;
+  right: 0;
+  color: var(--gray);
+  border-color: var(--dark);
+  background-color: var(--light);
+  border: 1px solid;
+  border-radius: 5px;
+  opacity: 0;
+  transition: 0.2s;
+}
+.expand-button > svg {
+  fill: var(--light);
+  filter: contrast(0.3);
+}
+.expand-button:hover {
+  cursor: pointer;
+  border-color: var(--secondary);
+}
+.expand-button:focus {
+  outline: 0;
+}
+
+pre:hover > .expand-button {
+  opacity: 1;
+  transition: 0.2s;
+}
+
+#mermaid-container {
+  position: fixed;
+  contain: layout;
+  z-index: 999;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  display: none;
+  backdrop-filter: blur(4px);
+  background: rgba(0, 0, 0, 0.5);
+}
+#mermaid-container.active {
+  display: inline-block;
+}
+#mermaid-container > #mermaid-space {
+  border: 1px solid var(--lightgray);
+  background-color: var(--light);
+  border-radius: 5px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 80vh;
+  width: 80vw;
+  overflow: hidden;
+}
+#mermaid-container > #mermaid-space > .mermaid-content {
+  padding: 2rem;
+  position: relative;
+  transform-origin: 0 0;
+  transition: transform 0.1s ease;
+  overflow: visible;
+  min-height: 200px;
+  min-width: 200px;
+}
+#mermaid-container > #mermaid-space > .mermaid-content pre {
+  margin: 0;
+  border: none;
+}
+#mermaid-container > #mermaid-space > .mermaid-content svg {
+  max-width: none;
+  height: auto;
+}
+#mermaid-container > #mermaid-space > .mermaid-controls {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  gap: 8px;
+  padding: 8px;
+  background: var(--light);
+  border: 1px solid var(--lightgray);
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 2;
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 1px solid var(--lightgray);
+  background: var(--light);
+  color: var(--dark);
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  font-family: var(--bodyFont);
+  transition: all 0.2s ease;
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button:hover {
+  background: var(--lightgray);
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button:active {
+  transform: translateY(1px);
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button:nth-child(2) {
+  width: auto;
+  padding: 0 12px;
+  font-size: 14px;
+}
+/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VSb290IjoiQzpcXEFyY2hpdmVcXOyeoeuLpOq1rOumrFxcVVNU7J247YS0X+yngOybkOyEnFxcc2l0ZVxccXVhcnR6XFxjb21wb25lbnRzXFxzdHlsZXMiLCJzb3VyY2VzIjpbIm1lcm1haWQuaW5saW5lLnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDRTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTs7QUFFQTtFQUNFO0VBQ0E7O0FBR0Y7RUFDRTtFQUNBOztBQUdGO0VBQ0U7OztBQUtGO0VBQ0U7RUFDQTs7O0FBSUo7RUFDRTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBOztBQUVBO0VBQ0U7O0FBR0Y7RUFDRTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTs7QUFFQTtFQUNFO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBOztBQUVBO0VBQ0U7RUFDQTs7QUFHRjtFQUNFO0VBQ0E7O0FBSUo7RUFDRTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBOztBQUVBO0VBQ0U7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTs7QUFFQTtFQUNFOztBQUdGO0VBQ0U7O0FBSUY7RUFDRTtFQUNBO0VBQ0EiLCJzb3VyY2VzQ29udGVudCI6WyIuZXhwYW5kLWJ1dHRvbiB7XG4gIHBvc2l0aW9uOiBhYnNvbHV0ZTtcbiAgZGlzcGxheTogZmxleDtcbiAgZmxvYXQ6IHJpZ2h0O1xuICBwYWRkaW5nOiAwLjRyZW07XG4gIG1hcmdpbjogMC4zcmVtO1xuICByaWdodDogMDsgLy8gTk9URTogcmlnaHQgd2lsbCBiZSBzZXQgaW4gbWVybWFpZC5pbmxpbmUudHNcbiAgY29sb3I6IHZhcigtLWdyYXkpO1xuICBib3JkZXItY29sb3I6IHZhcigtLWRhcmspO1xuICBiYWNrZ3JvdW5kLWNvbG9yOiB2YXIoLS1saWdodCk7XG4gIGJvcmRlcjogMXB4IHNvbGlkO1xuICBib3JkZXItcmFkaXVzOiA1cHg7XG4gIG9wYWNpdHk6IDA7XG4gIHRyYW5zaXRpb246IDAuMnM7XG5cbiAgJiA+IHN2ZyB7XG4gICAgZmlsbDogdmFyKC0tbGlnaHQpO1xuICAgIGZpbHRlcjogY29udHJhc3QoMC4zKTtcbiAgfVxuXG4gICY6aG92ZXIge1xuICAgIGN1cnNvcjogcG9pbnRlcjtcbiAgICBib3JkZXItY29sb3I6IHZhcigtLXNlY29uZGFyeSk7XG4gIH1cblxuICAmOmZvY3VzIHtcbiAgICBvdXRsaW5lOiAwO1xuICB9XG59XG5cbnByZSB7XG4gICY6aG92ZXIgPiAuZXhwYW5kLWJ1dHRvbiB7XG4gICAgb3BhY2l0eTogMTtcbiAgICB0cmFuc2l0aW9uOiAwLjJzO1xuICB9XG59XG5cbiNtZXJtYWlkLWNvbnRhaW5lciB7XG4gIHBvc2l0aW9uOiBmaXhlZDtcbiAgY29udGFpbjogbGF5b3V0O1xuICB6LWluZGV4OiA5OTk7XG4gIGxlZnQ6IDA7XG4gIHRvcDogMDtcbiAgd2lkdGg6IDEwMHZ3O1xuICBoZWlnaHQ6IDEwMHZoO1xuICBvdmVyZmxvdzogaGlkZGVuO1xuICBkaXNwbGF5OiBub25lO1xuICBiYWNrZHJvcC1maWx0ZXI6IGJsdXIoNHB4KTtcbiAgYmFja2dyb3VuZDogcmdiYSgwLCAwLCAwLCAwLjUpO1xuXG4gICYuYWN0aXZlIHtcbiAgICBkaXNwbGF5OiBpbmxpbmUtYmxvY2s7XG4gIH1cblxuICAmID4gI21lcm1haWQtc3BhY2Uge1xuICAgIGJvcmRlcjogMXB4IHNvbGlkIHZhcigtLWxpZ2h0Z3JheSk7XG4gICAgYmFja2dyb3VuZC1jb2xvcjogdmFyKC0tbGlnaHQpO1xuICAgIGJvcmRlci1yYWRpdXM6IDVweDtcbiAgICBwb3NpdGlvbjogZml4ZWQ7XG4gICAgdG9wOiA1MCU7XG4gICAgbGVmdDogNTAlO1xuICAgIHRyYW5zZm9ybTogdHJhbnNsYXRlKC01MCUsIC01MCUpO1xuICAgIGhlaWdodDogODB2aDtcbiAgICB3aWR0aDogODB2dztcbiAgICBvdmVyZmxvdzogaGlkZGVuO1xuXG4gICAgJiA+IC5tZXJtYWlkLWNvbnRlbnQge1xuICAgICAgcGFkZGluZzogMnJlbTtcbiAgICAgIHBvc2l0aW9uOiByZWxhdGl2ZTtcbiAgICAgIHRyYW5zZm9ybS1vcmlnaW46IDAgMDtcbiAgICAgIHRyYW5zaXRpb246IHRyYW5zZm9ybSAwLjFzIGVhc2U7XG4gICAgICBvdmVyZmxvdzogdmlzaWJsZTtcbiAgICAgIG1pbi1oZWlnaHQ6IDIwMHB4O1xuICAgICAgbWluLXdpZHRoOiAyMDBweDtcblxuICAgICAgcHJlIHtcbiAgICAgICAgbWFyZ2luOiAwO1xuICAgICAgICBib3JkZXI6IG5vbmU7XG4gICAgICB9XG5cbiAgICAgIHN2ZyB7XG4gICAgICAgIG1heC13aWR0aDogbm9uZTtcbiAgICAgICAgaGVpZ2h0OiBhdXRvO1xuICAgICAgfVxuICAgIH1cblxuICAgICYgPiAubWVybWFpZC1jb250cm9scyB7XG4gICAgICBwb3NpdGlvbjogYWJzb2x1dGU7XG4gICAgICBib3R0b206IDIwcHg7XG4gICAgICByaWdodDogMjBweDtcbiAgICAgIGRpc3BsYXk6IGZsZXg7XG4gICAgICBnYXA6IDhweDtcbiAgICAgIHBhZGRpbmc6IDhweDtcbiAgICAgIGJhY2tncm91bmQ6IHZhcigtLWxpZ2h0KTtcbiAgICAgIGJvcmRlcjogMXB4IHNvbGlkIHZhcigtLWxpZ2h0Z3JheSk7XG4gICAgICBib3JkZXItcmFkaXVzOiA2cHg7XG4gICAgICBib3gtc2hhZG93OiAwIDJweCA0cHggcmdiYSgwLCAwLCAwLCAwLjEpO1xuICAgICAgei1pbmRleDogMjtcblxuICAgICAgLm1lcm1haWQtY29udHJvbC1idXR0b24ge1xuICAgICAgICBkaXNwbGF5OiBmbGV4O1xuICAgICAgICBhbGlnbi1pdGVtczogY2VudGVyO1xuICAgICAgICBqdXN0aWZ5LWNvbnRlbnQ6IGNlbnRlcjtcbiAgICAgICAgd2lkdGg6IDMycHg7XG4gICAgICAgIGhlaWdodDogMzJweDtcbiAgICAgICAgcGFkZGluZzogMDtcbiAgICAgICAgYm9yZGVyOiAxcHggc29saWQgdmFyKC0tbGlnaHRncmF5KTtcbiAgICAgICAgYmFja2dyb3VuZDogdmFyKC0tbGlnaHQpO1xuICAgICAgICBjb2xvcjogdmFyKC0tZGFyayk7XG4gICAgICAgIGJvcmRlci1yYWRpdXM6IDRweDtcbiAgICAgICAgY3Vyc29yOiBwb2ludGVyO1xuICAgICAgICBmb250LXNpemU6IDE2cHg7XG4gICAgICAgIGZvbnQtZmFtaWx5OiB2YXIoLS1ib2R5Rm9udCk7XG4gICAgICAgIHRyYW5zaXRpb246IGFsbCAwLjJzIGVhc2U7XG5cbiAgICAgICAgJjpob3ZlciB7XG4gICAgICAgICAgYmFja2dyb3VuZDogdmFyKC0tbGlnaHRncmF5KTtcbiAgICAgICAgfVxuXG4gICAgICAgICY6YWN0aXZlIHtcbiAgICAgICAgICB0cmFuc2Zvcm06IHRyYW5zbGF0ZVkoMXB4KTtcbiAgICAgICAgfVxuXG4gICAgICAgIC8vIFN0eWxlIHRoZSByZXNldCBidXR0b24gZGlmZmVyZW50bHlcbiAgICAgICAgJjpudGgtY2hpbGQoMikge1xuICAgICAgICAgIHdpZHRoOiBhdXRvO1xuICAgICAgICAgIHBhZGRpbmc6IDAgMTJweDtcbiAgICAgICAgICBmb250LXNpemU6IDE0cHg7XG4gICAgICAgIH1cbiAgICAgIH1cbiAgICB9XG4gIH1cbn1cbiJdfQ== */</style><link href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" rel="stylesheet" type="text/css" spa-preserve/><script src="../../prescript.js" type="application/javascript" spa-preserve></script><script type="application/javascript" spa-preserve>const fetchData = fetch("../../static/contentIndex.json").then(data => data.json())</script></head><body data-slug="90_Archive/Direction/2026-10-18-AUV-정위치-유지-자세"><div id="quartz-root" class="page"><div id="quartz-body"><div class="left sidebar"><h2 class="page-title"><a href="../..">LabNote</a></h2><div class="spacer mobile-only"></div><div class="flex-component" style="flex-direction: row; flex-wrap: nowrap; gap: 1rem;"><div style="flex-grow: 1; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><div class="search"><button class="search-button"><svg role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19.9 19.7"><title>Search</title><g class="search-path" fill="none"><path stroke-linecap="square" d="M18.5 18.3l-5.4-5.4"></path><circle cx="8" cy="8" r="7"></circle></g></svg><p>검색</p></button><div class="search-container"><div class="search-space"><input autocomplete="off" class="search-bar" name="search" type="text" aria-label="검색어를 입력하세요" placeholder="검색어를 입력하세요"/><div class="search-layout" data-preview="true"></div></div></div></div></div><div style="flex-grow: 0; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><button class="darkmode"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="dayIcon" x="0px" y="0px" viewBox="0 0 35 35" style="enable-background:new 0 0 35 35" xml:space="preserve" aria-label="다크 모드"><title>다크 모드</title><path d="M6,17.5C6,16.672,5.328,16,4.5,16h-3C0.672,16,0,16.672,0,17.5    S0.672,19,1.5,19h3C5.328,19,6,18.328,6,17.5z M7.5,26c-0.414,0-0.789,0.168-1.061,0.439l-2,2C4.168,28.711,4,29.086,4,29.5    C4,30.328,4.671,31,5.5,31c0.414,0,0.789-0.168,1.06-0.44l2-2C8.832,28.289,9,27.914,9,27.5C9,26.672,8.329,26,7.5,26z M17.5,6    C18.329,6,19,5.328,19,4.5v-3C19,0.672,18.329,0,17.5,0S16,0.672,16,1.5v3C16,5.328,16.671,6,17.5,6z M27.5,9    c0.414,0,0.789-0.168,1.06-0.439l2-2C30.832,6.289,31,5.914,31,5.5C31,4.672,30.329,4,29.5,4c-0.414,0-0.789,0.168-1.061,0.44    l-2,2C26.168,6.711,26,7.086,26,7.5C26,8.328,26.671,9,27.5,9z M6.439,8.561C6.711,8.832,7.086,9,7.5,9C8.328,9,9,8.328,9,7.5    c0-0.414-0.168-0.789-0.439-1.061l-2-2C6.289,4.168,5.914,4,5.5,4C4.672,4,4,4.672,4,5.5c0,0.414,0.168,0.789,0.439,1.06    L6.439,8.561z M33.5,16h-3c-0.828,0-1.5,0.672-1.5,1.5s0.672,1.5,1.5,1.5h3c0.828,0,1.5-0.672,1.5-1.5S34.328,16,33.5,16z     M28.561,26.439C28.289,26.168,27.914,26,27.5,26c-0.828,0-1.5,0.672-1.5,1.5c0,0.414,0.168,0.789,0.439,1.06l2,2    C28.711,30.832,29.086,31,29.5,31c0.828,0,1.5-0.672,1.5-1.5c0-0.414-0.168-0.789-0.439-1.061L28.561,26.439z M17.5,29    c-0.829,0-1.5,0.672-1.5,1.5v3c0,0.828,0.671,1.5,1.5,1.5s1.5-0.672,1.5-1.5v-3C19,29.672,18.329,29,17.5,29z M17.5,7    C11.71,7,7,11.71,7,17.5S11.71,28,17.5,28S28,23.29,28,17.5S23.29,7,17.5,7z M17.5,25c-4.136,0-7.5-3.364-7.5-7.5    c0-4.136,3.364-7.5,7.5-7.5c4.136,0,7.5,3.364,7.5,7.5C25,21.636,21.636,25,17.5,25z"></path></svg><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="nightIcon" x="0px" y="0px" viewBox="0 0 100 100" style="enable-background:new 0 0 100 100" xml:space="preserve" aria-label="라이트 모드"><title>라이트 모드</title><path d="M96.76,66.458c-0.853-0.852-2.15-1.064-3.23-0.534c-6.063,2.991-12.858,4.571-19.655,4.571  C62.022,70.495,50.88,65.88,42.5,57.5C29.043,44.043,25.658,23.536,34.076,6.47c0.532-1.08,0.318-2.379-0.534-3.23  c-0.851-0.852-2.15-1.064-3.23-0.534c-4.918,2.427-9.375,5.619-13.246,9.491c-9.447,9.447-14.65,22.008-14.65,35.369  c0,13.36,5.203,25.921,14.65,35.368s22.008,14.65,35.368,14.65c13.361,0,25.921-5.203,35.369-14.65  c3.872-3.871,7.064-8.328,9.491-13.246C97.826,68.608,97.611,67.309,96.76,66.458z"></path></svg></button></div><div style="flex-grow: 0; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><button class="readermode"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="readerIcon" fill="currentColor" stroke="currentColor" stroke-width="0.2" stroke-linecap="round" stroke-linejoin="round" width="64px" height="64px" viewBox="0 0 24 24" aria-label="리더 모드"><title>리더 모드</title><g transform="translate(-1.8, -1.8) scale(1.15, 1.2)"><path d="M8.9891247,2.5 C10.1384702,2.5 11.2209868,2.96705384 12.0049645,3.76669482 C12.7883914,2.96705384 13.8709081,2.5 15.0202536,2.5 L18.7549359,2.5 C19.1691495,2.5 19.5049359,2.83578644 19.5049359,3.25 L19.5046891,4.004 L21.2546891,4.00457396 C21.6343849,4.00457396 21.9481801,4.28672784 21.9978425,4.6528034 L22.0046891,4.75457396 L22.0046891,20.25 C22.0046891,20.6296958 21.7225353,20.943491 21.3564597,20.9931534 L21.2546891,21 L2.75468914,21 C2.37499337,21 2.06119817,20.7178461 2.01153575,20.3517706 L2.00468914,20.25 L2.00468914,4.75457396 C2.00468914,4.37487819 2.28684302,4.061083 2.65291858,4.01142057 L2.75468914,4.00457396 L4.50368914,4.004 L4.50444233,3.25 C4.50444233,2.87030423 4.78659621,2.55650904 5.15267177,2.50684662 L5.25444233,2.5 L8.9891247,2.5 Z M4.50368914,5.504 L3.50468914,5.504 L3.50468914,19.5 L10.9478955,19.4998273 C10.4513189,18.9207296 9.73864328,18.5588115 8.96709342,18.5065584 L8.77307039,18.5 L5.25444233,18.5 C4.87474657,18.5 4.56095137,18.2178461 4.51128895,17.8517706 L4.50444233,17.75 L4.50368914,5.504 Z M19.5049359,17.75 C19.5049359,18.1642136 19.1691495,18.5 18.7549359,18.5 L15.2363079,18.5 C14.3910149,18.5 13.5994408,18.8724714 13.0614828,19.4998273 L20.5046891,19.5 L20.5046891,5.504 L19.5046891,5.504 L19.5049359,17.75 Z M18.0059359,3.999 L15.0202536,4 L14.8259077,4.00692283 C13.9889509,4.06666544 13.2254227,4.50975805 12.7549359,5.212 L12.7549359,17.777 L12.7782651,17.7601316 C13.4923805,17.2719483 14.3447024,17 15.2363079,17 L18.0059359,16.999 L18.0056891,4.798 L18.0033792,4.75457396 L18.0056891,4.71 L18.0059359,3.999 Z M8.9891247,4 L6.00368914,3.999 L6.00599909,4.75457396 L6.00599909,4.75457396 L6.00368914,4.783 L6.00368914,16.999 L8.77307039,17 C9.57551536,17 10.3461406,17.2202781 11.0128313,17.6202194 L11.2536891,17.776 L11.2536891,5.211 C10.8200889,4.56369974 10.1361548,4.13636104 9.37521067,4.02745763 L9.18347055,4.00692283 L8.9891247,4 Z"></path></g></svg></button></div></div><div class="explorer" data-behavior="link" data-collapsed="collapsed" data-savestate="true" data-data-fns="{&quot;order&quot;:[&quot;filter&quot;,&quot;map&quot;,&quot;sort&quot;],&quot;sortFn&quot;:&quot;(a,b)=>!a.isFolder&amp;&amp;!b.isFolder||a.isFolder&amp;&amp;b.isFolder?a.displayName.localeCompare(b.displayName,void 0,{numeric:!0,sensitivity:\&quot;base\&quot;}):!a.isFolder&amp;&amp;b.isFolder?1:-1&quot;,&quot;filterFn&quot;:&quot;node=>node.slugSegment!==\&quot;tags\&quot;&quot;,&quot;mapFn&quot;:&quot;node=>node&quot;}"><button type="button" class="explorer-toggle mobile-explorer hide-until-loaded" data-mobile="true" aria-controls="explorer-148"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide-menu"><line x1="4" x2="20" y1="12" y2="12"></line><line x1="4" x2="20" y1="6" y2="6"></line><line x1="4" x2="20" y1="18" y2="18"></line></svg></button><button type="button" class="title-button explorer-toggle desktop-explorer" data-mobile="false" aria-expanded="true"><h2>탐색기</h2><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="5 8 14 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fold"><polyline points="6 9 12 15 18 9"></polyline></svg></button><div id="explorer-148" class="explorer-content" aria-expanded="false" role="group"><ul class="explorer-ul overflow" id="list-0"><li class="overflow-end"></li></ul></div><template id="template-file"><li><a href="#"></a></li></template><template id="template-folder"><li><div class="folder-container"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="5 8 14 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="folder-icon"><polyline points="6 9 12 15 18 9"></polyline></svg><div><button class="folder-button"><span class="folder-title"></span></button></div></div><div class="folder-outer"><ul class="content"></ul></div></li></template></div></div><div class="center"><div class="page-header"><div class="popover-hint"><nav class="breadcrumb-container" aria-label="breadcrumbs"><div class="breadcrumb-element"><a href="../../">Home</a><p> ❯ </p></div><div class="breadcrumb-element"><a href="../../90_Archive/">90_Archive</a><p> ❯ </p></div><div class="breadcrumb-element"><a href="../../90_Archive/Direction/">Direction</a><p> ❯ </p></div><div class="breadcrumb-element"><a href>2026 10 18 AUV 정위치 유지 자세</a></div></nav><h1 class="article-title">2026-10-18 AUV 정위치 유지 자세</h1><p show-comma="true" class="content-meta"><time datetime="2026-10-17T15:00:00.000Z">2026년 10월 18일</time><span>43 min read</span></p><ul class="tags"><li><a href="../../tags/control-theory" class="internal tag-link">control-theory</a></li><li><a href="../../tags/modeling" class="internal tag-link">modeling</a></li><li><a href="../../tags/naval-architecture" class="internal tag-link">naval-architecture</a></li></ul></div></div><article class="popover-hint"><h1 id="auv-정위치-유지-자세--chatgpt-대화-전문">AUV 정위치 유지 자세 — ChatGPT 대화 전문<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#auv-정위치-유지-자세--chatgpt-대화-전문" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h1>
+<blockquote class="callout info" data-callout="info">
+<div class="callout-title">
+                  <div class="callout-icon"></div>
+                  <div class="callout-title-inner"><p>Source </p></div>
+                  
+                </div>
+<div class="callout-content">
+<p>ChatGPT 공유 링크 · 메시지 5개 (공유된 구간만) · 원 대화 제목 “프로펠러 반작용 토크 비교”
+<a href="https://chatgpt.com/share/6ad49fba-19b8-83ee-b1a7-e4c4566a4a3f" class="external">https://chatgpt.com/share/6ad49fba-19b8-83ee-b1a7-e4c4566a4a3f<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>
+원문 그대로 보존. 손댄 것은 두 가지: 페이지에서 글자로만 뽑힌 수식을 LaTeX(<code>$</code>, <code>$$</code>)로 다시 적은 것, 인용 링크의 <code>utm_source</code> 꼬리를 뗀 것.
+공유 구간은 앞 대화(AUV 수직 기동, 연구 방향 B 선택)의 뒷부분부터 시작한다. 첫 메시지가 ChatGPT 답변인 이유.
+이 대화에서 뽑아낸 논지는 → <a href="../../30_Knowledge/정위치-유지-자세-선택" class="internal alias" data-slug="30_Knowledge/정위치-유지-자세-선택">정위치 유지 자세 선택</a> · <a href="../../Research-Direction" class="internal alias" data-slug="Research-Direction">Research Direction</a></p>
+</div>
+</blockquote>
+<hr/>
+<h3 id="chatgpt">ChatGPT<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#chatgpt" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>그렇다면 네가 어떤 연구에 흥미를 느끼는지 조금 더 명확해진 것 같아.</p>
+<p>새로운 제어 알고리즘 자체를 개발하는 것보다, 기존 로봇이 수행하기 어려웠던 운동이나 임무를 가능하게 만드는 연구에 더 관심이 있는 거네.</p>
+<p>이 방향이라면 나는 연구 주제를 찾는 접근 자체를 조금 바꿔볼 것 같아.</p>
+<ol>
+<li>제어 알고리즘보다 로봇의 운동 능력에서 출발하기</li>
+</ol>
+<p>일반적인 제어 연구에서는 다음과 같은 접근을 많이 하지.</p>
+<p>기존 제어기의 한계 → 새로운 제어기 설계 → 성능 비교</p>
+<p>그런데 네가 선택한 B는 조금 달라.</p>
+<p>기존 플랫폼의 운동 한계 → 새로운 기동 능력 정의 → 동역학 분석 → 제어 시스템 개발</p>
+<p>예를 들어 우리가 이야기했던 어뢰형 AUV를 생각해 보자.</p>
+<p>일반적인 어뢰형 AUV는 전진하면서 러더와 스턴 플레인으로 자세를 제어하지.</p>
+<p>그런데 다음과 같은 질문을 던질 수 있어.</p>
+<p>전진속도가 거의 없는 상태에서도 자세를 자유롭게 제어할 수 있을까?</p>
+<p>수평으로 항해하다가 수직으로 자세를 전환할 수 있을까?</p>
+<p>해류가 강한 환경에서도 특정 위치에 정밀하게 정지할 수 있을까?</p>
+<p>제한된 구동기만으로 급격한 방향 전환이 가능할까?</p>
+<p>수면을 통과하는 동안에도 안정적인 자세 제어가 가능할까?</p>
+<p>이런 질문에서 출발하는 거야.</p>
+<p>중요한 것은 그 동작을 구현하는 데 기존 제어 방법만으로 충분한지, 아니면 새로운 제어 접근이 필요한지 분석하는 거지.</p>
+<ol start="2">
+<li>이 방향과 밀접한 연구 분야</li>
+</ol>
+<p>네가 앞으로 논문을 찾아본다면 다음 분야들을 살펴보는 게 좋겠어.</p>
+<p>연구 분야	핵심 내용	관련 키워드
+Agile Maneuvering	로봇의 고기동 운동 구현	Aggressive Maneuver, Nonlinear Control
+Underactuated Robotics	제한된 구동기로 복잡한 운동 구현	Underactuated Control
+Control Allocation	여러 구동기의 힘과 모멘트를 효율적으로 분배	Overactuation, Thrust Vectoring
+Nonlinear Motion Control	대각도 회전이나 복잡한 비선형 운동 제어	Geometric Control, NMPC
+Learning-Based Motion Control	학습을 이용한 복잡한 기동 정책 개발	RL, Sim-to-Real
+Reconfigurable Robotics	구동기나 기구 구조를 변경해 운동 능력 확장	Morphing, Variable Configuration</p>
+<p>여기서 내가 특히 주목하는 건 Underactuated Robotics와 Agile Maneuvering이야.</p>
+<p>왜냐하면 네가 처음 궁금해했던 노즐 제어 AUV의 수직 자세 전환도 이 두 분야와 연결될 수 있기 때문이야.</p>
+<p>다만 단순히 어려운 동작이라는 이유만으로 부족구동 문제인 것은 아니고, 실제 구동기 구성과 제어 가능한 자유도를 확인해야 해.</p>
+<ol start="3">
+<li>강화학습은 여기서 어떻게 활용할까?</li>
+</ol>
+<p>B를 선택했다고 해서 제어이론이나 강화학습의 비중을 줄일 필요는 없어.</p>
+<p>오히려 연구의 목적과 수단이 명확해지는 거야.</p>
+<p>예를 들어 AUV의 급격한 자세 전환을 연구한다고 하자.</p>
+<p>연구 목표</p>
+<p>기존 어뢰형 AUV가 수행하기 어려운 저속 대각도 자세 전환을 안정적으로 구현한다.</p>
+<p>연구 과정</p>
+<p>① AUV의 6DOF 동역학을 모델링한다.</p>
+<p>② 구동기의 특성과 제어 가능한 운동 범위를 분석한다.</p>
+<p>③ 기존 PID, LQR, MPC 등을 이용해 제어 가능성을 검토한다.</p>
+<p>④ 기존 제어기의 한계가 나타나는 조건을 확인한다.</p>
+<p>⑤ 필요하다면 비선형 제어 또는 강화학습 기반 기동 제어기를 개발한다.</p>
+<p>⑥ 기존 방식과 비교해 새로운 기동 능력이 확보되었는지 검증한다.</p>
+<p>이런 접근이라면 강화학습은 단순히 성능을 높이기 위한 도구가 아니라 기존 방식으로 구현하기 어려웠던 운동을 실현하기 위한 방법이 될 수 있겠지.</p>
+<p>물론 구동기가 물리적으로 만들 수 없는 힘이나 모멘트를 강화학습이 만들어 낼 수는 없어. 그래서 제어 가능성 분석이 먼저 필요해.</p>
+<ol start="4">
+<li>내가 추천하는 첫 번째 탐색 주제</li>
+</ol>
+<p>당장 논문 주제로 확정하자는 건 아니고, 다음 질문을 중심으로 공부해 보면 좋을 것 같아.</p>
+<p>“어뢰형 AUV의 기동 능력은 무엇에 의해 제한되는가?”</p>
+<p>이 질문부터 시작하는 거야.</p>
+<p>예를 들어 AUV의 기동 능력을 다음과 같이 구분할 수 있겠지.</p>
+<p>기동	일반적인 어뢰형 AUV	연구 가능성
+일정 수심·침로 유지	기본적인 제어 임무	기존 제어기 학습
+급격한 방향 전환	선체 및 제어면 성능에 제약	고기동 제어
+저속 자세 제어	제어면의 효율 감소	부족구동 및 추력편향
+정밀 호버링	일반적인 단일 추진기 구조로 어려움	구동기 설계 및 제어 할당
+수직 자세 전환	일반적인 운용 범위 밖	대각도 비선형 제어
+수면 돌출 자세 유지	부력·유체력 변화 발생	시변 동역학 및 자세 안정화</p>
+<p>이렇게 분석하다 보면 단순히 흥미로운 동작을 찾는 것에서 벗어나 기존 플랫폼의 구조적 한계가 무엇인지 이해할 수 있어.</p>
+<p>그 한계가 제어 알고리즘 때문인지, 구동기의 물리적 제약 때문인지 구분하는 것도 중요하고.</p>
+<ol start="5">
+<li>한 가지 더 생각해 볼 점</li>
+</ol>
+<p>나는 네가 제어기 설계뿐 아니라 기동을 가능하게 하는 시스템 전체에 관심을 가질 가능성도 있다고 생각해.</p>
+<p>예를 들어 AUV에 추력편향 노즐을 추가했다고 하자.</p>
+<p>제어 알고리즘만 연구하는 사람이라면 주어진 노즐 구조에서 최적의 제어기를 설계하는 데 집중할 수 있어.</p>
+<p>반면 네가 선택한 방향에서는 조금 다른 질문을 던질 수 있지.</p>
+<p>“노즐의 배치와 가동 범위를 어떻게 설계해야 기존 AUV가 수행하지 못했던 운동을 구현할 수 있을까?”</p>
+<p>여기에는 기구 설계, 동역학, 제어 가능성, 제어기 설계가 모두 포함돼.</p>
+<p>이런 연구는 Control-Oriented Design이나 Control Co-Design과도 연결돼. 로봇의 물리적 구조와 제어 시스템을 함께 고려하는 접근이야.</p>
+<p>지금 단계에서 내 생각</p>
+<p>나는 네가 당장 AUV의 수직 자세 유지나 도킹 같은 특정 임무를 연구 주제로 확정하지 않았으면 해.</p>
+<p>대신 당분간은 로봇의 기동 능력을 확장하는 제어(Motion Control for Enhanced Maneuverability)라는 넓은 관심 분야를 가지고 탐색하는 게 좋겠어.</p>
+<p>AUV뿐 아니라 UAV, USV, 수중-공중 전환 로봇 등으로 시야를 넓혀도 좋고.</p>
+<p>그리고 지금까지 대화를 보면 한 가지 궁금한 게 있어.</p>
+<p>너는 로봇의 구조나 구동기까지 직접 설계·변경하는 것에도 관심이 있어? 아니면 주어진 하드웨어의 한계 안에서 제어 알고리즘으로 최대한의 기동 능력을 끌어내는 쪽이 더 좋아?</p>
+<p>이 차이는 생각보다 커. 전자는 기계 설계와 제어의 공동 최적화로, 후자는 비선형 제어·최적제어·강화학습을 통한 운동 성능 극대화로 연구 방향이 달라질 수 있거든.</p>
+<h3 id="나">나<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#나" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>거시적인 주제 얘기하다가 구체적인 질문해서 미안한데 갑자기 생각난게 있는데 들어봐</p>
+<h3 id="chatgpt-1">ChatGPT<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#chatgpt-1" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>괜찮아 ㅋㅋ 오히려 그런 궁금증에서 흥미로운 연구 아이디어가 나올 수도 있지.</p>
+<p>어떤 생각이 들었어? 편하게 얘기해 봐. 일단 네 생각을 끝까지 들어보고, 물리적으로 가능한지, 제어공학적으로 어떤 의미가 있는지 같이 따져보자.</p>
+<h3 id="나-1">나<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#나-1" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>저번에 auv를 수직으로 세우는 기동이 제어라는 학문적으로는 의미가 있을수 있지만 실제auv 임무관점에서 봤을때 그렇게까지 필요한 기동은 아닌것 같다가 결론이었잖아. 방금 네가 말한걸 보다가 떠오른건데auv가 기동하다가 특정위치에서 정지해서 어떤 임무를 수행해야 할때 제자리 자세 제어를 해야할거 아니야. 불규칙적인 해류상황(해류가 어려방향에서 불규칙적인 힘드로 가해짐), 또는 규칙적인 해류상황(일정한 방향에서 일정한 속도로)에 놓였을때 윈통형 auv가 기동자세(누워있음)가 유리할지 선자세가 유리할지에 대한 논문(이건 auv가 아니라 원통이라 가정하고 유체쪽 논문을 찾으면 있을것도 같음)을 찾아본다음 어떤 상황에서 서있는 자세가 유리하다면 의미를 찾을수 있지 않을까? 또 auv의 액추에이터 상황(일반적인 후방 프로펠러,러더ㅡ스텀 외 독립적인 heave와 sway를 구현할수 있는 bow스러스터가 달려있는 delpin2같은 모델)에 따라 자세유지를 하기 유리한자세가 다를것 같다는 생각이 드네
+더 보기</p>
+<h3 id="chatgpt-2">ChatGPT<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#chatgpt-2" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>이건 좀 더 깊게 파고들어 볼 만한 아이디어인데?</p>
+<p>특히 네가 마지막에 이야기한 “해류 조건뿐 아니라 AUV의 액추에이터 구성에 따라 자세 유지에 유리한 선체 자세가 달라질 수 있다”는 부분이 핵심이라고 생각해.</p>
+<p>왜냐하면 이 아이디어는 단순히 AUV를 수직으로 세우는 특이한 기동에서 출발했지만, 지금은 실제 AUV 임무에서 에너지 소비와 자세 유지 성능을 개선하기 위한 문제로 발전했거든.</p>
+<p>관련 연구들을 찾아봤는데, 네가 제안한 문제의 각 요소를 다루는 논문들은 실제로 존재해.</p>
+<p>다만 먼저 짚고 넘어갈 게 있어.</p>
+<p>일반적인 수평 해류에서는 유체저항만 고려하면 AUV를 수직으로 세우는 것이 불리할 가능성이 높아. 하지만 액추에이터 구성과 정적 안정성까지 고려하면 이야기가 달라질 수 있어.</p>
+<p>이걸 순서대로 살펴보자.</p>
+<ol>
+<li>우선 유체역학적으로 어느 자세가 유리할까?</li>
+</ol>
+<p>네가 제안한 것처럼 AUV를 일단 단순한 원통형 물체라고 가정해 보자.</p>
+<p>AUV가 완전히 잠겨 있고, 일정한 방향으로 해류가 흐르는 상황이야.</p>
+<p>CASE A. 일정한 방향의 수평 해류</p>
+<p>두 가지 자세를 비교해 보자.</p>
+<p>① 수평 자세</p>
+<p>AUV의 길이 방향이 해류와 평행하다면 물은 선수에서 선미 방향으로 흘러가게 돼.</p>
+<p>유선형 AUV는 기본적으로 이런 유동 조건에서 저항을 줄이도록 설계되지.</p>
+<p>② 수직 자세</p>
+<p>반면 AUV가 수직으로 서 있다면 수평 해류가 선체의 측면 전체에 부딪히게 돼.</p>
+<p>단순한 원통형 선체에서 유동에 노출되는 투영면적을 비교해 보면 차이가 커.</p>
+<p>원통의 길이를 <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal">L</span></span></span></span>, 지름을 <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">D</span></span></span></span>라고 하면</p>
+<p>축방향 투영면적은</p>
+<p><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">A</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord text mtight"><span class="mord mtight">axial</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1.3629em;vertical-align:-0.345em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.0179em;"><span style="top:-2.655em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">4</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.03588em;">π</span><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.02778em;">D</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8913em;"><span style="top:-2.931em;margin-right:0.0714em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></p>
+<p>측면 방향 투영면적은</p>
+<p><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">A</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord text mtight"><span class="mord mtight">cross</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal">L</span><span class="mord mathnormal" style="margin-right:0.02778em;">D</span></span></span></span></p>
+<p>이야.</p>
+<p>즉,</p>
+<p><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.3393em;vertical-align:-0.4509em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8884em;"><span style="top:-2.655em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathnormal mtight">A</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3448em;"><span style="top:-2.3488em;margin-left:0em;margin-right:0.0714em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord text mtight"><span class="mord mtight">axial</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.1512em;"><span></span></span></span></span></span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.4101em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathnormal mtight">A</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1645em;"><span style="top:-2.357em;margin-left:0em;margin-right:0.0714em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord text mtight"><span class="mord mtight">cross</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.143em;"><span></span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.4509em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1.2173em;vertical-align:-0.345em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8723em;"><span style="top:-2.655em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.03588em;">π</span><span class="mord mathnormal mtight" style="margin-right:0.02778em;">D</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">4</span><span class="mord mathnormal mtight">L</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></p>
+<p>로 나타낼 수 있어.</p>
+<p>어뢰형 AUV처럼 길이가 지름보다 훨씬 긴 물체는 두 투영면적의 차이가 상당히 커지겠지.</p>
+<p>실제 항력은 투영면적뿐 아니라 유동 방향에 따른 항력계수도 고려해야 하지만, 일반적으로 축방향 유동이 횡방향 유동보다 유리해.</p>
+<p>따라서 일정한 수평 해류에서 위치를 유지하는 것만이 목적이라면, AUV를 수평으로 놓고 선수를 해류 방향으로 정렬하는 것이 유리할 가능성이 높아.</p>
+<p>실제로 Vakil과 Green의 2009년 논문에서는 유한 길이 원통의 유동 입사각을 0~90°로 변화시키며 항력과 양력 특성을 분석했어. 다만 비교적 낮은 Reynolds 수 영역의 연구이므로 실제 AUV에 계수를 그대로 적용하기보다는 유동 방향에 따른 힘의 변화 경향을 이해하는 데 적합해.
+<a href="https://www.sciencedirect.com/science/article/abs/pii/S0045793009000516" class="external">ScienceDirect<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a></p>
+<ol start="2">
+<li>그런데 불규칙적인 해류에서는 어떨까?</li>
+</ol>
+<p>여기서 네 아이디어가 조금 더 흥미로워져.</p>
+<p>일정한 방향의 해류라면 AUV가 유리한 방향으로 선체를 정렬하면 되겠지.</p>
+<p>하지만 해류의 방향과 세기가 계속 변한다면?</p>
+<p>예를 들어 AUV가 수평 자세로 정지해 있다고 생각해 보자.</p>
+<p>처음에는 선수 방향에서 해류가 들어오다가 측면 방향으로 바뀌면 선체가 받는 힘도 달라져.</p>
+<p>따라서 AUV는 해류 방향에 따라 헤딩을 변경하거나, 측면으로 가해지는 힘을 스러스터로 보상해야 할 수 있어.</p>
+<p>반면 수직으로 서 있는 AUV를 생각해 보자.</p>
+<p>이상적인 축대칭 원통이라면 수평면에서 해류가 어느 방향으로 들어오든 유동과 선체 길이축 사이의 각도는 항상 90°야.</p>
+<p>즉, 수직 자세에서는 수평 해류의 방향이 달라져도 선체의 기하학적인 유동 입사각은 일정하게 유지돼.</p>
+<p>이건 수평 자세와 다른 특징이지.</p>
+<p>하지만 중요한 반론이 있어.</p>
+<p>유동 입사각이 일정하다는 것이 더 작은 힘을 받는다는 뜻은 아니야.</p>
+<p>수직 원통은 수평 해류를 항상 횡방향으로 받기 때문에, 방향과 관계없이 큰 횡방향 항력을 받을 수 있어.</p>
+<p>또한 원통 주변의 와류 방출 때문에 시간에 따라 변동하는 유체력이 발생할 가능성도 있지.</p>
+<p>따라서 불규칙한 해류에서도 수직 자세가 반드시 유리하다고 볼 수는 없어.</p>
+<p>오히려 연구할 만한 질문은 다음과 같아.</p>
+<p>해류의 방향 변화에 따라 헤딩을 지속적으로 조정하는 수평 자세와, 수평 해류에 대한 유동 입사각이 일정한 수직 자세 중 어느 쪽이 실제 자세 유지에 더 적은 제어 에너지를 필요로 할까?</p>
+<p>이건 단순한 유체저항 비교와는 다른 문제가 돼.</p>
+<p>그리고 해류가 수평면에서만 변하는지, 수직 방향 성분까지 포함하는지도 중요해.</p>
+<p>수직 성분이 강한 환경에서는 수직 자세가 축방향 유동을 활용할 수 있으니까.</p>
+<ol start="3">
+<li>그런데 나는 액추에이터 구성이 더 중요한 변수일 수 있다고 생각해</li>
+</ol>
+<p>이 부분이 네 아이디어에서 특히 흥미로워.</p>
+<p>네가 예로 든 Delphin2를 살펴봤어.</p>
+<p>실제 Delphin2는 다음과 같은 구동기를 가지고 있어.</p>
+<p>Delphin2의 주요 구동기 구성</p>
+<p>구동기	개수	일반적인 역할
+후방 프로펠러	1	Surge
+수직 터널 스러스터	2	Heave, Pitch
+수평 터널 스러스터	2	Sway, Yaw
+후방 제어면	4	전진 중 자세 제어</p>
+<p>정확히는 선체 앞쪽과 뒤쪽에 각각 수직·수평 터널 스러스터가 배치되어 있어.</p>
+<p>University of Southampton의 연구에서는 이 구조를 이용해 저속에서는 터널 스러스터로 자세를 제어하고, 고속에서는 후방 프로펠러와 제어면을 사용하는 방식을 연구했어.
+<a href="https://www.sciencedirect.com/science/article/pii/S0957415816301477" class="external">ScienceDirect<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a></p>
+<p>그런데 이 AUV를 수직으로 세운다고 생각해 보자.</p>
+<p>수평 자세에서는</p>
+<p>후방 프로펠러가 지구 좌표계의 수평 방향 추력을 발생시키고, 수직 터널 스러스터가 수직 방향 추력을 발생시켜.</p>
+<p>즉, 원래 설계된 방향으로 구동기들이 작동하는 거야.</p>
+<p>수직 자세에서는</p>
+<p>상황이 달라져.</p>
+<p>후방 프로펠러의 추력 방향은 이제 지구 좌표계에서 수직 방향에 가까워지겠지.</p>
+<p>반대로 기존 수직 터널 스러스터의 추력 방향은 지구 좌표계에서 수평 방향으로 바뀌어.</p>
+<p>즉, 선체 자세가 변하면서 각각의 스러스터가 지구 좌표계에서 만들어 내는 힘과 모멘트의 방향도 달라지는 거야.</p>
+<p>이게 중요한 이유는 AUV가 받는 외란은 지구 좌표계를 기준으로 발생하기 때문이야.</p>
+<p>예를 들어 일정한 방향의 해류가 있다고 해 보자.</p>
+<p>수평 자세에서 해류를 보상하는 데 사용하던 스러스터와 수직 자세에서 사용하는 스러스터가 달라질 수 있겠지.</p>
+<p>이때 각 스러스터의 최대 추력, 응답속도, 효율이 다르다면?</p>
+<p>수직 자세에서 유체저항이 더 크더라도, 특정 방향의 외란에 대응하는 구동기 배치가 유리해지는 경우를 생각해 볼 수 있어.</p>
+<p>다만 Delphin2가 실제로 수직 자세를 더 잘 유지할 수 있다는 뜻은 아니야.</p>
+<p>수직 자세에서는 Roll을 비롯한 제어 가능 자유도와 정수압 복원모멘트가 달라지고, 후방 프로펠러의 역추력 가능 여부도 중요해져.</p>
+<p>특히 선체를 수직으로 세우면 일반적인 Roll 운동은 지구 좌표계의 수직축 회전에 가까워지는데, Delphin2는 정지 상태에서 이 운동을 직접 제어하는 능력이 제한적이야.</p>
+<p>그래서 실제로 어떤 자세가 유리한지 판단하려면 스러스터의 배치뿐 아니라 전체 제어 가능성을 분석해야 해.</p>
+<ol start="4">
+<li>여기서 하나 더 고려해야 할 것이 있어</li>
+</ol>
+<p>바로 CG와 CB에 따른 자세 안정성이야.</p>
+<p>이전에 우리가 AUV를 수직으로 세우는 문제를 이야기할 때도 등장했지.</p>
+<p>일반적인 AUV는 무게중심(CG)과 부력중심(CB)의 상대적 위치를 이용해 특정 방향의 정적 안정성을 확보하기도 해.</p>
+<p>그런데 수평 자세에서 안정적이도록 설계한 질량·부력 배치가 수직 자세에서도 안정적이라는 보장은 없어.</p>
+<p>예를 들어 수평 자세에서 부력중심이 무게중심보다 선체의 위쪽에 위치하도록 설계했다고 해 보자.</p>
+<p>그 상태에서 선체를 90° 세우면 두 중심 사이의 연결 방향도 함께 회전해.</p>
+<p>따라서 기존에 Roll 복원력을 만들어 주던 중심 간 간격이 수직 자세에서는 다른 축의 모멘트로 나타날 수 있어.</p>
+<p>즉, 수직 자세를 유지하려면 해류만 보상하는 것이 아니라 선체 자체의 정수압 모멘트도 보상해야 할 수 있어.</p>
+<p>반대로 수직 자세를 전제로 무게중심과 부력중심을 배치한 플랫폼이라면 다른 결과가 나올 수 있겠지.</p>
+<p>이건 단순한 유체저항 연구만으로는 판단할 수 없는 부분이야.</p>
+<ol start="5">
+<li>관련 논문을 찾아보니 이미 연결되는 연구들이 있어</li>
+</ol>
+<p>네가 제안한 연구를 그대로 수행한 논문이 있는지는 더 체계적인 선행연구 조사가 필요해.</p>
+<p>하지만 관련성이 높은 연구들은 확인했어.</p>
+<p>① 원통형 물체의 자세에 따른 유체력</p>
+<p>Vakil &amp; Green (2009)</p>
+<p>Drag and lift coefficients of inclined finite circular cylinders at moderate Reynolds numbers</p>
+<p><a href="https://www.sciencedirect.com/science/article/abs/pii/S0045793009000516" class="external">논문 보기<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a></p>
+<p>이 논문은 원통형 물체의 길이·지름 비율과 유동 입사각을 변화시키면서 항력과 양력을 분석해.</p>
+<p>네가 처음 제안한 “일단 AUV를 원통이라고 가정하고 유체력부터 비교해 보자”는 접근에 직접 연결되는 자료야.</p>
+<p>다만 이 논문만으로 실제 AUV의 자세 유지 에너지까지 판단할 수는 없어.</p>
+<p>② 원통형 물체의 축방향·횡방향 유체력</p>
+<p>Ersdal &amp; Faltinsen (2006)</p>
+<p>Normal forces on cylinders in near-axial flow</p>
+<p><a href="https://www.sciencedirect.com/science/article/abs/pii/S0889974606000673" class="external">논문 보기<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a></p>
+<p>수중 원통에 유동이 작은 입사각으로 작용할 때 발생하는 횡방향 힘을 실험적으로 분석한 연구야.</p>
+<p>특히 유동 입사각과 Reynolds 수가 횡방향 힘에 미치는 영향을 다뤄.</p>
+<p>AUV의 선체 자세와 해류 방향 사이의 관계를 분석할 때 참고할 만해.</p>
+<p>③ 액추에이터 구성에 따른 정위치 유지 성능</p>
+<p>Santhakumar &amp; Asokan (2013)</p>
+<p>Power efficient dynamic station keeping control of a flat-fish type autonomous underwater vehicle through design modifications of thruster configuration</p>
+<p><a href="https://www.sciencedirect.com/science/article/abs/pii/S002980181200371X" class="external">논문 보기<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a></p>
+<p>이 논문은 네 생각과 상당히 밀접해.</p>
+<p>AUV가 특정 위치와 자세를 유지하는 Dynamic Station Keeping 문제를 다루면서, 스러스터 구성을 변경했을 때 제어 성능과 에너지 소비가 어떻게 달라지는지 분석했어.</p>
+<p>특히 해류의 크기와 입사각에 따른 정위치 유지 성능을 비교했다는 점이 중요해.</p>
+<p>네가 제안한 연구에서 먼저 살펴볼 만한 선행연구라고 생각해.</p>
+<p>④ 로봇의 구성과 제어 에너지를 함께 최적화하는 연구</p>
+<p>Dang et al. (2023)</p>
+<p>Energy-Efficient Configuration and Control Allocation for a Dynamically Reconfigurable Underwater Robot</p>
+<p><a href="https://www.mdpi.com/1424-8220/23/12/5439" class="external">논문 보기<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a></p>
+<p>이 연구는 수중로봇의 구성 변화와 제어 할당을 함께 고려해서 에너지 소비를 최적화하는 방법을 제안해.</p>
+<p>경로 추종과 정위치 관측 임무를 다루고, 액추에이터 제약을 고려한 최적화 문제를 구성했어.</p>
+<p>네가 이야기한 아이디어를 수학적인 최적화 문제로 발전시키는 데 참고하기 좋아.</p>
+<p>⑤ 최근의 AUV 정위치 유지 제어 연구</p>
+<p>Liu et al. (2026)</p>
+<p>Active Disturbance-Rejection Multi-Stage Dynamic Positioning Control of Overactuated AUVs: Theory and Experiments</p>
+<p><a href="https://onlinelibrary.wiley.com/doi/10.1002/rob.70334" class="external">논문 보기<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a></p>
+<p>2026년 8월 발표된 논문이야.</p>
+<p>가늘고 긴 형태의 AUV를 대상으로 헤딩 조정, 경로 추종, 정위치 유지 과정을 구분하고, 외란 관측기와 제어 할당을 이용해 정밀 위치 제어를 수행했어.</p>
+<p>실제 호수 실험을 통해 검증했다는 점도 참고할 만해.</p>
+<p>다만 이 연구가 수평 자세와 수직 자세의 우열을 직접 비교한 것은 아니야.</p>
+<ol start="6">
+<li>그렇다면 실제 연구로 구성하면 어떻게 될까?</li>
+</ol>
+<p>나는 이 아이디어를 단순히</p>
+<p>“수평 자세와 수직 자세 중 무엇이 더 유리한가?”</p>
+<p>로 제한하지 않았으면 해.</p>
+<p>왜냐하면 최적의 자세가 반드시 0° 또는 90°일 이유는 없거든.</p>
+<p>어쩌면 20°, 45°, 70°처럼 중간 자세가 더 유리할 수도 있어.</p>
+<p>그러면 다음과 같은 연구 질문을 정의할 수 있어.</p>
+<p>연구 질문</p>
+<p>해류 환경과 액추에이터 구성에 따라 어뢰형 AUV의 정위치 유지에 가장 유리한 선체 자세가 존재하는가?</p>
+<p>여기에서 유리하다는 기준도 정해야 해.</p>
+<p>나는 크게 세 가지를 비교할 것 같아.</p>
+<p>평가 지표	의미
+Position Keeping Error	목표 위치에서 얼마나 벗어나는가
+Attitude Stability	자세를 얼마나 안정적으로 유지하는가
+Energy Consumption	위치와 자세 유지에 얼마나 많은 에너지가 필요한가</p>
+<p>그리고 연구를 두 단계로 나누는 거야.</p>
+<p>첫 번째: 유체역학적 특성 분석</p>
+<p>처음에는 액추에이터를 제외하고 원통형 선체만 고려해.</p>
+<p>선체의 자세를</p>
+<p><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">θ</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.8686em;vertical-align:-0.1944em;"></span><span class="mord"><span class="mord">0</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.6741em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mbin mtight">∘</span></span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace"> </span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">1</span><span class="mord"><span class="mord">5</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.6741em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mbin mtight">∘</span></span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace"> </span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">3</span><span class="mord"><span class="mord">0</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.6741em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mbin mtight">∘</span></span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace"> </span><span class="mspace" style="margin-right:0.1667em;"></span><span class="minner">…</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mpunct">,</span><span class="mspace"> </span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">9</span><span class="mord"><span class="mord">0</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.6741em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mbin mtight">∘</span></span></span></span></span></span></span></span></span></span></span></p>
+<p>로 변화시키면서 일정한 수평 해류에 대한 항력과 모멘트를 비교하는 거지.</p>
+<p>그다음 해류 방향과 크기를 변경하면서 동일한 분석을 수행해.</p>
+<p>여기서 얻고자 하는 결과는 다음과 같아.</p>
+<p><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5806em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.1132em;">τ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:-0.1132em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord text mtight"><span class="mord mtight">env</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.02778em;">θ</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">ψ</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">v</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2806em;"><span style="top:-2.55em;margin-left:-0.0359em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord text mtight"><span class="mord mtight">current</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span></p>
+<p>즉, 선체 자세와 해류 조건에 따라 AUV에 어떤 힘과 모멘트가 발생하는지 알아내는 거야.</p>
+<p>이 단계에서는 CFD를 사용할 수도 있지만, 처음부터 CFD로 시작할 필요는 없다고 생각해.</p>
+<p>기존 원통 유체력 연구에서 얻은 계수와 단순화된 모델을 이용해 먼저 경향을 분석할 수 있으니까.</p>
+<p>두 번째: 액추에이터를 포함한 정위치 유지 분석</p>
+<p>이제 Delphin2 같은 구동기 구성을 적용하는 거야.</p>
+<p>이때 정지 상태의 힘과 모멘트 평형은 개념적으로 다음과 같이 나타낼 수 있어.</p>
+<p><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.1132em;">τ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:-0.1132em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord text mtight"><span class="mord mtight">env</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.8694em;vertical-align:-0.2861em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.1132em;">τ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:-0.1132em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord text mtight"><span class="mord mtight">hydrostatic</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.05017em;">B</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.03588em;">η</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">0</span></span></span></span></p>
+<p>여기서 모든 힘과 모멘트는 동일한 좌표계에서 표현했다고 가정하자.</p>
+<p><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5806em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.1132em;">τ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:-0.1132em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord text mtight"><span class="mord mtight">env</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>: 해류에 의해 발생하는 힘과 모멘트</p>
+<p><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7167em;vertical-align:-0.2861em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.1132em;">τ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:-0.1132em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord text mtight"><span class="mord mtight">hydrostatic</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span></span></span></span>: 중력·부력에 의한 힘과 모멘트</p>
+<p><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.05017em;">B</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.03588em;">η</span><span class="mclose">)</span></span></span></span>: 선체 자세에 따른 구동기 힘·모멘트 할당 행렬</p>
+<p><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.10764em;">f</span></span></span></span>: 각 스러스터의 추력</p>
+<p>여기서 흥미로운 결과가 나올 수 있어.</p>
+<p>예를 들어 수평 자세에서는 해류에 의한 힘이 작더라도 특정 스러스터가 큰 출력을 요구할 수 있어.</p>
+<p>반대로 약간 기울어진 자세에서는 유체력이 증가하더라도 구동기들이 힘을 더 효율적으로 분담할 수 있을지 몰라.</p>
+<p>그렇게 되면 유체저항이 최소인 자세와 실제 제어 에너지가 최소인 자세가 서로 다를 수 있다는 가설을 세울 수 있겠지.</p>
+<p>물론 실제로 이런 차이가 존재하는지는 계산하고 검증해야 해.</p>
+<p>특히 정적 평형만으로 끝내서는 안 되고, 외란이 변할 때 추력 포화 없이 자세와 위치를 안정적으로 회복할 수 있는지도 확인해야 해.</p>
+<ol start="7">
+<li>여기서 한 단계 더 발전시키면?</li>
+</ol>
+<p>나는 여기서 자세 자체를 제어 목표가 아닌 최적화 변수로 사용하는 방법이 떠올라.</p>
+<p>일반적인 Station Keeping에서는 목표 위치와 목표 자세가 주어지면 제어기가 이를 유지하도록 동작하지.</p>
+<p>하지만 모든 임무가 특정 자세를 요구하는 것은 아니잖아.</p>
+<p>예를 들어 AUV가 특정 위치에서 수온이나 염분을 측정해야 한다면, 위치는 중요해도 선체의 Pitch가 반드시 0°일 필요는 없을 수 있어.</p>
+<p>그렇다면?</p>
+<p>AUV가 해류 조건에 따라 스스로 유리한 자세를 선택하게 만드는 거야.</p>
+<p>이런 구조를 생각할 수 있어.</p>
+<p><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.02778em;">θ</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.6887em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mbin mtight">∗</span></span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">ψ</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.6887em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mbin mtight">∗</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.9694em;vertical-align:-0.2861em;"></span><span class="mop">ar<span style="margin-right:0.01389em;">g</span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mop"><span class="mop">min</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.02778em;">θ</span><span class="mpunct mtight">,</span><span class="mord mathnormal mtight" style="margin-right:0.03588em;">ψ</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:-0.1389em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord text mtight"><span class="mord mtight">station keeping</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span></span></span></span></p>
+<p>여기서</p>
+<p><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.02778em;">θ</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.6887em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mbin mtight">∗</span></span></span></span></span></span></span></span></span></span></span>: 최적 Pitch</p>
+<p><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">ψ</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.6887em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mbin mtight">∗</span></span></span></span></span></span></span></span></span></span></span>: 최적 Heading</p>
+<p><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9694em;vertical-align:-0.2861em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:-0.1389em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord text mtight"><span class="mord mtight">station keeping</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span></span></span></span>: 해당 자세에서 정위치 유지를 위한 추정 소비전력</p>
+<p>단, 목표 위치와 임무 제약을 만족하고, 구동기 최대 출력과 안정성 조건을 지켜야 한다는 제약을 함께 넣어야 해.</p>
+<p>또한 자세를 변경하는 데 필요한 에너지도 고려해야겠지.</p>
+<p>예를 들어 해류 방향이 조금 바뀔 때마다 AUV가 몸을 계속 돌리면 오히려 에너지가 낭비될 테니까.</p>
+<p>이런 문제라면 MPC를 이용해 미래의 해류 변화를 예측하거나, 강화학습을 이용해 장기적인 에너지 소비를 고려하는 자세 선택 정책을 학습시키는 방향으로도 확장할 수 있어.</p>
+<p>다만 강화학습을 적용하기 전에 단순 최적화만으로 어느 정도 해결되는지 확인하는 것이 먼저라고 생각해.</p>
+<ol start="8">
+<li>그렇다면 연구 가치가 있을까?</li>
+</ol>
+<p>나는 이 아이디어가 우리가 처음 이야기했던 AUV의 수직 자세 유지보다 연구 목적을 정의하기 쉽다고 생각해.</p>
+<p>처음에는</p>
+<p>“AUV가 수직으로 서 있을 수 있을까?”</p>
+<p>라는 질문이었지.</p>
+<p>그런데 지금은</p>
+<p>“AUV가 특정 위치에서 임무를 수행할 때 어떤 자세가 에너지와 안정성 측면에서 가장 효율적일까?”</p>
+<p>라는 질문으로 변했어.</p>
+<p>후자는 실제 수중 관측이나 정밀 위치 유지 임무와 직접적으로 연결할 수 있어.</p>
+<p>다만 선행연구가 없는 완전히 새로운 문제라고 보기는 어려워. 앞에서 찾은 논문들만 해도 해류 방향, 스러스터 구성, 제어 할당, 에너지 최적화를 각각 연구하고 있으니까.</p>
+<p>학문적인 독창성은 이 요소들을 선체 자세 선택과 어떻게 연결하고, 기존 방법으로 설명하지 못했던 어떤 결과를 밝혀내느냐에 달려 있을 거야.</p>
+<p>그리고 한 가지는 분명히 하고 싶어.</p>
+<p>현재까지 살펴본 자료만으로는 수직 자세가 수평 자세보다 유리한 조건이 실제로 존재한다고 결론 내릴 수 없어.</p>
+<p>오히려 일반적인 수평 해류에서는 수평 자세가 유리할 것이라는 가설이 더 자연스러워.</p>
+<p>그렇지만 그 자체가 연구의 의미를 없애지는 않아.</p>
+<p>예를 들어 분석 결과 수직 자세가 모든 일반적인 해류 조건에서 불리하더라도, 왜 그런지 동역학과 구동기 제약을 이용해 설명할 수 있겠지.</p>
+<p>또 특정 구동기 구조에서는 중간 자세가 유리하다는 결과가 나온다면 그것도 의미 있는 발견이 될 수 있어.</p>
+<p>내 생각을 정리하면</p>
+<p>지금 네 아이디어에서 가장 눈여겨볼 부분은 자세를 바꾸면 유체력뿐 아니라 구동기의 힘과 모멘트 생성 능력도 함께 달라진다는 점이야.</p>
+<p>이 둘을 동시에 고려하는 게 핵심이지.</p>
+<p>그리고 당장 수직 자세의 실용성을 증명하려고 할 필요는 없다고 생각해.</p>
+<p>먼저 해류에 대한 최적 자세가 무엇인지 분석하고, 그 결과를 설명하는 과정에서 수직 자세가 유리한 특수한 조건이 발견되는지를 살펴보는 편이 더 자연스러워.</p>
+<p>그런데 여기서 한 가지 중요한 질문이 있어.</p>
+<p>네가 생각하는 AUV의 정위치 유지 임무는 다음 두 가지 중 어느 쪽에 가까워?</p>
+<p>A. 위치만 유지하면 되는 임무</p>
+<p>예를 들어 특정 좌표에서 수온, 염분 등의 데이터를 수집하는 거야. 이 경우 AUV가 수평으로 있든 수직으로 있든 크게 상관없어. 즉, 자세를 자유롭게 최적화할 수 있지.</p>
+<p>B. 위치와 특정 방향을 동시에 유지해야 하는 임무</p>
+<p>예를 들어 해저 구조물을 카메라로 관측하는 거야. 이 경우 센서가 목표물을 향해야 해서 자세에 제약이 생길 수 있어.</p>
+<p>나는 개인적으로 A부터 분석하고, 이후 B로 확장하는 것이 물리적인 원인을 명확하게 구분하는 데 유리할 것 같아.</p>
+<p>특히 A에서는 먼저 “일정한 해류 조건에서 AUV의 최적 정지 자세는 무엇이며, 그 자세가 액추에이터 구성에 따라 달라지는가?”라는 질문만으로도 꽤 구체적인 탐색을 시작할 수 있어.</p>
+<p>원하시면 다음을 도와드릴 수 있습니다.</p>
+<p>계속해서 AUV 자세 유지와 해류 영향에 대해 설명해 줘</p>
+<p>AUV 자세 유지 연구를 위한 구체적 실험 설계 아이디어 제안해 줘</p>
+<p>선택한 자세(수평/수직)별 에너지 소비 및 해류 대응 성능 비교 방법 알려줘</p></article><hr/><div class="page-footer"></div></div><div class="right sidebar"><div class="graph"><h3>그래프 뷰</h3><div class="graph-outer"><div class="graph-container" data-cfg="{&quot;drag&quot;:true,&quot;zoom&quot;:true,&quot;depth&quot;:1,&quot;scale&quot;:1.1,&quot;repelForce&quot;:0.5,&quot;centerForce&quot;:0.3,&quot;linkDistance&quot;:30,&quot;fontSize&quot;:0.6,&quot;opacityScale&quot;:1,&quot;showTags&quot;:true,&quot;removeTags&quot;:[],&quot;focusOnHover&quot;:false,&quot;enableRadial&quot;:false}"></div><button class="global-graph-icon" aria-label="Global Graph"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 55 55" fill="currentColor" xml:space="preserve"><path d="M49,0c-3.309,0-6,2.691-6,6c0,1.035,0.263,2.009,0.726,2.86l-9.829,9.829C32.542,17.634,30.846,17,29,17
+                s-3.542,0.634-4.898,1.688l-7.669-7.669C16.785,10.424,17,9.74,17,9c0-2.206-1.794-4-4-4S9,6.794,9,9s1.794,4,4,4
+                c0.74,0,1.424-0.215,2.019-0.567l7.669,7.669C21.634,21.458,21,23.154,21,25s0.634,3.542,1.688,4.897L10.024,42.562
+                C8.958,41.595,7.549,41,6,41c-3.309,0-6,2.691-6,6s2.691,6,6,6s6-2.691,6-6c0-1.035-0.263-2.009-0.726-2.86l12.829-12.829
+                c1.106,0.86,2.44,1.436,3.898,1.619v10.16c-2.833,0.478-5,2.942-5,5.91c0,3.309,2.691,6,6,6s6-2.691,6-6c0-2.967-2.167-5.431-5-5.91
+                v-10.16c1.458-0.183,2.792-0.759,3.898-1.619l7.669,7.669C41.215,39.576,41,40.26,41,41c0,2.206,1.794,4,4,4s4-1.794,4-4
+                s-1.794-4-4-4c-0.74,0-1.424,0.215-2.019,0.567l-7.669-7.669C36.366,28.542,37,26.846,37,25s-0.634-3.542-1.688-4.897l9.665-9.665
+                C46.042,11.405,47.451,12,49,12c3.309,0,6-2.691,6-6S52.309,0,49,0z M11,9c0-1.103,0.897-2,2-2s2,0.897,2,2s-0.897,2-2,2
+                S11,10.103,11,9z M6,51c-2.206,0-4-1.794-4-4s1.794-4,4-4s4,1.794,4,4S8.206,51,6,51z M33,49c0,2.206-1.794,4-4,4s-4-1.794-4-4
+                s1.794-4,4-4S33,46.794,33,49z M29,31c-3.309,0-6-2.691-6-6s2.691-6,6-6s6,2.691,6,6S32.309,31,29,31z M47,41c0,1.103-0.897,2-2,2
+                s-2-0.897-2-2s0.897-2,2-2S47,39.897,47,41z M49,10c-2.206,0-4-1.794-4-4s1.794-4,4-4s4,1.794,4,4S51.206,10,49,10z"></path></svg></button></div><div class="global-graph-outer"><div class="global-graph-container" data-cfg="{&quot;drag&quot;:true,&quot;zoom&quot;:true,&quot;depth&quot;:-1,&quot;scale&quot;:0.9,&quot;repelForce&quot;:0.5,&quot;centerForce&quot;:0.2,&quot;linkDistance&quot;:30,&quot;fontSize&quot;:0.6,&quot;opacityScale&quot;:1,&quot;showTags&quot;:true,&quot;removeTags&quot;:[],&quot;focusOnHover&quot;:true,&quot;enableRadial&quot;:true}"></div></div></div><div class="toc desktop-only"><button type="button" class="toc-header" aria-controls="toc-88" aria-expanded="true"><h3>목차</h3><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fold"><polyline points="6 9 12 15 18 9"></polyline></svg></button><ul id="list-1" class="toc-content overflow"><li class="depth-0"><a href="#auv-정위치-유지-자세--chatgpt-대화-전문" data-for="auv-정위치-유지-자세--chatgpt-대화-전문">AUV 정위치 유지 자세 — ChatGPT 대화 전문</a></li><li class="depth-2"><a href="#chatgpt" data-for="chatgpt">ChatGPT</a></li><li class="depth-2"><a href="#나" data-for="나">나</a></li><li class="depth-2"><a href="#chatgpt-1" data-for="chatgpt-1">ChatGPT</a></li><li class="depth-2"><a href="#나-1" data-for="나-1">나</a></li><li class="depth-2"><a href="#chatgpt-2" data-for="chatgpt-2">ChatGPT</a></li><li class="overflow-end"></li></ul></div><div class="backlinks"><h3>백링크</h3><ul id="list-2" class="overflow"><li><a href="../../10_Daily/2026-10-18" class="internal">2026-10-18</a></li><li><a href="../../30_Knowledge/정위치-유지-자세-선택" class="internal">정위치 유지 자세 선택</a></li><li><a href="../../" class="internal">Research Direction</a></li><li class="overflow-end"></li></ul></div></div><footer class><p>Created with <a href="https://quartz.jzhao.xyz/">Quartz v4.5.2</a> © 2026</p><ul></ul></footer></div></div></body><script type="application/javascript">function n(){let t=this.parentElement;t.classList.toggle("is-collapsed");let e=t.getElementsByClassName("callout-content")[0];if(!e)return;let l=t.classList.contains("is-collapsed");e.style.gridTemplateRows=l?"0fr":"1fr"}function c(){let t=document.getElementsByClassName("callout is-collapsible");for(let e of t){let l=e.getElementsByClassName("callout-title")[0],s=e.getElementsByClassName("callout-content")[0];if(!l||!s)continue;l.addEventListener("click",n),window.addCleanup(()=>l.removeEventListener("click",n));let o=e.classList.contains("is-collapsed");s.style.gridTemplateRows=o?"0fr":"1fr"}}document.addEventListener("nav",c);
+</script><script type="module">function f(i,e){if(!i)return;function r(o){o.target===this&&(o.preventDefault(),o.stopPropagation(),e())}function t(o){o.key.startsWith("Esc")&&(o.preventDefault(),e())}i?.addEventListener("click",r),window.addCleanup(()=>i?.removeEventListener("click",r)),document.addEventListener("keydown",t),window.addCleanup(()=>document.removeEventListener("keydown",t))}function y(i){for(;i.firstChild;)i.removeChild(i.firstChild)}var h=class{constructor(e,r){this.container=e;this.content=r;this.setupEventListeners(),this.setupNavigationControls(),this.resetTransform()}isDragging=!1;startPan={x:0,y:0};currentPan={x:0,y:0};scale=1;MIN_SCALE=.5;MAX_SCALE=3;cleanups=[];setupEventListeners(){let e=this.onMouseDown.bind(this),r=this.onMouseMove.bind(this),t=this.onMouseUp.bind(this),o=this.resetTransform.bind(this);this.container.addEventListener("mousedown",e),document.addEventListener("mousemove",r),document.addEventListener("mouseup",t),window.addEventListener("resize",o),this.cleanups.push(()=>this.container.removeEventListener("mousedown",e),()=>document.removeEventListener("mousemove",r),()=>document.removeEventListener("mouseup",t),()=>window.removeEventListener("resize",o))}cleanup(){for(let e of this.cleanups)e()}setupNavigationControls(){let e=document.createElement("div");e.className="mermaid-controls";let r=this.createButton("+",()=>this.zoom(.1)),t=this.createButton("-",()=>this.zoom(-.1)),o=this.createButton("Reset",()=>this.resetTransform());e.appendChild(t),e.appendChild(o),e.appendChild(r),this.container.appendChild(e)}createButton(e,r){let t=document.createElement("button");return t.textContent=e,t.className="mermaid-control-button",t.addEventListener("click",r),window.addCleanup(()=>t.removeEventListener("click",r)),t}onMouseDown(e){e.button===0&&(this.isDragging=!0,this.startPan={x:e.clientX-this.currentPan.x,y:e.clientY-this.currentPan.y},this.container.style.cursor="grabbing")}onMouseMove(e){this.isDragging&&(e.preventDefault(),this.currentPan={x:e.clientX-this.startPan.x,y:e.clientY-this.startPan.y},this.updateTransform())}onMouseUp(){this.isDragging=!1,this.container.style.cursor="grab"}zoom(e){let r=Math.min(Math.max(this.scale+e,this.MIN_SCALE),this.MAX_SCALE),t=this.content.getBoundingClientRect(),o=t.width/2,n=t.height/2,c=r-this.scale;this.currentPan.x-=o*c,this.currentPan.y-=n*c,this.scale=r,this.updateTransform()}updateTransform(){this.content.style.transform=`translate(${this.currentPan.x}px, ${this.currentPan.y}px) scale(${this.scale})`}resetTransform(){this.scale=1;let e=this.content.querySelector("svg");this.currentPan={x:e.getBoundingClientRect().width/2,y:e.getBoundingClientRect().height/2},this.updateTransform()}},C=["--secondary","--tertiary","--gray","--light","--lightgray","--highlight","--dark","--darkgray","--codeFont"],E;document.addEventListener("nav",async()=>{let e=document.querySelector(".center").querySelectorAll("code.mermaid");if(e.length===0)return;E||=await import("https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.4.0/mermaid.esm.min.mjs");let r=E.default,t=new WeakMap;for(let n of e)t.set(n,n.innerText);async function o(){for(let s of e){s.removeAttribute("data-processed");let a=t.get(s);a&&(s.innerHTML=a)}let n=C.reduce((s,a)=>(s[a]=window.getComputedStyle(document.documentElement).getPropertyValue(a),s),{}),c=document.documentElement.getAttribute("saved-theme")==="dark";r.initialize({startOnLoad:!1,securityLevel:"loose",theme:c?"dark":"base",themeVariables:{fontFamily:n["--codeFont"],primaryColor:n["--light"],primaryTextColor:n["--darkgray"],primaryBorderColor:n["--tertiary"],lineColor:n["--darkgray"],secondaryColor:n["--secondary"],tertiaryColor:n["--tertiary"],clusterBkg:n["--light"],edgeLabelBackground:n["--highlight"]}}),await r.run({nodes:e})}await o(),document.addEventListener("themechange",o),window.addCleanup(()=>document.removeEventListener("themechange",o));for(let n=0;n<e.length;n++){let v=function(){let g=l.querySelector("#mermaid-space"),m=l.querySelector(".mermaid-content");if(!m)return;y(m);let w=c.querySelector("svg").cloneNode(!0);m.appendChild(w),l.classList.add("active"),g.style.cursor="grab",u=new h(g,m)},M=function(){l.classList.remove("active"),u?.cleanup(),u=null},c=e[n],s=c.parentElement,a=s.querySelector(".clipboard-button"),d=s.querySelector(".expand-button"),p=window.getComputedStyle(a),L=a.offsetWidth+parseFloat(p.marginLeft||"0")+parseFloat(p.marginRight||"0");d.style.right=`calc(${L}px + 0.3rem)`,s.prepend(d);let l=s.querySelector("#mermaid-container");if(!l)return;let u=null;d.addEventListener("click",v),f(l,M),window.addCleanup(()=>{u?.cleanup(),d.removeEventListener("click",v)})}});
+</script><script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/copy-tex.min.js" type="application/javascript"></script><script src="../../postscript.js" type="module"></script></html>

@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="ko" dir="ltr"><head><title>시뮬레이션 환경 현실성</title><meta charset="utf-8"/><link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com"/><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto Sans KR:wght@400;700&amp;family=Noto Sans KR:ital,wght@0,400;0,600;1,400;1,600&amp;family=IBM Plex Mono:wght@400;600&amp;display=swap"/><link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin="anonymous"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta name="og:site_name" content="LabNote"/><meta property="og:title" content="시뮬레이션 환경 현실성"/><meta property="og:type" content="website"/><meta name="twitter:card" content="summary_large_image"/><meta name="twitter:title" content="시뮬레이션 환경 현실성"/><meta name="twitter:description" content="시뮬레이션 환경 현실성 한 줄로 지금 제어기는 정답지를 보면서 시험을 치고 있다 — 환경 구성이란 제어기에게서 정답지를 빼앗고, 실제 기체가 받는 것과 같은 “흐리고 늦고 빠진” 정보만 주는 일이다."/><meta property="og:description" content="시뮬레이션 환경 현실성 한 줄로 지금 제어기는 정답지를 보면서 시험을 치고 있다 — 환경 구성이란 제어기에게서 정답지를 빼앗고, 실제 기체가 받는 것과 같은 “흐리고 늦고 빠진” 정보만 주는 일이다."/><meta property="og:image:alt" content="시뮬레이션 환경 현실성 한 줄로 지금 제어기는 정답지를 보면서 시험을 치고 있다 — 환경 구성이란 제어기에게서 정답지를 빼앗고, 실제 기체가 받는 것과 같은 “흐리고 늦고 빠진” 정보만 주는 일이다."/><meta property="og:image" content="https://yusik36.github.io/research-notes/static/og-image.png"/><meta property="og:image:url" content="https://yusik36.github.io/research-notes/static/og-image.png"/><meta name="twitter:image" content="https://yusik36.github.io/research-notes/static/og-image.png"/><meta property="og:image:type" content="image/.png"/><meta property="twitter:domain" content="yusik36.github.io/research-notes"/><meta property="og:url" content="https://yusik36.github.io/research-notes/30_Knowledge/시뮬레이션-환경-현실성"/><meta property="twitter:url" content="https://yusik36.github.io/research-notes/30_Knowledge/시뮬레이션-환경-현실성"/><link rel="icon" href="../static/icon.png"/><meta name="description" content="시뮬레이션 환경 현실성 한 줄로 지금 제어기는 정답지를 보면서 시험을 치고 있다 — 환경 구성이란 제어기에게서 정답지를 빼앗고, 실제 기체가 받는 것과 같은 “흐리고 늦고 빠진” 정보만 주는 일이다."/><meta name="generator" content="Quartz"/><link href="../index.css" rel="stylesheet" type="text/css" spa-preserve/><style>.expand-button {
+  position: absolute;
+  display: flex;
+  float: right;
+  padding: 0.4rem;
+  margin: 0.3rem;
+  right: 0;
+  color: var(--gray);
+  border-color: var(--dark);
+  background-color: var(--light);
+  border: 1px solid;
+  border-radius: 5px;
+  opacity: 0;
+  transition: 0.2s;
+}
+.expand-button > svg {
+  fill: var(--light);
+  filter: contrast(0.3);
+}
+.expand-button:hover {
+  cursor: pointer;
+  border-color: var(--secondary);
+}
+.expand-button:focus {
+  outline: 0;
+}
+
+pre:hover > .expand-button {
+  opacity: 1;
+  transition: 0.2s;
+}
+
+#mermaid-container {
+  position: fixed;
+  contain: layout;
+  z-index: 999;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  display: none;
+  backdrop-filter: blur(4px);
+  background: rgba(0, 0, 0, 0.5);
+}
+#mermaid-container.active {
+  display: inline-block;
+}
+#mermaid-container > #mermaid-space {
+  border: 1px solid var(--lightgray);
+  background-color: var(--light);
+  border-radius: 5px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 80vh;
+  width: 80vw;
+  overflow: hidden;
+}
+#mermaid-container > #mermaid-space > .mermaid-content {
+  padding: 2rem;
+  position: relative;
+  transform-origin: 0 0;
+  transition: transform 0.1s ease;
+  overflow: visible;
+  min-height: 200px;
+  min-width: 200px;
+}
+#mermaid-container > #mermaid-space > .mermaid-content pre {
+  margin: 0;
+  border: none;
+}
+#mermaid-container > #mermaid-space > .mermaid-content svg {
+  max-width: none;
+  height: auto;
+}
+#mermaid-container > #mermaid-space > .mermaid-controls {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  gap: 8px;
+  padding: 8px;
+  background: var(--light);
+  border: 1px solid var(--lightgray);
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 2;
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 1px solid var(--lightgray);
+  background: var(--light);
+  color: var(--dark);
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  font-family: var(--bodyFont);
+  transition: all 0.2s ease;
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button:hover {
+  background: var(--lightgray);
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button:active {
+  transform: translateY(1px);
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button:nth-child(2) {
+  width: auto;
+  padding: 0 12px;
+  font-size: 14px;
+}
+/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VSb290IjoiQzpcXEFyY2hpdmVcXOyeoeuLpOq1rOumrFxcVVNU7J247YS0X+yngOybkOyEnFxcc2l0ZVxccXVhcnR6XFxjb21wb25lbnRzXFxzdHlsZXMiLCJzb3VyY2VzIjpbIm1lcm1haWQuaW5saW5lLnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDRTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTs7QUFFQTtFQUNFO0VBQ0E7O0FBR0Y7RUFDRTtFQUNBOztBQUdGO0VBQ0U7OztBQUtGO0VBQ0U7RUFDQTs7O0FBSUo7RUFDRTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBOztBQUVBO0VBQ0U7O0FBR0Y7RUFDRTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTs7QUFFQTtFQUNFO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBOztBQUVBO0VBQ0U7RUFDQTs7QUFHRjtFQUNFO0VBQ0E7O0FBSUo7RUFDRTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBOztBQUVBO0VBQ0U7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTs7QUFFQTtFQUNFOztBQUdGO0VBQ0U7O0FBSUY7RUFDRTtFQUNBO0VBQ0EiLCJzb3VyY2VzQ29udGVudCI6WyIuZXhwYW5kLWJ1dHRvbiB7XG4gIHBvc2l0aW9uOiBhYnNvbHV0ZTtcbiAgZGlzcGxheTogZmxleDtcbiAgZmxvYXQ6IHJpZ2h0O1xuICBwYWRkaW5nOiAwLjRyZW07XG4gIG1hcmdpbjogMC4zcmVtO1xuICByaWdodDogMDsgLy8gTk9URTogcmlnaHQgd2lsbCBiZSBzZXQgaW4gbWVybWFpZC5pbmxpbmUudHNcbiAgY29sb3I6IHZhcigtLWdyYXkpO1xuICBib3JkZXItY29sb3I6IHZhcigtLWRhcmspO1xuICBiYWNrZ3JvdW5kLWNvbG9yOiB2YXIoLS1saWdodCk7XG4gIGJvcmRlcjogMXB4IHNvbGlkO1xuICBib3JkZXItcmFkaXVzOiA1cHg7XG4gIG9wYWNpdHk6IDA7XG4gIHRyYW5zaXRpb246IDAuMnM7XG5cbiAgJiA+IHN2ZyB7XG4gICAgZmlsbDogdmFyKC0tbGlnaHQpO1xuICAgIGZpbHRlcjogY29udHJhc3QoMC4zKTtcbiAgfVxuXG4gICY6aG92ZXIge1xuICAgIGN1cnNvcjogcG9pbnRlcjtcbiAgICBib3JkZXItY29sb3I6IHZhcigtLXNlY29uZGFyeSk7XG4gIH1cblxuICAmOmZvY3VzIHtcbiAgICBvdXRsaW5lOiAwO1xuICB9XG59XG5cbnByZSB7XG4gICY6aG92ZXIgPiAuZXhwYW5kLWJ1dHRvbiB7XG4gICAgb3BhY2l0eTogMTtcbiAgICB0cmFuc2l0aW9uOiAwLjJzO1xuICB9XG59XG5cbiNtZXJtYWlkLWNvbnRhaW5lciB7XG4gIHBvc2l0aW9uOiBmaXhlZDtcbiAgY29udGFpbjogbGF5b3V0O1xuICB6LWluZGV4OiA5OTk7XG4gIGxlZnQ6IDA7XG4gIHRvcDogMDtcbiAgd2lkdGg6IDEwMHZ3O1xuICBoZWlnaHQ6IDEwMHZoO1xuICBvdmVyZmxvdzogaGlkZGVuO1xuICBkaXNwbGF5OiBub25lO1xuICBiYWNrZHJvcC1maWx0ZXI6IGJsdXIoNHB4KTtcbiAgYmFja2dyb3VuZDogcmdiYSgwLCAwLCAwLCAwLjUpO1xuXG4gICYuYWN0aXZlIHtcbiAgICBkaXNwbGF5OiBpbmxpbmUtYmxvY2s7XG4gIH1cblxuICAmID4gI21lcm1haWQtc3BhY2Uge1xuICAgIGJvcmRlcjogMXB4IHNvbGlkIHZhcigtLWxpZ2h0Z3JheSk7XG4gICAgYmFja2dyb3VuZC1jb2xvcjogdmFyKC0tbGlnaHQpO1xuICAgIGJvcmRlci1yYWRpdXM6IDVweDtcbiAgICBwb3NpdGlvbjogZml4ZWQ7XG4gICAgdG9wOiA1MCU7XG4gICAgbGVmdDogNTAlO1xuICAgIHRyYW5zZm9ybTogdHJhbnNsYXRlKC01MCUsIC01MCUpO1xuICAgIGhlaWdodDogODB2aDtcbiAgICB3aWR0aDogODB2dztcbiAgICBvdmVyZmxvdzogaGlkZGVuO1xuXG4gICAgJiA+IC5tZXJtYWlkLWNvbnRlbnQge1xuICAgICAgcGFkZGluZzogMnJlbTtcbiAgICAgIHBvc2l0aW9uOiByZWxhdGl2ZTtcbiAgICAgIHRyYW5zZm9ybS1vcmlnaW46IDAgMDtcbiAgICAgIHRyYW5zaXRpb246IHRyYW5zZm9ybSAwLjFzIGVhc2U7XG4gICAgICBvdmVyZmxvdzogdmlzaWJsZTtcbiAgICAgIG1pbi1oZWlnaHQ6IDIwMHB4O1xuICAgICAgbWluLXdpZHRoOiAyMDBweDtcblxuICAgICAgcHJlIHtcbiAgICAgICAgbWFyZ2luOiAwO1xuICAgICAgICBib3JkZXI6IG5vbmU7XG4gICAgICB9XG5cbiAgICAgIHN2ZyB7XG4gICAgICAgIG1heC13aWR0aDogbm9uZTtcbiAgICAgICAgaGVpZ2h0OiBhdXRvO1xuICAgICAgfVxuICAgIH1cblxuICAgICYgPiAubWVybWFpZC1jb250cm9scyB7XG4gICAgICBwb3NpdGlvbjogYWJzb2x1dGU7XG4gICAgICBib3R0b206IDIwcHg7XG4gICAgICByaWdodDogMjBweDtcbiAgICAgIGRpc3BsYXk6IGZsZXg7XG4gICAgICBnYXA6IDhweDtcbiAgICAgIHBhZGRpbmc6IDhweDtcbiAgICAgIGJhY2tncm91bmQ6IHZhcigtLWxpZ2h0KTtcbiAgICAgIGJvcmRlcjogMXB4IHNvbGlkIHZhcigtLWxpZ2h0Z3JheSk7XG4gICAgICBib3JkZXItcmFkaXVzOiA2cHg7XG4gICAgICBib3gtc2hhZG93OiAwIDJweCA0cHggcmdiYSgwLCAwLCAwLCAwLjEpO1xuICAgICAgei1pbmRleDogMjtcblxuICAgICAgLm1lcm1haWQtY29udHJvbC1idXR0b24ge1xuICAgICAgICBkaXNwbGF5OiBmbGV4O1xuICAgICAgICBhbGlnbi1pdGVtczogY2VudGVyO1xuICAgICAgICBqdXN0aWZ5LWNvbnRlbnQ6IGNlbnRlcjtcbiAgICAgICAgd2lkdGg6IDMycHg7XG4gICAgICAgIGhlaWdodDogMzJweDtcbiAgICAgICAgcGFkZGluZzogMDtcbiAgICAgICAgYm9yZGVyOiAxcHggc29saWQgdmFyKC0tbGlnaHRncmF5KTtcbiAgICAgICAgYmFja2dyb3VuZDogdmFyKC0tbGlnaHQpO1xuICAgICAgICBjb2xvcjogdmFyKC0tZGFyayk7XG4gICAgICAgIGJvcmRlci1yYWRpdXM6IDRweDtcbiAgICAgICAgY3Vyc29yOiBwb2ludGVyO1xuICAgICAgICBmb250LXNpemU6IDE2cHg7XG4gICAgICAgIGZvbnQtZmFtaWx5OiB2YXIoLS1ib2R5Rm9udCk7XG4gICAgICAgIHRyYW5zaXRpb246IGFsbCAwLjJzIGVhc2U7XG5cbiAgICAgICAgJjpob3ZlciB7XG4gICAgICAgICAgYmFja2dyb3VuZDogdmFyKC0tbGlnaHRncmF5KTtcbiAgICAgICAgfVxuXG4gICAgICAgICY6YWN0aXZlIHtcbiAgICAgICAgICB0cmFuc2Zvcm06IHRyYW5zbGF0ZVkoMXB4KTtcbiAgICAgICAgfVxuXG4gICAgICAgIC8vIFN0eWxlIHRoZSByZXNldCBidXR0b24gZGlmZmVyZW50bHlcbiAgICAgICAgJjpudGgtY2hpbGQoMikge1xuICAgICAgICAgIHdpZHRoOiBhdXRvO1xuICAgICAgICAgIHBhZGRpbmc6IDAgMTJweDtcbiAgICAgICAgICBmb250LXNpemU6IDE0cHg7XG4gICAgICAgIH1cbiAgICAgIH1cbiAgICB9XG4gIH1cbn1cbiJdfQ== */</style><link href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" rel="stylesheet" type="text/css" spa-preserve/><script src="../prescript.js" type="application/javascript" spa-preserve></script><script type="application/javascript" spa-preserve>const fetchData = fetch("../static/contentIndex.json").then(data => data.json())</script></head><body data-slug="30_Knowledge/시뮬레이션-환경-현실성"><div id="quartz-root" class="page"><div id="quartz-body"><div class="left sidebar"><h2 class="page-title"><a href="..">LabNote</a></h2><div class="spacer mobile-only"></div><div class="flex-component" style="flex-direction: row; flex-wrap: nowrap; gap: 1rem;"><div style="flex-grow: 1; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><div class="search"><button class="search-button"><svg role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19.9 19.7"><title>Search</title><g class="search-path" fill="none"><path stroke-linecap="square" d="M18.5 18.3l-5.4-5.4"></path><circle cx="8" cy="8" r="7"></circle></g></svg><p>검색</p></button><div class="search-container"><div class="search-space"><input autocomplete="off" class="search-bar" name="search" type="text" aria-label="검색어를 입력하세요" placeholder="검색어를 입력하세요"/><div class="search-layout" data-preview="true"></div></div></div></div></div><div style="flex-grow: 0; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><button class="darkmode"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="dayIcon" x="0px" y="0px" viewBox="0 0 35 35" style="enable-background:new 0 0 35 35" xml:space="preserve" aria-label="다크 모드"><title>다크 모드</title><path d="M6,17.5C6,16.672,5.328,16,4.5,16h-3C0.672,16,0,16.672,0,17.5    S0.672,19,1.5,19h3C5.328,19,6,18.328,6,17.5z M7.5,26c-0.414,0-0.789,0.168-1.061,0.439l-2,2C4.168,28.711,4,29.086,4,29.5    C4,30.328,4.671,31,5.5,31c0.414,0,0.789-0.168,1.06-0.44l2-2C8.832,28.289,9,27.914,9,27.5C9,26.672,8.329,26,7.5,26z M17.5,6    C18.329,6,19,5.328,19,4.5v-3C19,0.672,18.329,0,17.5,0S16,0.672,16,1.5v3C16,5.328,16.671,6,17.5,6z M27.5,9    c0.414,0,0.789-0.168,1.06-0.439l2-2C30.832,6.289,31,5.914,31,5.5C31,4.672,30.329,4,29.5,4c-0.414,0-0.789,0.168-1.061,0.44    l-2,2C26.168,6.711,26,7.086,26,7.5C26,8.328,26.671,9,27.5,9z M6.439,8.561C6.711,8.832,7.086,9,7.5,9C8.328,9,9,8.328,9,7.5    c0-0.414-0.168-0.789-0.439-1.061l-2-2C6.289,4.168,5.914,4,5.5,4C4.672,4,4,4.672,4,5.5c0,0.414,0.168,0.789,0.439,1.06    L6.439,8.561z M33.5,16h-3c-0.828,0-1.5,0.672-1.5,1.5s0.672,1.5,1.5,1.5h3c0.828,0,1.5-0.672,1.5-1.5S34.328,16,33.5,16z     M28.561,26.439C28.289,26.168,27.914,26,27.5,26c-0.828,0-1.5,0.672-1.5,1.5c0,0.414,0.168,0.789,0.439,1.06l2,2    C28.711,30.832,29.086,31,29.5,31c0.828,0,1.5-0.672,1.5-1.5c0-0.414-0.168-0.789-0.439-1.061L28.561,26.439z M17.5,29    c-0.829,0-1.5,0.672-1.5,1.5v3c0,0.828,0.671,1.5,1.5,1.5s1.5-0.672,1.5-1.5v-3C19,29.672,18.329,29,17.5,29z M17.5,7    C11.71,7,7,11.71,7,17.5S11.71,28,17.5,28S28,23.29,28,17.5S23.29,7,17.5,7z M17.5,25c-4.136,0-7.5-3.364-7.5-7.5    c0-4.136,3.364-7.5,7.5-7.5c4.136,0,7.5,3.364,7.5,7.5C25,21.636,21.636,25,17.5,25z"></path></svg><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="nightIcon" x="0px" y="0px" viewBox="0 0 100 100" style="enable-background:new 0 0 100 100" xml:space="preserve" aria-label="라이트 모드"><title>라이트 모드</title><path d="M96.76,66.458c-0.853-0.852-2.15-1.064-3.23-0.534c-6.063,2.991-12.858,4.571-19.655,4.571  C62.022,70.495,50.88,65.88,42.5,57.5C29.043,44.043,25.658,23.536,34.076,6.47c0.532-1.08,0.318-2.379-0.534-3.23  c-0.851-0.852-2.15-1.064-3.23-0.534c-4.918,2.427-9.375,5.619-13.246,9.491c-9.447,9.447-14.65,22.008-14.65,35.369  c0,13.36,5.203,25.921,14.65,35.368s22.008,14.65,35.368,14.65c13.361,0,25.921-5.203,35.369-14.65  c3.872-3.871,7.064-8.328,9.491-13.246C97.826,68.608,97.611,67.309,96.76,66.458z"></path></svg></button></div><div style="flex-grow: 0; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><button class="readermode"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="readerIcon" fill="currentColor" stroke="currentColor" stroke-width="0.2" stroke-linecap="round" stroke-linejoin="round" width="64px" height="64px" viewBox="0 0 24 24" aria-label="리더 모드"><title>리더 모드</title><g transform="translate(-1.8, -1.8) scale(1.15, 1.2)"><path d="M8.9891247,2.5 C10.1384702,2.5 11.2209868,2.96705384 12.0049645,3.76669482 C12.7883914,2.96705384 13.8709081,2.5 15.0202536,2.5 L18.7549359,2.5 C19.1691495,2.5 19.5049359,2.83578644 19.5049359,3.25 L19.5046891,4.004 L21.2546891,4.00457396 C21.6343849,4.00457396 21.9481801,4.28672784 21.9978425,4.6528034 L22.0046891,4.75457396 L22.0046891,20.25 C22.0046891,20.6296958 21.7225353,20.943491 21.3564597,20.9931534 L21.2546891,21 L2.75468914,21 C2.37499337,21 2.06119817,20.7178461 2.01153575,20.3517706 L2.00468914,20.25 L2.00468914,4.75457396 C2.00468914,4.37487819 2.28684302,4.061083 2.65291858,4.01142057 L2.75468914,4.00457396 L4.50368914,4.004 L4.50444233,3.25 C4.50444233,2.87030423 4.78659621,2.55650904 5.15267177,2.50684662 L5.25444233,2.5 L8.9891247,2.5 Z M4.50368914,5.504 L3.50468914,5.504 L3.50468914,19.5 L10.9478955,19.4998273 C10.4513189,18.9207296 9.73864328,18.5588115 8.96709342,18.5065584 L8.77307039,18.5 L5.25444233,18.5 C4.87474657,18.5 4.56095137,18.2178461 4.51128895,17.8517706 L4.50444233,17.75 L4.50368914,5.504 Z M19.5049359,17.75 C19.5049359,18.1642136 19.1691495,18.5 18.7549359,18.5 L15.2363079,18.5 C14.3910149,18.5 13.5994408,18.8724714 13.0614828,19.4998273 L20.5046891,19.5 L20.5046891,5.504 L19.5046891,5.504 L19.5049359,17.75 Z M18.0059359,3.999 L15.0202536,4 L14.8259077,4.00692283 C13.9889509,4.06666544 13.2254227,4.50975805 12.7549359,5.212 L12.7549359,17.777 L12.7782651,17.7601316 C13.4923805,17.2719483 14.3447024,17 15.2363079,17 L18.0059359,16.999 L18.0056891,4.798 L18.0033792,4.75457396 L18.0056891,4.71 L18.0059359,3.999 Z M8.9891247,4 L6.00368914,3.999 L6.00599909,4.75457396 L6.00599909,4.75457396 L6.00368914,4.783 L6.00368914,16.999 L8.77307039,17 C9.57551536,17 10.3461406,17.2202781 11.0128313,17.6202194 L11.2536891,17.776 L11.2536891,5.211 C10.8200889,4.56369974 10.1361548,4.13636104 9.37521067,4.02745763 L9.18347055,4.00692283 L8.9891247,4 Z"></path></g></svg></button></div></div><div class="explorer" data-behavior="link" data-collapsed="collapsed" data-savestate="true" data-data-fns="{&quot;order&quot;:[&quot;filter&quot;,&quot;map&quot;,&quot;sort&quot;],&quot;sortFn&quot;:&quot;(a,b)=>!a.isFolder&amp;&amp;!b.isFolder||a.isFolder&amp;&amp;b.isFolder?a.displayName.localeCompare(b.displayName,void 0,{numeric:!0,sensitivity:\&quot;base\&quot;}):!a.isFolder&amp;&amp;b.isFolder?1:-1&quot;,&quot;filterFn&quot;:&quot;node=>node.slugSegment!==\&quot;tags\&quot;&quot;,&quot;mapFn&quot;:&quot;node=>node&quot;}"><button type="button" class="explorer-toggle mobile-explorer hide-until-loaded" data-mobile="true" aria-controls="explorer-142"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide-menu"><line x1="4" x2="20" y1="12" y2="12"></line><line x1="4" x2="20" y1="6" y2="6"></line><line x1="4" x2="20" y1="18" y2="18"></line></svg></button><button type="button" class="title-button explorer-toggle desktop-explorer" data-mobile="false" aria-expanded="true"><h2>탐색기</h2><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="5 8 14 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fold"><polyline points="6 9 12 15 18 9"></polyline></svg></button><div id="explorer-142" class="explorer-content" aria-expanded="false" role="group"><ul class="explorer-ul overflow" id="list-0"><li class="overflow-end"></li></ul></div><template id="template-file"><li><a href="#"></a></li></template><template id="template-folder"><li><div class="folder-container"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="5 8 14 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="folder-icon"><polyline points="6 9 12 15 18 9"></polyline></svg><div><button class="folder-button"><span class="folder-title"></span></button></div></div><div class="folder-outer"><ul class="content"></ul></div></li></template></div></div><div class="center"><div class="page-header"><div class="popover-hint"><nav class="breadcrumb-container" aria-label="breadcrumbs"><div class="breadcrumb-element"><a href="../">Home</a><p> ❯ </p></div><div class="breadcrumb-element"><a href="../30_Knowledge/">30_Knowledge</a><p> ❯ </p></div><div class="breadcrumb-element"><a href>시뮬레이션 환경 현실성</a></div></nav><h1 class="article-title">시뮬레이션 환경 현실성</h1><p show-comma="true" class="content-meta"><time datetime="2026-09-28T15:00:00.000Z">2026년 9월 29일</time><span>20 min read</span></p><ul class="tags"><li><a href="../tags/simulation" class="internal tag-link">simulation</a></li><li><a href="../tags/communication" class="internal tag-link">communication</a></li><li><a href="../tags/modeling" class="internal tag-link">modeling</a></li><li><a href="../tags/ros2" class="internal tag-link">ros2</a></li></ul></div></div><article class="popover-hint"><h1 id="시뮬레이션-환경-현실성">시뮬레이션 환경 현실성<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#시뮬레이션-환경-현실성" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h1>
+<blockquote class="callout abstract" data-callout="abstract">
+<div class="callout-title">
+                  <div class="callout-icon"></div>
+                  <div class="callout-title-inner"><p>한 줄로 </p></div>
+                  
+                </div>
+<div class="callout-content">
+<p>지금 제어기는 <strong>정답지를 보면서 시험을 치고 있다</strong> — 환경 구성이란 제어기에게서 정답지를 빼앗고, 실제 기체가 받는 것과 같은 “흐리고 늦고 빠진” 정보만 주는 일이다.</p>
+</div>
+</blockquote>
+<p><strong>어디에 앉는가</strong> — 제어 이론(제어기 설계)과 별개인, 제어기와 plant <strong>사이의 층</strong>(센서·추정·통신·구동·환경)을 채우는 물건 → <a href="../20_Projects/AUV-Control-Sim/AUV-Control-Simulation#현재-구현-범위--무엇이-참값이고-무엇이-빠졌나-2026-09-29-정리" class="internal alias" data-slug="20_Projects/AUV-Control-Sim/AUV-Control-Simulation">현재 구현 범위 — 무엇이 참값이고 무엇이 빠졌나 (2026-09-29 정리)</a> · <a href="../30_Knowledge/Sim-to-Real" class="internal" data-slug="30_Knowledge/Sim-to-Real">Sim-to-Real</a></p>
+<h2 id="왜-필요한가">왜 필요한가<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#왜-필요한가" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>참값 환경에서 잘 되는 제어기는 <strong>“센서가 완벽하고, 통신이 기다려 주고, 힘이 원하는 대로 나올 때”</strong> 잘 된다는 뜻밖에 안 된다.
+실기체에서 무너지는 이유는 대부분 제어 법칙이 아니라 이 층에 있다.
+그리고 이 층은 강의(제어 이론)에서 안 다룬다 — 따로 챙겨야 한다.</p>
+<hr/>
+<h2 id="루프를-7칸으로-나누면-빠진-칸이-보인다">루프를 7칸으로 나누면 빠진 칸이 보인다<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#루프를-7칸으로-나누면-빠진-칸이-보인다" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>실제 폐루프는 plant 와 제어기 두 칸이 아니다.</p>
+<pre><code>            ┌──────────── 통신 (시간·지연·메시지·좌표 규약) ─────────────┐
+            ▼                                                            │
+[제어기] → [구동기] → [plant 동역학] ← [환경: 해류·파도·해저]            │
+   ▲                        │                                            │
+   │                        ▼                                            │
+[추정기(EKF)] ←──────── [센서] ──────────────────────────────────────────┘
+</code></pre>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th>칸</th><th>지금 상태</th><th>제어기가 받는 것</th></tr></thead><tbody><tr><td>plant 동역학</td><td>✅ 검증 (MSS·Delphin2 식, HoloOcean 적분)</td><td>—</td></tr><tr><td>센서</td><td>❌ 없음 — <code>DynamicsSensor</code> 참값</td><td>정답 12개</td></tr><tr><td>추정기</td><td>❌ 없음 (필요도 없음, 참값이니까)</td><td>—</td></tr><tr><td>통신</td><td>⚠️ lockstep·<code>Float64MultiArray</code></td><td>지연 0, 빠짐 0</td></tr><tr><td>구동기</td><td>❌ Delphin 없음 / Remus 포화만</td><td>요청한 힘 그대로</td></tr><tr><td>환경</td><td>❌ 빈 물</td><td>외란 0</td></tr><tr><td>제어기</td><td>⚠️ 자리표시</td><td>—</td></tr></tbody></table></div>
+<blockquote class="callout tip" data-callout="tip">
+<div class="callout-title">
+                  <div class="callout-icon"></div>
+                  <div class="callout-title-inner"><p>검증된 건 가운데 한 칸(plant)뿐이다 — 나머지 칸은 &quot;없음&quot; 이지 &quot;완벽함&quot; 이 아니다. </p></div>
+                  
+                </div>
+</blockquote>
+<h2 id="참값의-가장-큰-거짓말은-수평-위치-xy-다">참값의 가장 큰 거짓말은 수평 위치 x·y 다<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#참값의-가장-큰-거짓말은-수평-위치-xy-다" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p><strong>물속에는 위치를 직접 재는 센서가 거의 없다.</strong> 전파(GPS)·빛(카메라)이 몇 m 도 못 간다 → 소리(음향)와 적분에 기댄다.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th>센서</th><th>재는 것</th><th>원리 · 비유</th><th>대략 주기</th><th>오차의 성격</th><th>HoloOcean</th></tr></thead><tbody><tr><td><strong>IMU</strong></td><td>가속도 3 + 각속도 3</td><td>몸 안의 평형감각</td><td>100–400 Hz</td><td>잡음 + <strong>bias 가 천천히 흐름</strong> → 적분하면 발산</td><td><code>IMUSensor</code> (<code>AccelSigma</code> <code>AngVelSigma</code> <code>AccelBiasSigma</code> <code>AngVelBiasSigma</code> <code>ReturnBias</code>)</td></tr><tr><td><strong>수심계</strong></td><td>z (압력)</td><td>귀가 먹먹한 정도로 깊이 앎</td><td>수~수십 Hz</td><td>매우 정확 (cm 급) — 수직은 쉽다</td><td><code>DepthSensor</code> (<code>Sigma</code>)</td></tr><tr><td><strong>DVL</strong></td><td>해저 대비 속도 u v w</td><td>해저에 소리 4갈래 쏴서 도플러 → <strong>휠 오도메트리</strong></td><td>1–10 Hz</td><td>해저가 <code>MaxRange</code> 밖이면 <strong>값이 없음</strong>(bottom lock 상실)</td><td><code>DVLSensor</code> (<code>VelSigma</code> <code>MaxRange</code> <code>RangeSigma</code> <code>Elevation</code>)</td></tr><tr><td><strong>자력계/컴퍼스</strong></td><td>방위 ψ</td><td>나침반</td><td>수십 Hz</td><td>모터·철 구조물에 끌려감</td><td><code>MagnetometerSensor</code> (<code>Sigma</code>)</td></tr><tr><td><strong>GPS</strong></td><td>x y</td><td>—</td><td>1–10 Hz</td><td><strong>수면 근처에서만</strong> (기본 <code>Depth</code> = 2 m)</td><td><code>GPSSensor</code> (<code>Sigma</code> <code>Depth</code>)</td></tr><tr><td><strong>음향 측위</strong> (USBL/LBL)</td><td>비콘까지 거리·방향</td><td>박쥐</td><td>수 초에 1번</td><td>느리고 늦고 가끔 빠짐</td><td><code>AcousticBeaconSensor</code> (<code>DistanceSigma</code>)</td></tr></tbody></table></div>
+<p>(주기·정확도는 <strong>대략적 자릿수</strong>. 실제 값은 쓸 센서의 datasheet 로 넣는다.)</p>
+<ul>
+<li>그래서 수중 항법 = <strong>IMU + DVL 로 추측항법(dead reckoning)</strong>, 수심계로 z 고정, 가끔 들어오는 음향·GPS 로 드리프트 보정 → EKF. <strong>ANSL 주제 그 자체.</strong></li>
+<li>지금 제어기가 받는 x·y 는 이 모든 과정을 건너뛴 정답이다</li>
+</ul>
+<blockquote class="callout tip" data-callout="tip">
+<div class="callout-title">
+                  <div class="callout-icon"></div>
+                  <div class="callout-title-inner"><p>참값을 끄는 순간 &quot;제어&quot; 문제 앞에 &quot;항법&quot; 문제가 생긴다 — 그게 실기체의 기본값이다. </p></div>
+                  
+                </div>
+</blockquote>
+<h2 id="센서-오차는-잡음-하나가-아니다--8가지로-나눠-넣는다">센서 오차는 ‘잡음’ 하나가 아니다 — 8가지로 나눠 넣는다<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#센서-오차는-잡음-하나가-아니다--8가지로-나눠-넣는다" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>HoloOcean 이 지원하는 건 <strong>잡음·bias 두 가지뿐</strong>이다 (설치본 <code>sensors.py</code> 확인). 나머지는 노드에서 직접 만든다.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th>오차</th><th>제어에 미치는 영향</th><th>HoloOcean</th><th>넣는 곳</th></tr></thead><tbody><tr><td>백색 잡음</td><td>D 항이 증폭 → 구동기 떨림</td><td>✅ <code>*Sigma</code></td><td>설정만</td></tr><tr><td><strong>bias (느린 드리프트)</strong></td><td>적분하면 발산, 정상상태 오차</td><td>✅ <code>*BiasSigma</code> (IMU)</td><td>설정만</td></tr><tr><td>스케일 오차</td><td>게인이 몰래 바뀐 효과</td><td>❌</td><td>노드</td></tr><tr><td><strong>주기 (multi-rate)</strong></td><td>느린 센서 사이엔 <strong>옛 값</strong></td><td>⚠️ 센서별 <code>Hz</code> (아래 주의)</td><td>설정</td></tr><tr><td><strong>지연</strong></td><td>위상 지연 → 안정 여유 감소</td><td>❌</td><td>노드 (버퍼)</td></tr><tr><td>결측 (dropout)</td><td>값이 안 옴 — 그때 뭘 쓸지 정해야</td><td>⚠️ DVL 거리 초과 시</td><td>노드</td></tr><tr><td>이상값 (outlier)</td><td>한 번 튀면 제어 입력이 튐</td><td>❌</td><td>노드</td></tr><tr><td><strong>장착 위치·자세</strong></td><td>CG 가 아닌 곳의 속도를 잼</td><td>⚠️ 센서 부착 위치만</td><td>노드·추정기</td></tr></tbody></table></div>
+<ul>
+<li>장착 위치: CG 에서 <strong>r</strong> 떨어진 DVL 은 <code>v + ω×r</code> 를 잰다 → 선회 중엔 속도가 다르게 읽힘. <a href="../30_Knowledge/Transport-Theorem" class="internal alias" data-slug="30_Knowledge/Transport-Theorem">Transport Theorem</a> 의 <code>ω×</code> 가 여기서 또 나온다</li>
+<li><strong>주의 — 센서 <code>Hz</code> 는 <code>ticks_per_sec</code> 을 넘을 수 없고, 약수여야 한다</strong> (<code>environments.py</code>: 넘으면 경고, 약수 아니면 반올림). 지금 노드는 <strong>50 Hz tick</strong> → IMU 도 최대 50 Hz. 실제 IMU(100 Hz 이상)를 흉내 내려면 tick 을 올려야 하고, 실시간 유지가 되는지 따로 확인해야 한다</li>
+</ul>
+<blockquote class="callout tip" data-callout="tip">
+<div class="callout-title">
+                  <div class="callout-icon"></div>
+                  <div class="callout-title-inner"><p>오차는 하나씩 켠다 — 한꺼번에 켜면 성능이 나빠졌을 때 무엇 때문인지 모른다. </p></div>
+                  
+                </div>
+</blockquote>
+<h2 id="시계는-세-개다--시뮬-시간-벽시계-메시지-타임스탬프">시계는 세 개다 — 시뮬 시간, 벽시계, 메시지 타임스탬프<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#시계는-세-개다--시뮬-시간-벽시계-메시지-타임스탬프" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>지금은 셋이 일치하도록 <strong>억지로 묶어 놓았다</strong> (lockstep). 실제에서는 셋이 따로 논다.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th>시계</th><th>지금</th><th>실제</th></tr></thead><tbody><tr><td>시뮬레이션 시간</td><td>1 스텝 = 1 tick = 0.02 s</td><td>없음 (세상은 안 멈춤)</td></tr><tr><td>벽시계</td><td>Pacing 1x 로 <strong>화면만</strong> 맞춤</td><td>유일한 시간</td></tr><tr><td>메시지 시간</td><td><code>Float64MultiArray</code> 라 <strong>타임스탬프 없음</strong> (<code>k</code>, <code>t</code> 를 데이터에 넣음)</td><td><code>header.stamp</code> — 측정 시점</td></tr></tbody></table></div>
+<ul>
+<li><strong>lockstep = 시뮬레이터가 제어기를 기다려 준다.</strong> 제어기가 느려도 세상이 멈춰 준다 → 계산 지연이 <strong>0 으로 보인다</strong></li>
+<li>실제: 센서는 제 주기대로 오고, 제어기는 제 주기대로 돌고, 늦은 값은 늦은 대로 쓴다 (jitter 포함)</li>
+<li>그래서 제어기는 “지금 들어온 값” 이 아니라 <strong>“언제 잰 값인지”</strong> 를 봐야 한다 → 표준 메시지의 <code>header.stamp</code> 가 필요한 이유</li>
+<li><code>HoloOceanPlant</code> 의 blocking 은 <strong>시뮬 전용 편의</strong> (코드 생성도 불가). 실기체 구조에 가까운 쪽은 ROS 2 블록 방식 <code>remus100_holo_loop.slx</code></li>
+</ul>
+<blockquote class="callout tip" data-callout="tip">
+<div class="callout-title">
+                  <div class="callout-icon"></div>
+                  <div class="callout-title-inner"><p>Pacing 1x 는 &quot;실시간처럼 보이게&quot; 일 뿐 &quot;비동기 환경&quot; 이 아니다. </p></div>
+                  
+                </div>
+</blockquote>
+<h2 id="지연은-위상을-먹는다--제어-이론과-만나는-지점">지연은 위상을 먹는다 — 제어 이론과 만나는 지점<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#지연은-위상을-먹는다--제어-이론과-만나는-지점" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>지연 <code>τ</code> 는 이득은 그대로 두고 위상만 <code>ωτ</code> 만큼 깎는다.</p>
+<pre><code>e^{-sτ}  →  |e^{-jωτ}| = 1,   ∠e^{-jωτ} = -ωτ  [rad]
+</code></pre>
+<p><strong>읽는 법</strong> — 크기는 안 바뀌니 Bode 이득 선도에서는 안 보인다. 위상 선도에서만 교차 주파수 <code>ω_c</code> 근처가 <code>ω_c·τ</code> 만큼 내려가 <strong>위상 여유가 그만큼 준다.</strong> 빠른 제어기(ω_c 큼)일수록 같은 지연에 더 취약하다.</p>
+<ul>
+<li>이게 “환경 구성” 과 “제어 이론” 이 만나는 곳 — 환경에 지연을 넣어야 강의에서 배우는 <strong>안정 여유</strong>가 실제로 의미를 가진다</li>
+</ul>
+<blockquote class="callout tip" data-callout="tip">
+<div class="callout-title">
+                  <div class="callout-icon"></div>
+                  <div class="callout-title-inner"><p>지연 0 인 환경에서 맞춘 게인은 위상 여유를 과대평가한다. </p></div>
+                  
+                </div>
+</blockquote>
+<h2 id="메시지와-좌표-규약이-실기체-이식의-절반이다">메시지와 좌표 규약이 실기체 이식의 절반이다<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#메시지와-좌표-규약이-실기체-이식의-절반이다" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p><strong>지금 이미 좌표 규약이 세 개 섞여 있다.</strong></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th>누가</th><th>world</th><th>body</th><th>우리 코드</th></tr></thead><tbody><tr><td>Fossen / MSS / 강의</td><td>NED</td><td>FRD</td><td>제어기·<code>/state</code> 가 이 규약</td></tr><tr><td>HoloOcean</td><td>NWU</td><td>FLU</td><td><code>holo_bridge.py</code> 에서 <code>T = diag(1, -1, -1)</code> 로 변환</td></tr><tr><td>ROS 표준 (REP-103)</td><td>ENU</td><td>FLU</td><td>아직 안 씀 — 표준 메시지로 가면 만남</td></tr></tbody></table></div>
+<ul>
+<li>부호 하나 틀리면 <strong>양의 되먹임</strong> → 발산. 실기체에서 가장 흔한 첫 버그</li>
+<li><code>Float64MultiArray</code> 에 없는 것: 타임스탬프, <code>frame_id</code>(어느 좌표계인지), 공분산(얼마나 믿을 만한지). EKF 는 공분산을 먹고 산다</li>
+<li>표준 후보: <code>sensor_msgs/Imu</code> · <code>sensor_msgs/FluidPressure</code>(수심) · <code>nav_msgs/Odometry</code>(추정 결과) · DVL 은 <code>geometry_msgs/TwistWithCovarianceStamped</code> 또는 드라이버 전용 메시지</li>
+<li>센서 토픽은 QoS 를 best-effort 로 쓰는 경우가 많다 → 빠지는 메시지를 전제로 설계 (<a href="../00_Inbox/DDS" class="internal" data-slug="00_Inbox/DDS">DDS</a>)</li>
+</ul>
+<blockquote class="callout tip" data-callout="tip">
+<div class="callout-title">
+                  <div class="callout-icon"></div>
+                  <div class="callout-title-inner"><p>표준 메시지로 바꾸는 순간 &quot;제어기가 시뮬레이터용인지 실기체용인지&quot; 구분이 사라진다 — 그게 목적이다. </p></div>
+                  
+                </div>
+</blockquote>
+<h2 id="제어기가-요청한-힘은-그대로-나오지-않는다">제어기가 요청한 힘은 그대로 나오지 않는다<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#제어기가-요청한-힘은-그대로-나오지-않는다" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>지금 Delphin 은 <code>tau = [X Y Z K M N]</code> 를 <strong>원하는 대로 정확히, 즉시</strong> 받는다.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th>실제 구동기에 있는 것</th><th>결과</th></tr></thead><tbody><tr><td>추진기 추력 ∝ `n·</td><td>n</td></tr><tr><td>모터 시정수 (수십~수백 ms)</td><td>또 하나의 지연</td></tr><tr><td>데드존</td><td>작은 명령은 안 먹힘 → 한계 사이클</td></tr><tr><td>포화 · 핀 각속도 제한</td><td>windup, 큰 기동에서 성능 급락 (<a href="../30_Knowledge/Anti-windup" class="internal" data-slug="30_Knowledge/Anti-windup">Anti-windup</a>)</td></tr><tr><td>할당 (tau → 추진기·핀 각각)</td><td>6 자유도를 다 낼 수 없는 경우가 많음 (underactuated)</td></tr></tbody></table></div>
+<ul>
+<li>Remus 강의 모델은 핀 ±20°, rpm 1525 포화는 있지만 <strong>시정수·각속도 제한은 없다</strong></li>
+<li>할당은 4강 Part 2 (thrust allocation)</li>
+</ul>
+<blockquote class="callout tip" data-callout="tip">
+<div class="callout-title">
+                  <div class="callout-icon"></div>
+                  <div class="callout-title-inner"><p>구동기 모델이 없으면 제어기는 &quot;빠르게&quot; 튜닝된다 — 실기체에선 그 빠름이 포화와 떨림이 된다. </p></div>
+                  
+                </div>
+</blockquote>
+<h2 id="빈-물은-가장-쉬운-시험이다">빈 물은 가장 쉬운 시험이다<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#빈-물은-가장-쉬운-시험이다" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th>환경</th><th>영향</th><th>지금</th><th>넣는 법</th></tr></thead><tbody><tr><td><strong>해류</strong></td><td>정상상태 오차 (I 항이 필요해지는 이유), 경로 이탈</td><td>없음</td><td>우리 식에 <strong>상대속도 <code>ν_r = ν − ν_c</code></strong> 로</td></tr><tr><td>파도</td><td>수면 근처 z·θ 흔들림</td><td>없음</td><td>외란 힘으로</td></tr><tr><td>해저·장애물</td><td>DVL 거리, 충돌</td><td>150 m 빈 물</td><td>맵 변경</td></tr></tbody></table></div>
+<ul>
+<li><strong>해류는 DVL 을 헷갈리게 한다</strong> — DVL 은 해저 대비 속도, 유체력은 물 대비 속도로 정해진다. 둘이 달라지는 게 해류다</li>
+<li>HoloOcean 에 <code>set_ocean_currents()</code> 가 있지만, 우리 노드는 <strong>가속도를 직접 넣는 방식(control_scheme 1)</strong> 이라 그 명령이 우리 식에 반영되는지 <strong>미확인</strong>. 일관성을 위해 우리 식의 <code>ν_r</code> 에 넣는 게 맞다</li>
+<li>DVL <code>MaxRange</code> 는 주파수에 따라 수십~수백 m → 150 m 물 수면 근처라면 <strong>해저를 못 볼 수도</strong> 있다. 시나리오 수심을 센서 사양에 맞춰야 함</li>
+</ul>
+<blockquote class="callout tip" data-callout="tip">
+<div class="callout-title">
+                  <div class="callout-icon"></div>
+                  <div class="callout-title-inner"><p>외란이 없으면 적분 제어가 왜 필요한지 시뮬레이션이 보여 주지 못한다. </p></div>
+                  
+                </div>
+</blockquote>
+<h2 id="plant-가-설계-모델과-같으면-자기-답안을-자기가-채점하는-것이다">plant 가 설계 모델과 같으면 자기 답안을 자기가 채점하는 것이다<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#plant-가-설계-모델과-같으면-자기-답안을-자기가-채점하는-것이다" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<ul>
+<li>지금 local plant = holo plant = <strong>같은 Delphin2 식</strong>. 제어기를 그 식으로 설계하면 모델 오차가 <strong>정확히 0</strong></li>
+<li>실제 기체는 식과 다르다 (Delphin2 <code>Ixx = 1.8</code> 은 “Assumed value”)</li>
+<li>넣는 법: plant 쪽 파라미터만 흔든다 — 질량·부가질량·감쇠 ±10–30 %, 여러 번 돌려(Monte Carlo) <strong>최악의 경우</strong>를 본다</li>
+<li>RL 쪽에선 같은 걸 domain randomization 이라 부른다 → <a href="../30_Knowledge/Sim-to-Real" class="internal" data-slug="30_Knowledge/Sim-to-Real">Sim-to-Real</a> · <a href="../30_Knowledge/고전제어와-강화학습" class="internal alias" data-slug="30_Knowledge/고전제어와-강화학습">고전제어와 강화학습</a> 비교의 공정한 조건</li>
+</ul>
+<blockquote class="callout tip" data-callout="tip">
+<div class="callout-title">
+                  <div class="callout-icon"></div>
+                  <div class="callout-title-inner"><p>제어기용 모델과 plant 용 모델은 파일부터 분리해 둔다. </p></div>
+                  
+                </div>
+</blockquote>
+<h2 id="참값은-버리는-게-아니라-채점석으로-옮긴다">참값은 버리는 게 아니라 채점석으로 옮긴다<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#참값은-버리는-게-아니라-채점석으로-옮긴다" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>시뮬레이터의 유일한 특권은 <strong>정답을 안다</strong>는 것 — 제어기에서 빼되, 기록에는 남긴다.</p>
+<pre><code>/delphin2/truth   ← DynamicsSensor 참값    → logger · 평가 스크립트만 구독
+/delphin2/imu, /dvl, /depth  ← 센서         → 추정기
+/delphin2/odom    ← 추정 결과               → 제어기
+</code></pre>
+<ul>
+<li>평가 = <code>truth</code> vs <code>odom</code> (추정 오차), <code>truth</code> vs 목표 (제어 오차) — 둘을 나눠야 <strong>추정 탓인지 제어 탓인지</strong> 구분된다</li>
+<li>잡음을 넣으면 매번 결과가 다르다 → <strong>난수 seed 고정</strong>, 비교는 같은 seed 로</li>
+<li>기록은 <code>ros2 bag</code> 으로 남기면 나중에 추정기만 바꿔 <strong>재생</strong>할 수 있다</li>
+</ul>
+<blockquote class="callout tip" data-callout="tip">
+<div class="callout-title">
+                  <div class="callout-icon"></div>
+                  <div class="callout-title-inner"><p>제어기가 truth 토픽을 구독하고 있으면 그건 아직 시뮬레이션용 제어기다 — 이걸로 점검한다. </p></div>
+                  
+                </div>
+</blockquote>
+<h2 id="한-번에-한-칸씩--권장-순서와-칸마다의-확인-방법">한 번에 한 칸씩 — 권장 순서와 칸마다의 확인 방법<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#한-번에-한-칸씩--권장-순서와-칸마다의-확인-방법" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th>단계</th><th>켜는 것</th><th>확인할 것 (통과 기준)</th></tr></thead><tbody><tr><td>0</td><td>제어기 설계 (참값, local)</td><td>지금 계획. 기준선 성능 기록</td></tr><tr><td>1</td><td>truth 토픽 분리 + logger</td><td>제어기 결과가 0 단계와 <strong>완전히 같음</strong> (배관만 바꿈)</td></tr><tr><td>2</td><td>센서 토픽 (표준 메시지, <strong>잡음 0</strong>) → 단순 변환해서 제어기</td><td>역시 같음 — 좌표·부호 검증</td></tr><tr><td>3</td><td>잡음·bias 켬 (하나씩)</td><td>성능 저하량 기록</td></tr><tr><td>4</td><td>추정기 (EKF)</td><td><code>truth</code> vs <code>odom</code> 오차</td></tr><tr><td>5</td><td>주기·지연·결측 (lockstep 해제)</td><td>위상 여유 감소가 예측과 맞는지</td></tr><tr><td>6</td><td>구동기 모델·할당</td><td>포화·떨림</td></tr><tr><td>7</td><td>해류·파라미터 흔들기</td><td>최악의 경우</td></tr></tbody></table></div>
+<ul>
+<li><strong>1·2 단계에서 결과가 달라지면 배관 버그다</strong> — 잡음이 없으니 달라질 이유가 없다. 이게 이 순서의 핵심</li>
+</ul>
+<blockquote class="callout tip" data-callout="tip">
+<div class="callout-title">
+                  <div class="callout-icon"></div>
+                  <div class="callout-title-inner"><p>잡음 0 으로 먼저 연결해 결과가 같은지 보고, 그다음에 잡음을 켠다. </p></div>
+                  
+                </div>
+</blockquote>
+<h2 id="검산">검산<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#검산" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th>조건</th><th>계산</th><th>의미</th></tr></thead><tbody><tr><td>지연 τ = 0.1 s, 교차 주파수 ω_c = 2 rad/s</td><td>위상 손실 = 0.2 rad ≈ 11.5°</td><td>위상 여유 45° 로 설계했으면 33.5° 로 줄어듦</td></tr><tr><td>같은 지연, ω_c = 10 rad/s</td><td>1 rad ≈ 57°</td><td>여유가 없어짐 — 빠른 제어기는 지연에 약하다</td></tr><tr><td>가속도 bias b = 0.01 m/s² 를 두 번 적분, 60 s</td><td>½·b·t² = 18 m</td><td>예시 값. IMU 만으로 위치를 못 믿는 이유</td></tr><tr><td>자이로 bias 0.01 °/s, 10 분</td><td>6°</td><td>예시 값. 방위도 보정 센서가 필요</td></tr><tr><td>tick 50 Hz, IMU 를 200 Hz 로 설정</td><td>경고 (tick 초과)</td><td>실제 IMU 주기를 흉내 내려면 tick 상향 필요</td></tr></tbody></table></div>
+<p>(bias 값은 자릿수를 보기 위한 예시. 실제 센서 datasheet 로 바꿔 넣을 것.)</p>
+<h2 id="헷갈렸던-점">헷갈렸던 점<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#헷갈렸던-점" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<h3 id="우리는-imu-센서-노드를-쓰고-있다">”우리는 IMU 센서 노드를 쓰고 있다”<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#우리는-imu-센서-노드를-쓰고-있다" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>아니다. 제어기가 받는 건 <code>DynamicsSensor</code> — 시뮬레이터 내부 상태를 그대로 읽는 <strong>가짜 센서</strong>다. 센서 노드는 하나도 없다 (2026-09-29 확인).</p>
+<h3 id="pacing-1x-로-실시간으로-돌리니-실제-통신-환경과-같다">”Pacing 1x 로 실시간으로 돌리니 실제 통신 환경과 같다”<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#pacing-1x-로-실시간으로-돌리니-실제-통신-환경과-같다" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>아니다. 1x 는 화면 속도만 맞춘다. lockstep 이라 시뮬레이터는 여전히 제어기를 <strong>기다려 주고</strong>, 계산·통신 지연은 0 이다.</p>
+<h3 id="holoocean-이-mss-와-069--로-맞으니-실제-기체도-이렇게-움직인다">”HoloOcean 이 MSS 와 0.69 % 로 맞으니 실제 기체도 이렇게 움직인다”<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#holoocean-이-mss-와-069--로-맞으니-실제-기체도-이렇게-움직인다" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>아니다. 검증된 건 <strong>“HoloOcean = MSS 식”</strong> 까지. MSS 식이 실제 기체와 맞는지는 별개이고 미검증이다.</p>
+<h3 id="holoocean-이-수중-센서에-강하니-설정만-켜면-실제-센서가-된다">”HoloOcean 이 수중 센서에 강하니 설정만 켜면 실제 센서가 된다”<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#holoocean-이-수중-센서에-강하니-설정만-켜면-실제-센서가-된다" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>절반만 맞다. HoloOcean 이 주는 건 <strong>잡음·bias·(DVL) 거리 제한</strong>까지. 지연·결측·이상값·스케일·장착 오차·표준 메시지·타임스탬프는 우리 노드가 만들어야 한다.</p>
+<h2 id="내가-실제로-써본-곳">내가 실제로 써본 곳<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#내가-실제로-써본-곳" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<ul>
+<li><a href="../20_Projects/AUV-Control-Sim/AUV-Control-Simulation" class="internal alias" data-slug="20_Projects/AUV-Control-Sim/AUV-Control-Simulation">AUV Control Simulation</a> — 7칸 중 plant 만 검증된 상태, 이 노트가 다음 단계 설계도</li>
+<li>2026-09-29 — 구현 범위 정리 (결과 8)</li>
+<li>센서·추정기·지연은 <strong>아직 코드로 직접 넣어 본 적 없음</strong></li>
+</ul>
+<h2 id="채워야-할-것">채워야 할 것<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#채워야-할-것" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" disabled/> 실제로 쓸(또는 ANSL 에 있는) IMU·DVL·수심계 datasheet 값 → <code>*Sigma</code>, <code>Hz</code> 에 넣기</li>
+<li class="task-list-item"><input type="checkbox" disabled/> tick 을 100·200 Hz 로 올렸을 때 실시간 유지되는지 (렌더링 on/off)</li>
+<li class="task-list-item"><input type="checkbox" disabled/> control_scheme 1 에서 <code>set_ocean_currents()</code> 가 효과 있는지, 아니면 우리 식 <code>ν_r</code> 로만 넣어야 하는지</li>
+<li class="task-list-item"><input type="checkbox" disabled/> DVL 표준 메시지 — ROS 2 에서 흔히 쓰는 형식 조사</li>
+<li class="task-list-item"><input type="checkbox" disabled/> Delphin2 파라미터 불확실성 범위 — 어느 계수를 얼마나 흔들지 근거</li>
+</ul>
+<h2 id="참고">참고<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#참고" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<ul>
+<li>HoloOcean 2.3.0 설치본 <code>C:\sim\holoocean\.venv\Lib\site-packages\holoocean\sensors.py</code> (센서 옵션), <code>environments.py</code> (센서 <code>Hz</code> 규칙, <code>set_ocean_currents</code>)</li>
+<li>우리 코드: <code>C:\Archive\제어공학특론\holoocean_env\holo_bridge.py</code> (NED ↔ NWU 변환)</li>
+<li>Fossen, <em>Handbook of Marine Craft Hydrodynamics and Motion Control</em> — 상대속도·해류, 항법 장</li>
+<li>ROS REP-103 (좌표 규약), REP-105 (frame 이름)</li>
+<li>관련 노트: <a href="../30_Knowledge/Sim-to-Real" class="internal" data-slug="30_Knowledge/Sim-to-Real">Sim-to-Real</a> · <a href="../00_Inbox/DDS" class="internal" data-slug="00_Inbox/DDS">DDS</a> · <a href="../30_Knowledge/Transport-Theorem" class="internal alias" data-slug="30_Knowledge/Transport-Theorem">Transport Theorem</a> · <a href="../30_Knowledge/Anti-windup" class="internal" data-slug="30_Knowledge/Anti-windup">Anti-windup</a> · <a href="../30_Knowledge/Solver-Step-Size" class="internal alias" data-slug="30_Knowledge/Solver-Step-Size">Solver Step Size</a> · <a href="../30_Knowledge/6-DOF-Marine-Craft-Model" class="internal alias" data-slug="30_Knowledge/6-DOF-Marine-Craft-Model">6-DOF Marine Craft Model</a></li>
+</ul></article><hr/><div class="page-footer"></div></div><div class="right sidebar"><div class="graph"><h3>그래프 뷰</h3><div class="graph-outer"><div class="graph-container" data-cfg="{&quot;drag&quot;:true,&quot;zoom&quot;:true,&quot;depth&quot;:1,&quot;scale&quot;:1.1,&quot;repelForce&quot;:0.5,&quot;centerForce&quot;:0.3,&quot;linkDistance&quot;:30,&quot;fontSize&quot;:0.6,&quot;opacityScale&quot;:1,&quot;showTags&quot;:true,&quot;removeTags&quot;:[],&quot;focusOnHover&quot;:false,&quot;enableRadial&quot;:false}"></div><button class="global-graph-icon" aria-label="Global Graph"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 55 55" fill="currentColor" xml:space="preserve"><path d="M49,0c-3.309,0-6,2.691-6,6c0,1.035,0.263,2.009,0.726,2.86l-9.829,9.829C32.542,17.634,30.846,17,29,17
+                s-3.542,0.634-4.898,1.688l-7.669-7.669C16.785,10.424,17,9.74,17,9c0-2.206-1.794-4-4-4S9,6.794,9,9s1.794,4,4,4
+                c0.74,0,1.424-0.215,2.019-0.567l7.669,7.669C21.634,21.458,21,23.154,21,25s0.634,3.542,1.688,4.897L10.024,42.562
+                C8.958,41.595,7.549,41,6,41c-3.309,0-6,2.691-6,6s2.691,6,6,6s6-2.691,6-6c0-1.035-0.263-2.009-0.726-2.86l12.829-12.829
+                c1.106,0.86,2.44,1.436,3.898,1.619v10.16c-2.833,0.478-5,2.942-5,5.91c0,3.309,2.691,6,6,6s6-2.691,6-6c0-2.967-2.167-5.431-5-5.91
+                v-10.16c1.458-0.183,2.792-0.759,3.898-1.619l7.669,7.669C41.215,39.576,41,40.26,41,41c0,2.206,1.794,4,4,4s4-1.794,4-4
+                s-1.794-4-4-4c-0.74,0-1.424,0.215-2.019,0.567l-7.669-7.669C36.366,28.542,37,26.846,37,25s-0.634-3.542-1.688-4.897l9.665-9.665
+                C46.042,11.405,47.451,12,49,12c3.309,0,6-2.691,6-6S52.309,0,49,0z M11,9c0-1.103,0.897-2,2-2s2,0.897,2,2s-0.897,2-2,2
+                S11,10.103,11,9z M6,51c-2.206,0-4-1.794-4-4s1.794-4,4-4s4,1.794,4,4S8.206,51,6,51z M33,49c0,2.206-1.794,4-4,4s-4-1.794-4-4
+                s1.794-4,4-4S33,46.794,33,49z M29,31c-3.309,0-6-2.691-6-6s2.691-6,6-6s6,2.691,6,6S32.309,31,29,31z M47,41c0,1.103-0.897,2-2,2
+                s-2-0.897-2-2s0.897-2,2-2S47,39.897,47,41z M49,10c-2.206,0-4-1.794-4-4s1.794-4,4-4s4,1.794,4,4S51.206,10,49,10z"></path></svg></button></div><div class="global-graph-outer"><div class="global-graph-container" data-cfg="{&quot;drag&quot;:true,&quot;zoom&quot;:true,&quot;depth&quot;:-1,&quot;scale&quot;:0.9,&quot;repelForce&quot;:0.5,&quot;centerForce&quot;:0.2,&quot;linkDistance&quot;:30,&quot;fontSize&quot;:0.6,&quot;opacityScale&quot;:1,&quot;showTags&quot;:true,&quot;removeTags&quot;:[],&quot;focusOnHover&quot;:true,&quot;enableRadial&quot;:true}"></div></div></div><div class="toc desktop-only"><button type="button" class="toc-header" aria-controls="toc-84" aria-expanded="true"><h3>목차</h3><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fold"><polyline points="6 9 12 15 18 9"></polyline></svg></button><ul id="list-1" class="toc-content overflow"><li class="depth-0"><a href="#시뮬레이션-환경-현실성" data-for="시뮬레이션-환경-현실성">시뮬레이션 환경 현실성</a></li><li class="depth-1"><a href="#왜-필요한가" data-for="왜-필요한가">왜 필요한가</a></li><li class="depth-1"><a href="#루프를-7칸으로-나누면-빠진-칸이-보인다" data-for="루프를-7칸으로-나누면-빠진-칸이-보인다">루프를 7칸으로 나누면 빠진 칸이 보인다</a></li><li class="depth-1"><a href="#참값의-가장-큰-거짓말은-수평-위치-xy-다" data-for="참값의-가장-큰-거짓말은-수평-위치-xy-다">참값의 가장 큰 거짓말은 수평 위치 x·y 다</a></li><li class="depth-1"><a href="#센서-오차는-잡음-하나가-아니다--8가지로-나눠-넣는다" data-for="센서-오차는-잡음-하나가-아니다--8가지로-나눠-넣는다">센서 오차는 ‘잡음’ 하나가 아니다 — 8가지로 나눠 넣는다</a></li><li class="depth-1"><a href="#시계는-세-개다--시뮬-시간-벽시계-메시지-타임스탬프" data-for="시계는-세-개다--시뮬-시간-벽시계-메시지-타임스탬프">시계는 세 개다 — 시뮬 시간, 벽시계, 메시지 타임스탬프</a></li><li class="depth-1"><a href="#지연은-위상을-먹는다--제어-이론과-만나는-지점" data-for="지연은-위상을-먹는다--제어-이론과-만나는-지점">지연은 위상을 먹는다 — 제어 이론과 만나는 지점</a></li><li class="depth-1"><a href="#메시지와-좌표-규약이-실기체-이식의-절반이다" data-for="메시지와-좌표-규약이-실기체-이식의-절반이다">메시지와 좌표 규약이 실기체 이식의 절반이다</a></li><li class="depth-1"><a href="#제어기가-요청한-힘은-그대로-나오지-않는다" data-for="제어기가-요청한-힘은-그대로-나오지-않는다">제어기가 요청한 힘은 그대로 나오지 않는다</a></li><li class="depth-1"><a href="#빈-물은-가장-쉬운-시험이다" data-for="빈-물은-가장-쉬운-시험이다">빈 물은 가장 쉬운 시험이다</a></li><li class="depth-1"><a href="#plant-가-설계-모델과-같으면-자기-답안을-자기가-채점하는-것이다" data-for="plant-가-설계-모델과-같으면-자기-답안을-자기가-채점하는-것이다">plant 가 설계 모델과 같으면 자기 답안을 자기가 채점하는 것이다</a></li><li class="depth-1"><a href="#참값은-버리는-게-아니라-채점석으로-옮긴다" data-for="참값은-버리는-게-아니라-채점석으로-옮긴다">참값은 버리는 게 아니라 채점석으로 옮긴다</a></li><li class="depth-1"><a href="#한-번에-한-칸씩--권장-순서와-칸마다의-확인-방법" data-for="한-번에-한-칸씩--권장-순서와-칸마다의-확인-방법">한 번에 한 칸씩 — 권장 순서와 칸마다의 확인 방법</a></li><li class="depth-1"><a href="#검산" data-for="검산">검산</a></li><li class="depth-1"><a href="#헷갈렸던-점" data-for="헷갈렸던-점">헷갈렸던 점</a></li><li class="depth-2"><a href="#우리는-imu-센서-노드를-쓰고-있다" data-for="우리는-imu-센서-노드를-쓰고-있다">”우리는 IMU 센서 노드를 쓰고 있다”</a></li><li class="depth-2"><a href="#pacing-1x-로-실시간으로-돌리니-실제-통신-환경과-같다" data-for="pacing-1x-로-실시간으로-돌리니-실제-통신-환경과-같다">”Pacing 1x 로 실시간으로 돌리니 실제 통신 환경과 같다”</a></li><li class="depth-2"><a href="#holoocean-이-mss-와-069--로-맞으니-실제-기체도-이렇게-움직인다" data-for="holoocean-이-mss-와-069--로-맞으니-실제-기체도-이렇게-움직인다">”HoloOcean 이 MSS 와 0.69 % 로 맞으니 실제 기체도 이렇게 움직인다”</a></li><li class="depth-2"><a href="#holoocean-이-수중-센서에-강하니-설정만-켜면-실제-센서가-된다" data-for="holoocean-이-수중-센서에-강하니-설정만-켜면-실제-센서가-된다">”HoloOcean 이 수중 센서에 강하니 설정만 켜면 실제 센서가 된다”</a></li><li class="depth-1"><a href="#내가-실제로-써본-곳" data-for="내가-실제로-써본-곳">내가 실제로 써본 곳</a></li><li class="depth-1"><a href="#채워야-할-것" data-for="채워야-할-것">채워야 할 것</a></li><li class="depth-1"><a href="#참고" data-for="참고">참고</a></li><li class="overflow-end"></li></ul></div><div class="backlinks"><h3>백링크</h3><ul id="list-2" class="overflow"><li><a href="../10_Daily/2026-09-29" class="internal">2026-09-29</a></li><li><a href="../20_Projects/AUV-Control-Sim/AUV-Control-Simulation" class="internal">AUV Control Simulation</a></li><li><a href="../30_Knowledge/정위치-유지-자세-선택" class="internal">정위치 유지 자세 선택</a></li><li class="overflow-end"></li></ul></div></div><footer class><p>Created with <a href="https://quartz.jzhao.xyz/">Quartz v4.5.2</a> © 2026</p><ul></ul></footer></div></div></body><script type="application/javascript">function n(){let t=this.parentElement;t.classList.toggle("is-collapsed");let e=t.getElementsByClassName("callout-content")[0];if(!e)return;let l=t.classList.contains("is-collapsed");e.style.gridTemplateRows=l?"0fr":"1fr"}function c(){let t=document.getElementsByClassName("callout is-collapsible");for(let e of t){let l=e.getElementsByClassName("callout-title")[0],s=e.getElementsByClassName("callout-content")[0];if(!l||!s)continue;l.addEventListener("click",n),window.addCleanup(()=>l.removeEventListener("click",n));let o=e.classList.contains("is-collapsed");s.style.gridTemplateRows=o?"0fr":"1fr"}}document.addEventListener("nav",c);
+</script><script type="module">function f(i,e){if(!i)return;function r(o){o.target===this&&(o.preventDefault(),o.stopPropagation(),e())}function t(o){o.key.startsWith("Esc")&&(o.preventDefault(),e())}i?.addEventListener("click",r),window.addCleanup(()=>i?.removeEventListener("click",r)),document.addEventListener("keydown",t),window.addCleanup(()=>document.removeEventListener("keydown",t))}function y(i){for(;i.firstChild;)i.removeChild(i.firstChild)}var h=class{constructor(e,r){this.container=e;this.content=r;this.setupEventListeners(),this.setupNavigationControls(),this.resetTransform()}isDragging=!1;startPan={x:0,y:0};currentPan={x:0,y:0};scale=1;MIN_SCALE=.5;MAX_SCALE=3;cleanups=[];setupEventListeners(){let e=this.onMouseDown.bind(this),r=this.onMouseMove.bind(this),t=this.onMouseUp.bind(this),o=this.resetTransform.bind(this);this.container.addEventListener("mousedown",e),document.addEventListener("mousemove",r),document.addEventListener("mouseup",t),window.addEventListener("resize",o),this.cleanups.push(()=>this.container.removeEventListener("mousedown",e),()=>document.removeEventListener("mousemove",r),()=>document.removeEventListener("mouseup",t),()=>window.removeEventListener("resize",o))}cleanup(){for(let e of this.cleanups)e()}setupNavigationControls(){let e=document.createElement("div");e.className="mermaid-controls";let r=this.createButton("+",()=>this.zoom(.1)),t=this.createButton("-",()=>this.zoom(-.1)),o=this.createButton("Reset",()=>this.resetTransform());e.appendChild(t),e.appendChild(o),e.appendChild(r),this.container.appendChild(e)}createButton(e,r){let t=document.createElement("button");return t.textContent=e,t.className="mermaid-control-button",t.addEventListener("click",r),window.addCleanup(()=>t.removeEventListener("click",r)),t}onMouseDown(e){e.button===0&&(this.isDragging=!0,this.startPan={x:e.clientX-this.currentPan.x,y:e.clientY-this.currentPan.y},this.container.style.cursor="grabbing")}onMouseMove(e){this.isDragging&&(e.preventDefault(),this.currentPan={x:e.clientX-this.startPan.x,y:e.clientY-this.startPan.y},this.updateTransform())}onMouseUp(){this.isDragging=!1,this.container.style.cursor="grab"}zoom(e){let r=Math.min(Math.max(this.scale+e,this.MIN_SCALE),this.MAX_SCALE),t=this.content.getBoundingClientRect(),o=t.width/2,n=t.height/2,c=r-this.scale;this.currentPan.x-=o*c,this.currentPan.y-=n*c,this.scale=r,this.updateTransform()}updateTransform(){this.content.style.transform=`translate(${this.currentPan.x}px, ${this.currentPan.y}px) scale(${this.scale})`}resetTransform(){this.scale=1;let e=this.content.querySelector("svg");this.currentPan={x:e.getBoundingClientRect().width/2,y:e.getBoundingClientRect().height/2},this.updateTransform()}},C=["--secondary","--tertiary","--gray","--light","--lightgray","--highlight","--dark","--darkgray","--codeFont"],E;document.addEventListener("nav",async()=>{let e=document.querySelector(".center").querySelectorAll("code.mermaid");if(e.length===0)return;E||=await import("https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.4.0/mermaid.esm.min.mjs");let r=E.default,t=new WeakMap;for(let n of e)t.set(n,n.innerText);async function o(){for(let s of e){s.removeAttribute("data-processed");let a=t.get(s);a&&(s.innerHTML=a)}let n=C.reduce((s,a)=>(s[a]=window.getComputedStyle(document.documentElement).getPropertyValue(a),s),{}),c=document.documentElement.getAttribute("saved-theme")==="dark";r.initialize({startOnLoad:!1,securityLevel:"loose",theme:c?"dark":"base",themeVariables:{fontFamily:n["--codeFont"],primaryColor:n["--light"],primaryTextColor:n["--darkgray"],primaryBorderColor:n["--tertiary"],lineColor:n["--darkgray"],secondaryColor:n["--secondary"],tertiaryColor:n["--tertiary"],clusterBkg:n["--light"],edgeLabelBackground:n["--highlight"]}}),await r.run({nodes:e})}await o(),document.addEventListener("themechange",o),window.addCleanup(()=>document.removeEventListener("themechange",o));for(let n=0;n<e.length;n++){let v=function(){let g=l.querySelector("#mermaid-space"),m=l.querySelector(".mermaid-content");if(!m)return;y(m);let w=c.querySelector("svg").cloneNode(!0);m.appendChild(w),l.classList.add("active"),g.style.cursor="grab",u=new h(g,m)},M=function(){l.classList.remove("active"),u?.cleanup(),u=null},c=e[n],s=c.parentElement,a=s.querySelector(".clipboard-button"),d=s.querySelector(".expand-button"),p=window.getComputedStyle(a),L=a.offsetWidth+parseFloat(p.marginLeft||"0")+parseFloat(p.marginRight||"0");d.style.right=`calc(${L}px + 0.3rem)`,s.prepend(d);let l=s.querySelector("#mermaid-container");if(!l)return;let u=null;d.addEventListener("click",v),f(l,M),window.addCleanup(()=>{u?.cleanup(),d.removeEventListener("click",v)})}});
+</script><script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/copy-tex.min.js" type="application/javascript"></script><script src="../postscript.js" type="module"></script></html>

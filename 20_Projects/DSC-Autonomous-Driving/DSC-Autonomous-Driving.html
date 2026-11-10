@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="ko" dir="ltr"><head><title>DSC Autonomous Driving</title><meta charset="utf-8"/><link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com"/><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto Sans KR:wght@400;700&amp;family=Noto Sans KR:ital,wght@0,400;0,600;1,400;1,600&amp;family=IBM Plex Mono:wght@400;600&amp;display=swap"/><link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin="anonymous"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta name="og:site_name" content="LabNote"/><meta property="og:title" content="DSC Autonomous Driving"/><meta property="og:type" content="website"/><meta name="twitter:card" content="summary_large_image"/><meta name="twitter:title" content="DSC Autonomous Driving"/><meta name="twitter:description" content="2026 DSC 자율주행차 장애물 회피 기술 교육 이 프로젝트가 채우는 로드맵 칸: learning → Research Direction 강화학습 기반 자율주행 — 보상함수(reward function) 설계와 반복 개선이 핵심."/><meta property="og:description" content="2026 DSC 자율주행차 장애물 회피 기술 교육 이 프로젝트가 채우는 로드맵 칸: learning → Research Direction 강화학습 기반 자율주행 — 보상함수(reward function) 설계와 반복 개선이 핵심."/><meta property="og:image:alt" content="2026 DSC 자율주행차 장애물 회피 기술 교육 이 프로젝트가 채우는 로드맵 칸: learning → Research Direction 강화학습 기반 자율주행 — 보상함수(reward function) 설계와 반복 개선이 핵심."/><meta property="og:image" content="https://yusik36.github.io/research-notes/static/og-image.png"/><meta property="og:image:url" content="https://yusik36.github.io/research-notes/static/og-image.png"/><meta name="twitter:image" content="https://yusik36.github.io/research-notes/static/og-image.png"/><meta property="og:image:type" content="image/.png"/><meta property="twitter:domain" content="yusik36.github.io/research-notes"/><meta property="og:url" content="https://yusik36.github.io/research-notes/20_Projects/DSC-Autonomous-Driving/DSC-Autonomous-Driving"/><meta property="twitter:url" content="https://yusik36.github.io/research-notes/20_Projects/DSC-Autonomous-Driving/DSC-Autonomous-Driving"/><link rel="icon" href="../../static/icon.png"/><meta name="description" content="2026 DSC 자율주행차 장애물 회피 기술 교육 이 프로젝트가 채우는 로드맵 칸: learning → Research Direction 강화학습 기반 자율주행 — 보상함수(reward function) 설계와 반복 개선이 핵심."/><meta name="generator" content="Quartz"/><link href="../../index.css" rel="stylesheet" type="text/css" spa-preserve/><style>.expand-button {
+  position: absolute;
+  display: flex;
+  float: right;
+  padding: 0.4rem;
+  margin: 0.3rem;
+  right: 0;
+  color: var(--gray);
+  border-color: var(--dark);
+  background-color: var(--light);
+  border: 1px solid;
+  border-radius: 5px;
+  opacity: 0;
+  transition: 0.2s;
+}
+.expand-button > svg {
+  fill: var(--light);
+  filter: contrast(0.3);
+}
+.expand-button:hover {
+  cursor: pointer;
+  border-color: var(--secondary);
+}
+.expand-button:focus {
+  outline: 0;
+}
+
+pre:hover > .expand-button {
+  opacity: 1;
+  transition: 0.2s;
+}
+
+#mermaid-container {
+  position: fixed;
+  contain: layout;
+  z-index: 999;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  display: none;
+  backdrop-filter: blur(4px);
+  background: rgba(0, 0, 0, 0.5);
+}
+#mermaid-container.active {
+  display: inline-block;
+}
+#mermaid-container > #mermaid-space {
+  border: 1px solid var(--lightgray);
+  background-color: var(--light);
+  border-radius: 5px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 80vh;
+  width: 80vw;
+  overflow: hidden;
+}
+#mermaid-container > #mermaid-space > .mermaid-content {
+  padding: 2rem;
+  position: relative;
+  transform-origin: 0 0;
+  transition: transform 0.1s ease;
+  overflow: visible;
+  min-height: 200px;
+  min-width: 200px;
+}
+#mermaid-container > #mermaid-space > .mermaid-content pre {
+  margin: 0;
+  border: none;
+}
+#mermaid-container > #mermaid-space > .mermaid-content svg {
+  max-width: none;
+  height: auto;
+}
+#mermaid-container > #mermaid-space > .mermaid-controls {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  gap: 8px;
+  padding: 8px;
+  background: var(--light);
+  border: 1px solid var(--lightgray);
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 2;
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 1px solid var(--lightgray);
+  background: var(--light);
+  color: var(--dark);
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  font-family: var(--bodyFont);
+  transition: all 0.2s ease;
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button:hover {
+  background: var(--lightgray);
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button:active {
+  transform: translateY(1px);
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button:nth-child(2) {
+  width: auto;
+  padding: 0 12px;
+  font-size: 14px;
+}
+/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VSb290IjoiQzpcXEFyY2hpdmVcXOyeoeuLpOq1rOumrFxcVVNU7J247YS0X+yngOybkOyEnFxcc2l0ZVxccXVhcnR6XFxjb21wb25lbnRzXFxzdHlsZXMiLCJzb3VyY2VzIjpbIm1lcm1haWQuaW5saW5lLnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDRTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTs7QUFFQTtFQUNFO0VBQ0E7O0FBR0Y7RUFDRTtFQUNBOztBQUdGO0VBQ0U7OztBQUtGO0VBQ0U7RUFDQTs7O0FBSUo7RUFDRTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBOztBQUVBO0VBQ0U7O0FBR0Y7RUFDRTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTs7QUFFQTtFQUNFO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBOztBQUVBO0VBQ0U7RUFDQTs7QUFHRjtFQUNFO0VBQ0E7O0FBSUo7RUFDRTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBOztBQUVBO0VBQ0U7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTs7QUFFQTtFQUNFOztBQUdGO0VBQ0U7O0FBSUY7RUFDRTtFQUNBO0VBQ0EiLCJzb3VyY2VzQ29udGVudCI6WyIuZXhwYW5kLWJ1dHRvbiB7XG4gIHBvc2l0aW9uOiBhYnNvbHV0ZTtcbiAgZGlzcGxheTogZmxleDtcbiAgZmxvYXQ6IHJpZ2h0O1xuICBwYWRkaW5nOiAwLjRyZW07XG4gIG1hcmdpbjogMC4zcmVtO1xuICByaWdodDogMDsgLy8gTk9URTogcmlnaHQgd2lsbCBiZSBzZXQgaW4gbWVybWFpZC5pbmxpbmUudHNcbiAgY29sb3I6IHZhcigtLWdyYXkpO1xuICBib3JkZXItY29sb3I6IHZhcigtLWRhcmspO1xuICBiYWNrZ3JvdW5kLWNvbG9yOiB2YXIoLS1saWdodCk7XG4gIGJvcmRlcjogMXB4IHNvbGlkO1xuICBib3JkZXItcmFkaXVzOiA1cHg7XG4gIG9wYWNpdHk6IDA7XG4gIHRyYW5zaXRpb246IDAuMnM7XG5cbiAgJiA+IHN2ZyB7XG4gICAgZmlsbDogdmFyKC0tbGlnaHQpO1xuICAgIGZpbHRlcjogY29udHJhc3QoMC4zKTtcbiAgfVxuXG4gICY6aG92ZXIge1xuICAgIGN1cnNvcjogcG9pbnRlcjtcbiAgICBib3JkZXItY29sb3I6IHZhcigtLXNlY29uZGFyeSk7XG4gIH1cblxuICAmOmZvY3VzIHtcbiAgICBvdXRsaW5lOiAwO1xuICB9XG59XG5cbnByZSB7XG4gICY6aG92ZXIgPiAuZXhwYW5kLWJ1dHRvbiB7XG4gICAgb3BhY2l0eTogMTtcbiAgICB0cmFuc2l0aW9uOiAwLjJzO1xuICB9XG59XG5cbiNtZXJtYWlkLWNvbnRhaW5lciB7XG4gIHBvc2l0aW9uOiBmaXhlZDtcbiAgY29udGFpbjogbGF5b3V0O1xuICB6LWluZGV4OiA5OTk7XG4gIGxlZnQ6IDA7XG4gIHRvcDogMDtcbiAgd2lkdGg6IDEwMHZ3O1xuICBoZWlnaHQ6IDEwMHZoO1xuICBvdmVyZmxvdzogaGlkZGVuO1xuICBkaXNwbGF5OiBub25lO1xuICBiYWNrZHJvcC1maWx0ZXI6IGJsdXIoNHB4KTtcbiAgYmFja2dyb3VuZDogcmdiYSgwLCAwLCAwLCAwLjUpO1xuXG4gICYuYWN0aXZlIHtcbiAgICBkaXNwbGF5OiBpbmxpbmUtYmxvY2s7XG4gIH1cblxuICAmID4gI21lcm1haWQtc3BhY2Uge1xuICAgIGJvcmRlcjogMXB4IHNvbGlkIHZhcigtLWxpZ2h0Z3JheSk7XG4gICAgYmFja2dyb3VuZC1jb2xvcjogdmFyKC0tbGlnaHQpO1xuICAgIGJvcmRlci1yYWRpdXM6IDVweDtcbiAgICBwb3NpdGlvbjogZml4ZWQ7XG4gICAgdG9wOiA1MCU7XG4gICAgbGVmdDogNTAlO1xuICAgIHRyYW5zZm9ybTogdHJhbnNsYXRlKC01MCUsIC01MCUpO1xuICAgIGhlaWdodDogODB2aDtcbiAgICB3aWR0aDogODB2dztcbiAgICBvdmVyZmxvdzogaGlkZGVuO1xuXG4gICAgJiA+IC5tZXJtYWlkLWNvbnRlbnQge1xuICAgICAgcGFkZGluZzogMnJlbTtcbiAgICAgIHBvc2l0aW9uOiByZWxhdGl2ZTtcbiAgICAgIHRyYW5zZm9ybS1vcmlnaW46IDAgMDtcbiAgICAgIHRyYW5zaXRpb246IHRyYW5zZm9ybSAwLjFzIGVhc2U7XG4gICAgICBvdmVyZmxvdzogdmlzaWJsZTtcbiAgICAgIG1pbi1oZWlnaHQ6IDIwMHB4O1xuICAgICAgbWluLXdpZHRoOiAyMDBweDtcblxuICAgICAgcHJlIHtcbiAgICAgICAgbWFyZ2luOiAwO1xuICAgICAgICBib3JkZXI6IG5vbmU7XG4gICAgICB9XG5cbiAgICAgIHN2ZyB7XG4gICAgICAgIG1heC13aWR0aDogbm9uZTtcbiAgICAgICAgaGVpZ2h0OiBhdXRvO1xuICAgICAgfVxuICAgIH1cblxuICAgICYgPiAubWVybWFpZC1jb250cm9scyB7XG4gICAgICBwb3NpdGlvbjogYWJzb2x1dGU7XG4gICAgICBib3R0b206IDIwcHg7XG4gICAgICByaWdodDogMjBweDtcbiAgICAgIGRpc3BsYXk6IGZsZXg7XG4gICAgICBnYXA6IDhweDtcbiAgICAgIHBhZGRpbmc6IDhweDtcbiAgICAgIGJhY2tncm91bmQ6IHZhcigtLWxpZ2h0KTtcbiAgICAgIGJvcmRlcjogMXB4IHNvbGlkIHZhcigtLWxpZ2h0Z3JheSk7XG4gICAgICBib3JkZXItcmFkaXVzOiA2cHg7XG4gICAgICBib3gtc2hhZG93OiAwIDJweCA0cHggcmdiYSgwLCAwLCAwLCAwLjEpO1xuICAgICAgei1pbmRleDogMjtcblxuICAgICAgLm1lcm1haWQtY29udHJvbC1idXR0b24ge1xuICAgICAgICBkaXNwbGF5OiBmbGV4O1xuICAgICAgICBhbGlnbi1pdGVtczogY2VudGVyO1xuICAgICAgICBqdXN0aWZ5LWNvbnRlbnQ6IGNlbnRlcjtcbiAgICAgICAgd2lkdGg6IDMycHg7XG4gICAgICAgIGhlaWdodDogMzJweDtcbiAgICAgICAgcGFkZGluZzogMDtcbiAgICAgICAgYm9yZGVyOiAxcHggc29saWQgdmFyKC0tbGlnaHRncmF5KTtcbiAgICAgICAgYmFja2dyb3VuZDogdmFyKC0tbGlnaHQpO1xuICAgICAgICBjb2xvcjogdmFyKC0tZGFyayk7XG4gICAgICAgIGJvcmRlci1yYWRpdXM6IDRweDtcbiAgICAgICAgY3Vyc29yOiBwb2ludGVyO1xuICAgICAgICBmb250LXNpemU6IDE2cHg7XG4gICAgICAgIGZvbnQtZmFtaWx5OiB2YXIoLS1ib2R5Rm9udCk7XG4gICAgICAgIHRyYW5zaXRpb246IGFsbCAwLjJzIGVhc2U7XG5cbiAgICAgICAgJjpob3ZlciB7XG4gICAgICAgICAgYmFja2dyb3VuZDogdmFyKC0tbGlnaHRncmF5KTtcbiAgICAgICAgfVxuXG4gICAgICAgICY6YWN0aXZlIHtcbiAgICAgICAgICB0cmFuc2Zvcm06IHRyYW5zbGF0ZVkoMXB4KTtcbiAgICAgICAgfVxuXG4gICAgICAgIC8vIFN0eWxlIHRoZSByZXNldCBidXR0b24gZGlmZmVyZW50bHlcbiAgICAgICAgJjpudGgtY2hpbGQoMikge1xuICAgICAgICAgIHdpZHRoOiBhdXRvO1xuICAgICAgICAgIHBhZGRpbmc6IDAgMTJweDtcbiAgICAgICAgICBmb250LXNpemU6IDE0cHg7XG4gICAgICAgIH1cbiAgICAgIH1cbiAgICB9XG4gIH1cbn1cbiJdfQ== */</style><link href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" rel="stylesheet" type="text/css" spa-preserve/><script src="../../prescript.js" type="application/javascript" spa-preserve></script><script type="application/javascript" spa-preserve>const fetchData = fetch("../../static/contentIndex.json").then(data => data.json())</script></head><body data-slug="20_Projects/DSC-Autonomous-Driving/DSC-Autonomous-Driving"><div id="quartz-root" class="page"><div id="quartz-body"><div class="left sidebar"><h2 class="page-title"><a href="../..">LabNote</a></h2><div class="spacer mobile-only"></div><div class="flex-component" style="flex-direction: row; flex-wrap: nowrap; gap: 1rem;"><div style="flex-grow: 1; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><div class="search"><button class="search-button"><svg role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19.9 19.7"><title>Search</title><g class="search-path" fill="none"><path stroke-linecap="square" d="M18.5 18.3l-5.4-5.4"></path><circle cx="8" cy="8" r="7"></circle></g></svg><p>검색</p></button><div class="search-container"><div class="search-space"><input autocomplete="off" class="search-bar" name="search" type="text" aria-label="검색어를 입력하세요" placeholder="검색어를 입력하세요"/><div class="search-layout" data-preview="true"></div></div></div></div></div><div style="flex-grow: 0; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><button class="darkmode"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="dayIcon" x="0px" y="0px" viewBox="0 0 35 35" style="enable-background:new 0 0 35 35" xml:space="preserve" aria-label="다크 모드"><title>다크 모드</title><path d="M6,17.5C6,16.672,5.328,16,4.5,16h-3C0.672,16,0,16.672,0,17.5    S0.672,19,1.5,19h3C5.328,19,6,18.328,6,17.5z M7.5,26c-0.414,0-0.789,0.168-1.061,0.439l-2,2C4.168,28.711,4,29.086,4,29.5    C4,30.328,4.671,31,5.5,31c0.414,0,0.789-0.168,1.06-0.44l2-2C8.832,28.289,9,27.914,9,27.5C9,26.672,8.329,26,7.5,26z M17.5,6    C18.329,6,19,5.328,19,4.5v-3C19,0.672,18.329,0,17.5,0S16,0.672,16,1.5v3C16,5.328,16.671,6,17.5,6z M27.5,9    c0.414,0,0.789-0.168,1.06-0.439l2-2C30.832,6.289,31,5.914,31,5.5C31,4.672,30.329,4,29.5,4c-0.414,0-0.789,0.168-1.061,0.44    l-2,2C26.168,6.711,26,7.086,26,7.5C26,8.328,26.671,9,27.5,9z M6.439,8.561C6.711,8.832,7.086,9,7.5,9C8.328,9,9,8.328,9,7.5    c0-0.414-0.168-0.789-0.439-1.061l-2-2C6.289,4.168,5.914,4,5.5,4C4.672,4,4,4.672,4,5.5c0,0.414,0.168,0.789,0.439,1.06    L6.439,8.561z M33.5,16h-3c-0.828,0-1.5,0.672-1.5,1.5s0.672,1.5,1.5,1.5h3c0.828,0,1.5-0.672,1.5-1.5S34.328,16,33.5,16z     M28.561,26.439C28.289,26.168,27.914,26,27.5,26c-0.828,0-1.5,0.672-1.5,1.5c0,0.414,0.168,0.789,0.439,1.06l2,2    C28.711,30.832,29.086,31,29.5,31c0.828,0,1.5-0.672,1.5-1.5c0-0.414-0.168-0.789-0.439-1.061L28.561,26.439z M17.5,29    c-0.829,0-1.5,0.672-1.5,1.5v3c0,0.828,0.671,1.5,1.5,1.5s1.5-0.672,1.5-1.5v-3C19,29.672,18.329,29,17.5,29z M17.5,7    C11.71,7,7,11.71,7,17.5S11.71,28,17.5,28S28,23.29,28,17.5S23.29,7,17.5,7z M17.5,25c-4.136,0-7.5-3.364-7.5-7.5    c0-4.136,3.364-7.5,7.5-7.5c4.136,0,7.5,3.364,7.5,7.5C25,21.636,21.636,25,17.5,25z"></path></svg><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="nightIcon" x="0px" y="0px" viewBox="0 0 100 100" style="enable-background:new 0 0 100 100" xml:space="preserve" aria-label="라이트 모드"><title>라이트 모드</title><path d="M96.76,66.458c-0.853-0.852-2.15-1.064-3.23-0.534c-6.063,2.991-12.858,4.571-19.655,4.571  C62.022,70.495,50.88,65.88,42.5,57.5C29.043,44.043,25.658,23.536,34.076,6.47c0.532-1.08,0.318-2.379-0.534-3.23  c-0.851-0.852-2.15-1.064-3.23-0.534c-4.918,2.427-9.375,5.619-13.246,9.491c-9.447,9.447-14.65,22.008-14.65,35.369  c0,13.36,5.203,25.921,14.65,35.368s22.008,14.65,35.368,14.65c13.361,0,25.921-5.203,35.369-14.65  c3.872-3.871,7.064-8.328,9.491-13.246C97.826,68.608,97.611,67.309,96.76,66.458z"></path></svg></button></div><div style="flex-grow: 0; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><button class="readermode"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="readerIcon" fill="currentColor" stroke="currentColor" stroke-width="0.2" stroke-linecap="round" stroke-linejoin="round" width="64px" height="64px" viewBox="0 0 24 24" aria-label="리더 모드"><title>리더 모드</title><g transform="translate(-1.8, -1.8) scale(1.15, 1.2)"><path d="M8.9891247,2.5 C10.1384702,2.5 11.2209868,2.96705384 12.0049645,3.76669482 C12.7883914,2.96705384 13.8709081,2.5 15.0202536,2.5 L18.7549359,2.5 C19.1691495,2.5 19.5049359,2.83578644 19.5049359,3.25 L19.5046891,4.004 L21.2546891,4.00457396 C21.6343849,4.00457396 21.9481801,4.28672784 21.9978425,4.6528034 L22.0046891,4.75457396 L22.0046891,20.25 C22.0046891,20.6296958 21.7225353,20.943491 21.3564597,20.9931534 L21.2546891,21 L2.75468914,21 C2.37499337,21 2.06119817,20.7178461 2.01153575,20.3517706 L2.00468914,20.25 L2.00468914,4.75457396 C2.00468914,4.37487819 2.28684302,4.061083 2.65291858,4.01142057 L2.75468914,4.00457396 L4.50368914,4.004 L4.50444233,3.25 C4.50444233,2.87030423 4.78659621,2.55650904 5.15267177,2.50684662 L5.25444233,2.5 L8.9891247,2.5 Z M4.50368914,5.504 L3.50468914,5.504 L3.50468914,19.5 L10.9478955,19.4998273 C10.4513189,18.9207296 9.73864328,18.5588115 8.96709342,18.5065584 L8.77307039,18.5 L5.25444233,18.5 C4.87474657,18.5 4.56095137,18.2178461 4.51128895,17.8517706 L4.50444233,17.75 L4.50368914,5.504 Z M19.5049359,17.75 C19.5049359,18.1642136 19.1691495,18.5 18.7549359,18.5 L15.2363079,18.5 C14.3910149,18.5 13.5994408,18.8724714 13.0614828,19.4998273 L20.5046891,19.5 L20.5046891,5.504 L19.5046891,5.504 L19.5049359,17.75 Z M18.0059359,3.999 L15.0202536,4 L14.8259077,4.00692283 C13.9889509,4.06666544 13.2254227,4.50975805 12.7549359,5.212 L12.7549359,17.777 L12.7782651,17.7601316 C13.4923805,17.2719483 14.3447024,17 15.2363079,17 L18.0059359,16.999 L18.0056891,4.798 L18.0033792,4.75457396 L18.0056891,4.71 L18.0059359,3.999 Z M8.9891247,4 L6.00368914,3.999 L6.00599909,4.75457396 L6.00599909,4.75457396 L6.00368914,4.783 L6.00368914,16.999 L8.77307039,17 C9.57551536,17 10.3461406,17.2202781 11.0128313,17.6202194 L11.2536891,17.776 L11.2536891,5.211 C10.8200889,4.56369974 10.1361548,4.13636104 9.37521067,4.02745763 L9.18347055,4.00692283 L8.9891247,4 Z"></path></g></svg></button></div></div><div class="explorer" data-behavior="link" data-collapsed="collapsed" data-savestate="true" data-data-fns="{&quot;order&quot;:[&quot;filter&quot;,&quot;map&quot;,&quot;sort&quot;],&quot;sortFn&quot;:&quot;(a,b)=>!a.isFolder&amp;&amp;!b.isFolder||a.isFolder&amp;&amp;b.isFolder?a.displayName.localeCompare(b.displayName,void 0,{numeric:!0,sensitivity:\&quot;base\&quot;}):!a.isFolder&amp;&amp;b.isFolder?1:-1&quot;,&quot;filterFn&quot;:&quot;node=>node.slugSegment!==\&quot;tags\&quot;&quot;,&quot;mapFn&quot;:&quot;node=>node&quot;}"><button type="button" class="explorer-toggle mobile-explorer hide-until-loaded" data-mobile="true" aria-controls="explorer-115"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide-menu"><line x1="4" x2="20" y1="12" y2="12"></line><line x1="4" x2="20" y1="6" y2="6"></line><line x1="4" x2="20" y1="18" y2="18"></line></svg></button><button type="button" class="title-button explorer-toggle desktop-explorer" data-mobile="false" aria-expanded="true"><h2>탐색기</h2><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="5 8 14 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fold"><polyline points="6 9 12 15 18 9"></polyline></svg></button><div id="explorer-115" class="explorer-content" aria-expanded="false" role="group"><ul class="explorer-ul overflow" id="list-0"><li class="overflow-end"></li></ul></div><template id="template-file"><li><a href="#"></a></li></template><template id="template-folder"><li><div class="folder-container"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="5 8 14 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="folder-icon"><polyline points="6 9 12 15 18 9"></polyline></svg><div><button class="folder-button"><span class="folder-title"></span></button></div></div><div class="folder-outer"><ul class="content"></ul></div></li></template></div></div><div class="center"><div class="page-header"><div class="popover-hint"><nav class="breadcrumb-container" aria-label="breadcrumbs"><div class="breadcrumb-element"><a href="../../">Home</a><p> ❯ </p></div><div class="breadcrumb-element"><a href="../../20_Projects/">20_Projects</a><p> ❯ </p></div><div class="breadcrumb-element"><a href="../../20_Projects/DSC-Autonomous-Driving/">DSC Autonomous Driving</a><p> ❯ </p></div><div class="breadcrumb-element"><a href>DSC Autonomous Driving</a></div></nav><h1 class="article-title">DSC Autonomous Driving</h1><p show-comma="true" class="content-meta"><time datetime="2026-08-09T15:00:00.000Z">2026년 8월 10일</time><span>15 min read</span></p><ul class="tags"><li><a href="../../tags/reinforcement-learning" class="internal tag-link">reinforcement-learning</a></li><li><a href="../../tags/python" class="internal tag-link">python</a></li><li><a href="../../tags/ugv" class="internal tag-link">ugv</a></li><li><a href="../../tags/simulation" class="internal tag-link">simulation</a></li></ul></div></div><article class="popover-hint"><h1 id="2026-dsc-자율주행차-장애물-회피-기술-교육">2026 DSC 자율주행차 장애물 회피 기술 교육<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#2026-dsc-자율주행차-장애물-회피-기술-교육" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h1>
+<blockquote>
+<p>이 프로젝트가 채우는 로드맵 칸: <code>learning</code> → <a href="../../Research-Direction" class="internal alias" data-slug="Research-Direction">Research Direction</a></p>
+</blockquote>
+<p>강화학습 기반 자율주행 — <strong>보상함수(reward function) 설계와 반복 개선</strong>이 핵심.</p>
+<h2 id="결과--최우수상">결과 — 최우수상<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#결과--최우수상" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<blockquote class="callout success" data-callout="success">
+<div class="callout-title">
+                  <div class="callout-icon"></div>
+                  <div class="callout-title-inner"><p>2026 DSC 공유대학 AWS DeepRacer 자율주행차 장애물 회피 기술 교육 — <strong>최우수상</strong></p></div>
+                  
+                </div>
+<div class="callout-content">
+<p>발표 시점(7/31)에는 실차 완주 영상이 없어 20.9초짜리 미완주 영상으로 발표했고,
+이후 완주 영상(58.3초)을 촬영해 2026-09-04에 발표자료 슬라이드 10을 교체했다.</p>
+</div>
+</blockquote>
+<p><img src="../../_attachments/DSC-Autonomous-Driving/2026-09-04/2026-09-04-최우수상-수상.jpg" width="auto" height="auto" alt/></p>
+<p>실차 완주 주행 → <a href="../../20_Projects/DSC-Autonomous-Driving/2026-07-31-교육-발표#실물-차량-주행" class="internal alias" data-slug="20_Projects/DSC-Autonomous-Driving/2026-07-31-교육-발표">실물 차량 주행</a></p>
+<h2 id="보상함수-설계--11번의-반복">보상함수 설계 — 11번의 반복<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#보상함수-설계--11번의-반복" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>이 프로젝트에서 제일 값진 자료. 버전이 전부 남아있음.</p>
+<pre><code>1단계   step1_demo.py → ver1 → ver2 → ver3
+2단계   step2_demo.py → ver1 → ver2
+3단계   step3_demo.py → ver1 → ver2 → ver3
+        └→ Final_ver.py
+</code></pre>
+<blockquote>
+<p><strong>왜 이게 중요한가:</strong> 결과 코드 하나만 있으면 “됐다”밖에 말할 게 없다.
+버전이 다 남아있으면 “ver1은 이래서 실패했고 ver2에서 이걸 바꿨다”를 말할 수 있다.
+면접에서 물어보는 건 후자다.</p>
+</blockquote>
+<h2 id="경로-최적화">경로 최적화<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#경로-최적화" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<ul>
+<li><code>최적화 경로/트랙 최적화 파일.py</code></li>
+<li><code>최적화 경로/racing_line_summary.txt</code></li>
+<li><code>최적화 경로/보수적인 곡선/</code> — 1단계 보상함수를 보수적인 곡선에 적용한 변형</li>
+</ul>
+<h2 id="학습-모델">학습 모델<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#학습-모델" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p><code>traj_opt_ver3</code> ~ <code>ver10</code> best 모델 (각 21MB, <code>.tar.gz</code>).
+용량 문제로 볼트에 미복사 — 원본은 <code>C:\Archive\2026 DSC 자율주행차 장애물 회피 기술 교육\학습모델\</code></p>
+<h2 id="자료">자료<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#자료" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<ul>
+<li><a href="../../20_Projects/DSC-Autonomous-Driving/2026-07-31-교육-발표" class="internal alias" data-slug="20_Projects/DSC-Autonomous-Driving/2026-07-31-교육-발표">2026-07-31 교육 발표</a> — 최종 발표 PPT를 페이지 순서대로 옮긴 노트 (12p, 이미지 18 + 영상 1)</li>
+<li><code>2026 자율주행차 장애물 회피교육.pptx</code> (35MB, 원본 위치 보존) — 2026-09-04 슬라이드 10 교체판</li>
+<li><code>사진, 동영상/</code> — 실차 주행 사진·영상. <code>최종본 동영상.mp4</code>(완주, 58.3초) · <code>실물차량_주행_최종본.gif</code>(슬라이드용 변환본) · <code>최종본사진.jpg</code>(수상)</li>
+</ul>
+<h2 id="채워야-할-것">채워야 할 것<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#채워야-할-것" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" checked disabled/> <del>1/2/3단계를 나눈 기준</del> → <strong>보상 커리큘럼</strong>이었다. 1단계 안정적 경로 추종 → 2단계 속도 증가 → 3단계 종합 최적화. <strong>행동·상태 정의(= MDP 경계선)는 세 단계 내내 고정</strong>이었고 바뀐 건 보상뿐 (2026-09-21) → <a href="../../30_Knowledge/Reward-Shaping" class="internal alias" data-slug="30_Knowledge/Reward-Shaping">Reward Shaping</a> · <a href="../../30_Knowledge/MDP" class="internal" data-slug="30_Knowledge/MDP">MDP</a></li>
+<li class="task-list-item"><input type="checkbox" disabled/> <strong>각 ver에서 뭘 바꿨고 왜 바꿨는지</strong> ← 최우선. 이게 이 프로젝트의 전부. 단계 기준은 잡혔으니 이제 <strong>단계 안쪽의 ver1→ver2→ver3</strong>이 남았다</li>
+<li class="task-list-item"><input type="checkbox" disabled/> ver3 ~ ver10 학습 모델의 성능 비교 (어떤 게 왜 좋았나)</li>
+<li class="task-list-item"><input type="checkbox" disabled/> “보수적인 곡선”이 뭔지, 왜 따로 뒀는지</li>
+<li class="task-list-item"><input type="checkbox" disabled/> 최종 결과 — 랩타임이든 완주율이든 숫자 (수상 결과는 기록했지만 <strong>숫자는 여전히 없다</strong>)</li>
+<li class="task-list-item"><input type="checkbox" disabled/> 발표 시점(7/31)에 완주 영상이 없었던 이유 — 실차에서 무엇이 안 맞았는지. 기록이 없어 복기 필요 → <a href="../../30_Knowledge/Sim-to-Real" class="internal" data-slug="30_Knowledge/Sim-to-Real">Sim-to-Real</a></li>
+</ul>
+<hr/>
+<h1 id="회고--강화학습과-규칙기반-제어의-차이">회고 — 강화학습과 규칙기반 제어의 차이<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#회고--강화학습과-규칙기반-제어의-차이" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h1>
+<blockquote class="callout info" data-callout="info">
+<div class="callout-title">
+                  <div class="callout-icon"></div>
+                  <div class="callout-title-inner"><p>Source </p></div>
+                  
+                </div>
+<div class="callout-content">
+<p>ChatGPT 대화 「강화학습과 규칙제어 비교」 · 2026-08-31 정리
+<a href="https://chatgpt.com/share/6a953993-94d0-83ee-ab5f-53e10480f6b7" class="external">https://chatgpt.com/share/6a953993-94d0-83ee-ab5f-53e10480f6b7<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>
+공유 링크가 대화 중간부터 시작해 <strong>첫 질문은 남아 있지 않다.</strong> 답변 내용으로 보아
+“규칙기반에서 게인 바꾸듯 보상을 조금 손봤는데, 몇 시간 학습을 기다렸다가 실패하는
+루프가 반복된다 — 내가 잘못 배운 건가?”에 가까운 질문이었다.</p>
+</div>
+</blockquote>
+<p>이 프로젝트에서 보상함수를 <strong>11번</strong> 고쳐 쓴 경험이 무엇이었는지를 사후에 정리한 것.</p>
+<h2 id="1-게인을-바꾸는-것과-보상을-바꾸는-것은-성격이-다르다">1. 게인을 바꾸는 것과 보상을 바꾸는 것은 성격이 다르다<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#1-게인을-바꾸는-것과-보상을-바꾸는-것은-성격이-다르다" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th></th><th>바꾸는 대상</th><th>결과</th></tr></thead><tbody><tr><td>규칙기반</td><td><strong>완성된 제어기의 동작</strong></td><td><code>K_p</code>를 20% 키우면 다음 주행에서 바로 “응답이 세졌네”가 보인다</td></tr><tr><td>강화학습</td><td><strong>앞으로 어떤 제어기를 학습할지, 그 목적함수</strong></td><td>보상 변경 → 학습과정 변경 → policy 변화 → 그제서야 행동 변화</td></tr></tbody></table></div>
+<p>그래서 이 루프가 생긴다.</p>
+<pre><code>보상 조금 수정 → 다시 학습 → 한참 기다림 → 결과 확인
+→ &quot;아 이 방향 아닌데&quot; → 다시 수정 → 다시 학습
+</code></pre>
+<p><strong>더 나쁜 건 보상을 10% 바꿨다고 행동이 10% 바뀌지 않는다는 것.</strong>
+<code>R = 1.0·R_velocity + 0.1·R_upright − 0.01·R_energy</code> 에서 energy penalty를
+<code>0.01 → 0.02</code>로 두 배만 올려도, 기대(“에너지를 덜 쓰는 보행이 나오겠네”)와 달리
+보폭이 확 줄거나, 속도가 크게 떨어지거나, 이상한 gait를 찾아내거나, 학습 자체가
+불안정해질 수 있다. <strong>보상 항들이 하나의 최적화 문제 안에서 서로 경쟁하기 때문</strong>이다.</p>
+<blockquote>
+<p>규칙기반 제어는 <strong>디버깅이 빠르고 국소적</strong>이다 — 이 게인을 바꿨다 → 여기 행동이 바뀌었다.
+강화학습은 <strong>디버깅이 느리고 전역적</strong>이다 — 이 보상을 바꿨다 → 학습 궤적 전체가
+달라졌다 → 전혀 다른 전략이 나왔다.</p>
+</blockquote>
+<p>RL이 잘 됐을 때는 사람이 설계하기 어려운 복잡한 제어를 알아서 찾아주지만,
+<strong>개발 과정 자체는 규칙기반보다 훨씬 답답할 수 있다.</strong> 규칙기반은 10초 돌려보고 바로
+고치는데 RL은 그 피드백 루프가 몇 시간~며칠이다. 이게 RL에서 sample efficiency뿐
+아니라 <strong>experiment efficiency</strong>(사람이 실험을 몇 번 해야 하는가)가 중요한 이유다.</p>
+<h2 id="2-그-비용을-줄이는-방법">2. 그 비용을 줄이는 방법<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#2-그-비용을-줄이는-방법" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>무식하게 며칠씩 돌리는 게 초보 단계에선 흔하지만, 줄이는 방법이 있다.</p>
+<ul>
+<li><strong>짧은 학습으로 후보를 먼저 거른다.</strong> 매번 5000만 step 풀 트레이닝 대신
+reward A/B/C를 100만 step씩만 돌려 학습곡선과 행동을 비교한다. 명백히 이상한 건
+풀 트레이닝까지 안 간다.</li>
+<li><strong>seed를 여러 개 본다.</strong> RL은 random seed에 따라 결과가 크게 달라져서,
+“보상을 바꿨더니 좋아졌다”가 사실 <strong>“이번 seed가 운이 좋았다”</strong> 일 수 있다.</li>
+<li><strong>보상 항을 따로 로깅한다.</strong> 총 보상만 <code>R = 247</code>로 보면 아무 의미가 없다.
+<code>R_velocity=320 / R_upright=85 / R_energy=−130 / R_slip=−28</code> 로 쪼개서 보면
+“energy는 줄었는데 velocity가 훨씬 크게 떨어졌네”를 <strong>학습 중간에</strong> 알고 끊을 수 있다.
+→ 규칙기반에서 로그 보며 “조향은 좋아졌는데 obstacle distance가 나빠졌네” 하고
+판단하는 것과 같은 역할.</li>
+<li><strong>checkpoint에서 이어서 fine-tuning한다.</strong> 보상을 조금 손봤다고 랜덤 policy부터
+다시 시작할 필요는 없다. 단, 너무 크게 바꾸면 기존 policy가 새 목적에 안 맞아
+이상하게 학습되고 비교 실험의 공정성도 떨어진다 — 만능은 아니다.</li>
+</ul>
+<blockquote class="callout note" data-callout="note">
+<div class="callout-title">
+                  <div class="callout-icon"></div>
+                  <div class="callout-title-inner"><p>이 프로젝트에 바로 걸리는 지적 </p></div>
+                  
+                </div>
+<div class="callout-content">
+<p>세 번째 항목이 위 <code>채워야 할 것</code> 1번(“각 ver에서 뭘 바꿨고 왜 바꿨는지”)에 대한
+답이기도 하다. <strong>보상 항별 로그가 남아 있었다면</strong> ver1 → ver2에서 무엇이 좋아지고
+무엇이 나빠졌는지를 지금도 숫자로 말할 수 있었을 것이다.</p>
+</div>
+</blockquote>
+<h2 id="3-보상은-게인이-아니라-평가기준이다">3. 보상은 게인이 아니라 평가기준이다<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#3-보상은-게인이-아니라-평가기준이다" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p><strong>reward를 controller gain처럼 생각하면 RL 튜닝이 굉장히 고통스러워진다.</strong></p>
+<p>“왼쪽으로 쏠리니까 lateral reward를 0.7 → 0.8로 올려보자”를 반복하기 전에,
+먼저 물어야 할 것은 이것이다.</p>
+<blockquote>
+<p><strong>“왜 지금 policy는 왼쪽으로 쏠리는 행동을 높은 return이라고 판단하고 있지?”</strong></p>
+</blockquote>
+<p>원인 후보는 보상만이 아니다 — reward scale / observation 부족 / action range /
+simulator dynamics / exploration / termination 조건.
+<strong>사실은 observation 설계 문제인데 reward coefficient를 0.13, 0.15, 0.17로 계속
+만지는 일</strong>이 여기서 생긴다. 그러면 위의 “학습 → 기다림 → 실패 → 수정” 지옥에 들어간다.</p>
+<h2 id="4-rl-이론은-어디에-서-있나--3층-구조">4. RL 이론은 어디에 서 있나 — 3층 구조<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#4-rl-이론은-어디에-서-있나--3층-구조" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>“강화학습 이론이 인류가 쌓아올린 역학 아카이브보다 크진 않을 것 아니냐”는 물음에 대해.</p>
+<p>맞다. 축적량으로 보면 고전역학·동역학·제어이론 전체보다 훨씬 작고, 그게 오히려 RL의
+성격을 말해준다. 핵심 아이디어는 놀랄 만큼 압축된다.</p>
+<pre><code>s_t → a_t → r_t, s_{t+1}
+max_π  E[ Σ γ^t r_t ]
+</code></pre>
+<p>= 현재 상태에서 행동하고, 결과와 보상을 받아, 장기 보상이 커지는 행동 정책을 찾는다.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th>층</th><th>내용</th></tr></thead><tbody><tr><td><strong>1층 — 기반 학문</strong></td><td>확률론, 통계, 선형대수, 최적화, 동적계획법, 제어이론</td></tr><tr><td><strong>2층 — RL 이론</strong></td><td>MDP, value function, Bellman equation, policy optimization, TD learning, exploration, 수렴성, sample complexity</td></tr><tr><td><strong>3층 — RL 엔지니어링</strong></td><td>PPO냐 SAC냐, reward 설계, simulator 구성, observation/action 설계, 학습속도, domain randomization 범위</td></tr></tbody></table></div>
+<p>내가 겪은 것(“툴을 효율적으로 쓰는 법”)은 대부분 <strong>3층</strong>이다.
+대학에서 “강화학습”을 배우면 보통 2층을 깊게 배우고 3층까지 내려온다.
+Bellman equation <code>V^π(s) = E[r + γ V^π(s′)]</code> 같은 건 사용 팁이 아니라
+<strong>sequential decision making 자체에 대한 수학적 구조</strong>다.</p>
+<p>그리고 로봇 분야에서는 3층이 특히 중요하다. <strong>순수 RL 이론을 잘 안다고 보행 로봇이
+바로 걷지는 않는다</strong> — RL 이론 + 로봇/동역학 지식 + 시뮬레이터 + reward/observation
+설계 경험이 합쳐져야 한다.</p>
+<h2 id="5-rl은-역학을-없앤-게-아니라-다른-곳으로-밀어냈다">5. RL은 역학을 없앤 게 아니라 다른 곳으로 밀어냈다<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#5-rl은-역학을-없앤-게-아니라-다른-곳으로-밀어냈다" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<pre><code>고전 제어   인간이 동역학 이해 → 인간이 제어법 설계 → 로봇
+강화학습    물리 시뮬레이터 → 수억 번 경험 → RL이 제어법 탐색 → 로봇
+</code></pre>
+<p>에이전트는 동역학을 모르지만 <strong>시뮬레이터는 동역학을 안다.</strong> <code>F = ma</code>도, 접촉력도,
+마찰로 미끄러지는 것도 시뮬레이터가 계산해 준다. 즉 <strong>지식과 계산량을 맞바꾼 것</strong>이다.</p>
+<ul>
+<li>고전 제어 = 인류가 축적한 지식을 압축해서 제어기에 넣는다</li>
+<li>강화학습 = 비교적 일반적인 학습 원리를 주고, 계산과 경험으로 제어법을 다시 찾게 한다</li>
+</ul>
+<p>고전 제어가 “이 시스템은 이런 특성이니 이런 제어기가 필요하다”라고 추론한다면,
+RL은 “잘 모르겠고 1억 번 해봐”가 어느 정도 가능한 것이다.
+그래서 <strong>RL이 비싼 건 이론이 부족해서가 아니라, 애초에 인간의 사전지식을 계산과
+경험으로 대체하는 성격이 강하기 때문</strong>이다.</p>
+<p>그리고 현대 로봇 RL은 기존 지식을 버리지 않는다. 로봇 구조도 센서도 사람이 고르고,
+시뮬레이터엔 역학을 넣고, action 범위도 안전 제약도 사람이 건다. <strong>그 안에서 인간이
+직접 설계하기 어려운 제어 정책만 RL에게 찾아달라고 하는 것</strong>에 가깝다.</p>
+<blockquote class="callout note" data-callout="note">
+<div class="callout-title">
+                  <div class="callout-icon"></div>
+                  <div class="callout-title-inner"><p>다시 공부한다면 </p></div>
+                  
+                </div>
+<div class="callout-content">
+<p>이론 전체를 처음부터 깊게 파는 것보다
+<strong>MDP → Bellman → Value/Q → Policy Gradient → Actor-Critic → PPO/SAC →
+reward/observation 설계</strong> 순이 실전에서 겪은 문제와 가장 바로 연결된다.</p>
+</div>
+</blockquote>
+<p>관련: <a href="../../30_Knowledge/Reward-Shaping" class="internal alias" data-slug="30_Knowledge/Reward-Shaping">Reward Shaping</a> · <a href="../../20_Projects/AMET2026-Physicar/AMET2026-Physicar" class="internal alias" data-slug="20_Projects/AMET2026-Physicar/AMET2026-Physicar">AMET2026 Physicar</a> — 같은 여름에 한 규칙기반 쪽 프로젝트</p></article><hr/><div class="page-footer"></div></div><div class="right sidebar"><div class="graph"><h3>그래프 뷰</h3><div class="graph-outer"><div class="graph-container" data-cfg="{&quot;drag&quot;:true,&quot;zoom&quot;:true,&quot;depth&quot;:1,&quot;scale&quot;:1.1,&quot;repelForce&quot;:0.5,&quot;centerForce&quot;:0.3,&quot;linkDistance&quot;:30,&quot;fontSize&quot;:0.6,&quot;opacityScale&quot;:1,&quot;showTags&quot;:true,&quot;removeTags&quot;:[],&quot;focusOnHover&quot;:false,&quot;enableRadial&quot;:false}"></div><button class="global-graph-icon" aria-label="Global Graph"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 55 55" fill="currentColor" xml:space="preserve"><path d="M49,0c-3.309,0-6,2.691-6,6c0,1.035,0.263,2.009,0.726,2.86l-9.829,9.829C32.542,17.634,30.846,17,29,17
+                s-3.542,0.634-4.898,1.688l-7.669-7.669C16.785,10.424,17,9.74,17,9c0-2.206-1.794-4-4-4S9,6.794,9,9s1.794,4,4,4
+                c0.74,0,1.424-0.215,2.019-0.567l7.669,7.669C21.634,21.458,21,23.154,21,25s0.634,3.542,1.688,4.897L10.024,42.562
+                C8.958,41.595,7.549,41,6,41c-3.309,0-6,2.691-6,6s2.691,6,6,6s6-2.691,6-6c0-1.035-0.263-2.009-0.726-2.86l12.829-12.829
+                c1.106,0.86,2.44,1.436,3.898,1.619v10.16c-2.833,0.478-5,2.942-5,5.91c0,3.309,2.691,6,6,6s6-2.691,6-6c0-2.967-2.167-5.431-5-5.91
+                v-10.16c1.458-0.183,2.792-0.759,3.898-1.619l7.669,7.669C41.215,39.576,41,40.26,41,41c0,2.206,1.794,4,4,4s4-1.794,4-4
+                s-1.794-4-4-4c-0.74,0-1.424,0.215-2.019,0.567l-7.669-7.669C36.366,28.542,37,26.846,37,25s-0.634-3.542-1.688-4.897l9.665-9.665
+                C46.042,11.405,47.451,12,49,12c3.309,0,6-2.691,6-6S52.309,0,49,0z M11,9c0-1.103,0.897-2,2-2s2,0.897,2,2s-0.897,2-2,2
+                S11,10.103,11,9z M6,51c-2.206,0-4-1.794-4-4s1.794-4,4-4s4,1.794,4,4S8.206,51,6,51z M33,49c0,2.206-1.794,4-4,4s-4-1.794-4-4
+                s1.794-4,4-4S33,46.794,33,49z M29,31c-3.309,0-6-2.691-6-6s2.691-6,6-6s6,2.691,6,6S32.309,31,29,31z M47,41c0,1.103-0.897,2-2,2
+                s-2-0.897-2-2s0.897-2,2-2S47,39.897,47,41z M49,10c-2.206,0-4-1.794-4-4s1.794-4,4-4s4,1.794,4,4S51.206,10,49,10z"></path></svg></button></div><div class="global-graph-outer"><div class="global-graph-container" data-cfg="{&quot;drag&quot;:true,&quot;zoom&quot;:true,&quot;depth&quot;:-1,&quot;scale&quot;:0.9,&quot;repelForce&quot;:0.5,&quot;centerForce&quot;:0.2,&quot;linkDistance&quot;:30,&quot;fontSize&quot;:0.6,&quot;opacityScale&quot;:1,&quot;showTags&quot;:true,&quot;removeTags&quot;:[],&quot;focusOnHover&quot;:true,&quot;enableRadial&quot;:true}"></div></div></div><div class="toc desktop-only"><button type="button" class="toc-header" aria-controls="toc-57" aria-expanded="true"><h3>목차</h3><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fold"><polyline points="6 9 12 15 18 9"></polyline></svg></button><ul id="list-1" class="toc-content overflow"><li class="depth-0"><a href="#2026-dsc-자율주행차-장애물-회피-기술-교육" data-for="2026-dsc-자율주행차-장애물-회피-기술-교육">2026 DSC 자율주행차 장애물 회피 기술 교육</a></li><li class="depth-1"><a href="#결과--최우수상" data-for="결과--최우수상">결과 — 최우수상</a></li><li class="depth-1"><a href="#보상함수-설계--11번의-반복" data-for="보상함수-설계--11번의-반복">보상함수 설계 — 11번의 반복</a></li><li class="depth-1"><a href="#경로-최적화" data-for="경로-최적화">경로 최적화</a></li><li class="depth-1"><a href="#학습-모델" data-for="학습-모델">학습 모델</a></li><li class="depth-1"><a href="#자료" data-for="자료">자료</a></li><li class="depth-1"><a href="#채워야-할-것" data-for="채워야-할-것">채워야 할 것</a></li><li class="depth-0"><a href="#회고--강화학습과-규칙기반-제어의-차이" data-for="회고--강화학습과-규칙기반-제어의-차이">회고 — 강화학습과 규칙기반 제어의 차이</a></li><li class="depth-1"><a href="#1-게인을-바꾸는-것과-보상을-바꾸는-것은-성격이-다르다" data-for="1-게인을-바꾸는-것과-보상을-바꾸는-것은-성격이-다르다">1. 게인을 바꾸는 것과 보상을 바꾸는 것은 성격이 다르다</a></li><li class="depth-1"><a href="#2-그-비용을-줄이는-방법" data-for="2-그-비용을-줄이는-방법">2. 그 비용을 줄이는 방법</a></li><li class="depth-1"><a href="#3-보상은-게인이-아니라-평가기준이다" data-for="3-보상은-게인이-아니라-평가기준이다">3. 보상은 게인이 아니라 평가기준이다</a></li><li class="depth-1"><a href="#4-rl-이론은-어디에-서-있나--3층-구조" data-for="4-rl-이론은-어디에-서-있나--3층-구조">4. RL 이론은 어디에 서 있나 — 3층 구조</a></li><li class="depth-1"><a href="#5-rl은-역학을-없앤-게-아니라-다른-곳으로-밀어냈다" data-for="5-rl은-역학을-없앤-게-아니라-다른-곳으로-밀어냈다">5. RL은 역학을 없앤 게 아니라 다른 곳으로 밀어냈다</a></li><li class="overflow-end"></li></ul></div><div class="backlinks"><h3>백링크</h3><ul id="list-2" class="overflow"><li><a href="../../10_Daily/2026-08-10" class="internal">2026-08-10</a></li><li><a href="../../10_Daily/2026-09-11" class="internal">2026-09-11</a></li><li><a href="../../10_Daily/2026-09-21" class="internal">2026-09-21</a></li><li><a href="../../20_Projects/AMET2026-Physicar/AMET2026-Physicar" class="internal">AMET2026 Physicar</a></li><li><a href="../../20_Projects/DSC-Autonomous-Driving/2026-07-31-교육-발표" class="internal">2026-07-31 교육 발표</a></li><li><a href="../../30_Knowledge/Learning-Path" class="internal">Learning Path</a></li><li><a href="../../30_Knowledge/MDP" class="internal">MDP</a></li><li><a href="../../30_Knowledge/Reward-Shaping" class="internal">Reward Shaping</a></li><li><a href="../../30_Knowledge/Sim-to-Real" class="internal">Sim-to-Real</a></li><li><a href="../../30_Knowledge/강화학습" class="internal">강화학습</a></li><li><a href="../../30_Knowledge/고전제어와-강화학습" class="internal">고전제어와 강화학습</a></li><li><a href="../../" class="internal">Research Direction</a></li><li class="overflow-end"></li></ul></div></div><footer class><p>Created with <a href="https://quartz.jzhao.xyz/">Quartz v4.5.2</a> © 2026</p><ul></ul></footer></div></div></body><script type="application/javascript">function n(){let t=this.parentElement;t.classList.toggle("is-collapsed");let e=t.getElementsByClassName("callout-content")[0];if(!e)return;let l=t.classList.contains("is-collapsed");e.style.gridTemplateRows=l?"0fr":"1fr"}function c(){let t=document.getElementsByClassName("callout is-collapsible");for(let e of t){let l=e.getElementsByClassName("callout-title")[0],s=e.getElementsByClassName("callout-content")[0];if(!l||!s)continue;l.addEventListener("click",n),window.addCleanup(()=>l.removeEventListener("click",n));let o=e.classList.contains("is-collapsed");s.style.gridTemplateRows=o?"0fr":"1fr"}}document.addEventListener("nav",c);
+</script><script type="module">function f(i,e){if(!i)return;function r(o){o.target===this&&(o.preventDefault(),o.stopPropagation(),e())}function t(o){o.key.startsWith("Esc")&&(o.preventDefault(),e())}i?.addEventListener("click",r),window.addCleanup(()=>i?.removeEventListener("click",r)),document.addEventListener("keydown",t),window.addCleanup(()=>document.removeEventListener("keydown",t))}function y(i){for(;i.firstChild;)i.removeChild(i.firstChild)}var h=class{constructor(e,r){this.container=e;this.content=r;this.setupEventListeners(),this.setupNavigationControls(),this.resetTransform()}isDragging=!1;startPan={x:0,y:0};currentPan={x:0,y:0};scale=1;MIN_SCALE=.5;MAX_SCALE=3;cleanups=[];setupEventListeners(){let e=this.onMouseDown.bind(this),r=this.onMouseMove.bind(this),t=this.onMouseUp.bind(this),o=this.resetTransform.bind(this);this.container.addEventListener("mousedown",e),document.addEventListener("mousemove",r),document.addEventListener("mouseup",t),window.addEventListener("resize",o),this.cleanups.push(()=>this.container.removeEventListener("mousedown",e),()=>document.removeEventListener("mousemove",r),()=>document.removeEventListener("mouseup",t),()=>window.removeEventListener("resize",o))}cleanup(){for(let e of this.cleanups)e()}setupNavigationControls(){let e=document.createElement("div");e.className="mermaid-controls";let r=this.createButton("+",()=>this.zoom(.1)),t=this.createButton("-",()=>this.zoom(-.1)),o=this.createButton("Reset",()=>this.resetTransform());e.appendChild(t),e.appendChild(o),e.appendChild(r),this.container.appendChild(e)}createButton(e,r){let t=document.createElement("button");return t.textContent=e,t.className="mermaid-control-button",t.addEventListener("click",r),window.addCleanup(()=>t.removeEventListener("click",r)),t}onMouseDown(e){e.button===0&&(this.isDragging=!0,this.startPan={x:e.clientX-this.currentPan.x,y:e.clientY-this.currentPan.y},this.container.style.cursor="grabbing")}onMouseMove(e){this.isDragging&&(e.preventDefault(),this.currentPan={x:e.clientX-this.startPan.x,y:e.clientY-this.startPan.y},this.updateTransform())}onMouseUp(){this.isDragging=!1,this.container.style.cursor="grab"}zoom(e){let r=Math.min(Math.max(this.scale+e,this.MIN_SCALE),this.MAX_SCALE),t=this.content.getBoundingClientRect(),o=t.width/2,n=t.height/2,c=r-this.scale;this.currentPan.x-=o*c,this.currentPan.y-=n*c,this.scale=r,this.updateTransform()}updateTransform(){this.content.style.transform=`translate(${this.currentPan.x}px, ${this.currentPan.y}px) scale(${this.scale})`}resetTransform(){this.scale=1;let e=this.content.querySelector("svg");this.currentPan={x:e.getBoundingClientRect().width/2,y:e.getBoundingClientRect().height/2},this.updateTransform()}},C=["--secondary","--tertiary","--gray","--light","--lightgray","--highlight","--dark","--darkgray","--codeFont"],E;document.addEventListener("nav",async()=>{let e=document.querySelector(".center").querySelectorAll("code.mermaid");if(e.length===0)return;E||=await import("https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.4.0/mermaid.esm.min.mjs");let r=E.default,t=new WeakMap;for(let n of e)t.set(n,n.innerText);async function o(){for(let s of e){s.removeAttribute("data-processed");let a=t.get(s);a&&(s.innerHTML=a)}let n=C.reduce((s,a)=>(s[a]=window.getComputedStyle(document.documentElement).getPropertyValue(a),s),{}),c=document.documentElement.getAttribute("saved-theme")==="dark";r.initialize({startOnLoad:!1,securityLevel:"loose",theme:c?"dark":"base",themeVariables:{fontFamily:n["--codeFont"],primaryColor:n["--light"],primaryTextColor:n["--darkgray"],primaryBorderColor:n["--tertiary"],lineColor:n["--darkgray"],secondaryColor:n["--secondary"],tertiaryColor:n["--tertiary"],clusterBkg:n["--light"],edgeLabelBackground:n["--highlight"]}}),await r.run({nodes:e})}await o(),document.addEventListener("themechange",o),window.addCleanup(()=>document.removeEventListener("themechange",o));for(let n=0;n<e.length;n++){let v=function(){let g=l.querySelector("#mermaid-space"),m=l.querySelector(".mermaid-content");if(!m)return;y(m);let w=c.querySelector("svg").cloneNode(!0);m.appendChild(w),l.classList.add("active"),g.style.cursor="grab",u=new h(g,m)},M=function(){l.classList.remove("active"),u?.cleanup(),u=null},c=e[n],s=c.parentElement,a=s.querySelector(".clipboard-button"),d=s.querySelector(".expand-button"),p=window.getComputedStyle(a),L=a.offsetWidth+parseFloat(p.marginLeft||"0")+parseFloat(p.marginRight||"0");d.style.right=`calc(${L}px + 0.3rem)`,s.prepend(d);let l=s.querySelector("#mermaid-container");if(!l)return;let u=null;d.addEventListener("click",v),f(l,M),window.addCleanup(()=>{u?.cleanup(),d.removeEventListener("click",v)})}});
+</script><script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/copy-tex.min.js" type="application/javascript"></script><script src="../../postscript.js" type="module"></script></html>

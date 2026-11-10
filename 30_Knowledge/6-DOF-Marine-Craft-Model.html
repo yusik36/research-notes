@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="ko" dir="ltr"><head><title>6-DOF Marine Craft Model</title><meta charset="utf-8"/><link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com"/><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto Sans KR:wght@400;700&amp;family=Noto Sans KR:ital,wght@0,400;0,600;1,400;1,600&amp;family=IBM Plex Mono:wght@400;600&amp;display=swap"/><link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin="anonymous"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta name="og:site_name" content="LabNote"/><meta property="og:title" content="6-DOF Marine Craft Model"/><meta property="og:type" content="website"/><meta name="twitter:card" content="summary_large_image"/><meta name="twitter:title" content="6-DOF Marine Craft Model"/><meta name="twitter:description" content="6-DOF Marine Craft Model 한 줄로 “이 배에 이만큼 힘을 주면 10초 뒤 지구상 어디에 있을까”를 계산하는 모델. 강의 116장이 결국 두 줄을 유도한다."/><meta property="og:description" content="6-DOF Marine Craft Model 한 줄로 “이 배에 이만큼 힘을 주면 10초 뒤 지구상 어디에 있을까”를 계산하는 모델. 강의 116장이 결국 두 줄을 유도한다."/><meta property="og:image:alt" content="6-DOF Marine Craft Model 한 줄로 “이 배에 이만큼 힘을 주면 10초 뒤 지구상 어디에 있을까”를 계산하는 모델. 강의 116장이 결국 두 줄을 유도한다."/><meta property="og:image" content="https://yusik36.github.io/research-notes/static/og-image.png"/><meta property="og:image:url" content="https://yusik36.github.io/research-notes/static/og-image.png"/><meta name="twitter:image" content="https://yusik36.github.io/research-notes/static/og-image.png"/><meta property="og:image:type" content="image/.png"/><meta property="twitter:domain" content="yusik36.github.io/research-notes"/><meta property="og:url" content="https://yusik36.github.io/research-notes/30_Knowledge/6-DOF-Marine-Craft-Model"/><meta property="twitter:url" content="https://yusik36.github.io/research-notes/30_Knowledge/6-DOF-Marine-Craft-Model"/><link rel="icon" href="../static/icon.png"/><meta name="description" content="6-DOF Marine Craft Model 한 줄로 “이 배에 이만큼 힘을 주면 10초 뒤 지구상 어디에 있을까”를 계산하는 모델. 강의 116장이 결국 두 줄을 유도한다."/><meta name="generator" content="Quartz"/><link href="../index.css" rel="stylesheet" type="text/css" spa-preserve/><style>.expand-button {
+  position: absolute;
+  display: flex;
+  float: right;
+  padding: 0.4rem;
+  margin: 0.3rem;
+  right: 0;
+  color: var(--gray);
+  border-color: var(--dark);
+  background-color: var(--light);
+  border: 1px solid;
+  border-radius: 5px;
+  opacity: 0;
+  transition: 0.2s;
+}
+.expand-button > svg {
+  fill: var(--light);
+  filter: contrast(0.3);
+}
+.expand-button:hover {
+  cursor: pointer;
+  border-color: var(--secondary);
+}
+.expand-button:focus {
+  outline: 0;
+}
+
+pre:hover > .expand-button {
+  opacity: 1;
+  transition: 0.2s;
+}
+
+#mermaid-container {
+  position: fixed;
+  contain: layout;
+  z-index: 999;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  display: none;
+  backdrop-filter: blur(4px);
+  background: rgba(0, 0, 0, 0.5);
+}
+#mermaid-container.active {
+  display: inline-block;
+}
+#mermaid-container > #mermaid-space {
+  border: 1px solid var(--lightgray);
+  background-color: var(--light);
+  border-radius: 5px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 80vh;
+  width: 80vw;
+  overflow: hidden;
+}
+#mermaid-container > #mermaid-space > .mermaid-content {
+  padding: 2rem;
+  position: relative;
+  transform-origin: 0 0;
+  transition: transform 0.1s ease;
+  overflow: visible;
+  min-height: 200px;
+  min-width: 200px;
+}
+#mermaid-container > #mermaid-space > .mermaid-content pre {
+  margin: 0;
+  border: none;
+}
+#mermaid-container > #mermaid-space > .mermaid-content svg {
+  max-width: none;
+  height: auto;
+}
+#mermaid-container > #mermaid-space > .mermaid-controls {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  gap: 8px;
+  padding: 8px;
+  background: var(--light);
+  border: 1px solid var(--lightgray);
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 2;
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 1px solid var(--lightgray);
+  background: var(--light);
+  color: var(--dark);
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  font-family: var(--bodyFont);
+  transition: all 0.2s ease;
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button:hover {
+  background: var(--lightgray);
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button:active {
+  transform: translateY(1px);
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button:nth-child(2) {
+  width: auto;
+  padding: 0 12px;
+  font-size: 14px;
+}
+/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VSb290IjoiQzpcXEFyY2hpdmVcXOyeoeuLpOq1rOumrFxcVVNU7J247YS0X+yngOybkOyEnFxcc2l0ZVxccXVhcnR6XFxjb21wb25lbnRzXFxzdHlsZXMiLCJzb3VyY2VzIjpbIm1lcm1haWQuaW5saW5lLnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDRTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTs7QUFFQTtFQUNFO0VBQ0E7O0FBR0Y7RUFDRTtFQUNBOztBQUdGO0VBQ0U7OztBQUtGO0VBQ0U7RUFDQTs7O0FBSUo7RUFDRTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBOztBQUVBO0VBQ0U7O0FBR0Y7RUFDRTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTs7QUFFQTtFQUNFO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBOztBQUVBO0VBQ0U7RUFDQTs7QUFHRjtFQUNFO0VBQ0E7O0FBSUo7RUFDRTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBOztBQUVBO0VBQ0U7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTs7QUFFQTtFQUNFOztBQUdGO0VBQ0U7O0FBSUY7RUFDRTtFQUNBO0VBQ0EiLCJzb3VyY2VzQ29udGVudCI6WyIuZXhwYW5kLWJ1dHRvbiB7XG4gIHBvc2l0aW9uOiBhYnNvbHV0ZTtcbiAgZGlzcGxheTogZmxleDtcbiAgZmxvYXQ6IHJpZ2h0O1xuICBwYWRkaW5nOiAwLjRyZW07XG4gIG1hcmdpbjogMC4zcmVtO1xuICByaWdodDogMDsgLy8gTk9URTogcmlnaHQgd2lsbCBiZSBzZXQgaW4gbWVybWFpZC5pbmxpbmUudHNcbiAgY29sb3I6IHZhcigtLWdyYXkpO1xuICBib3JkZXItY29sb3I6IHZhcigtLWRhcmspO1xuICBiYWNrZ3JvdW5kLWNvbG9yOiB2YXIoLS1saWdodCk7XG4gIGJvcmRlcjogMXB4IHNvbGlkO1xuICBib3JkZXItcmFkaXVzOiA1cHg7XG4gIG9wYWNpdHk6IDA7XG4gIHRyYW5zaXRpb246IDAuMnM7XG5cbiAgJiA+IHN2ZyB7XG4gICAgZmlsbDogdmFyKC0tbGlnaHQpO1xuICAgIGZpbHRlcjogY29udHJhc3QoMC4zKTtcbiAgfVxuXG4gICY6aG92ZXIge1xuICAgIGN1cnNvcjogcG9pbnRlcjtcbiAgICBib3JkZXItY29sb3I6IHZhcigtLXNlY29uZGFyeSk7XG4gIH1cblxuICAmOmZvY3VzIHtcbiAgICBvdXRsaW5lOiAwO1xuICB9XG59XG5cbnByZSB7XG4gICY6aG92ZXIgPiAuZXhwYW5kLWJ1dHRvbiB7XG4gICAgb3BhY2l0eTogMTtcbiAgICB0cmFuc2l0aW9uOiAwLjJzO1xuICB9XG59XG5cbiNtZXJtYWlkLWNvbnRhaW5lciB7XG4gIHBvc2l0aW9uOiBmaXhlZDtcbiAgY29udGFpbjogbGF5b3V0O1xuICB6LWluZGV4OiA5OTk7XG4gIGxlZnQ6IDA7XG4gIHRvcDogMDtcbiAgd2lkdGg6IDEwMHZ3O1xuICBoZWlnaHQ6IDEwMHZoO1xuICBvdmVyZmxvdzogaGlkZGVuO1xuICBkaXNwbGF5OiBub25lO1xuICBiYWNrZHJvcC1maWx0ZXI6IGJsdXIoNHB4KTtcbiAgYmFja2dyb3VuZDogcmdiYSgwLCAwLCAwLCAwLjUpO1xuXG4gICYuYWN0aXZlIHtcbiAgICBkaXNwbGF5OiBpbmxpbmUtYmxvY2s7XG4gIH1cblxuICAmID4gI21lcm1haWQtc3BhY2Uge1xuICAgIGJvcmRlcjogMXB4IHNvbGlkIHZhcigtLWxpZ2h0Z3JheSk7XG4gICAgYmFja2dyb3VuZC1jb2xvcjogdmFyKC0tbGlnaHQpO1xuICAgIGJvcmRlci1yYWRpdXM6IDVweDtcbiAgICBwb3NpdGlvbjogZml4ZWQ7XG4gICAgdG9wOiA1MCU7XG4gICAgbGVmdDogNTAlO1xuICAgIHRyYW5zZm9ybTogdHJhbnNsYXRlKC01MCUsIC01MCUpO1xuICAgIGhlaWdodDogODB2aDtcbiAgICB3aWR0aDogODB2dztcbiAgICBvdmVyZmxvdzogaGlkZGVuO1xuXG4gICAgJiA+IC5tZXJtYWlkLWNvbnRlbnQge1xuICAgICAgcGFkZGluZzogMnJlbTtcbiAgICAgIHBvc2l0aW9uOiByZWxhdGl2ZTtcbiAgICAgIHRyYW5zZm9ybS1vcmlnaW46IDAgMDtcbiAgICAgIHRyYW5zaXRpb246IHRyYW5zZm9ybSAwLjFzIGVhc2U7XG4gICAgICBvdmVyZmxvdzogdmlzaWJsZTtcbiAgICAgIG1pbi1oZWlnaHQ6IDIwMHB4O1xuICAgICAgbWluLXdpZHRoOiAyMDBweDtcblxuICAgICAgcHJlIHtcbiAgICAgICAgbWFyZ2luOiAwO1xuICAgICAgICBib3JkZXI6IG5vbmU7XG4gICAgICB9XG5cbiAgICAgIHN2ZyB7XG4gICAgICAgIG1heC13aWR0aDogbm9uZTtcbiAgICAgICAgaGVpZ2h0OiBhdXRvO1xuICAgICAgfVxuICAgIH1cblxuICAgICYgPiAubWVybWFpZC1jb250cm9scyB7XG4gICAgICBwb3NpdGlvbjogYWJzb2x1dGU7XG4gICAgICBib3R0b206IDIwcHg7XG4gICAgICByaWdodDogMjBweDtcbiAgICAgIGRpc3BsYXk6IGZsZXg7XG4gICAgICBnYXA6IDhweDtcbiAgICAgIHBhZGRpbmc6IDhweDtcbiAgICAgIGJhY2tncm91bmQ6IHZhcigtLWxpZ2h0KTtcbiAgICAgIGJvcmRlcjogMXB4IHNvbGlkIHZhcigtLWxpZ2h0Z3JheSk7XG4gICAgICBib3JkZXItcmFkaXVzOiA2cHg7XG4gICAgICBib3gtc2hhZG93OiAwIDJweCA0cHggcmdiYSgwLCAwLCAwLCAwLjEpO1xuICAgICAgei1pbmRleDogMjtcblxuICAgICAgLm1lcm1haWQtY29udHJvbC1idXR0b24ge1xuICAgICAgICBkaXNwbGF5OiBmbGV4O1xuICAgICAgICBhbGlnbi1pdGVtczogY2VudGVyO1xuICAgICAgICBqdXN0aWZ5LWNvbnRlbnQ6IGNlbnRlcjtcbiAgICAgICAgd2lkdGg6IDMycHg7XG4gICAgICAgIGhlaWdodDogMzJweDtcbiAgICAgICAgcGFkZGluZzogMDtcbiAgICAgICAgYm9yZGVyOiAxcHggc29saWQgdmFyKC0tbGlnaHRncmF5KTtcbiAgICAgICAgYmFja2dyb3VuZDogdmFyKC0tbGlnaHQpO1xuICAgICAgICBjb2xvcjogdmFyKC0tZGFyayk7XG4gICAgICAgIGJvcmRlci1yYWRpdXM6IDRweDtcbiAgICAgICAgY3Vyc29yOiBwb2ludGVyO1xuICAgICAgICBmb250LXNpemU6IDE2cHg7XG4gICAgICAgIGZvbnQtZmFtaWx5OiB2YXIoLS1ib2R5Rm9udCk7XG4gICAgICAgIHRyYW5zaXRpb246IGFsbCAwLjJzIGVhc2U7XG5cbiAgICAgICAgJjpob3ZlciB7XG4gICAgICAgICAgYmFja2dyb3VuZDogdmFyKC0tbGlnaHRncmF5KTtcbiAgICAgICAgfVxuXG4gICAgICAgICY6YWN0aXZlIHtcbiAgICAgICAgICB0cmFuc2Zvcm06IHRyYW5zbGF0ZVkoMXB4KTtcbiAgICAgICAgfVxuXG4gICAgICAgIC8vIFN0eWxlIHRoZSByZXNldCBidXR0b24gZGlmZmVyZW50bHlcbiAgICAgICAgJjpudGgtY2hpbGQoMikge1xuICAgICAgICAgIHdpZHRoOiBhdXRvO1xuICAgICAgICAgIHBhZGRpbmc6IDAgMTJweDtcbiAgICAgICAgICBmb250LXNpemU6IDE0cHg7XG4gICAgICAgIH1cbiAgICAgIH1cbiAgICB9XG4gIH1cbn1cbiJdfQ== */</style><link href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" rel="stylesheet" type="text/css" spa-preserve/><script src="../prescript.js" type="application/javascript" spa-preserve></script><script type="application/javascript" spa-preserve>const fetchData = fetch("../static/contentIndex.json").then(data => data.json())</script></head><body data-slug="30_Knowledge/6-DOF-Marine-Craft-Model"><div id="quartz-root" class="page"><div id="quartz-body"><div class="left sidebar"><h2 class="page-title"><a href="..">LabNote</a></h2><div class="spacer mobile-only"></div><div class="flex-component" style="flex-direction: row; flex-wrap: nowrap; gap: 1rem;"><div style="flex-grow: 1; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><div class="search"><button class="search-button"><svg role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19.9 19.7"><title>Search</title><g class="search-path" fill="none"><path stroke-linecap="square" d="M18.5 18.3l-5.4-5.4"></path><circle cx="8" cy="8" r="7"></circle></g></svg><p>검색</p></button><div class="search-container"><div class="search-space"><input autocomplete="off" class="search-bar" name="search" type="text" aria-label="검색어를 입력하세요" placeholder="검색어를 입력하세요"/><div class="search-layout" data-preview="true"></div></div></div></div></div><div style="flex-grow: 0; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><button class="darkmode"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="dayIcon" x="0px" y="0px" viewBox="0 0 35 35" style="enable-background:new 0 0 35 35" xml:space="preserve" aria-label="다크 모드"><title>다크 모드</title><path d="M6,17.5C6,16.672,5.328,16,4.5,16h-3C0.672,16,0,16.672,0,17.5    S0.672,19,1.5,19h3C5.328,19,6,18.328,6,17.5z M7.5,26c-0.414,0-0.789,0.168-1.061,0.439l-2,2C4.168,28.711,4,29.086,4,29.5    C4,30.328,4.671,31,5.5,31c0.414,0,0.789-0.168,1.06-0.44l2-2C8.832,28.289,9,27.914,9,27.5C9,26.672,8.329,26,7.5,26z M17.5,6    C18.329,6,19,5.328,19,4.5v-3C19,0.672,18.329,0,17.5,0S16,0.672,16,1.5v3C16,5.328,16.671,6,17.5,6z M27.5,9    c0.414,0,0.789-0.168,1.06-0.439l2-2C30.832,6.289,31,5.914,31,5.5C31,4.672,30.329,4,29.5,4c-0.414,0-0.789,0.168-1.061,0.44    l-2,2C26.168,6.711,26,7.086,26,7.5C26,8.328,26.671,9,27.5,9z M6.439,8.561C6.711,8.832,7.086,9,7.5,9C8.328,9,9,8.328,9,7.5    c0-0.414-0.168-0.789-0.439-1.061l-2-2C6.289,4.168,5.914,4,5.5,4C4.672,4,4,4.672,4,5.5c0,0.414,0.168,0.789,0.439,1.06    L6.439,8.561z M33.5,16h-3c-0.828,0-1.5,0.672-1.5,1.5s0.672,1.5,1.5,1.5h3c0.828,0,1.5-0.672,1.5-1.5S34.328,16,33.5,16z     M28.561,26.439C28.289,26.168,27.914,26,27.5,26c-0.828,0-1.5,0.672-1.5,1.5c0,0.414,0.168,0.789,0.439,1.06l2,2    C28.711,30.832,29.086,31,29.5,31c0.828,0,1.5-0.672,1.5-1.5c0-0.414-0.168-0.789-0.439-1.061L28.561,26.439z M17.5,29    c-0.829,0-1.5,0.672-1.5,1.5v3c0,0.828,0.671,1.5,1.5,1.5s1.5-0.672,1.5-1.5v-3C19,29.672,18.329,29,17.5,29z M17.5,7    C11.71,7,7,11.71,7,17.5S11.71,28,17.5,28S28,23.29,28,17.5S23.29,7,17.5,7z M17.5,25c-4.136,0-7.5-3.364-7.5-7.5    c0-4.136,3.364-7.5,7.5-7.5c4.136,0,7.5,3.364,7.5,7.5C25,21.636,21.636,25,17.5,25z"></path></svg><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="nightIcon" x="0px" y="0px" viewBox="0 0 100 100" style="enable-background:new 0 0 100 100" xml:space="preserve" aria-label="라이트 모드"><title>라이트 모드</title><path d="M96.76,66.458c-0.853-0.852-2.15-1.064-3.23-0.534c-6.063,2.991-12.858,4.571-19.655,4.571  C62.022,70.495,50.88,65.88,42.5,57.5C29.043,44.043,25.658,23.536,34.076,6.47c0.532-1.08,0.318-2.379-0.534-3.23  c-0.851-0.852-2.15-1.064-3.23-0.534c-4.918,2.427-9.375,5.619-13.246,9.491c-9.447,9.447-14.65,22.008-14.65,35.369  c0,13.36,5.203,25.921,14.65,35.368s22.008,14.65,35.368,14.65c13.361,0,25.921-5.203,35.369-14.65  c3.872-3.871,7.064-8.328,9.491-13.246C97.826,68.608,97.611,67.309,96.76,66.458z"></path></svg></button></div><div style="flex-grow: 0; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><button class="readermode"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="readerIcon" fill="currentColor" stroke="currentColor" stroke-width="0.2" stroke-linecap="round" stroke-linejoin="round" width="64px" height="64px" viewBox="0 0 24 24" aria-label="리더 모드"><title>리더 모드</title><g transform="translate(-1.8, -1.8) scale(1.15, 1.2)"><path d="M8.9891247,2.5 C10.1384702,2.5 11.2209868,2.96705384 12.0049645,3.76669482 C12.7883914,2.96705384 13.8709081,2.5 15.0202536,2.5 L18.7549359,2.5 C19.1691495,2.5 19.5049359,2.83578644 19.5049359,3.25 L19.5046891,4.004 L21.2546891,4.00457396 C21.6343849,4.00457396 21.9481801,4.28672784 21.9978425,4.6528034 L22.0046891,4.75457396 L22.0046891,20.25 C22.0046891,20.6296958 21.7225353,20.943491 21.3564597,20.9931534 L21.2546891,21 L2.75468914,21 C2.37499337,21 2.06119817,20.7178461 2.01153575,20.3517706 L2.00468914,20.25 L2.00468914,4.75457396 C2.00468914,4.37487819 2.28684302,4.061083 2.65291858,4.01142057 L2.75468914,4.00457396 L4.50368914,4.004 L4.50444233,3.25 C4.50444233,2.87030423 4.78659621,2.55650904 5.15267177,2.50684662 L5.25444233,2.5 L8.9891247,2.5 Z M4.50368914,5.504 L3.50468914,5.504 L3.50468914,19.5 L10.9478955,19.4998273 C10.4513189,18.9207296 9.73864328,18.5588115 8.96709342,18.5065584 L8.77307039,18.5 L5.25444233,18.5 C4.87474657,18.5 4.56095137,18.2178461 4.51128895,17.8517706 L4.50444233,17.75 L4.50368914,5.504 Z M19.5049359,17.75 C19.5049359,18.1642136 19.1691495,18.5 18.7549359,18.5 L15.2363079,18.5 C14.3910149,18.5 13.5994408,18.8724714 13.0614828,19.4998273 L20.5046891,19.5 L20.5046891,5.504 L19.5046891,5.504 L19.5049359,17.75 Z M18.0059359,3.999 L15.0202536,4 L14.8259077,4.00692283 C13.9889509,4.06666544 13.2254227,4.50975805 12.7549359,5.212 L12.7549359,17.777 L12.7782651,17.7601316 C13.4923805,17.2719483 14.3447024,17 15.2363079,17 L18.0059359,16.999 L18.0056891,4.798 L18.0033792,4.75457396 L18.0056891,4.71 L18.0059359,3.999 Z M8.9891247,4 L6.00368914,3.999 L6.00599909,4.75457396 L6.00599909,4.75457396 L6.00368914,4.783 L6.00368914,16.999 L8.77307039,17 C9.57551536,17 10.3461406,17.2202781 11.0128313,17.6202194 L11.2536891,17.776 L11.2536891,5.211 C10.8200889,4.56369974 10.1361548,4.13636104 9.37521067,4.02745763 L9.18347055,4.00692283 L8.9891247,4 Z"></path></g></svg></button></div></div><div class="explorer" data-behavior="link" data-collapsed="collapsed" data-savestate="true" data-data-fns="{&quot;order&quot;:[&quot;filter&quot;,&quot;map&quot;,&quot;sort&quot;],&quot;sortFn&quot;:&quot;(a,b)=>!a.isFolder&amp;&amp;!b.isFolder||a.isFolder&amp;&amp;b.isFolder?a.displayName.localeCompare(b.displayName,void 0,{numeric:!0,sensitivity:\&quot;base\&quot;}):!a.isFolder&amp;&amp;b.isFolder?1:-1&quot;,&quot;filterFn&quot;:&quot;node=>node.slugSegment!==\&quot;tags\&quot;&quot;,&quot;mapFn&quot;:&quot;node=>node&quot;}"><button type="button" class="explorer-toggle mobile-explorer hide-until-loaded" data-mobile="true" aria-controls="explorer-118"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide-menu"><line x1="4" x2="20" y1="12" y2="12"></line><line x1="4" x2="20" y1="6" y2="6"></line><line x1="4" x2="20" y1="18" y2="18"></line></svg></button><button type="button" class="title-button explorer-toggle desktop-explorer" data-mobile="false" aria-expanded="true"><h2>탐색기</h2><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="5 8 14 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fold"><polyline points="6 9 12 15 18 9"></polyline></svg></button><div id="explorer-118" class="explorer-content" aria-expanded="false" role="group"><ul class="explorer-ul overflow" id="list-0"><li class="overflow-end"></li></ul></div><template id="template-file"><li><a href="#"></a></li></template><template id="template-folder"><li><div class="folder-container"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="5 8 14 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="folder-icon"><polyline points="6 9 12 15 18 9"></polyline></svg><div><button class="folder-button"><span class="folder-title"></span></button></div></div><div class="folder-outer"><ul class="content"></ul></div></li></template></div></div><div class="center"><div class="page-header"><div class="popover-hint"><nav class="breadcrumb-container" aria-label="breadcrumbs"><div class="breadcrumb-element"><a href="../">Home</a><p> ❯ </p></div><div class="breadcrumb-element"><a href="../30_Knowledge/">30_Knowledge</a><p> ❯ </p></div><div class="breadcrumb-element"><a href>6 DOF Marine Craft Model</a></div></nav><h1 class="article-title">6-DOF Marine Craft Model</h1><p show-comma="true" class="content-meta"><time datetime="2026-08-30T15:00:00.000Z">2026년 8월 31일</time><span>14 min read</span></p><ul class="tags"><li><a href="../tags/modeling" class="internal tag-link">modeling</a></li><li><a href="../tags/naval-architecture" class="internal tag-link">naval-architecture</a></li><li><a href="../tags/control-theory" class="internal tag-link">control-theory</a></li></ul></div></div><article class="popover-hint"><h1 id="6-dof-marine-craft-model">6-DOF Marine Craft Model<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#6-dof-marine-craft-model" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h1>
+<blockquote class="callout abstract" data-callout="abstract">
+<div class="callout-title">
+                  <div class="callout-icon"></div>
+                  <div class="callout-title-inner"><p>한 줄로 </p></div>
+                  
+                </div>
+<div class="callout-content">
+<p>“이 배에 이만큼 힘을 주면 10초 뒤 지구상 어디에 있을까”를 계산하는 모델.
+<strong>강의 116장이 결국 두 줄을 유도한다.</strong></p>
+</div>
+</blockquote>
+<pre><code>η̇ = J(η) ν                                    ← Kinematics (기구학)
+M ν̇ + C(ν)ν + D(ν)ν + g(η) = τ                ← Kinetics (동역학)
+</code></pre>
+<p><strong>어디에 앉는가</strong> — 이 노트가 상위다. <a href="../30_Knowledge/Rotation-Matrix" class="internal alias" data-slug="30_Knowledge/Rotation-Matrix">Rotation Matrix</a> · <a href="../30_Knowledge/Euler-Angle-Rates" class="internal alias" data-slug="30_Knowledge/Euler-Angle-Rates">Euler Angle Rates</a> · <a href="../30_Knowledge/Transport-Theorem" class="internal alias" data-slug="30_Knowledge/Transport-Theorem">Transport Theorem</a> · <a href="../30_Knowledge/Moment-of-Inertia" class="internal alias" data-slug="30_Knowledge/Moment-of-Inertia">Moment of Inertia</a> · <a href="../30_Knowledge/Rigid-Body-Kinetics" class="internal alias" data-slug="30_Knowledge/Rigid-Body-Kinetics">Rigid-Body Kinetics</a> 가 각각 이 두 줄의 한 칸씩을 채운다.</p>
+<h2 id="왜-필요한가">왜 필요한가<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#왜-필요한가" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>세 가지 용도가 있는데, 결국 같은 모델이다.</p>
+<ul>
+<li><strong>시뮬레이터</strong> — 실물 배 없이 제어기를 수천 번 테스트. MSS Toolbox, PythonVehicleSimulator가 이걸 구현한 것.</li>
+<li><strong>항법 (Navigation)</strong> — ANSL 맥락에서 가장 직접적. IMU는 <strong>BODY 값만</strong> 준다. 알고 싶은 건 “북위 얼마, 선수각 몇 도” — 전부 NED 값. 그 간극을 메우는 게 <code>R</code> 과 <code>T_Θ</code>.</li>
+<li><strong>제어기 설계</strong> — 목표는 항상 지구 기준으로 주어지는데(“저 부표까지”) 손에 쥔 건 프로펠러와 러더뿐. 그 사이 번역이 <code>R</code>.</li>
+</ul>
+<h2 id="사슬은-원래-고등학교-물리-두-줄이다">사슬은 원래 고등학교 물리 두 줄이다<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#사슬은-원래-고등학교-물리-두-줄이다" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<pre><code>①  a = F / m            힘을 알면 가속도를 안다
+②  Δ위치 = 속도 × 시간   속도를 알면 위치를 안다
+
+힘 → 가속도 → (적분) → 속도 → (변환·적분) → 위치
+</code></pre>
+<p>Fossen의 두 줄은 이것과 같은 사슬이다. 대상이 “점 하나”가 아니라 “물 위에서 여섯 방향으로 움직이는 덩치 큰 강체”라서 두 줄 각각이 뚱뚱해졌을 뿐이다.</p>
+<blockquote class="callout tip" data-callout="tip">
+<div class="callout-title">
+                  <div class="callout-icon"></div>
+                  <div class="callout-title-inner"><p>이 대응을 잃지 않는 것이 116장을 관통하는 유일한 나침반이었다. </p></div>
+                  
+                </div>
+</blockquote>
+<h2 id="ν-만-봐서는-배가-어디로-가는지-알-수-없다"><code>ν</code> 만 봐서는 배가 어디로 가는지 알 수 없다<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#ν-만-봐서는-배가-어디로-가는지-알-수-없다" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>이것이 방정식이 두 개로 갈라지는 이유 전부다.</p>
+<p>같은 <code>ν = [0, 0, 3]ᵀ</code> 라도 배가 수평이면 초속 3 m로 <strong>가라앉는 중</strong>이고, 오른쪽으로 90° 누워 있으면 <strong>서쪽으로 이동 중</strong>이다. 배 안의 속도계는 두 경우 모두 똑같은 숫자를 가리킨다.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th></th><th>Kinematics</th><th>Kinetics</th></tr></thead><tbody><tr><td>다루는 것</td><td>순수 기하학</td><td>힘이 원인</td></tr><tr><td>질량 등장?</td><td><strong>안 함</strong></td><td>함</td></tr><tr><td>식</td><td><code>η̇ = J(η)ν</code></td><td><code>Mν̇ + C(ν)ν + D(ν)ν + g(η) = τ</code></td></tr></tbody></table></div>
+<p>선형 시스템에서는 위치·속도 관계가 그냥 <code>ṗ = v</code> 라 신경 쓸 게 없다. 6-DOF 강체에서는 이 관계가 <strong>비선형</strong>이 되어서 따로 떼어냈다.</p>
+<blockquote class="callout tip" data-callout="tip">
+<div class="callout-title">
+                  <div class="callout-icon"></div>
+                  <div class="callout-title-inner"><p>속도를 알아도 자세를 모르면 위치를 못 구한다. 그래서 통역기 <code>J</code> 가 <code>ν</code> 가 아니라 <strong><code>η</code> 의 함수</strong>다.</p></div>
+                  
+                </div>
+</blockquote>
+<p>Fossen이 이걸 “robot-inspired model”이라 부르는 이유 — 로봇 매니퓰레이터의 <code>M(q)q̈ + C(q,q̇)q̇ + g(q) = τ</code> 와 구조가 판박이고, 배라서 <code>D(ν)ν</code> (유체 감쇠) 하나가 추가된 것.</p>
+<h2 id="위치는-ned-속도는-body--전체에서-가장-중요한-설계-결정">위치는 NED, 속도는 BODY — 전체에서 가장 중요한 설계 결정<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#위치는-ned-속도는-body--전체에서-가장-중요한-설계-결정" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<ul>
+<li><strong>위치를 NED에</strong> — “북쪽 100m 지점” 같은 목표는 지구 기준이어야 의미가 있음</li>
+<li><strong>속도를 BODY에</strong> — ① 질량·관성행렬 <code>M</code> 이 <strong>상수</strong>가 됨 (<a href="../30_Knowledge/Moment-of-Inertia" class="internal alias" data-slug="30_Knowledge/Moment-of-Inertia">Moment of Inertia</a>) ② 추력·유체력이 원래 몸체 기준으로 걸림</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th></th><th>{n} NED</th><th>{b} BODY</th></tr></thead><tbody><tr><td>축</td><td>x=북(진북), y=동, z=<strong>아래</strong></td><td>x=선수, y=우현, z=아래</td></tr><tr><td>성격</td><td>관성계로 취급</td><td>배와 함께 이동·회전</td></tr><tr><td>표현하는 것</td><td>위치 <code>η</code></td><td>속도 <code>ν</code>, 힘 <code>τ</code></td></tr></tbody></table></div>
+<p>가정 2개: <strong>flat earth</strong> (지구 곡률 무시), <strong>NED = 관성계</strong> (Newton 법칙 적용 가능).</p>
+<blockquote class="callout tip" data-callout="tip">
+<div class="callout-title">
+                  <div class="callout-icon"></div>
+                  <div class="callout-title-inner"><p>그 <strong>대가</strong>로 치르는 게 <code>J(η)</code> 변환식과 <code>C(ν)ν</code> 항이다. 공짜가 아니다.</p></div>
+                  
+                </div>
+</blockquote>
+<p><strong>Z축이 아래</strong>라서 고도가 오르면 z가 <strong>감소</strong>하고 yaw는 위에서 봤을 때 시계방향이 +. ROS의 ENU 관례와 정반대 — 센서 데이터 다룰 때 실제로 물리는 지점.</p>
+<h2 id="ned--enu-변환--ros와-붙일-때-실제로-필요한-것">NED ↔ ENU 변환 — ROS와 붙일 때 실제로 필요한 것<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#ned--enu-변환--ros와-붙일-때-실제로-필요한-것" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<pre><code>NED :  x = North,  y = East,   z = Down
+ENU :  x = East,   y = North,  z = Up          ← ROS 관례
+</code></pre>
+<p>축 이름만 바뀐 게 아니라 <strong>x와 y가 맞바뀌고 z 부호가 뒤집힌다.</strong></p>
+<pre><code>⎡ x_NED ⎤   ⎡  y_ENU ⎤                  ⎡ 100 ⎤            ⎡  30 ⎤
+⎢ y_NED ⎥ = ⎢  x_ENU ⎥        ex)  P_NED=⎢  30 ⎥  →  P_ENU=⎢ 100 ⎥
+⎣ z_NED ⎦   ⎣ −z_ENU ⎦                  ⎣   5 ⎦            ⎣  −5 ⎦
+</code></pre>
+<p>선수각도 같이 바뀐다. NED는 <strong>북쪽에서 시계방향</strong>, ENU는 <strong>동쪽에서 반시계방향</strong>이라:</p>
+<pre><code>ψ_NED = 90° − ψ_ENU              ψ_ENU = 90° − ψ_NED
+</code></pre>
+<blockquote class="callout tip" data-callout="tip">
+<div class="callout-title">
+                  <div class="callout-icon"></div>
+                  <div class="callout-title-inner"><p>이 변환은 자기 자신이 역변환이다 (두 번 적용하면 제자리). x↔y 교환과 z 부호 반전 둘 다 involution이라서. </p></div>
+                  
+                </div>
+</blockquote>
+<h2 id="표기-읽는-법--위첨자와-아래첨자">표기 읽는 법 — 위첨자와 아래첨자<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#표기-읽는-법--위첨자와-아래첨자" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>기호 하나에 세 가지 정보가 들어 있다.</p>
+<pre><code>        위첨자 = 어느 좌표계 성분으로 적었는가
+   v^b_nb
+        아래첨자 = 누구 기준 / 누구의
+</code></pre>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th>기호</th><th>읽는 법</th></tr></thead><tbody><tr><td><code>p^n_nb</code></td><td>{n} 원점에서 {b} 원점까지의 <strong>위치</strong>를, <strong>{n} 성분</strong>으로</td></tr><tr><td><code>Θ_nb</code></td><td>{n} 에 대해 {b} 가 얼마나 돌아가 있나 (자세)</td></tr><tr><td><code>v^b_nb</code></td><td>{b} 원점이 {n} 에 대해 움직이는 <strong>속도</strong>를, <strong>{b} 성분</strong>으로</td></tr><tr><td><code>ω^b_nb</code></td><td>{n} 기준 {b} 의 <strong>각속도</strong>를, <strong>{b} 성분</strong>으로</td></tr><tr><td><code>f^n_b</code></td><td>body-fixed force 를 <strong>{n} 성분</strong>으로 = <code>R^n_b f^b_b</code></td></tr></tbody></table></div>
+<blockquote class="callout tip" data-callout="tip">
+<div class="callout-title">
+                  <div class="callout-icon"></div>
+                  <div class="callout-title-inner"><p>아래첨자가 같아도 위첨자가 다르면 <strong>다른 숫자 세 개</strong>다. <code>v^n_nb</code> 와 <code>v^b_nb</code> 는 같은 속도를 다른 자로 잰 것. 손으로 쓸 때 위첨자를 빠뜨리면 유도가 통째로 무너진다.</p></div>
+                  
+                </div>
+</blockquote>
+<h2 id="대부분의-배는-underactuated라서-감결합해-쓴다">대부분의 배는 underactuated라서 감결합해 쓴다<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#대부분의-배는-underactuated라서-감결합해-쓴다" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>옆으로 미는 추진기가 없어 sway를 직접 제어 못 한다.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th>모델</th><th>DOF</th><th>용도</th></tr></thead><tbody><tr><td>1-DOF</td><td>yaw</td><td>heading autopilot</td></tr><tr><td>1-DOF</td><td>surge</td><td>속도 제어</td></tr><tr><td><strong>3-DOF 수평면</strong></td><td>surge, sway, yaw</td><td><strong>DP, 경로추종 — 랩에서 주로 쓰는 것</strong></td></tr><tr><td>4-DOF</td><td>+ roll</td><td>선회 중 롤 저감</td></tr><tr><td>6-DOF</td><td>전부</td><td>시뮬레이션, 전방향 AUV</td></tr></tbody></table></div>
+<h2 id="기준점은-cg가-아니라-co로-잡는다">기준점은 CG가 아니라 CO로 잡는다<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#기준점은-cg가-아니라-co로-잡는다" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th>약자</th><th>뜻</th></tr></thead><tbody><tr><td><strong>CO</strong></td><td>Coordinate Origin — BODY 좌표계 원점 (우리가 정함)</td></tr><tr><td><strong>CG</strong></td><td>Centre of Gravity — 무게중심</td></tr><tr><td><strong>CB</strong></td><td>Centre of Buoyancy — 부심</td></tr><tr><td><strong>CF</strong></td><td>Centre of Flotation — 부양중심</td></tr></tbody></table></div>
+<p>강의는 <strong>CG가 아니라 CO 기준</strong>으로 방정식을 쓰라고 권한다. 이유는 <strong>CG가 시간에 따라 변하기 때문</strong> — 연료를 쓰면 가벼워지고 화물을 실으면 위치가 바뀐다. CO는 제어 목적에 맞춰 고른다 (접안이면 실제 회전 중심, 경로추종이면 경로를 따라갈 기준점).</p>
+<h2 id="수식">수식<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#수식" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p><strong>핵심 벡터 3종 (SNAME 표기)</strong></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th>DOF</th><th>운동</th><th><strong>η</strong> (NED)</th><th><strong>ν</strong> (BODY)</th><th><strong>τ</strong> (BODY)</th></tr></thead><tbody><tr><td>1</td><td>surge / 전후동요</td><td>x</td><td>u</td><td>X</td></tr><tr><td>2</td><td>sway / 좌우동요</td><td>y</td><td>v</td><td>Y</td></tr><tr><td>3</td><td>heave / 상하동요</td><td>z</td><td>w</td><td>Z</td></tr><tr><td>4</td><td>roll / 횡동요</td><td>φ</td><td>p</td><td>K</td></tr><tr><td>5</td><td>pitch / 종동요</td><td>θ</td><td>q</td><td>M</td></tr><tr><td>6</td><td>yaw / 선수동요</td><td>ψ</td><td>r</td><td>N</td></tr></tbody></table></div>
+<pre><code>η = [x, y, z, φ, θ, ψ]ᵀ      ← 어디에 어떤 자세로 있나
+ν = [u, v, w, p, q, r]ᵀ      ← 얼마나 빨리 움직이나
+τ = [X, Y, Z, K, M, N]ᵀ      ← 무슨 힘이 걸리나
+</code></pre>
+<p><strong>야코비안 J(η)</strong></p>
+<pre><code>        ⎡ R^n_b(Θ)     0     ⎤
+J(η) =  ⎢                    ⎥          η̇ = J(η)·ν
+        ⎣    0      T_Θ(Θ)  ⎦
+</code></pre>
+<p><strong>읽는 법</strong></p>
+<ul>
+<li>대각선에만 블록 → <strong>선속도 변환과 각속도 변환이 서로 안 섞인다.</strong></li>
+<li><code>J</code> 는 사실 <code>η</code> 전체가 아니라 자세 <code>Θ = [φ,θ,ψ]</code> 에만 의존한다 — 북쪽 100m에 있든 500m에 있든 선수가 북동쪽이면 북동쪽으로 간다. 그래서 <code>J(Θ)</code> 라고 쓰는 문헌도 많다.</li>
+</ul>
+<p><strong>행렬 목록</strong></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th>기호</th><th>이름</th><th>출처</th></tr></thead><tbody><tr><td><code>R^n_b(Θ)</code></td><td>회전행렬 3×3</td><td><a href="../30_Knowledge/Rotation-Matrix" class="internal alias" data-slug="30_Knowledge/Rotation-Matrix">Rotation Matrix</a></td></tr><tr><td><code>T_Θ(Θ)</code></td><td>각속도 변환 3×3</td><td><a href="../30_Knowledge/Euler-Angle-Rates" class="internal alias" data-slug="30_Knowledge/Euler-Angle-Rates">Euler Angle Rates</a></td></tr><tr><td><code>J(η)</code></td><td>야코비안 6×6</td><td>위 둘의 블록대각</td></tr><tr><td><code>M</code></td><td>관성행렬 6×6</td><td>질량·관성모멘트 + added mass — <a href="../30_Knowledge/Rigid-Body-Kinetics" class="internal alias" data-slug="30_Knowledge/Rigid-Body-Kinetics">Rigid-Body Kinetics</a> · <a href="../30_Knowledge/Moment-of-Inertia" class="internal alias" data-slug="30_Knowledge/Moment-of-Inertia">Moment of Inertia</a></td></tr><tr><td><code>C(ν)</code></td><td>Coriolis 6×6</td><td><a href="../30_Knowledge/Transport-Theorem" class="internal alias" data-slug="30_Knowledge/Transport-Theorem">Transport Theorem</a> 이 만들어낸 항 → <a href="../30_Knowledge/Rigid-Body-Kinetics" class="internal alias" data-slug="30_Knowledge/Rigid-Body-Kinetics">Rigid-Body Kinetics</a> 에서 조립</td></tr><tr><td><code>D(ν)</code></td><td>감쇠행렬 6×6</td><td>유체 저항</td></tr><tr><td><code>g(η)</code></td><td>복원력 6×1</td><td>중력·부력</td></tr></tbody></table></div>
+<p><strong>전체 시뮬레이션 루프</strong> — 강의 전체가 결국 이 반복문 하나를 만드는 것.</p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="python" data-theme="github-light github-dark"><code data-language="python" data-theme="github-light github-dark" style="display:grid;"><span data-line><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">while</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;"> True</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">:</span></span>
+<span data-line><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">    τ  </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">=</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;"> controller(η, η_목표)                     </span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;"># 제어기</span></span>
+<span data-line><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">    ν̇  </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">=</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;"> M⁻¹ · (τ − C(ν)ν − D(ν)ν − g(η))         </span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;"># KINETICS: 힘 → 가속도</span></span>
+<span data-line><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">    ν  </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">=</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;"> ν </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">+</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;"> ν̇·dt                                  </span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;"># 적분 → BODY 속도</span></span>
+<span data-line><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">    η̇  </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">=</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;"> J(η) · ν                                  </span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;"># KINEMATICS: 통역</span></span>
+<span data-line><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">    η  </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">=</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;"> η </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">+</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;"> η̇·dt                                  </span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;"># 적분 → NED 위치·자세</span></span></code></pre></figure>
+<blockquote class="callout tip" data-callout="tip">
+<div class="callout-title">
+                  <div class="callout-icon"></div>
+                  <div class="callout-title-inner"><p> <code>η̇ = J(η)ν</code> 한 줄이 없으면 루프가 안 닫힌다. 제어기는 지구 기준 목표를 보는데 동역학은 배 기준 속도를 뱉으니 언어가 다르기 때문.</p></div>
+                  
+                </div>
+</blockquote>
+<p><strong>항법에서 읽으면</strong> — 이 한 줄이 곧 strapdown INS의 골격이고, GPS와 융합하는 EKF의 prediction step이다.</p>
+<pre><code>자이로 [p,q,r] ──T_Θ──► [φ̇,θ̇,ψ̇] ──적분──► 자세 [φ,θ,ψ]
+                                              │
+                                              ▼ (이 자세로 R을 만든다)
+가속도계 ──R──► NED 가속도 ──적분──► NED 속도 ──적분──► 위치
+</code></pre>
+<h2 id="검산">검산<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#검산" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th>확인 항목</th><th>결과</th><th>맞는 이유</th></tr></thead><tbody><tr><td><code>Θ = 0</code> 일 때 <code>J(η)</code></td><td><code>I₆</code></td><td>두 좌표계가 정렬되면 통역이 필요 없다</td></tr><tr><td><code>ν = [0,0,3]ᵀ</code>, 수평</td><td><code>η̇</code> 의 z 성분 = 3</td><td>z-down이므로 가라앉는 중</td></tr><tr><td><code>ν = [0,0,3]ᵀ</code>, 우현 90° 누움</td><td><code>η̇</code> 가 서쪽 성분을 가짐</td><td>배의 아래축이 서쪽을 향하므로. <strong>같은 <code>ν</code>, 다른 결과</strong></td></tr><tr><td><code>J</code> 의 두 블록이 섞이는가</td><td>안 섞임</td><td>블록대각이므로 선속도·각속도 독립</td></tr></tbody></table></div>
+<h2 id="헷갈렸던-점">헷갈렸던 점<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#헷갈렸던-점" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<h3 id="ν-와-v-는-같은-기호다">”<code>ν</code> 와 <code>v</code> 는 같은 기호다”<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#ν-와-v-는-같은-기호다" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>다르다. <code>ν</code>(뉴)는 6×1 속도 벡터 전체, <code>v</code>(브이)는 그 안의 sway 성분 하나. 손으로 쓸 때 제일 사고나기 쉬움.</p>
+<h3 id="cνν-는-배에-걸리는-실제-힘이다">”<code>C(ν)ν</code> 는 배에 걸리는 실제 힘이다”<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#cνν-는-배에-걸리는-실제-힘이다" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>물이 밀거나 바람이 부는 게 아니라, <strong>회전하는 좌표계에서 방정식을 쓰기로 한 선택의 대가</strong>로 수학적으로 튀어나온 항. 자세한 건 <a href="../30_Knowledge/Transport-Theorem" class="internal alias" data-slug="30_Knowledge/Transport-Theorem">Transport Theorem</a>.</p>
+<h3 id="j-는-η-전체의-함수다">”<code>J</code> 는 <code>η</code> 전체의 함수다”<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#j-는-η-전체의-함수다" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>이름은 <code>J(η)</code> 지만 실제로는 자세 <code>Θ</code> 에만 의존한다. 위치(x,y,z)는 방향에 영향을 안 준다.</p>
+<h2 id="내가-실제로-써본-곳">내가 실제로 써본 곳<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#내가-실제로-써본-곳" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<ul>
+<li><strong>2026-09-04 — 상태벡터 정의 · 표기법 · NED↔ENU · 기준점(CO/CG/CB/CF)까지 손으로 정리.</strong>
+<img src="../_attachments/ANSL-Undergrad-Research/2026-09-04/2026-09-04-p01-6dof-state-ned-enu.png" width="auto" height="auto" alt/>
+<img src="../_attachments/ANSL-Undergrad-Research/2026-09-04/2026-09-04-p02-notation.png" width="auto" height="auto" alt/>
+<img src="../_attachments/ANSL-Undergrad-Research/2026-09-04/2026-09-04-p05-eom-reference-point.png" width="auto" height="auto" alt/>
+<blockquote class="callout warning" data-callout="warning">
+<div class="callout-title">
+                  <div class="callout-icon"></div>
+                  <div class="callout-title-inner"><p>위 손계산에서 잡힌 슬립 (2026-09-04) <code>η</code>, <code>ν</code> 를 <strong>Kinetic</strong> 이라 적었지만 둘 다 <strong>Kinematic</strong> 이다. kinetics는 힘 쪽(<code>M</code>, <code>C</code>, <code>D</code>, <code>g</code>)을 가리킨다.
+② <code>v^n_nb = [u v w]ᵀ</code> 로 적었는데 설명은 &quot;b좌표계 성분&quot;이다. 위첨자가 <strong><code>b</code></strong> 여야 한다.
+③ <code>ψ=90°</code> 예제의 행렬 계산 중간줄에서 <code>cos</code>/<code>sin</code> 이 행을 바꿔 들어갔다 (<code>[2;0]</code> 으로 적힘). 최종 답 <code>ẋ_N=0, ẏ_N=2</code> 는 맞다.</p></div>
+                  
+                </div>
+<p>① </p>
+</blockquote>
+</li>
+<li>아직 직접 구현한 적 없음. <a href="../20_Projects/Capstone-Otter-USV/Capstone-Otter-USV" class="internal alias" data-slug="20_Projects/Capstone-Otter-USV/Capstone-Otter-USV">Capstone Otter USV</a> 의 Otter USV 모델이 이 구조를 그대로 쓰고 있었다는 걸 이제 알게 됨</li>
+<li><a href="../30_Knowledge/LOS-Guidance" class="internal alias" data-slug="30_Knowledge/LOS-Guidance">LOS Guidance</a>, <a href="../30_Knowledge/Stanley-Controller" class="internal alias" data-slug="30_Knowledge/Stanley-Controller">Stanley Controller</a> 가 만들어내는 명령이 결국 이 모델의 <code>τ</code> 로 들어감</li>
+<li><a href="../30_Knowledge/Transfer-Function" class="internal alias" data-slug="30_Knowledge/Transfer-Function">Transfer Function</a> — 1-DOF로 축소해서 선형화하면 전달함수가 나오는 지점</li>
+</ul>
+<h2 id="참고">참고<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#참고" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<ul>
+<li>강의 : 제어공학특론 — Dynamic Model of Marine Craft (윤원근 교수, CNU AVSE)</li>
+<li>교재 : T. I. Fossen, <em>Handbook of Marine Craft Hydrodynamics and Motion Control</em></li>
+<li>Lecture Notes TTK 4190 (NTNU, Fossen)</li>
+<li>툴박스 : MSS Toolbox — <a href="https://github.com/cybergalactic/MSS" class="external">https://github.com/cybergalactic/MSS<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a> / PythonVehicleSimulator</li>
+</ul></article><hr/><div class="page-footer"></div></div><div class="right sidebar"><div class="graph"><h3>그래프 뷰</h3><div class="graph-outer"><div class="graph-container" data-cfg="{&quot;drag&quot;:true,&quot;zoom&quot;:true,&quot;depth&quot;:1,&quot;scale&quot;:1.1,&quot;repelForce&quot;:0.5,&quot;centerForce&quot;:0.3,&quot;linkDistance&quot;:30,&quot;fontSize&quot;:0.6,&quot;opacityScale&quot;:1,&quot;showTags&quot;:true,&quot;removeTags&quot;:[],&quot;focusOnHover&quot;:false,&quot;enableRadial&quot;:false}"></div><button class="global-graph-icon" aria-label="Global Graph"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 55 55" fill="currentColor" xml:space="preserve"><path d="M49,0c-3.309,0-6,2.691-6,6c0,1.035,0.263,2.009,0.726,2.86l-9.829,9.829C32.542,17.634,30.846,17,29,17
+                s-3.542,0.634-4.898,1.688l-7.669-7.669C16.785,10.424,17,9.74,17,9c0-2.206-1.794-4-4-4S9,6.794,9,9s1.794,4,4,4
+                c0.74,0,1.424-0.215,2.019-0.567l7.669,7.669C21.634,21.458,21,23.154,21,25s0.634,3.542,1.688,4.897L10.024,42.562
+                C8.958,41.595,7.549,41,6,41c-3.309,0-6,2.691-6,6s2.691,6,6,6s6-2.691,6-6c0-1.035-0.263-2.009-0.726-2.86l12.829-12.829
+                c1.106,0.86,2.44,1.436,3.898,1.619v10.16c-2.833,0.478-5,2.942-5,5.91c0,3.309,2.691,6,6,6s6-2.691,6-6c0-2.967-2.167-5.431-5-5.91
+                v-10.16c1.458-0.183,2.792-0.759,3.898-1.619l7.669,7.669C41.215,39.576,41,40.26,41,41c0,2.206,1.794,4,4,4s4-1.794,4-4
+                s-1.794-4-4-4c-0.74,0-1.424,0.215-2.019,0.567l-7.669-7.669C36.366,28.542,37,26.846,37,25s-0.634-3.542-1.688-4.897l9.665-9.665
+                C46.042,11.405,47.451,12,49,12c3.309,0,6-2.691,6-6S52.309,0,49,0z M11,9c0-1.103,0.897-2,2-2s2,0.897,2,2s-0.897,2-2,2
+                S11,10.103,11,9z M6,51c-2.206,0-4-1.794-4-4s1.794-4,4-4s4,1.794,4,4S8.206,51,6,51z M33,49c0,2.206-1.794,4-4,4s-4-1.794-4-4
+                s1.794-4,4-4S33,46.794,33,49z M29,31c-3.309,0-6-2.691-6-6s2.691-6,6-6s6,2.691,6,6S32.309,31,29,31z M47,41c0,1.103-0.897,2-2,2
+                s-2-0.897-2-2s0.897-2,2-2S47,39.897,47,41z M49,10c-2.206,0-4-1.794-4-4s1.794-4,4-4s4,1.794,4,4S51.206,10,49,10z"></path></svg></button></div><div class="global-graph-outer"><div class="global-graph-container" data-cfg="{&quot;drag&quot;:true,&quot;zoom&quot;:true,&quot;depth&quot;:-1,&quot;scale&quot;:0.9,&quot;repelForce&quot;:0.5,&quot;centerForce&quot;:0.2,&quot;linkDistance&quot;:30,&quot;fontSize&quot;:0.6,&quot;opacityScale&quot;:1,&quot;showTags&quot;:true,&quot;removeTags&quot;:[],&quot;focusOnHover&quot;:true,&quot;enableRadial&quot;:true}"></div></div></div><div class="toc desktop-only"><button type="button" class="toc-header" aria-controls="toc-60" aria-expanded="true"><h3>목차</h3><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fold"><polyline points="6 9 12 15 18 9"></polyline></svg></button><ul id="list-1" class="toc-content overflow"><li class="depth-0"><a href="#6-dof-marine-craft-model" data-for="6-dof-marine-craft-model">6-DOF Marine Craft Model</a></li><li class="depth-1"><a href="#왜-필요한가" data-for="왜-필요한가">왜 필요한가</a></li><li class="depth-1"><a href="#사슬은-원래-고등학교-물리-두-줄이다" data-for="사슬은-원래-고등학교-물리-두-줄이다">사슬은 원래 고등학교 물리 두 줄이다</a></li><li class="depth-1"><a href="#ν-만-봐서는-배가-어디로-가는지-알-수-없다" data-for="ν-만-봐서는-배가-어디로-가는지-알-수-없다">ν 만 봐서는 배가 어디로 가는지 알 수 없다</a></li><li class="depth-1"><a href="#위치는-ned-속도는-body--전체에서-가장-중요한-설계-결정" data-for="위치는-ned-속도는-body--전체에서-가장-중요한-설계-결정">위치는 NED, 속도는 BODY — 전체에서 가장 중요한 설계 결정</a></li><li class="depth-1"><a href="#ned--enu-변환--ros와-붙일-때-실제로-필요한-것" data-for="ned--enu-변환--ros와-붙일-때-실제로-필요한-것">NED ↔ ENU 변환 — ROS와 붙일 때 실제로 필요한 것</a></li><li class="depth-1"><a href="#표기-읽는-법--위첨자와-아래첨자" data-for="표기-읽는-법--위첨자와-아래첨자">표기 읽는 법 — 위첨자와 아래첨자</a></li><li class="depth-1"><a href="#대부분의-배는-underactuated라서-감결합해-쓴다" data-for="대부분의-배는-underactuated라서-감결합해-쓴다">대부분의 배는 underactuated라서 감결합해 쓴다</a></li><li class="depth-1"><a href="#기준점은-cg가-아니라-co로-잡는다" data-for="기준점은-cg가-아니라-co로-잡는다">기준점은 CG가 아니라 CO로 잡는다</a></li><li class="depth-1"><a href="#수식" data-for="수식">수식</a></li><li class="depth-1"><a href="#검산" data-for="검산">검산</a></li><li class="depth-1"><a href="#헷갈렸던-점" data-for="헷갈렸던-점">헷갈렸던 점</a></li><li class="depth-2"><a href="#ν-와-v-는-같은-기호다" data-for="ν-와-v-는-같은-기호다">”ν 와 v 는 같은 기호다”</a></li><li class="depth-2"><a href="#cνν-는-배에-걸리는-실제-힘이다" data-for="cνν-는-배에-걸리는-실제-힘이다">”C(ν)ν 는 배에 걸리는 실제 힘이다”</a></li><li class="depth-2"><a href="#j-는-η-전체의-함수다" data-for="j-는-η-전체의-함수다">”J 는 η 전체의 함수다”</a></li><li class="depth-1"><a href="#내가-실제로-써본-곳" data-for="내가-실제로-써본-곳">내가 실제로 써본 곳</a></li><li class="depth-1"><a href="#참고" data-for="참고">참고</a></li><li class="overflow-end"></li></ul></div><div class="backlinks"><h3>백링크</h3><ul id="list-2" class="overflow"><li><a href="../10_Daily/2026-08-31" class="internal">2026-08-31</a></li><li><a href="../10_Daily/2026-09-04" class="internal">2026-09-04</a></li><li><a href="../20_Projects/AUV-Control-Sim/AUV-Control-Simulation" class="internal">AUV Control Simulation</a></li><li><a href="../30_Knowledge/Delphin2-Actuator-and-Extra-Drag" class="internal">Delphin2 Actuator and Extra Drag</a></li><li><a href="../30_Knowledge/Euler-Angle-Rates" class="internal">Euler Angle Rates</a></li><li><a href="../30_Knowledge/Hydrodynamic-and-Restoring-Forces" class="internal">Hydrodynamic and Restoring Forces</a></li><li><a href="../30_Knowledge/LOS-Guidance" class="internal">LOS Guidance</a></li><li><a href="../30_Knowledge/Moment-of-Inertia" class="internal">Moment of Inertia</a></li><li><a href="../30_Knowledge/Rigid-Body-Kinetics" class="internal">Rigid-Body Kinetics</a></li><li><a href="../30_Knowledge/Rotation-Matrix" class="internal">Rotation Matrix</a></li><li><a href="../30_Knowledge/Transfer-Function" class="internal">Transfer Function</a></li><li><a href="../30_Knowledge/Transport-Theorem" class="internal">Transport Theorem</a></li><li><a href="../30_Knowledge/시뮬레이션-환경-현실성" class="internal">시뮬레이션 환경 현실성</a></li><li><a href="../30_Knowledge/정위치-유지-자세-선택" class="internal">정위치 유지 자세 선택</a></li><li><a href="../" class="internal">Research Direction</a></li><li class="overflow-end"></li></ul></div></div><footer class><p>Created with <a href="https://quartz.jzhao.xyz/">Quartz v4.5.2</a> © 2026</p><ul></ul></footer></div></div></body><script type="application/javascript">function n(){let t=this.parentElement;t.classList.toggle("is-collapsed");let e=t.getElementsByClassName("callout-content")[0];if(!e)return;let l=t.classList.contains("is-collapsed");e.style.gridTemplateRows=l?"0fr":"1fr"}function c(){let t=document.getElementsByClassName("callout is-collapsible");for(let e of t){let l=e.getElementsByClassName("callout-title")[0],s=e.getElementsByClassName("callout-content")[0];if(!l||!s)continue;l.addEventListener("click",n),window.addCleanup(()=>l.removeEventListener("click",n));let o=e.classList.contains("is-collapsed");s.style.gridTemplateRows=o?"0fr":"1fr"}}document.addEventListener("nav",c);
+</script><script type="module">function f(i,e){if(!i)return;function r(o){o.target===this&&(o.preventDefault(),o.stopPropagation(),e())}function t(o){o.key.startsWith("Esc")&&(o.preventDefault(),e())}i?.addEventListener("click",r),window.addCleanup(()=>i?.removeEventListener("click",r)),document.addEventListener("keydown",t),window.addCleanup(()=>document.removeEventListener("keydown",t))}function y(i){for(;i.firstChild;)i.removeChild(i.firstChild)}var h=class{constructor(e,r){this.container=e;this.content=r;this.setupEventListeners(),this.setupNavigationControls(),this.resetTransform()}isDragging=!1;startPan={x:0,y:0};currentPan={x:0,y:0};scale=1;MIN_SCALE=.5;MAX_SCALE=3;cleanups=[];setupEventListeners(){let e=this.onMouseDown.bind(this),r=this.onMouseMove.bind(this),t=this.onMouseUp.bind(this),o=this.resetTransform.bind(this);this.container.addEventListener("mousedown",e),document.addEventListener("mousemove",r),document.addEventListener("mouseup",t),window.addEventListener("resize",o),this.cleanups.push(()=>this.container.removeEventListener("mousedown",e),()=>document.removeEventListener("mousemove",r),()=>document.removeEventListener("mouseup",t),()=>window.removeEventListener("resize",o))}cleanup(){for(let e of this.cleanups)e()}setupNavigationControls(){let e=document.createElement("div");e.className="mermaid-controls";let r=this.createButton("+",()=>this.zoom(.1)),t=this.createButton("-",()=>this.zoom(-.1)),o=this.createButton("Reset",()=>this.resetTransform());e.appendChild(t),e.appendChild(o),e.appendChild(r),this.container.appendChild(e)}createButton(e,r){let t=document.createElement("button");return t.textContent=e,t.className="mermaid-control-button",t.addEventListener("click",r),window.addCleanup(()=>t.removeEventListener("click",r)),t}onMouseDown(e){e.button===0&&(this.isDragging=!0,this.startPan={x:e.clientX-this.currentPan.x,y:e.clientY-this.currentPan.y},this.container.style.cursor="grabbing")}onMouseMove(e){this.isDragging&&(e.preventDefault(),this.currentPan={x:e.clientX-this.startPan.x,y:e.clientY-this.startPan.y},this.updateTransform())}onMouseUp(){this.isDragging=!1,this.container.style.cursor="grab"}zoom(e){let r=Math.min(Math.max(this.scale+e,this.MIN_SCALE),this.MAX_SCALE),t=this.content.getBoundingClientRect(),o=t.width/2,n=t.height/2,c=r-this.scale;this.currentPan.x-=o*c,this.currentPan.y-=n*c,this.scale=r,this.updateTransform()}updateTransform(){this.content.style.transform=`translate(${this.currentPan.x}px, ${this.currentPan.y}px) scale(${this.scale})`}resetTransform(){this.scale=1;let e=this.content.querySelector("svg");this.currentPan={x:e.getBoundingClientRect().width/2,y:e.getBoundingClientRect().height/2},this.updateTransform()}},C=["--secondary","--tertiary","--gray","--light","--lightgray","--highlight","--dark","--darkgray","--codeFont"],E;document.addEventListener("nav",async()=>{let e=document.querySelector(".center").querySelectorAll("code.mermaid");if(e.length===0)return;E||=await import("https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.4.0/mermaid.esm.min.mjs");let r=E.default,t=new WeakMap;for(let n of e)t.set(n,n.innerText);async function o(){for(let s of e){s.removeAttribute("data-processed");let a=t.get(s);a&&(s.innerHTML=a)}let n=C.reduce((s,a)=>(s[a]=window.getComputedStyle(document.documentElement).getPropertyValue(a),s),{}),c=document.documentElement.getAttribute("saved-theme")==="dark";r.initialize({startOnLoad:!1,securityLevel:"loose",theme:c?"dark":"base",themeVariables:{fontFamily:n["--codeFont"],primaryColor:n["--light"],primaryTextColor:n["--darkgray"],primaryBorderColor:n["--tertiary"],lineColor:n["--darkgray"],secondaryColor:n["--secondary"],tertiaryColor:n["--tertiary"],clusterBkg:n["--light"],edgeLabelBackground:n["--highlight"]}}),await r.run({nodes:e})}await o(),document.addEventListener("themechange",o),window.addCleanup(()=>document.removeEventListener("themechange",o));for(let n=0;n<e.length;n++){let v=function(){let g=l.querySelector("#mermaid-space"),m=l.querySelector(".mermaid-content");if(!m)return;y(m);let w=c.querySelector("svg").cloneNode(!0);m.appendChild(w),l.classList.add("active"),g.style.cursor="grab",u=new h(g,m)},M=function(){l.classList.remove("active"),u?.cleanup(),u=null},c=e[n],s=c.parentElement,a=s.querySelector(".clipboard-button"),d=s.querySelector(".expand-button"),p=window.getComputedStyle(a),L=a.offsetWidth+parseFloat(p.marginLeft||"0")+parseFloat(p.marginRight||"0");d.style.right=`calc(${L}px + 0.3rem)`,s.prepend(d);let l=s.querySelector("#mermaid-container");if(!l)return;let u=null;d.addEventListener("click",v),f(l,M),window.addCleanup(()=>{u?.cleanup(),d.removeEventListener("click",v)})}});
+</script><script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/copy-tex.min.js" type="application/javascript"></script><script src="../postscript.js" type="module"></script></html>

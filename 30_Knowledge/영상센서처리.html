@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="ko" dir="ltr"><head><title>영상센서처리</title><meta charset="utf-8"/><link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com"/><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto Sans KR:wght@400;700&amp;family=Noto Sans KR:ital,wght@0,400;0,600;1,400;1,600&amp;family=IBM Plex Mono:wght@400;600&amp;display=swap"/><link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin="anonymous"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta name="og:site_name" content="LabNote"/><meta property="og:title" content="영상센서처리"/><meta property="og:type" content="website"/><meta name="twitter:card" content="summary_large_image"/><meta name="twitter:title" content="영상센서처리"/><meta name="twitter:description" content="영상센서처리 한 줄로 픽셀값을 계산으로 바꿔서 영상을 나누고(임곗값), 선명하게 하고(히스토그램 변환), 잡음을 지우고(필터), 경계와 직선을 찾는(에지, 허프) 과목. 중간고사 범위는 1~7주차."/><meta property="og:description" content="영상센서처리 한 줄로 픽셀값을 계산으로 바꿔서 영상을 나누고(임곗값), 선명하게 하고(히스토그램 변환), 잡음을 지우고(필터), 경계와 직선을 찾는(에지, 허프) 과목. 중간고사 범위는 1~7주차."/><meta property="og:image:alt" content="영상센서처리 한 줄로 픽셀값을 계산으로 바꿔서 영상을 나누고(임곗값), 선명하게 하고(히스토그램 변환), 잡음을 지우고(필터), 경계와 직선을 찾는(에지, 허프) 과목. 중간고사 범위는 1~7주차."/><meta property="og:image" content="https://yusik36.github.io/research-notes/static/og-image.png"/><meta property="og:image:url" content="https://yusik36.github.io/research-notes/static/og-image.png"/><meta name="twitter:image" content="https://yusik36.github.io/research-notes/static/og-image.png"/><meta property="og:image:type" content="image/.png"/><meta property="twitter:domain" content="yusik36.github.io/research-notes"/><meta property="og:url" content="https://yusik36.github.io/research-notes/30_Knowledge/영상센서처리"/><meta property="twitter:url" content="https://yusik36.github.io/research-notes/30_Knowledge/영상센서처리"/><link rel="icon" href="../static/icon.png"/><meta name="description" content="영상센서처리 한 줄로 픽셀값을 계산으로 바꿔서 영상을 나누고(임곗값), 선명하게 하고(히스토그램 변환), 잡음을 지우고(필터), 경계와 직선을 찾는(에지, 허프) 과목. 중간고사 범위는 1~7주차."/><meta name="generator" content="Quartz"/><link href="../index.css" rel="stylesheet" type="text/css" spa-preserve/><style>.expand-button {
+  position: absolute;
+  display: flex;
+  float: right;
+  padding: 0.4rem;
+  margin: 0.3rem;
+  right: 0;
+  color: var(--gray);
+  border-color: var(--dark);
+  background-color: var(--light);
+  border: 1px solid;
+  border-radius: 5px;
+  opacity: 0;
+  transition: 0.2s;
+}
+.expand-button > svg {
+  fill: var(--light);
+  filter: contrast(0.3);
+}
+.expand-button:hover {
+  cursor: pointer;
+  border-color: var(--secondary);
+}
+.expand-button:focus {
+  outline: 0;
+}
+
+pre:hover > .expand-button {
+  opacity: 1;
+  transition: 0.2s;
+}
+
+#mermaid-container {
+  position: fixed;
+  contain: layout;
+  z-index: 999;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  display: none;
+  backdrop-filter: blur(4px);
+  background: rgba(0, 0, 0, 0.5);
+}
+#mermaid-container.active {
+  display: inline-block;
+}
+#mermaid-container > #mermaid-space {
+  border: 1px solid var(--lightgray);
+  background-color: var(--light);
+  border-radius: 5px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 80vh;
+  width: 80vw;
+  overflow: hidden;
+}
+#mermaid-container > #mermaid-space > .mermaid-content {
+  padding: 2rem;
+  position: relative;
+  transform-origin: 0 0;
+  transition: transform 0.1s ease;
+  overflow: visible;
+  min-height: 200px;
+  min-width: 200px;
+}
+#mermaid-container > #mermaid-space > .mermaid-content pre {
+  margin: 0;
+  border: none;
+}
+#mermaid-container > #mermaid-space > .mermaid-content svg {
+  max-width: none;
+  height: auto;
+}
+#mermaid-container > #mermaid-space > .mermaid-controls {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  gap: 8px;
+  padding: 8px;
+  background: var(--light);
+  border: 1px solid var(--lightgray);
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 2;
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 1px solid var(--lightgray);
+  background: var(--light);
+  color: var(--dark);
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  font-family: var(--bodyFont);
+  transition: all 0.2s ease;
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button:hover {
+  background: var(--lightgray);
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button:active {
+  transform: translateY(1px);
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button:nth-child(2) {
+  width: auto;
+  padding: 0 12px;
+  font-size: 14px;
+}
+/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VSb290IjoiQzpcXEFyY2hpdmVcXOyeoeuLpOq1rOumrFxcVVNU7J247YS0X+yngOybkOyEnFxcc2l0ZVxccXVhcnR6XFxjb21wb25lbnRzXFxzdHlsZXMiLCJzb3VyY2VzIjpbIm1lcm1haWQuaW5saW5lLnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDRTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTs7QUFFQTtFQUNFO0VBQ0E7O0FBR0Y7RUFDRTtFQUNBOztBQUdGO0VBQ0U7OztBQUtGO0VBQ0U7RUFDQTs7O0FBSUo7RUFDRTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBOztBQUVBO0VBQ0U7O0FBR0Y7RUFDRTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTs7QUFFQTtFQUNFO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBOztBQUVBO0VBQ0U7RUFDQTs7QUFHRjtFQUNFO0VBQ0E7O0FBSUo7RUFDRTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBOztBQUVBO0VBQ0U7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTs7QUFFQTtFQUNFOztBQUdGO0VBQ0U7O0FBSUY7RUFDRTtFQUNBO0VBQ0EiLCJzb3VyY2VzQ29udGVudCI6WyIuZXhwYW5kLWJ1dHRvbiB7XG4gIHBvc2l0aW9uOiBhYnNvbHV0ZTtcbiAgZGlzcGxheTogZmxleDtcbiAgZmxvYXQ6IHJpZ2h0O1xuICBwYWRkaW5nOiAwLjRyZW07XG4gIG1hcmdpbjogMC4zcmVtO1xuICByaWdodDogMDsgLy8gTk9URTogcmlnaHQgd2lsbCBiZSBzZXQgaW4gbWVybWFpZC5pbmxpbmUudHNcbiAgY29sb3I6IHZhcigtLWdyYXkpO1xuICBib3JkZXItY29sb3I6IHZhcigtLWRhcmspO1xuICBiYWNrZ3JvdW5kLWNvbG9yOiB2YXIoLS1saWdodCk7XG4gIGJvcmRlcjogMXB4IHNvbGlkO1xuICBib3JkZXItcmFkaXVzOiA1cHg7XG4gIG9wYWNpdHk6IDA7XG4gIHRyYW5zaXRpb246IDAuMnM7XG5cbiAgJiA+IHN2ZyB7XG4gICAgZmlsbDogdmFyKC0tbGlnaHQpO1xuICAgIGZpbHRlcjogY29udHJhc3QoMC4zKTtcbiAgfVxuXG4gICY6aG92ZXIge1xuICAgIGN1cnNvcjogcG9pbnRlcjtcbiAgICBib3JkZXItY29sb3I6IHZhcigtLXNlY29uZGFyeSk7XG4gIH1cblxuICAmOmZvY3VzIHtcbiAgICBvdXRsaW5lOiAwO1xuICB9XG59XG5cbnByZSB7XG4gICY6aG92ZXIgPiAuZXhwYW5kLWJ1dHRvbiB7XG4gICAgb3BhY2l0eTogMTtcbiAgICB0cmFuc2l0aW9uOiAwLjJzO1xuICB9XG59XG5cbiNtZXJtYWlkLWNvbnRhaW5lciB7XG4gIHBvc2l0aW9uOiBmaXhlZDtcbiAgY29udGFpbjogbGF5b3V0O1xuICB6LWluZGV4OiA5OTk7XG4gIGxlZnQ6IDA7XG4gIHRvcDogMDtcbiAgd2lkdGg6IDEwMHZ3O1xuICBoZWlnaHQ6IDEwMHZoO1xuICBvdmVyZmxvdzogaGlkZGVuO1xuICBkaXNwbGF5OiBub25lO1xuICBiYWNrZHJvcC1maWx0ZXI6IGJsdXIoNHB4KTtcbiAgYmFja2dyb3VuZDogcmdiYSgwLCAwLCAwLCAwLjUpO1xuXG4gICYuYWN0aXZlIHtcbiAgICBkaXNwbGF5OiBpbmxpbmUtYmxvY2s7XG4gIH1cblxuICAmID4gI21lcm1haWQtc3BhY2Uge1xuICAgIGJvcmRlcjogMXB4IHNvbGlkIHZhcigtLWxpZ2h0Z3JheSk7XG4gICAgYmFja2dyb3VuZC1jb2xvcjogdmFyKC0tbGlnaHQpO1xuICAgIGJvcmRlci1yYWRpdXM6IDVweDtcbiAgICBwb3NpdGlvbjogZml4ZWQ7XG4gICAgdG9wOiA1MCU7XG4gICAgbGVmdDogNTAlO1xuICAgIHRyYW5zZm9ybTogdHJhbnNsYXRlKC01MCUsIC01MCUpO1xuICAgIGhlaWdodDogODB2aDtcbiAgICB3aWR0aDogODB2dztcbiAgICBvdmVyZmxvdzogaGlkZGVuO1xuXG4gICAgJiA+IC5tZXJtYWlkLWNvbnRlbnQge1xuICAgICAgcGFkZGluZzogMnJlbTtcbiAgICAgIHBvc2l0aW9uOiByZWxhdGl2ZTtcbiAgICAgIHRyYW5zZm9ybS1vcmlnaW46IDAgMDtcbiAgICAgIHRyYW5zaXRpb246IHRyYW5zZm9ybSAwLjFzIGVhc2U7XG4gICAgICBvdmVyZmxvdzogdmlzaWJsZTtcbiAgICAgIG1pbi1oZWlnaHQ6IDIwMHB4O1xuICAgICAgbWluLXdpZHRoOiAyMDBweDtcblxuICAgICAgcHJlIHtcbiAgICAgICAgbWFyZ2luOiAwO1xuICAgICAgICBib3JkZXI6IG5vbmU7XG4gICAgICB9XG5cbiAgICAgIHN2ZyB7XG4gICAgICAgIG1heC13aWR0aDogbm9uZTtcbiAgICAgICAgaGVpZ2h0OiBhdXRvO1xuICAgICAgfVxuICAgIH1cblxuICAgICYgPiAubWVybWFpZC1jb250cm9scyB7XG4gICAgICBwb3NpdGlvbjogYWJzb2x1dGU7XG4gICAgICBib3R0b206IDIwcHg7XG4gICAgICByaWdodDogMjBweDtcbiAgICAgIGRpc3BsYXk6IGZsZXg7XG4gICAgICBnYXA6IDhweDtcbiAgICAgIHBhZGRpbmc6IDhweDtcbiAgICAgIGJhY2tncm91bmQ6IHZhcigtLWxpZ2h0KTtcbiAgICAgIGJvcmRlcjogMXB4IHNvbGlkIHZhcigtLWxpZ2h0Z3JheSk7XG4gICAgICBib3JkZXItcmFkaXVzOiA2cHg7XG4gICAgICBib3gtc2hhZG93OiAwIDJweCA0cHggcmdiYSgwLCAwLCAwLCAwLjEpO1xuICAgICAgei1pbmRleDogMjtcblxuICAgICAgLm1lcm1haWQtY29udHJvbC1idXR0b24ge1xuICAgICAgICBkaXNwbGF5OiBmbGV4O1xuICAgICAgICBhbGlnbi1pdGVtczogY2VudGVyO1xuICAgICAgICBqdXN0aWZ5LWNvbnRlbnQ6IGNlbnRlcjtcbiAgICAgICAgd2lkdGg6IDMycHg7XG4gICAgICAgIGhlaWdodDogMzJweDtcbiAgICAgICAgcGFkZGluZzogMDtcbiAgICAgICAgYm9yZGVyOiAxcHggc29saWQgdmFyKC0tbGlnaHRncmF5KTtcbiAgICAgICAgYmFja2dyb3VuZDogdmFyKC0tbGlnaHQpO1xuICAgICAgICBjb2xvcjogdmFyKC0tZGFyayk7XG4gICAgICAgIGJvcmRlci1yYWRpdXM6IDRweDtcbiAgICAgICAgY3Vyc29yOiBwb2ludGVyO1xuICAgICAgICBmb250LXNpemU6IDE2cHg7XG4gICAgICAgIGZvbnQtZmFtaWx5OiB2YXIoLS1ib2R5Rm9udCk7XG4gICAgICAgIHRyYW5zaXRpb246IGFsbCAwLjJzIGVhc2U7XG5cbiAgICAgICAgJjpob3ZlciB7XG4gICAgICAgICAgYmFja2dyb3VuZDogdmFyKC0tbGlnaHRncmF5KTtcbiAgICAgICAgfVxuXG4gICAgICAgICY6YWN0aXZlIHtcbiAgICAgICAgICB0cmFuc2Zvcm06IHRyYW5zbGF0ZVkoMXB4KTtcbiAgICAgICAgfVxuXG4gICAgICAgIC8vIFN0eWxlIHRoZSByZXNldCBidXR0b24gZGlmZmVyZW50bHlcbiAgICAgICAgJjpudGgtY2hpbGQoMikge1xuICAgICAgICAgIHdpZHRoOiBhdXRvO1xuICAgICAgICAgIHBhZGRpbmc6IDAgMTJweDtcbiAgICAgICAgICBmb250LXNpemU6IDE0cHg7XG4gICAgICAgIH1cbiAgICAgIH1cbiAgICB9XG4gIH1cbn1cbiJdfQ== */</style><link href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" rel="stylesheet" type="text/css" spa-preserve/><script src="../prescript.js" type="application/javascript" spa-preserve></script><script type="application/javascript" spa-preserve>const fetchData = fetch("../static/contentIndex.json").then(data => data.json())</script></head><body data-slug="30_Knowledge/영상센서처리"><div id="quartz-root" class="page"><div id="quartz-body"><div class="left sidebar"><h2 class="page-title"><a href="..">LabNote</a></h2><div class="spacer mobile-only"></div><div class="flex-component" style="flex-direction: row; flex-wrap: nowrap; gap: 1rem;"><div style="flex-grow: 1; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><div class="search"><button class="search-button"><svg role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19.9 19.7"><title>Search</title><g class="search-path" fill="none"><path stroke-linecap="square" d="M18.5 18.3l-5.4-5.4"></path><circle cx="8" cy="8" r="7"></circle></g></svg><p>검색</p></button><div class="search-container"><div class="search-space"><input autocomplete="off" class="search-bar" name="search" type="text" aria-label="검색어를 입력하세요" placeholder="검색어를 입력하세요"/><div class="search-layout" data-preview="true"></div></div></div></div></div><div style="flex-grow: 0; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><button class="darkmode"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="dayIcon" x="0px" y="0px" viewBox="0 0 35 35" style="enable-background:new 0 0 35 35" xml:space="preserve" aria-label="다크 모드"><title>다크 모드</title><path d="M6,17.5C6,16.672,5.328,16,4.5,16h-3C0.672,16,0,16.672,0,17.5    S0.672,19,1.5,19h3C5.328,19,6,18.328,6,17.5z M7.5,26c-0.414,0-0.789,0.168-1.061,0.439l-2,2C4.168,28.711,4,29.086,4,29.5    C4,30.328,4.671,31,5.5,31c0.414,0,0.789-0.168,1.06-0.44l2-2C8.832,28.289,9,27.914,9,27.5C9,26.672,8.329,26,7.5,26z M17.5,6    C18.329,6,19,5.328,19,4.5v-3C19,0.672,18.329,0,17.5,0S16,0.672,16,1.5v3C16,5.328,16.671,6,17.5,6z M27.5,9    c0.414,0,0.789-0.168,1.06-0.439l2-2C30.832,6.289,31,5.914,31,5.5C31,4.672,30.329,4,29.5,4c-0.414,0-0.789,0.168-1.061,0.44    l-2,2C26.168,6.711,26,7.086,26,7.5C26,8.328,26.671,9,27.5,9z M6.439,8.561C6.711,8.832,7.086,9,7.5,9C8.328,9,9,8.328,9,7.5    c0-0.414-0.168-0.789-0.439-1.061l-2-2C6.289,4.168,5.914,4,5.5,4C4.672,4,4,4.672,4,5.5c0,0.414,0.168,0.789,0.439,1.06    L6.439,8.561z M33.5,16h-3c-0.828,0-1.5,0.672-1.5,1.5s0.672,1.5,1.5,1.5h3c0.828,0,1.5-0.672,1.5-1.5S34.328,16,33.5,16z     M28.561,26.439C28.289,26.168,27.914,26,27.5,26c-0.828,0-1.5,0.672-1.5,1.5c0,0.414,0.168,0.789,0.439,1.06l2,2    C28.711,30.832,29.086,31,29.5,31c0.828,0,1.5-0.672,1.5-1.5c0-0.414-0.168-0.789-0.439-1.061L28.561,26.439z M17.5,29    c-0.829,0-1.5,0.672-1.5,1.5v3c0,0.828,0.671,1.5,1.5,1.5s1.5-0.672,1.5-1.5v-3C19,29.672,18.329,29,17.5,29z M17.5,7    C11.71,7,7,11.71,7,17.5S11.71,28,17.5,28S28,23.29,28,17.5S23.29,7,17.5,7z M17.5,25c-4.136,0-7.5-3.364-7.5-7.5    c0-4.136,3.364-7.5,7.5-7.5c4.136,0,7.5,3.364,7.5,7.5C25,21.636,21.636,25,17.5,25z"></path></svg><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="nightIcon" x="0px" y="0px" viewBox="0 0 100 100" style="enable-background:new 0 0 100 100" xml:space="preserve" aria-label="라이트 모드"><title>라이트 모드</title><path d="M96.76,66.458c-0.853-0.852-2.15-1.064-3.23-0.534c-6.063,2.991-12.858,4.571-19.655,4.571  C62.022,70.495,50.88,65.88,42.5,57.5C29.043,44.043,25.658,23.536,34.076,6.47c0.532-1.08,0.318-2.379-0.534-3.23  c-0.851-0.852-2.15-1.064-3.23-0.534c-4.918,2.427-9.375,5.619-13.246,9.491c-9.447,9.447-14.65,22.008-14.65,35.369  c0,13.36,5.203,25.921,14.65,35.368s22.008,14.65,35.368,14.65c13.361,0,25.921-5.203,35.369-14.65  c3.872-3.871,7.064-8.328,9.491-13.246C97.826,68.608,97.611,67.309,96.76,66.458z"></path></svg></button></div><div style="flex-grow: 0; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><button class="readermode"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="readerIcon" fill="currentColor" stroke="currentColor" stroke-width="0.2" stroke-linecap="round" stroke-linejoin="round" width="64px" height="64px" viewBox="0 0 24 24" aria-label="리더 모드"><title>리더 모드</title><g transform="translate(-1.8, -1.8) scale(1.15, 1.2)"><path d="M8.9891247,2.5 C10.1384702,2.5 11.2209868,2.96705384 12.0049645,3.76669482 C12.7883914,2.96705384 13.8709081,2.5 15.0202536,2.5 L18.7549359,2.5 C19.1691495,2.5 19.5049359,2.83578644 19.5049359,3.25 L19.5046891,4.004 L21.2546891,4.00457396 C21.6343849,4.00457396 21.9481801,4.28672784 21.9978425,4.6528034 L22.0046891,4.75457396 L22.0046891,20.25 C22.0046891,20.6296958 21.7225353,20.943491 21.3564597,20.9931534 L21.2546891,21 L2.75468914,21 C2.37499337,21 2.06119817,20.7178461 2.01153575,20.3517706 L2.00468914,20.25 L2.00468914,4.75457396 C2.00468914,4.37487819 2.28684302,4.061083 2.65291858,4.01142057 L2.75468914,4.00457396 L4.50368914,4.004 L4.50444233,3.25 C4.50444233,2.87030423 4.78659621,2.55650904 5.15267177,2.50684662 L5.25444233,2.5 L8.9891247,2.5 Z M4.50368914,5.504 L3.50468914,5.504 L3.50468914,19.5 L10.9478955,19.4998273 C10.4513189,18.9207296 9.73864328,18.5588115 8.96709342,18.5065584 L8.77307039,18.5 L5.25444233,18.5 C4.87474657,18.5 4.56095137,18.2178461 4.51128895,17.8517706 L4.50444233,17.75 L4.50368914,5.504 Z M19.5049359,17.75 C19.5049359,18.1642136 19.1691495,18.5 18.7549359,18.5 L15.2363079,18.5 C14.3910149,18.5 13.5994408,18.8724714 13.0614828,19.4998273 L20.5046891,19.5 L20.5046891,5.504 L19.5046891,5.504 L19.5049359,17.75 Z M18.0059359,3.999 L15.0202536,4 L14.8259077,4.00692283 C13.9889509,4.06666544 13.2254227,4.50975805 12.7549359,5.212 L12.7549359,17.777 L12.7782651,17.7601316 C13.4923805,17.2719483 14.3447024,17 15.2363079,17 L18.0059359,16.999 L18.0056891,4.798 L18.0033792,4.75457396 L18.0056891,4.71 L18.0059359,3.999 Z M8.9891247,4 L6.00368914,3.999 L6.00599909,4.75457396 L6.00599909,4.75457396 L6.00368914,4.783 L6.00368914,16.999 L8.77307039,17 C9.57551536,17 10.3461406,17.2202781 11.0128313,17.6202194 L11.2536891,17.776 L11.2536891,5.211 C10.8200889,4.56369974 10.1361548,4.13636104 9.37521067,4.02745763 L9.18347055,4.00692283 L8.9891247,4 Z"></path></g></svg></button></div></div><div class="explorer" data-behavior="link" data-collapsed="collapsed" data-savestate="true" data-data-fns="{&quot;order&quot;:[&quot;filter&quot;,&quot;map&quot;,&quot;sort&quot;],&quot;sortFn&quot;:&quot;(a,b)=>!a.isFolder&amp;&amp;!b.isFolder||a.isFolder&amp;&amp;b.isFolder?a.displayName.localeCompare(b.displayName,void 0,{numeric:!0,sensitivity:\&quot;base\&quot;}):!a.isFolder&amp;&amp;b.isFolder?1:-1&quot;,&quot;filterFn&quot;:&quot;node=>node.slugSegment!==\&quot;tags\&quot;&quot;,&quot;mapFn&quot;:&quot;node=>node&quot;}"><button type="button" class="explorer-toggle mobile-explorer hide-until-loaded" data-mobile="true" aria-controls="explorer-143"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide-menu"><line x1="4" x2="20" y1="12" y2="12"></line><line x1="4" x2="20" y1="6" y2="6"></line><line x1="4" x2="20" y1="18" y2="18"></line></svg></button><button type="button" class="title-button explorer-toggle desktop-explorer" data-mobile="false" aria-expanded="true"><h2>탐색기</h2><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="5 8 14 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fold"><polyline points="6 9 12 15 18 9"></polyline></svg></button><div id="explorer-143" class="explorer-content" aria-expanded="false" role="group"><ul class="explorer-ul overflow" id="list-0"><li class="overflow-end"></li></ul></div><template id="template-file"><li><a href="#"></a></li></template><template id="template-folder"><li><div class="folder-container"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="5 8 14 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="folder-icon"><polyline points="6 9 12 15 18 9"></polyline></svg><div><button class="folder-button"><span class="folder-title"></span></button></div></div><div class="folder-outer"><ul class="content"></ul></div></li></template></div></div><div class="center"><div class="page-header"><div class="popover-hint"><nav class="breadcrumb-container" aria-label="breadcrumbs"><div class="breadcrumb-element"><a href="../">Home</a><p> ❯ </p></div><div class="breadcrumb-element"><a href="../30_Knowledge/">30_Knowledge</a><p> ❯ </p></div><div class="breadcrumb-element"><a href>영상센서처리</a></div></nav><h1 class="article-title">영상센서처리</h1><p show-comma="true" class="content-meta"><time datetime="2026-10-15T15:00:00.000Z">2026년 10월 16일</time><span>18 min read</span></p></div></div><article class="popover-hint"><h1 id="영상센서처리">영상센서처리<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#영상센서처리" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h1>
+<blockquote class="callout abstract" data-callout="abstract">
+<div class="callout-title">
+                  <div class="callout-icon"></div>
+                  <div class="callout-title-inner"><p>한 줄로 </p></div>
+                  
+                </div>
+<div class="callout-content">
+<p>픽셀값을 계산으로 바꿔서 영상을 나누고(임곗값), 선명하게 하고(히스토그램 변환), 잡음을 지우고(필터), 경계와 직선을 찾는(에지, 허프) 과목. 중간고사 범위는 1~7주차.</p>
+</div>
+</blockquote>
+<p><strong>어디에 앉는가</strong>: UGV·USV의 카메라 인식 파이프라인 앞단(전처리 → 에지 → 직선/차선 검출). 학습 경로는 <a href="../30_Knowledge/Learning-Path" class="internal alias" data-slug="30_Knowledge/Learning-Path">Learning Path</a>, AMET 대회의 카메라 corridor planner(<a href="../30_Knowledge/Corridor-Planner-(physicar_planner)" class="internal alias" data-slug="30_Knowledge/Corridor-Planner-(physicar_planner)">Corridor Planner (physicar_planner)</a>)가 실제로 이 앞단을 쓴 곳이다.</p>
+<h2 id="왜-필요한가">왜 필요한가<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#왜-필요한가" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<ul>
+<li>카메라 영상은 그대로 쓰면 조명, 잡음, 낮은 대비 때문에 인식이 흔들린다.</li>
+<li>차선 검출 = 그레이 변환 → 블러 → 캐니 → 허프. 이 과목 7주가 그 파이프라인 한 줄이다.</li>
+<li>2026-10-19 중간고사 대비로 정리 (손으로 쓰는 서술형 7~8문항).</li>
+</ul>
+<h2 id="시험은-차이-과정-특징을-문장으로-쓰는-것이다">시험은 “차이, 과정, 특징”을 문장으로 쓰는 것이다<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#시험은-차이-과정-특징을-문장으로-쓰는-것이다" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>선배 후기 결론: 코딩 문제 없음, 이론만, 주관식 서술.</p>
+<ul>
+<li>형식: “A와 B의 차이”, “A를 하는 과정”, “A의 특징”</li>
+<li>안 나온 챕터 없음, <strong>1챕터도 출제</strong>. 교수가 말로만 한 사소한 것은 안 나옴</li>
+<li>26년 1학기: 식은 외우고, 계산 부분은 손으로 풀어 보기, 시험이 어려웠음</li>
+</ul>
+<blockquote class="callout tip" data-callout="tip">
+<div class="callout-title">
+                  <div class="callout-icon"></div>
+                  <div class="callout-title-inner"><p>&quot;차이&quot; 문제는 같은 기준으로 둘을 나란히 놓아야 점수가 나온다. </p></div>
+                  
+                </div>
+</blockquote>
+<h2 id="디지털화는-위치를-자르고-밝기를-자른다">디지털화는 위치를 자르고 밝기를 자른다<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#디지털화는-위치를-자르고-밝기를-자른다" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<ul>
+<li>표본화(sampling): <strong>위치(공간)</strong> 를 격자로 나눔 → 해상도</li>
+<li>양자화(quantization): <strong>밝기</strong> 를 2^b 단계 정수로 → 8비트면 0~255</li>
+<li>이진 영상 1비트 / 그레이 8비트 / RGB 24비트. 이 과목에서 “흑백 영상”은 <strong>그레이</strong>를 뜻한다</li>
+<li>OpenCV는 BGR, matplotlib은 RGB라서 그대로 출력하면 R과 B가 바뀐다 (교수가 네 번 강조)</li>
+</ul>
+<blockquote class="callout tip" data-callout="tip">
+<div class="callout-title">
+                  <div class="callout-icon"></div>
+                  <div class="callout-title-inner"><p>샘플링은 위치, 양자화는 밝기. </p></div>
+                  
+                </div>
+</blockquote>
+<h2 id="jpeg는-눈이-둔한-정보부터-버린다">JPEG는 눈이 둔한 정보부터 버린다<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#jpeg는-눈이-둔한-정보부터-버린다" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<ul>
+<li>눈은 <strong>색보다 밝기에 민감</strong> → 밝기는 지키고 색을 줄인다</li>
+<li>① RGB → YCbCr (Y 밝기, Cb = B − Y, Cr = R − Y) ② <strong>크로마 서브샘플링</strong>(CbCr 해상도 줄임) ③ <strong>DCT</strong>로 저주파 유지, 고주파 제거</li>
+<li>중요한 정보는 저주파(완만한 밝기 변화)에 몰려 있어서 고주파(머리카락 같은 디테일)를 버려도 티가 안 난다</li>
+<li>RAW는 헤더가 없어 가로·세로·비트 수를 모른다. BMP 헤더 = 파일 헤더 14B + 정보 헤더 40B, 맨 앞 “BM”(0x42 0x4D)</li>
+</ul>
+<blockquote class="callout tip" data-callout="tip">
+<div class="callout-title">
+                  <div class="callout-icon"></div>
+                  <div class="callout-title-inner"><p>YCbCr → 크로마 서브샘플링 → DCT, 세 단계 이름까지 쓸 것. </p></div>
+                  
+                </div>
+</blockquote>
+<h2 id="덧셈-오버플로는-saturation으로-막는다">덧셈 오버플로는 saturation으로 막는다<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#덧셈-오버플로는-saturation으로-막는다" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<ul>
+<li>saturation: 255 넘으면 255, 0 밑이면 0</li>
+<li>wrapping: 256으로 나눈 나머지, 0부터 다시 셈. 밝던 곳이 <strong>검은 얼룩</strong>이 된다</li>
+<li>wrapping은 영상용으로 만든 기능이 아니라 8비트 저장의 자연스러운 결과(자리올림이 버려짐). 그래서 saturation이 추가 처리다</li>
+<li>차이 영상은 단순 뺄셈 대신 <strong>절댓값 차</strong></li>
+</ul>
+<blockquote class="callout tip" data-callout="tip">
+<div class="callout-title">
+                  <div class="callout-icon"></div>
+                  <div class="callout-title-inner"><p>220 + 60 = 280 → saturation 255, wrapping 24. </p></div>
+                  
+                </div>
+</blockquote>
+<h2 id="논리-연산은-흑백-마스크와-함께-쓸-때-의미가-있다">논리 연산은 흑백 마스크와 함께 쓸 때 의미가 있다<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#논리-연산은-흑백-마스크와-함께-쓸-때-의미가-있다" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<ul>
+<li>비트 단위 연산. AND = <strong>마스크</strong>(검정이 가림), OR = <strong>선택적 세트</strong>(흰색이 칠함), XOR = <strong>비교</strong>(다른 곳만), NOT = 255 − 값</li>
+<li>사진값 x에 대해: x AND 255 = x, x AND 0 = 0, x OR 0 = x, x OR 255 = 255</li>
+<li>회색끼리 AND(110 AND 200 = 72)는 눈으로 보면 의미가 없다. 슬라이드 p.8은 “비트 단위로 계산된다”를 보여 주는 계산 연습</li>
+<li>픽셀 결합: W·A + (1 − W)·B. 가중치 합이 1이라 밝아지지 않고 섞인다</li>
+</ul>
+<blockquote class="callout tip" data-callout="tip">
+<div class="callout-title">
+                  <div class="callout-icon"></div>
+                  <div class="callout-title-inner"><p>마스크는 사람이 0과 255로만 만든 영상이다. 사진이 흑백일 필요는 없다. </p></div>
+                  
+                </div>
+</blockquote>
+<h2 id="오츠는-그룹-안이-가장-뭉치는-t를-고른다">오츠는 그룹 안이 가장 뭉치는 T를 고른다<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#오츠는-그룹-안이-가장-뭉치는-t를-고른다" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<ul>
+<li>클래스 내 분산 최소 = 클래스 간 분산 최대 (같은 말)</li>
+<li>분산 = 평균에서 퍼진 정도. 좋은 T로 나누면 어두운 무리끼리, 밝은 무리끼리 뭉친다</li>
+<li><strong>개수를 반반으로 나누는 게 아니다.</strong> 픽셀값이 확 뛰는 곳(히스토그램 골짜기)에 T가 간다 → 봉우리 2개일 때 가장 효과적</li>
+<li>반복 방법(평균만, T를 고쳐 가며 수렴, 종료 기준 T0 필요)과 달리 평균+분산, 반복 없이 한 번에, 정할 값 없음</li>
+<li>적응적 임곗값: 블록마다 T. 블록이 너무 작으면 잡음, 너무 크면 전역과 같아짐 (교수: 블록 크기가 가장 중요)</li>
+</ul>
+<blockquote class="callout tip" data-callout="tip">
+<div class="callout-title">
+                  <div class="callout-icon"></div>
+                  <div class="callout-title-inner"><p>오츠의 &quot;반복 없음&quot;은 후보 256개를 한 번씩 점수 매기는 것이지, 고쳐 가며 수렴하는 게 아니다. </p></div>
+                  
+                </div>
+</blockquote>
+<h2 id="평활화는-등수대로-밝기를-다시-매긴다">평활화는 등수대로 밝기를 다시 매긴다<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#평활화는-등수대로-밝기를-다시-매긴다" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<ul>
+<li>누적합 ÷ 전체 픽셀 = “이 밝기 이하가 몇 %” = 등수. 여기에 최대 밝기를 곱하면 등수에 비례한 새 밝기</li>
+<li>평평한 히스토그램의 누적 그래프는 직선 → 누적이 직선이 되게 매핑하면 평평해진다 (교수: 가장 핵심 포인트)</li>
+<li>스트레칭은 <strong>선형</strong>으로 폭만 늘림(모양 유지), 평활화는 <strong>비선형</strong>으로 모양을 평평하게</li>
+<li>평활화를 더 많이 쓰는 이유: <strong>파라미터가 없어서 누가 해도 같은 결과</strong> (교수 두 번 강조)</li>
+<li>End-in: 하위 m%, 상위 n%를 잘라 내고 스트레칭. 잡음 점 하나에 min/max가 휘둘리는 문제 해결</li>
+</ul>
+<blockquote class="callout tip" data-callout="tip">
+<div class="callout-title">
+                  <div class="callout-icon"></div>
+                  <div class="callout-title-inner"><p>기본 스트레칭은 자르지 않는다. 자르는 건 End-in. </p></div>
+                  
+                </div>
+</blockquote>
+<h2 id="필터는-잡음-종류에-맞춰-고른다">필터는 잡음 종류에 맞춰 고른다<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#필터는-잡음-종류에-맞춰-고른다" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<ul>
+<li>가우시안 잡음(전체가 자글자글) → 평균, <strong>가우시안</strong> / S&amp;P(흰 점·검은 점) → <strong>중간값</strong>, 보존 스무딩</li>
+<li>가우시안 = 가운데에 큰 가중치를 주는 가중 평균 → 에지를 평균보다 잘 지킴. 파라미터 σ 하나, k = 3σ, 크기 2k+1 (σ=1 → 7×7), 중심값 1/(2π)</li>
+<li>분리 가능성: G(x,y) = G(x)·G(y), N² → 2N (7×7: 49 → 14)</li>
+<li>중간값: 정렬해서 가운데 값. 튀는 값은 양 끝으로 밀려나 뽑히지 않는다</li>
+<li>보존 스무딩: 이웃 8개의 [MIN, MAX]를 벗어날 때만 경계값으로. 튀는 점만 고치고 나머지는 그대로</li>
+<li>언샤프: 원본 − 블러 = 에지, 원본 + 에지 = 샤프. 하이부스트 h = (1+α)f − αf̄</li>
+</ul>
+<blockquote class="callout tip" data-callout="tip">
+<div class="callout-title">
+                  <div class="callout-icon"></div>
+                  <div class="callout-title-inner"><p>블러는 결과물이 아니라 에지를 뽑는 도구다. </p></div>
+                  
+                </div>
+</blockquote>
+<h2 id="1차-미분은-봉우리-2차-미분은-영교차로-에지를-찾는다">1차 미분은 봉우리, 2차 미분은 영교차로 에지를 찾는다<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#1차-미분은-봉우리-2차-미분은-영교차로-에지를-찾는다" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<ul>
+<li>둘 다 에지 검출. 기준만 다르다</li>
+<li>그래디언트 방향 ⟂ 에지 (교수: 꼭 기억). 방향은 θ = tan⁻¹(dy/dx) 숫자라 대각선도 표현된다</li>
+<li>크기 영상, 방향 영상은 입력과 같은 크기의 2차원 배열로 저장</li>
+<li>캐니: 가우시안 → 소벨(크기·방향) → <strong>비최대치 억제</strong>(방향 양옆보다 크면 남김, 에지를 얇게) → <strong>히스테리시스</strong>(T1 위는 무조건, T1~T2는 강한 에지와 8이웃으로 이어진 것만)</li>
+<li>영교차 = 값이 +에서 −로 바뀌며 0을 가로지르는 곳. 그냥 0인 곳은 아니다</li>
+<li>라플라시안 <code>0 1 0 / 1 −4 1 / 0 1 0</code>: 마스크 하나로 모든 방향, 대신 잡음에 매우 민감 → 가우시안 먼저(LoG, 멕시칸 모자)</li>
+</ul>
+<blockquote class="callout tip" data-callout="tip">
+<div class="callout-title">
+                  <div class="callout-icon"></div>
+                  <div class="callout-title-inner"><p>미분해서 0을 지나는 곳은 원래 것의 꼭대기다. f″의 영교차 = f′의 꼭대기 = 에지. </p></div>
+                  
+                </div>
+</blockquote>
+<h2 id="허프-변환은-점들을-지나는-직선의-이름표를-찾는다">허프 변환은 점들을 지나는 직선의 이름표를 찾는다<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#허프-변환은-점들을-지나는-직선의-이름표를-찾는다" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<ul>
+<li>직선 y = ax + b는 (a, b) 두 숫자로 정해진다</li>
+<li>영상의 점 하나 = 그 점을 지나는 모든 직선 = 파라미터 공간의 직선 하나 (b = −xa + y)</li>
+<li>여러 선의 <strong>교점</strong> = 그 점들을 모두 지나는 직선. 예: (1,1), (3,3), (−2,−2) → 교점 (1, 0) → y = x</li>
+<li>세로선은 a가 무한대 → ρ = x cosθ + y sinθ로 유한하게. θ는 법선 각도(세로선 0°, 가로선 90°)</li>
+<li>허프 전에 에지 검출 필수. 임곗값이 크면 정확, 작으면 직선이 많아짐. 확률적 허프는 빠르지만 일부를 놓친다</li>
+</ul>
+<blockquote class="callout tip" data-callout="tip">
+<div class="callout-title">
+                  <div class="callout-icon"></div>
+                  <div class="callout-title-inner"><p>영상의 직선 하나 = 파라미터 공간의 점 하나, 영상의 점 하나 = 파라미터 공간의 직선 하나. </p></div>
+                  
+                </div>
+</blockquote>
+<h2 id="수식">수식<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#수식" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<pre><code>스트레칭    new = (old − min) / (max − min) × 255
+평활화      n[i] = sum[i] / N × I_max          (반올림해서 매핑)
+가우시안    G(x,y) = 1/(2πσ²) · exp(−(x²+y²)/(2σ²)),  k = 3σ
+하이부스트  h = (1+α)·f − α·f̄
+그래디언트  |∇f| = √(dx² + dy²),  θ = tan⁻¹(dy/dx)
+라플라시안  ∇²f = f(x+1,y) + f(x−1,y) + f(x,y+1) + f(x,y−1) − 4f(x,y)
+허프        b = −x·a + y   /   ρ = x cosθ + y sinθ
+</code></pre>
+<p><strong>읽는 법</strong></p>
+<ul>
+<li>스트레칭: 빼서 옮기고(0부터) → 나눠서 0~1로 → 255 곱해서 펼침. 교수가 외우지 말고 세 동작으로 이해하라고 함</li>
+<li>평활화: 누적/N은 등수(%), I_max는 범위 최댓값(8비트면 255). 영상에 실제로 있는 최댓값이 아니다</li>
+<li>하이부스트: 원본 계수 1+α, 블러 계수 −α. 합이 1이라 밝기 유지</li>
+</ul>
+<h2 id="검산">검산<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#검산" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th>조건</th><th>결과</th><th>맞는 이유</th></tr></thead><tbody><tr><td>평활화 4×4, 범위 0~7, 개수 0,2,6,4,2,1,1,0</td><td>매핑 0,1,4,5,6,7,7,7</td><td>누적 0,2,8,12,14,15,16,16 × 7/16, 3.5는 4로 반올림</td></tr><tr><td>wrapping 200+100</td><td>44</td><td>300 − 256</td></tr><tr><td>하이부스트 원본 1.5, 블러 −0.5</td><td>α = 0.5</td><td>1+α = 1.5 (교수가 수업 중 질문)</td></tr><tr><td>보존 스무딩 (110 99 110 / 110 130 120 / 90 100 112)</td><td>120</td><td>이웃 MIN 90, MAX 120, 130 > MAX</td></tr><tr><td>히스테리시스 6×6 예 (강 → 약 → 약 대각선, 떨어진 약 1개)</td><td>2개 남음</td><td>대각선도 8이웃 연결, 사슬로 추적</td></tr></tbody></table></div>
+<h2 id="헷갈렸던-점">헷갈렸던 점<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#헷갈렸던-점" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<h3 id="saturation과-wrapping은-방식만-다르고-결과는-같다">”saturation과 wrapping은 방식만 다르고 결과는 같다”<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#saturation과-wrapping은-방식만-다르고-결과는-같다" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>255를 넘지 않는 픽셀은 같지만, 넘는 픽셀(원래 밝던 곳)은 wrapping에서 어두운 값(44, 94)이 된다. 오버플로가 난 픽셀에서만 다르다.</p>
+<h3 id="wrapping은-기능을-못-하는데-왜-만들었나">”wrapping은 기능을 못 하는데 왜 만들었나”<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#wrapping은-기능을-못-하는데-왜-만들었나" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>만든 게 아니라 8비트 덧셈의 자연스러운 결과다. 11111111 + 1에서 9번째 자리가 버려져 0이 된다. 각도·시계처럼 한 바퀴 도는 값에는 오히려 맞다.</p>
+<h3 id="영상에서-0이나-255인-픽셀이-몇-개나-된다고-논리-연산을-하나">”영상에서 0이나 255인 픽셀이 몇 개나 된다고 논리 연산을 하나”<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#영상에서-0이나-255인-픽셀이-몇-개나-된다고-논리-연산을-하나" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>0/255로만 된 건 사진이 아니라 사람이 만든 마스크 쪽이다. 사진값 x AND 255 = x, x AND 0 = 0이라 사진이 회색이어도 깔끔하게 가려진다.</p>
+<h3 id="오츠는-두-그룹의-개수가-비슷해지는-t를-고른다">”오츠는 두 그룹의 개수가 비슷해지는 T를 고른다”<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#오츠는-두-그룹의-개수가-비슷해지는-t를-고른다" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>틀림. 어두운 것 7개, 밝은 것 2개여도 그 사이를 고른다. 개수가 아니라 그룹 안 밝기가 비슷한지를 본다. 결국 “픽셀값이 확 뛰는 곳”이 있어야 잘 된다는 게 맞는 이해.</p>
+<h3 id="오츠도-t를-여러-번-넣어-보는데-왜-반복이-없다고-하나">”오츠도 T를 여러 번 넣어 보는데 왜 반복이 없다고 하나”<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#오츠도-t를-여러-번-넣어-보는데-왜-반복이-없다고-하나" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>반복 방법은 이번 결과로 다음 T를 고쳐 가며 언제 끝날지 모른다. 오츠는 후보 256개를 한 번씩 점수 매기고 끝. 이진 영상도 매번 만들지 않고 히스토그램 256칸으로만 계산한다.</p>
+<h3 id="언샤프는-흐리게-만든-다음-다시-안-흐리게-만드는-쓸데없는-짓">”언샤프는 흐리게 만든 다음 다시 안 흐리게 만드는 쓸데없는 짓”<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#언샤프는-흐리게-만든-다음-다시-안-흐리게-만드는-쓸데없는-짓" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>흐린 영상은 결과물이 아니라 에지를 뽑는 도구. 원본 − 흐린 영상 = 사라진 디테일 = 에지. 그걸 원본에 더하면 원본보다 선명해진다(되돌리는 게 아님).</p>
+<h3 id="2차-미분은-결국-에지를-얇게-만드는-것">“2차 미분은 결국 에지를 얇게 만드는 것”<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#2차-미분은-결국-에지를-얇게-만드는-것" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>절반만 맞음. 2차 미분은 에지를 찾는 방법 자체이고(기준이 영교차), 얇은 건 결과로 따라오는 장점. 이미 찾은 에지를 얇게 다듬는 건 캐니의 비최대치 억제다.</p>
+<h3 id="1차-미분도-0을-지나잖아">”1차 미분도 0을 지나잖아”<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#1차-미분도-0을-지나잖아" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>맞다. 그런데 f′가 0을 지나는 곳은 f의 꼭대기(흰 띠의 가운데)라 에지가 아니다. 그래서 1차 미분은 봉우리를, 2차 미분은 영교차를 본다.</p>
+<h3 id="허프-공간에서-점은-점으로-나타나는-거-아닌가">”허프 공간에서 점은 점으로 나타나는 거 아닌가”<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#허프-공간에서-점은-점으로-나타나는-거-아닌가" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>방향이 반대다. 영상의 <strong>직선</strong>이 허프 공간의 점이고, 영상의 <strong>점</strong>은 그 점을 지나는 모든 직선을 모은 것이라 허프 공간의 직선이 된다. 아직 완전히 이해 못 함.</p>
+<h3 id="기본-스트레칭은-분포-바깥을-잘라-내고-늘린다">”기본 스트레칭은 분포 바깥을 잘라 내고 늘린다”<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#기본-스트레칭은-분포-바깥을-잘라-내고-늘린다" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>자르는 건 End-in. 기본 스트레칭은 진짜 min<del>max를 그대로 0</del>255로 늘린다.</p>
+<h2 id="내가-실제로-써본-곳">내가 실제로 써본 곳<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#내가-실제로-써본-곳" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<ul>
+<li>과제1~5 (OpenCV 코랩 실습, 2026-09 ~ 10). 시험 대비로는 코딩을 뺐다.</li>
+<li><a href="../30_Knowledge/Corridor-Planner-(physicar_planner)" class="internal alias" data-slug="30_Knowledge/Corridor-Planner-(physicar_planner)">Corridor Planner (physicar_planner)</a>: 카메라 기반 경로 계획, 같은 종류의 전처리를 실제로 쓴 곳.</li>
+</ul>
+<h2 id="채워야-할-것">채워야 할 것<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#채워야-할-것" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" disabled/> 허프 변환: 점 → 파라미터 공간 직선을 처음부터 다시 (1단계 “직선 = (a, b) 이름표”까지만 함)</li>
+<li class="task-list-item"><input type="checkbox" disabled/> 모의고사 남은 문제: 보존 스무딩 손계산, 언샤프 α, 캐니 4단계 서술, 1차 vs 2차 미분, 허프</li>
+<li class="task-list-item"><input type="checkbox" disabled/> 막힌 곳과 틀린 답 목록: <code>C:\3-2\영상센서처리\복습목록.md</code></li>
+</ul>
+<h2 id="참고">참고<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#참고" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<ul>
+<li>강의: 영상센서처리 (DSC 공유대학 ecampus), 1~7주차 학습정리 PDF + 강의 전사본</li>
+<li>강의노트: <code>C:\3-2\영상센서처리\notes\</code>, 학습 페이지 <code>study.html</code></li>
+<li>교재 그림 출처: 고병철(2022), Gonzalez</li>
+</ul></article><hr/><div class="page-footer"></div></div><div class="right sidebar"><div class="graph"><h3>그래프 뷰</h3><div class="graph-outer"><div class="graph-container" data-cfg="{&quot;drag&quot;:true,&quot;zoom&quot;:true,&quot;depth&quot;:1,&quot;scale&quot;:1.1,&quot;repelForce&quot;:0.5,&quot;centerForce&quot;:0.3,&quot;linkDistance&quot;:30,&quot;fontSize&quot;:0.6,&quot;opacityScale&quot;:1,&quot;showTags&quot;:true,&quot;removeTags&quot;:[],&quot;focusOnHover&quot;:false,&quot;enableRadial&quot;:false}"></div><button class="global-graph-icon" aria-label="Global Graph"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 55 55" fill="currentColor" xml:space="preserve"><path d="M49,0c-3.309,0-6,2.691-6,6c0,1.035,0.263,2.009,0.726,2.86l-9.829,9.829C32.542,17.634,30.846,17,29,17
+                s-3.542,0.634-4.898,1.688l-7.669-7.669C16.785,10.424,17,9.74,17,9c0-2.206-1.794-4-4-4S9,6.794,9,9s1.794,4,4,4
+                c0.74,0,1.424-0.215,2.019-0.567l7.669,7.669C21.634,21.458,21,23.154,21,25s0.634,3.542,1.688,4.897L10.024,42.562
+                C8.958,41.595,7.549,41,6,41c-3.309,0-6,2.691-6,6s2.691,6,6,6s6-2.691,6-6c0-1.035-0.263-2.009-0.726-2.86l12.829-12.829
+                c1.106,0.86,2.44,1.436,3.898,1.619v10.16c-2.833,0.478-5,2.942-5,5.91c0,3.309,2.691,6,6,6s6-2.691,6-6c0-2.967-2.167-5.431-5-5.91
+                v-10.16c1.458-0.183,2.792-0.759,3.898-1.619l7.669,7.669C41.215,39.576,41,40.26,41,41c0,2.206,1.794,4,4,4s4-1.794,4-4
+                s-1.794-4-4-4c-0.74,0-1.424,0.215-2.019,0.567l-7.669-7.669C36.366,28.542,37,26.846,37,25s-0.634-3.542-1.688-4.897l9.665-9.665
+                C46.042,11.405,47.451,12,49,12c3.309,0,6-2.691,6-6S52.309,0,49,0z M11,9c0-1.103,0.897-2,2-2s2,0.897,2,2s-0.897,2-2,2
+                S11,10.103,11,9z M6,51c-2.206,0-4-1.794-4-4s1.794-4,4-4s4,1.794,4,4S8.206,51,6,51z M33,49c0,2.206-1.794,4-4,4s-4-1.794-4-4
+                s1.794-4,4-4S33,46.794,33,49z M29,31c-3.309,0-6-2.691-6-6s2.691-6,6-6s6,2.691,6,6S32.309,31,29,31z M47,41c0,1.103-0.897,2-2,2
+                s-2-0.897-2-2s0.897-2,2-2S47,39.897,47,41z M49,10c-2.206,0-4-1.794-4-4s1.794-4,4-4s4,1.794,4,4S51.206,10,49,10z"></path></svg></button></div><div class="global-graph-outer"><div class="global-graph-container" data-cfg="{&quot;drag&quot;:true,&quot;zoom&quot;:true,&quot;depth&quot;:-1,&quot;scale&quot;:0.9,&quot;repelForce&quot;:0.5,&quot;centerForce&quot;:0.2,&quot;linkDistance&quot;:30,&quot;fontSize&quot;:0.6,&quot;opacityScale&quot;:1,&quot;showTags&quot;:true,&quot;removeTags&quot;:[],&quot;focusOnHover&quot;:true,&quot;enableRadial&quot;:true}"></div></div></div><div class="toc desktop-only"><button type="button" class="toc-header" aria-controls="toc-85" aria-expanded="true"><h3>목차</h3><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fold"><polyline points="6 9 12 15 18 9"></polyline></svg></button><ul id="list-1" class="toc-content overflow"><li class="depth-0"><a href="#영상센서처리" data-for="영상센서처리">영상센서처리</a></li><li class="depth-1"><a href="#왜-필요한가" data-for="왜-필요한가">왜 필요한가</a></li><li class="depth-1"><a href="#시험은-차이-과정-특징을-문장으로-쓰는-것이다" data-for="시험은-차이-과정-특징을-문장으로-쓰는-것이다">시험은 “차이, 과정, 특징”을 문장으로 쓰는 것이다</a></li><li class="depth-1"><a href="#디지털화는-위치를-자르고-밝기를-자른다" data-for="디지털화는-위치를-자르고-밝기를-자른다">디지털화는 위치를 자르고 밝기를 자른다</a></li><li class="depth-1"><a href="#jpeg는-눈이-둔한-정보부터-버린다" data-for="jpeg는-눈이-둔한-정보부터-버린다">JPEG는 눈이 둔한 정보부터 버린다</a></li><li class="depth-1"><a href="#덧셈-오버플로는-saturation으로-막는다" data-for="덧셈-오버플로는-saturation으로-막는다">덧셈 오버플로는 saturation으로 막는다</a></li><li class="depth-1"><a href="#논리-연산은-흑백-마스크와-함께-쓸-때-의미가-있다" data-for="논리-연산은-흑백-마스크와-함께-쓸-때-의미가-있다">논리 연산은 흑백 마스크와 함께 쓸 때 의미가 있다</a></li><li class="depth-1"><a href="#오츠는-그룹-안이-가장-뭉치는-t를-고른다" data-for="오츠는-그룹-안이-가장-뭉치는-t를-고른다">오츠는 그룹 안이 가장 뭉치는 T를 고른다</a></li><li class="depth-1"><a href="#평활화는-등수대로-밝기를-다시-매긴다" data-for="평활화는-등수대로-밝기를-다시-매긴다">평활화는 등수대로 밝기를 다시 매긴다</a></li><li class="depth-1"><a href="#필터는-잡음-종류에-맞춰-고른다" data-for="필터는-잡음-종류에-맞춰-고른다">필터는 잡음 종류에 맞춰 고른다</a></li><li class="depth-1"><a href="#1차-미분은-봉우리-2차-미분은-영교차로-에지를-찾는다" data-for="1차-미분은-봉우리-2차-미분은-영교차로-에지를-찾는다">1차 미분은 봉우리, 2차 미분은 영교차로 에지를 찾는다</a></li><li class="depth-1"><a href="#허프-변환은-점들을-지나는-직선의-이름표를-찾는다" data-for="허프-변환은-점들을-지나는-직선의-이름표를-찾는다">허프 변환은 점들을 지나는 직선의 이름표를 찾는다</a></li><li class="depth-1"><a href="#수식" data-for="수식">수식</a></li><li class="depth-1"><a href="#검산" data-for="검산">검산</a></li><li class="depth-1"><a href="#헷갈렸던-점" data-for="헷갈렸던-점">헷갈렸던 점</a></li><li class="depth-2"><a href="#saturation과-wrapping은-방식만-다르고-결과는-같다" data-for="saturation과-wrapping은-방식만-다르고-결과는-같다">”saturation과 wrapping은 방식만 다르고 결과는 같다”</a></li><li class="depth-2"><a href="#wrapping은-기능을-못-하는데-왜-만들었나" data-for="wrapping은-기능을-못-하는데-왜-만들었나">”wrapping은 기능을 못 하는데 왜 만들었나”</a></li><li class="depth-2"><a href="#영상에서-0이나-255인-픽셀이-몇-개나-된다고-논리-연산을-하나" data-for="영상에서-0이나-255인-픽셀이-몇-개나-된다고-논리-연산을-하나">”영상에서 0이나 255인 픽셀이 몇 개나 된다고 논리 연산을 하나”</a></li><li class="depth-2"><a href="#오츠는-두-그룹의-개수가-비슷해지는-t를-고른다" data-for="오츠는-두-그룹의-개수가-비슷해지는-t를-고른다">”오츠는 두 그룹의 개수가 비슷해지는 T를 고른다”</a></li><li class="depth-2"><a href="#오츠도-t를-여러-번-넣어-보는데-왜-반복이-없다고-하나" data-for="오츠도-t를-여러-번-넣어-보는데-왜-반복이-없다고-하나">”오츠도 T를 여러 번 넣어 보는데 왜 반복이 없다고 하나”</a></li><li class="depth-2"><a href="#언샤프는-흐리게-만든-다음-다시-안-흐리게-만드는-쓸데없는-짓" data-for="언샤프는-흐리게-만든-다음-다시-안-흐리게-만드는-쓸데없는-짓">”언샤프는 흐리게 만든 다음 다시 안 흐리게 만드는 쓸데없는 짓”</a></li><li class="depth-2"><a href="#2차-미분은-결국-에지를-얇게-만드는-것" data-for="2차-미분은-결국-에지를-얇게-만드는-것">“2차 미분은 결국 에지를 얇게 만드는 것”</a></li><li class="depth-2"><a href="#1차-미분도-0을-지나잖아" data-for="1차-미분도-0을-지나잖아">”1차 미분도 0을 지나잖아”</a></li><li class="depth-2"><a href="#허프-공간에서-점은-점으로-나타나는-거-아닌가" data-for="허프-공간에서-점은-점으로-나타나는-거-아닌가">”허프 공간에서 점은 점으로 나타나는 거 아닌가”</a></li><li class="depth-2"><a href="#기본-스트레칭은-분포-바깥을-잘라-내고-늘린다" data-for="기본-스트레칭은-분포-바깥을-잘라-내고-늘린다">”기본 스트레칭은 분포 바깥을 잘라 내고 늘린다”</a></li><li class="depth-1"><a href="#내가-실제로-써본-곳" data-for="내가-실제로-써본-곳">내가 실제로 써본 곳</a></li><li class="depth-1"><a href="#채워야-할-것" data-for="채워야-할-것">채워야 할 것</a></li><li class="depth-1"><a href="#참고" data-for="참고">참고</a></li><li class="overflow-end"></li></ul></div></div><footer class><p>Created with <a href="https://quartz.jzhao.xyz/">Quartz v4.5.2</a> © 2026</p><ul></ul></footer></div></div></body><script type="application/javascript">function n(){let t=this.parentElement;t.classList.toggle("is-collapsed");let e=t.getElementsByClassName("callout-content")[0];if(!e)return;let l=t.classList.contains("is-collapsed");e.style.gridTemplateRows=l?"0fr":"1fr"}function c(){let t=document.getElementsByClassName("callout is-collapsible");for(let e of t){let l=e.getElementsByClassName("callout-title")[0],s=e.getElementsByClassName("callout-content")[0];if(!l||!s)continue;l.addEventListener("click",n),window.addCleanup(()=>l.removeEventListener("click",n));let o=e.classList.contains("is-collapsed");s.style.gridTemplateRows=o?"0fr":"1fr"}}document.addEventListener("nav",c);
+</script><script type="module">function f(i,e){if(!i)return;function r(o){o.target===this&&(o.preventDefault(),o.stopPropagation(),e())}function t(o){o.key.startsWith("Esc")&&(o.preventDefault(),e())}i?.addEventListener("click",r),window.addCleanup(()=>i?.removeEventListener("click",r)),document.addEventListener("keydown",t),window.addCleanup(()=>document.removeEventListener("keydown",t))}function y(i){for(;i.firstChild;)i.removeChild(i.firstChild)}var h=class{constructor(e,r){this.container=e;this.content=r;this.setupEventListeners(),this.setupNavigationControls(),this.resetTransform()}isDragging=!1;startPan={x:0,y:0};currentPan={x:0,y:0};scale=1;MIN_SCALE=.5;MAX_SCALE=3;cleanups=[];setupEventListeners(){let e=this.onMouseDown.bind(this),r=this.onMouseMove.bind(this),t=this.onMouseUp.bind(this),o=this.resetTransform.bind(this);this.container.addEventListener("mousedown",e),document.addEventListener("mousemove",r),document.addEventListener("mouseup",t),window.addEventListener("resize",o),this.cleanups.push(()=>this.container.removeEventListener("mousedown",e),()=>document.removeEventListener("mousemove",r),()=>document.removeEventListener("mouseup",t),()=>window.removeEventListener("resize",o))}cleanup(){for(let e of this.cleanups)e()}setupNavigationControls(){let e=document.createElement("div");e.className="mermaid-controls";let r=this.createButton("+",()=>this.zoom(.1)),t=this.createButton("-",()=>this.zoom(-.1)),o=this.createButton("Reset",()=>this.resetTransform());e.appendChild(t),e.appendChild(o),e.appendChild(r),this.container.appendChild(e)}createButton(e,r){let t=document.createElement("button");return t.textContent=e,t.className="mermaid-control-button",t.addEventListener("click",r),window.addCleanup(()=>t.removeEventListener("click",r)),t}onMouseDown(e){e.button===0&&(this.isDragging=!0,this.startPan={x:e.clientX-this.currentPan.x,y:e.clientY-this.currentPan.y},this.container.style.cursor="grabbing")}onMouseMove(e){this.isDragging&&(e.preventDefault(),this.currentPan={x:e.clientX-this.startPan.x,y:e.clientY-this.startPan.y},this.updateTransform())}onMouseUp(){this.isDragging=!1,this.container.style.cursor="grab"}zoom(e){let r=Math.min(Math.max(this.scale+e,this.MIN_SCALE),this.MAX_SCALE),t=this.content.getBoundingClientRect(),o=t.width/2,n=t.height/2,c=r-this.scale;this.currentPan.x-=o*c,this.currentPan.y-=n*c,this.scale=r,this.updateTransform()}updateTransform(){this.content.style.transform=`translate(${this.currentPan.x}px, ${this.currentPan.y}px) scale(${this.scale})`}resetTransform(){this.scale=1;let e=this.content.querySelector("svg");this.currentPan={x:e.getBoundingClientRect().width/2,y:e.getBoundingClientRect().height/2},this.updateTransform()}},C=["--secondary","--tertiary","--gray","--light","--lightgray","--highlight","--dark","--darkgray","--codeFont"],E;document.addEventListener("nav",async()=>{let e=document.querySelector(".center").querySelectorAll("code.mermaid");if(e.length===0)return;E||=await import("https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.4.0/mermaid.esm.min.mjs");let r=E.default,t=new WeakMap;for(let n of e)t.set(n,n.innerText);async function o(){for(let s of e){s.removeAttribute("data-processed");let a=t.get(s);a&&(s.innerHTML=a)}let n=C.reduce((s,a)=>(s[a]=window.getComputedStyle(document.documentElement).getPropertyValue(a),s),{}),c=document.documentElement.getAttribute("saved-theme")==="dark";r.initialize({startOnLoad:!1,securityLevel:"loose",theme:c?"dark":"base",themeVariables:{fontFamily:n["--codeFont"],primaryColor:n["--light"],primaryTextColor:n["--darkgray"],primaryBorderColor:n["--tertiary"],lineColor:n["--darkgray"],secondaryColor:n["--secondary"],tertiaryColor:n["--tertiary"],clusterBkg:n["--light"],edgeLabelBackground:n["--highlight"]}}),await r.run({nodes:e})}await o(),document.addEventListener("themechange",o),window.addCleanup(()=>document.removeEventListener("themechange",o));for(let n=0;n<e.length;n++){let v=function(){let g=l.querySelector("#mermaid-space"),m=l.querySelector(".mermaid-content");if(!m)return;y(m);let w=c.querySelector("svg").cloneNode(!0);m.appendChild(w),l.classList.add("active"),g.style.cursor="grab",u=new h(g,m)},M=function(){l.classList.remove("active"),u?.cleanup(),u=null},c=e[n],s=c.parentElement,a=s.querySelector(".clipboard-button"),d=s.querySelector(".expand-button"),p=window.getComputedStyle(a),L=a.offsetWidth+parseFloat(p.marginLeft||"0")+parseFloat(p.marginRight||"0");d.style.right=`calc(${L}px + 0.3rem)`,s.prepend(d);let l=s.querySelector("#mermaid-container");if(!l)return;let u=null;d.addEventListener("click",v),f(l,M),window.addCleanup(()=>{u?.cleanup(),d.removeEventListener("click",v)})}});
+</script><script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/copy-tex.min.js" type="application/javascript"></script><script src="../postscript.js" type="module"></script></html>

@@ -1,0 +1,40 @@
+DeepRacer optimized racing-line normalization summary
+=====================================================
+Source file: 최적화 경로.csv
+Source rows: 320
+Unique closed-loop points: 319
+Duplicate final endpoint removed: True
+Loop length: 15.901241 m
+Full mean segment spacing: 0.049846 m
+Full min/max segment spacing: 0.049124 / 0.050601 m
+
+Heading handling
+----------------
+heading_deg was recomputed directly from consecutive x-y coordinates.
+It follows the DeepRacer convention used by atan2(delta_y, delta_x).
+The raw TUMFTM psi_rad column was not copied directly.
+Median difference after TUM psi + 90 deg conversion: 0.612715 deg
+Maximum difference after TUM psi + 90 deg conversion: 1.933704 deg
+
+Curvature
+---------
+Signed curvature range: -0.7805046 to 1.3494852 1/m
+Maximum absolute curvature: 1.3494852 1/m
+
+Reward-ready reduction
+----------------------
+Reduction method: closed-loop Ramer-Douglas-Peucker
+RDP tolerance: 0.0050 m
+Reward points: 73
+Point reduction: 77.12%
+Measured maximum geometric deviation: 0.004937 m
+Measured 99th percentile deviation: 0.004584 m
+Reward mean segment length: 0.217744 m
+Reward min/max segment length: 0.099557 / 0.798244 m
+
+Notes
+-----
+- Both exported CSV files omit the duplicated closing endpoint.
+- Treat the data as a closed loop: next_index = (index + 1) % point_count.
+- source_vx_mps and source_ax_mps2 are retained only in racing_line_full.csv for reference.
+- They should not be treated as validated DeepRacer target values yet.

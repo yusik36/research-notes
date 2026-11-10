@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="ko" dir="ltr"><head><title>강화학습</title><meta charset="utf-8"/><link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com"/><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto Sans KR:wght@400;700&amp;family=Noto Sans KR:ital,wght@0,400;0,600;1,400;1,600&amp;family=IBM Plex Mono:wght@400;600&amp;display=swap"/><link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin="anonymous"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta name="og:site_name" content="LabNote"/><meta property="og:title" content="강화학습"/><meta property="og:type" content="website"/><meta name="twitter:card" content="summary_large_image"/><meta name="twitter:title" content="강화학습"/><meta name="twitter:description" content="강화학습 공부계획 한 줄로 유닛 14개 + 체크포인트 3개. 이론을 순서대로 밀되, 중간에 세 번 끊고 USV heading을 실제로 학습시킨다. 이론이 끝나기를 기다리면 compare 칸은 5개월 동안 비어 있다."/><meta property="og:description" content="강화학습 공부계획 한 줄로 유닛 14개 + 체크포인트 3개. 이론을 순서대로 밀되, 중간에 세 번 끊고 USV heading을 실제로 학습시킨다. 이론이 끝나기를 기다리면 compare 칸은 5개월 동안 비어 있다."/><meta property="og:image:alt" content="강화학습 공부계획 한 줄로 유닛 14개 + 체크포인트 3개. 이론을 순서대로 밀되, 중간에 세 번 끊고 USV heading을 실제로 학습시킨다. 이론이 끝나기를 기다리면 compare 칸은 5개월 동안 비어 있다."/><meta property="og:image" content="https://yusik36.github.io/research-notes/static/og-image.png"/><meta property="og:image:url" content="https://yusik36.github.io/research-notes/static/og-image.png"/><meta name="twitter:image" content="https://yusik36.github.io/research-notes/static/og-image.png"/><meta property="og:image:type" content="image/.png"/><meta property="twitter:domain" content="yusik36.github.io/research-notes"/><meta property="og:url" content="https://yusik36.github.io/research-notes/30_Knowledge/강화학습"/><meta property="twitter:url" content="https://yusik36.github.io/research-notes/30_Knowledge/강화학습"/><link rel="icon" href="../static/icon.png"/><meta name="description" content="강화학습 공부계획 한 줄로 유닛 14개 + 체크포인트 3개. 이론을 순서대로 밀되, 중간에 세 번 끊고 USV heading을 실제로 학습시킨다. 이론이 끝나기를 기다리면 compare 칸은 5개월 동안 비어 있다."/><meta name="generator" content="Quartz"/><link href="../index.css" rel="stylesheet" type="text/css" spa-preserve/><style>.expand-button {
+  position: absolute;
+  display: flex;
+  float: right;
+  padding: 0.4rem;
+  margin: 0.3rem;
+  right: 0;
+  color: var(--gray);
+  border-color: var(--dark);
+  background-color: var(--light);
+  border: 1px solid;
+  border-radius: 5px;
+  opacity: 0;
+  transition: 0.2s;
+}
+.expand-button > svg {
+  fill: var(--light);
+  filter: contrast(0.3);
+}
+.expand-button:hover {
+  cursor: pointer;
+  border-color: var(--secondary);
+}
+.expand-button:focus {
+  outline: 0;
+}
+
+pre:hover > .expand-button {
+  opacity: 1;
+  transition: 0.2s;
+}
+
+#mermaid-container {
+  position: fixed;
+  contain: layout;
+  z-index: 999;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  display: none;
+  backdrop-filter: blur(4px);
+  background: rgba(0, 0, 0, 0.5);
+}
+#mermaid-container.active {
+  display: inline-block;
+}
+#mermaid-container > #mermaid-space {
+  border: 1px solid var(--lightgray);
+  background-color: var(--light);
+  border-radius: 5px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 80vh;
+  width: 80vw;
+  overflow: hidden;
+}
+#mermaid-container > #mermaid-space > .mermaid-content {
+  padding: 2rem;
+  position: relative;
+  transform-origin: 0 0;
+  transition: transform 0.1s ease;
+  overflow: visible;
+  min-height: 200px;
+  min-width: 200px;
+}
+#mermaid-container > #mermaid-space > .mermaid-content pre {
+  margin: 0;
+  border: none;
+}
+#mermaid-container > #mermaid-space > .mermaid-content svg {
+  max-width: none;
+  height: auto;
+}
+#mermaid-container > #mermaid-space > .mermaid-controls {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  gap: 8px;
+  padding: 8px;
+  background: var(--light);
+  border: 1px solid var(--lightgray);
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 2;
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 1px solid var(--lightgray);
+  background: var(--light);
+  color: var(--dark);
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  font-family: var(--bodyFont);
+  transition: all 0.2s ease;
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button:hover {
+  background: var(--lightgray);
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button:active {
+  transform: translateY(1px);
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button:nth-child(2) {
+  width: auto;
+  padding: 0 12px;
+  font-size: 14px;
+}
+/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VSb290IjoiQzpcXEFyY2hpdmVcXOyeoeuLpOq1rOumrFxcVVNU7J247YS0X+yngOybkOyEnFxcc2l0ZVxccXVhcnR6XFxjb21wb25lbnRzXFxzdHlsZXMiLCJzb3VyY2VzIjpbIm1lcm1haWQuaW5saW5lLnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDRTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTs7QUFFQTtFQUNFO0VBQ0E7O0FBR0Y7RUFDRTtFQUNBOztBQUdGO0VBQ0U7OztBQUtGO0VBQ0U7RUFDQTs7O0FBSUo7RUFDRTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBOztBQUVBO0VBQ0U7O0FBR0Y7RUFDRTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTs7QUFFQTtFQUNFO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBOztBQUVBO0VBQ0U7RUFDQTs7QUFHRjtFQUNFO0VBQ0E7O0FBSUo7RUFDRTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBOztBQUVBO0VBQ0U7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTs7QUFFQTtFQUNFOztBQUdGO0VBQ0U7O0FBSUY7RUFDRTtFQUNBO0VBQ0EiLCJzb3VyY2VzQ29udGVudCI6WyIuZXhwYW5kLWJ1dHRvbiB7XG4gIHBvc2l0aW9uOiBhYnNvbHV0ZTtcbiAgZGlzcGxheTogZmxleDtcbiAgZmxvYXQ6IHJpZ2h0O1xuICBwYWRkaW5nOiAwLjRyZW07XG4gIG1hcmdpbjogMC4zcmVtO1xuICByaWdodDogMDsgLy8gTk9URTogcmlnaHQgd2lsbCBiZSBzZXQgaW4gbWVybWFpZC5pbmxpbmUudHNcbiAgY29sb3I6IHZhcigtLWdyYXkpO1xuICBib3JkZXItY29sb3I6IHZhcigtLWRhcmspO1xuICBiYWNrZ3JvdW5kLWNvbG9yOiB2YXIoLS1saWdodCk7XG4gIGJvcmRlcjogMXB4IHNvbGlkO1xuICBib3JkZXItcmFkaXVzOiA1cHg7XG4gIG9wYWNpdHk6IDA7XG4gIHRyYW5zaXRpb246IDAuMnM7XG5cbiAgJiA+IHN2ZyB7XG4gICAgZmlsbDogdmFyKC0tbGlnaHQpO1xuICAgIGZpbHRlcjogY29udHJhc3QoMC4zKTtcbiAgfVxuXG4gICY6aG92ZXIge1xuICAgIGN1cnNvcjogcG9pbnRlcjtcbiAgICBib3JkZXItY29sb3I6IHZhcigtLXNlY29uZGFyeSk7XG4gIH1cblxuICAmOmZvY3VzIHtcbiAgICBvdXRsaW5lOiAwO1xuICB9XG59XG5cbnByZSB7XG4gICY6aG92ZXIgPiAuZXhwYW5kLWJ1dHRvbiB7XG4gICAgb3BhY2l0eTogMTtcbiAgICB0cmFuc2l0aW9uOiAwLjJzO1xuICB9XG59XG5cbiNtZXJtYWlkLWNvbnRhaW5lciB7XG4gIHBvc2l0aW9uOiBmaXhlZDtcbiAgY29udGFpbjogbGF5b3V0O1xuICB6LWluZGV4OiA5OTk7XG4gIGxlZnQ6IDA7XG4gIHRvcDogMDtcbiAgd2lkdGg6IDEwMHZ3O1xuICBoZWlnaHQ6IDEwMHZoO1xuICBvdmVyZmxvdzogaGlkZGVuO1xuICBkaXNwbGF5OiBub25lO1xuICBiYWNrZHJvcC1maWx0ZXI6IGJsdXIoNHB4KTtcbiAgYmFja2dyb3VuZDogcmdiYSgwLCAwLCAwLCAwLjUpO1xuXG4gICYuYWN0aXZlIHtcbiAgICBkaXNwbGF5OiBpbmxpbmUtYmxvY2s7XG4gIH1cblxuICAmID4gI21lcm1haWQtc3BhY2Uge1xuICAgIGJvcmRlcjogMXB4IHNvbGlkIHZhcigtLWxpZ2h0Z3JheSk7XG4gICAgYmFja2dyb3VuZC1jb2xvcjogdmFyKC0tbGlnaHQpO1xuICAgIGJvcmRlci1yYWRpdXM6IDVweDtcbiAgICBwb3NpdGlvbjogZml4ZWQ7XG4gICAgdG9wOiA1MCU7XG4gICAgbGVmdDogNTAlO1xuICAgIHRyYW5zZm9ybTogdHJhbnNsYXRlKC01MCUsIC01MCUpO1xuICAgIGhlaWdodDogODB2aDtcbiAgICB3aWR0aDogODB2dztcbiAgICBvdmVyZmxvdzogaGlkZGVuO1xuXG4gICAgJiA+IC5tZXJtYWlkLWNvbnRlbnQge1xuICAgICAgcGFkZGluZzogMnJlbTtcbiAgICAgIHBvc2l0aW9uOiByZWxhdGl2ZTtcbiAgICAgIHRyYW5zZm9ybS1vcmlnaW46IDAgMDtcbiAgICAgIHRyYW5zaXRpb246IHRyYW5zZm9ybSAwLjFzIGVhc2U7XG4gICAgICBvdmVyZmxvdzogdmlzaWJsZTtcbiAgICAgIG1pbi1oZWlnaHQ6IDIwMHB4O1xuICAgICAgbWluLXdpZHRoOiAyMDBweDtcblxuICAgICAgcHJlIHtcbiAgICAgICAgbWFyZ2luOiAwO1xuICAgICAgICBib3JkZXI6IG5vbmU7XG4gICAgICB9XG5cbiAgICAgIHN2ZyB7XG4gICAgICAgIG1heC13aWR0aDogbm9uZTtcbiAgICAgICAgaGVpZ2h0OiBhdXRvO1xuICAgICAgfVxuICAgIH1cblxuICAgICYgPiAubWVybWFpZC1jb250cm9scyB7XG4gICAgICBwb3NpdGlvbjogYWJzb2x1dGU7XG4gICAgICBib3R0b206IDIwcHg7XG4gICAgICByaWdodDogMjBweDtcbiAgICAgIGRpc3BsYXk6IGZsZXg7XG4gICAgICBnYXA6IDhweDtcbiAgICAgIHBhZGRpbmc6IDhweDtcbiAgICAgIGJhY2tncm91bmQ6IHZhcigtLWxpZ2h0KTtcbiAgICAgIGJvcmRlcjogMXB4IHNvbGlkIHZhcigtLWxpZ2h0Z3JheSk7XG4gICAgICBib3JkZXItcmFkaXVzOiA2cHg7XG4gICAgICBib3gtc2hhZG93OiAwIDJweCA0cHggcmdiYSgwLCAwLCAwLCAwLjEpO1xuICAgICAgei1pbmRleDogMjtcblxuICAgICAgLm1lcm1haWQtY29udHJvbC1idXR0b24ge1xuICAgICAgICBkaXNwbGF5OiBmbGV4O1xuICAgICAgICBhbGlnbi1pdGVtczogY2VudGVyO1xuICAgICAgICBqdXN0aWZ5LWNvbnRlbnQ6IGNlbnRlcjtcbiAgICAgICAgd2lkdGg6IDMycHg7XG4gICAgICAgIGhlaWdodDogMzJweDtcbiAgICAgICAgcGFkZGluZzogMDtcbiAgICAgICAgYm9yZGVyOiAxcHggc29saWQgdmFyKC0tbGlnaHRncmF5KTtcbiAgICAgICAgYmFja2dyb3VuZDogdmFyKC0tbGlnaHQpO1xuICAgICAgICBjb2xvcjogdmFyKC0tZGFyayk7XG4gICAgICAgIGJvcmRlci1yYWRpdXM6IDRweDtcbiAgICAgICAgY3Vyc29yOiBwb2ludGVyO1xuICAgICAgICBmb250LXNpemU6IDE2cHg7XG4gICAgICAgIGZvbnQtZmFtaWx5OiB2YXIoLS1ib2R5Rm9udCk7XG4gICAgICAgIHRyYW5zaXRpb246IGFsbCAwLjJzIGVhc2U7XG5cbiAgICAgICAgJjpob3ZlciB7XG4gICAgICAgICAgYmFja2dyb3VuZDogdmFyKC0tbGlnaHRncmF5KTtcbiAgICAgICAgfVxuXG4gICAgICAgICY6YWN0aXZlIHtcbiAgICAgICAgICB0cmFuc2Zvcm06IHRyYW5zbGF0ZVkoMXB4KTtcbiAgICAgICAgfVxuXG4gICAgICAgIC8vIFN0eWxlIHRoZSByZXNldCBidXR0b24gZGlmZmVyZW50bHlcbiAgICAgICAgJjpudGgtY2hpbGQoMikge1xuICAgICAgICAgIHdpZHRoOiBhdXRvO1xuICAgICAgICAgIHBhZGRpbmc6IDAgMTJweDtcbiAgICAgICAgICBmb250LXNpemU6IDE0cHg7XG4gICAgICAgIH1cbiAgICAgIH1cbiAgICB9XG4gIH1cbn1cbiJdfQ== */</style><link href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" rel="stylesheet" type="text/css" spa-preserve/><script src="../prescript.js" type="application/javascript" spa-preserve></script><script type="application/javascript" spa-preserve>const fetchData = fetch("../static/contentIndex.json").then(data => data.json())</script></head><body data-slug="30_Knowledge/강화학습"><div id="quartz-root" class="page"><div id="quartz-body"><div class="left sidebar"><h2 class="page-title"><a href="..">LabNote</a></h2><div class="spacer mobile-only"></div><div class="flex-component" style="flex-direction: row; flex-wrap: nowrap; gap: 1rem;"><div style="flex-grow: 1; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><div class="search"><button class="search-button"><svg role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19.9 19.7"><title>Search</title><g class="search-path" fill="none"><path stroke-linecap="square" d="M18.5 18.3l-5.4-5.4"></path><circle cx="8" cy="8" r="7"></circle></g></svg><p>검색</p></button><div class="search-container"><div class="search-space"><input autocomplete="off" class="search-bar" name="search" type="text" aria-label="검색어를 입력하세요" placeholder="검색어를 입력하세요"/><div class="search-layout" data-preview="true"></div></div></div></div></div><div style="flex-grow: 0; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><button class="darkmode"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="dayIcon" x="0px" y="0px" viewBox="0 0 35 35" style="enable-background:new 0 0 35 35" xml:space="preserve" aria-label="다크 모드"><title>다크 모드</title><path d="M6,17.5C6,16.672,5.328,16,4.5,16h-3C0.672,16,0,16.672,0,17.5    S0.672,19,1.5,19h3C5.328,19,6,18.328,6,17.5z M7.5,26c-0.414,0-0.789,0.168-1.061,0.439l-2,2C4.168,28.711,4,29.086,4,29.5    C4,30.328,4.671,31,5.5,31c0.414,0,0.789-0.168,1.06-0.44l2-2C8.832,28.289,9,27.914,9,27.5C9,26.672,8.329,26,7.5,26z M17.5,6    C18.329,6,19,5.328,19,4.5v-3C19,0.672,18.329,0,17.5,0S16,0.672,16,1.5v3C16,5.328,16.671,6,17.5,6z M27.5,9    c0.414,0,0.789-0.168,1.06-0.439l2-2C30.832,6.289,31,5.914,31,5.5C31,4.672,30.329,4,29.5,4c-0.414,0-0.789,0.168-1.061,0.44    l-2,2C26.168,6.711,26,7.086,26,7.5C26,8.328,26.671,9,27.5,9z M6.439,8.561C6.711,8.832,7.086,9,7.5,9C8.328,9,9,8.328,9,7.5    c0-0.414-0.168-0.789-0.439-1.061l-2-2C6.289,4.168,5.914,4,5.5,4C4.672,4,4,4.672,4,5.5c0,0.414,0.168,0.789,0.439,1.06    L6.439,8.561z M33.5,16h-3c-0.828,0-1.5,0.672-1.5,1.5s0.672,1.5,1.5,1.5h3c0.828,0,1.5-0.672,1.5-1.5S34.328,16,33.5,16z     M28.561,26.439C28.289,26.168,27.914,26,27.5,26c-0.828,0-1.5,0.672-1.5,1.5c0,0.414,0.168,0.789,0.439,1.06l2,2    C28.711,30.832,29.086,31,29.5,31c0.828,0,1.5-0.672,1.5-1.5c0-0.414-0.168-0.789-0.439-1.061L28.561,26.439z M17.5,29    c-0.829,0-1.5,0.672-1.5,1.5v3c0,0.828,0.671,1.5,1.5,1.5s1.5-0.672,1.5-1.5v-3C19,29.672,18.329,29,17.5,29z M17.5,7    C11.71,7,7,11.71,7,17.5S11.71,28,17.5,28S28,23.29,28,17.5S23.29,7,17.5,7z M17.5,25c-4.136,0-7.5-3.364-7.5-7.5    c0-4.136,3.364-7.5,7.5-7.5c4.136,0,7.5,3.364,7.5,7.5C25,21.636,21.636,25,17.5,25z"></path></svg><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="nightIcon" x="0px" y="0px" viewBox="0 0 100 100" style="enable-background:new 0 0 100 100" xml:space="preserve" aria-label="라이트 모드"><title>라이트 모드</title><path d="M96.76,66.458c-0.853-0.852-2.15-1.064-3.23-0.534c-6.063,2.991-12.858,4.571-19.655,4.571  C62.022,70.495,50.88,65.88,42.5,57.5C29.043,44.043,25.658,23.536,34.076,6.47c0.532-1.08,0.318-2.379-0.534-3.23  c-0.851-0.852-2.15-1.064-3.23-0.534c-4.918,2.427-9.375,5.619-13.246,9.491c-9.447,9.447-14.65,22.008-14.65,35.369  c0,13.36,5.203,25.921,14.65,35.368s22.008,14.65,35.368,14.65c13.361,0,25.921-5.203,35.369-14.65  c3.872-3.871,7.064-8.328,9.491-13.246C97.826,68.608,97.611,67.309,96.76,66.458z"></path></svg></button></div><div style="flex-grow: 0; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><button class="readermode"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="readerIcon" fill="currentColor" stroke="currentColor" stroke-width="0.2" stroke-linecap="round" stroke-linejoin="round" width="64px" height="64px" viewBox="0 0 24 24" aria-label="리더 모드"><title>리더 모드</title><g transform="translate(-1.8, -1.8) scale(1.15, 1.2)"><path d="M8.9891247,2.5 C10.1384702,2.5 11.2209868,2.96705384 12.0049645,3.76669482 C12.7883914,2.96705384 13.8709081,2.5 15.0202536,2.5 L18.7549359,2.5 C19.1691495,2.5 19.5049359,2.83578644 19.5049359,3.25 L19.5046891,4.004 L21.2546891,4.00457396 C21.6343849,4.00457396 21.9481801,4.28672784 21.9978425,4.6528034 L22.0046891,4.75457396 L22.0046891,20.25 C22.0046891,20.6296958 21.7225353,20.943491 21.3564597,20.9931534 L21.2546891,21 L2.75468914,21 C2.37499337,21 2.06119817,20.7178461 2.01153575,20.3517706 L2.00468914,20.25 L2.00468914,4.75457396 C2.00468914,4.37487819 2.28684302,4.061083 2.65291858,4.01142057 L2.75468914,4.00457396 L4.50368914,4.004 L4.50444233,3.25 C4.50444233,2.87030423 4.78659621,2.55650904 5.15267177,2.50684662 L5.25444233,2.5 L8.9891247,2.5 Z M4.50368914,5.504 L3.50468914,5.504 L3.50468914,19.5 L10.9478955,19.4998273 C10.4513189,18.9207296 9.73864328,18.5588115 8.96709342,18.5065584 L8.77307039,18.5 L5.25444233,18.5 C4.87474657,18.5 4.56095137,18.2178461 4.51128895,17.8517706 L4.50444233,17.75 L4.50368914,5.504 Z M19.5049359,17.75 C19.5049359,18.1642136 19.1691495,18.5 18.7549359,18.5 L15.2363079,18.5 C14.3910149,18.5 13.5994408,18.8724714 13.0614828,19.4998273 L20.5046891,19.5 L20.5046891,5.504 L19.5046891,5.504 L19.5049359,17.75 Z M18.0059359,3.999 L15.0202536,4 L14.8259077,4.00692283 C13.9889509,4.06666544 13.2254227,4.50975805 12.7549359,5.212 L12.7549359,17.777 L12.7782651,17.7601316 C13.4923805,17.2719483 14.3447024,17 15.2363079,17 L18.0059359,16.999 L18.0056891,4.798 L18.0033792,4.75457396 L18.0056891,4.71 L18.0059359,3.999 Z M8.9891247,4 L6.00368914,3.999 L6.00599909,4.75457396 L6.00599909,4.75457396 L6.00368914,4.783 L6.00368914,16.999 L8.77307039,17 C9.57551536,17 10.3461406,17.2202781 11.0128313,17.6202194 L11.2536891,17.776 L11.2536891,5.211 C10.8200889,4.56369974 10.1361548,4.13636104 9.37521067,4.02745763 L9.18347055,4.00692283 L8.9891247,4 Z"></path></g></svg></button></div></div><div class="explorer" data-behavior="link" data-collapsed="collapsed" data-savestate="true" data-data-fns="{&quot;order&quot;:[&quot;filter&quot;,&quot;map&quot;,&quot;sort&quot;],&quot;sortFn&quot;:&quot;(a,b)=>!a.isFolder&amp;&amp;!b.isFolder||a.isFolder&amp;&amp;b.isFolder?a.displayName.localeCompare(b.displayName,void 0,{numeric:!0,sensitivity:\&quot;base\&quot;}):!a.isFolder&amp;&amp;b.isFolder?1:-1&quot;,&quot;filterFn&quot;:&quot;node=>node.slugSegment!==\&quot;tags\&quot;&quot;,&quot;mapFn&quot;:&quot;node=>node&quot;}"><button type="button" class="explorer-toggle mobile-explorer hide-until-loaded" data-mobile="true" aria-controls="explorer-140"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide-menu"><line x1="4" x2="20" y1="12" y2="12"></line><line x1="4" x2="20" y1="6" y2="6"></line><line x1="4" x2="20" y1="18" y2="18"></line></svg></button><button type="button" class="title-button explorer-toggle desktop-explorer" data-mobile="false" aria-expanded="true"><h2>탐색기</h2><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="5 8 14 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fold"><polyline points="6 9 12 15 18 9"></polyline></svg></button><div id="explorer-140" class="explorer-content" aria-expanded="false" role="group"><ul class="explorer-ul overflow" id="list-0"><li class="overflow-end"></li></ul></div><template id="template-file"><li><a href="#"></a></li></template><template id="template-folder"><li><div class="folder-container"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="5 8 14 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="folder-icon"><polyline points="6 9 12 15 18 9"></polyline></svg><div><button class="folder-button"><span class="folder-title"></span></button></div></div><div class="folder-outer"><ul class="content"></ul></div></li></template></div></div><div class="center"><div class="page-header"><div class="popover-hint"><nav class="breadcrumb-container" aria-label="breadcrumbs"><div class="breadcrumb-element"><a href="../">Home</a><p> ❯ </p></div><div class="breadcrumb-element"><a href="../30_Knowledge/">30_Knowledge</a><p> ❯ </p></div><div class="breadcrumb-element"><a href>강화학습</a></div></nav><h1 class="article-title">강화학습</h1><p show-comma="true" class="content-meta"><time datetime="2026-09-08T15:00:00.000Z">2026년 9월 09일</time><span>24 min read</span></p><ul class="tags"><li><a href="../tags/reinforcement-learning" class="internal tag-link">reinforcement-learning</a></li><li><a href="../tags/control-theory" class="internal tag-link">control-theory</a></li></ul></div></div><article class="popover-hint"><h1 id="강화학습-공부계획">강화학습 공부계획<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#강화학습-공부계획" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h1>
+<blockquote class="callout abstract" data-callout="abstract">
+<div class="callout-title">
+                  <div class="callout-icon"></div>
+                  <div class="callout-title-inner"><p>한 줄로 </p></div>
+                  
+                </div>
+<div class="callout-content">
+<p><strong>유닛 14개 + 체크포인트 3개.</strong> 이론을 순서대로 밀되, 중간에 세 번 끊고 USV heading을 실제로 학습시킨다.
+이론이 끝나기를 기다리면 <code>compare</code> 칸은 5개월 동안 비어 있다.</p>
+</div>
+</blockquote>
+<p><strong>어디에 앉는가</strong> — <a href="../Research-Direction" class="internal alias" data-slug="Research-Direction">Research Direction</a> 의 <code>learning</code> 칸(🟨 얇음)을 채우는 진입 계획. 도착점은 <code>compare</code> · <code>hybrid</code> 두 칸이다. → <a href="../Research-Direction" class="internal alias" data-slug="Research-Direction">Research Direction</a></p>
+<h2 id="왜-필요한가">왜 필요한가<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#왜-필요한가" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p><code>learning</code> 칸이 얇은 건 자료가 없어서가 아니라 <strong>RL 자료가 전부 AI 계보로 쓰여 있어서</strong>다.
+제어 언어로 쓰인 자료는 대학원 수준이고, 학부 수준 자료는 제어와 연결을 안 해준다.
+그 사이를 어떻게 건널지, 그리고 도중에 무엇을 손에 남길지를 먼저 정해야 했다.</p>
+<hr/>
+<h2 id="계획의-뼈대--유닛-14개-체크포인트-3개">계획의 뼈대 — 유닛 14개, 체크포인트 3개<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#계획의-뼈대--유닛-14개-체크포인트-3개" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p><code>L</code> = Siegen Lecture · <code>S&amp;B</code> = Sutton &amp; Barto 장 · <code>ex</code> = Siegen 연습문제</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th>유닛</th><th>주제</th><th>L</th><th>S&amp;B</th><th>ex</th><th>산출 노트</th><th>제어에서 이건 뭐였나</th></tr></thead><tbody><tr><td>0</td><td>Introduction</td><td>01</td><td>1</td><td>01</td><td>—</td><td>agent–environment 루프 ↔ 폐루프 제어</td></tr><tr><td>1</td><td><strong>MDP</strong></td><td>02</td><td>3</td><td>02</td><td><a href="../30_Knowledge/MDP" class="internal" data-slug="30_Knowledge/MDP">MDP</a> · <a href="../Bellman-Equation" class="internal alias" data-slug="Bellman-Equation">Bellman Equation</a></td><td>상태공간 모델. Markov = 상태를 제대로 잡았는가</td></tr><tr><td>2</td><td><strong>Dynamic Programming</strong></td><td>03</td><td>4</td><td>03</td><td><a href="../Dynamic-Programming" class="internal alias" data-slug="Dynamic-Programming">Dynamic Programming</a></td><td><strong>HJB의 이산판.</strong> 후진 재귀 = value iteration</td></tr><tr><td>3</td><td>Monte Carlo</td><td>04</td><td>5</td><td>04</td><td><a href="../Monte-Carlo-Learning" class="internal alias" data-slug="Monte-Carlo-Learning">Monte Carlo Learning</a></td><td>모델 없이 성능지표를 추정한다</td></tr><tr><td>4</td><td><strong>TD learning</strong></td><td>05</td><td>6</td><td>05</td><td><a href="../TD-Learning" class="internal alias" data-slug="TD-Learning">TD Learning</a> · <a href="../00_Inbox/Q-learning" class="internal" data-slug="00_Inbox/Q-learning">Q-learning</a></td><td>관측기·적응제어의 온라인 갱신과 같은 형태</td></tr><tr><td>5</td><td>n-step bootstrapping</td><td>06</td><td>7</td><td>06</td><td><a href="../n-step-Bootstrapping" class="internal alias" data-slug="n-step-Bootstrapping">n-step Bootstrapping</a></td><td>예측 지평의 길이 ↔ MPC horizon</td></tr><tr><td>★</td><td><strong>CP1 — tabular Q로 USV heading</strong></td><td></td><td></td><td></td><td></td><td><code>compare</code> 칸 첫 삽</td></tr><tr><td>6</td><td>Planning &amp; Dyna</td><td>07</td><td>8</td><td>07</td><td><a href="../Dyna" class="internal" data-slug="Dyna">Dyna</a></td><td>model-based. <a href="../System-Identification" class="internal alias" data-slug="System-Identification">System Identification</a> 과 같은 자리</td></tr><tr><td>7</td><td>지도학습·함수근사</td><td>08</td><td>—</td><td>08</td><td><a href="../Function-Approximation" class="internal alias" data-slug="Function-Approximation">Function Approximation</a></td><td>회귀와 과적합. ex08이 실제 전기구동 시스템</td></tr><tr><td>8</td><td>on-policy 예측 근사</td><td>09</td><td>9</td><td>09</td><td><a href="../Semi-gradient" class="internal" data-slug="Semi-gradient">Semi-gradient</a></td><td></td></tr><tr><td>9</td><td><strong>value-based 제어 근사</strong></td><td>10</td><td>10·11</td><td>10</td><td><a href="../Deadly-Triad" class="internal alias" data-slug="Deadly-Triad">Deadly Triad</a> · <a href="../DQN" class="internal" data-slug="DQN">DQN</a></td><td>RL이 왜 터지는가. 안정성 감각이 먹히는 자리</td></tr><tr><td>10</td><td><strong>stochastic policy gradient</strong></td><td>11</td><td>13</td><td>11</td><td><a href="../Policy-Gradient" class="internal alias" data-slug="Policy-Gradient">Policy Gradient</a> · <a href="../Actor-Critic" class="internal" data-slug="Actor-Critic">Actor-Critic</a></td><td>목적함수를 직접 미분한다</td></tr><tr><td>11</td><td>deterministic policy gradient</td><td>12</td><td>—</td><td>12</td><td><a href="../DDPG" class="internal" data-slug="DDPG">DDPG</a></td><td>연속 입력 = 타각·추력</td></tr><tr><td>12</td><td><strong>TRPO · PPO</strong></td><td>13</td><td>—</td><td>12</td><td><a href="../PPO" class="internal" data-slug="PPO">PPO</a> · <a href="../SAC" class="internal" data-slug="SAC">SAC</a></td><td>연속 제어의 실질 표준</td></tr><tr><td>★</td><td><strong>CP2 — PPO로 같은 USV heading</strong></td><td></td><td></td><td></td><td></td><td><code>compare</code> 칸을 실제로 채움</td></tr><tr><td>13</td><td>Outlook</td><td>14</td><td>17</td><td>—</td><td><a href="../30_Knowledge/Sim-to-Real" class="internal" data-slug="30_Knowledge/Sim-to-Real">Sim-to-Real</a> · <a href="../00_Inbox/Domain-Randomization" class="internal alias" data-slug="00_Inbox/Domain-Randomization">Domain Randomization</a></td><td></td></tr><tr><td>★</td><td><strong>CP3 — residual RL + safety filter</strong></td><td></td><td></td><td></td><td><a href="../Residual-RL" class="internal alias" data-slug="Residual-RL">Residual RL</a> · <a href="../Safe-RL" class="internal alias" data-slug="Safe-RL">Safe RL</a></td><td><code>hybrid</code> 칸 첫 삽</td></tr></tbody></table></div>
+<p><strong>국소 투입</strong></p>
+<pre><code>유닛 2 직후    Bertsekas 1장 1~2시간 — 같은 DP를 제어 표기로 다시 본다
+CP3 직전       Bertsekas rollout·MPC + Li 강의 Lecture 9~10 (ADP↔MPC, DSAC)
+</code></pre>
+<blockquote class="callout tip" data-callout="tip">
+<div class="callout-title">
+                  <div class="callout-icon"></div>
+                  <div class="callout-title-inner"><p>굵은 유닛(1·2·4·9·10·12)이 고비다. 여기는 2주를 잡는다. </p></div>
+                  
+                </div>
+</blockquote>
+<h2 id="한-유닛은-네-단계로-돈다">한 유닛은 네 단계로 돈다<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#한-유닛은-네-단계로-돈다" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<pre><code>① 강의    Claude가 유도까지 설명 + 제어 대응을 붙인다
+② 읽기    Siegen Lecture N 슬라이드 → S&amp;B 해당 장
+③ 확인    확인문제 + S&amp;B 연습문제 + Siegen ex 코드 → 채점받는다
+④ 기록    개념 노트 1개 작성
+</code></pre>
+<p>①이 먼저인 이유 — 슬라이드는 유도를 보여주지만 <strong>증명은 안 한다.</strong> contraction이나 최적정책의 존재 같은 건 결과만 나온다. 먼저 지도를 받고 읽으면 그 구멍이 어디인지 알고 읽게 된다.</p>
+<p>③에서 세 종류를 다 푸는 이유 — S&amp;B 연습문제는 <strong>손으로 푸는 것</strong>(개념), Siegen ex는 <strong>돌려보는 것</strong>(구현). 둘은 서로 대체되지 않는다.</p>
+<blockquote class="callout warning" data-callout="warning">
+<div class="callout-title">
+                  <div class="callout-icon"></div>
+                  <div class="callout-title-inner"><p>계획 변경 (2026-09-11) — ①을 뺐다 </p></div>
+                  
+                </div>
+<div class="callout-content">
+<p>실제로 돌려보니 <strong>Claude가 먼저 강의하고 슬라이드로 보내는 구조</strong>가 “책 펴놓고 순서대로 가고 싶다”와 충돌했다.
+바뀐 루프는 이렇다.</p>
+<pre><code>①  혼자 읽기      단단한 강화학습을 순서대로. 앞질러 설명하지 않는다
+②  막히면 질문     절·쪽 번호를 들고 온다
+③  랩노트         장이 끝나면 Claude가 쓴다
+</code></pre>
+<p>③(노트가 게이트)은 그대로다. 없어진 건 선행 강의뿐이고, <strong><code>헷갈렸던 점</code> 칸은 ②의 질문이 그대로 채운다.</strong></p>
+</div>
+</blockquote>
+<h2 id="유닛마다-노트-하나가-게이트다">유닛마다 노트 하나가 게이트다<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#유닛마다-노트-하나가-게이트다" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>산출물을 강제하지 않으면 “읽었다”로 끝나고 <code>learning</code> 칸은 안 찬다.</p>
+<p><a href="../Research-Direction" class="internal alias" data-slug="Research-Direction">Research Direction</a> 의 <code>learning</code> 칸에 지금 걸려 있는 붉은 링크가 이렇다.</p>
+<pre><code>아직 없는 것   [[Sim-to-Real]] [[Domain Randomization]] [[Safe RL]]
+              [[Catastrophic Forgetting]] [[PPO]] [[SAC]]
+</code></pre>
+<p><strong>이 계획은 정확히 그 링크들을 채우도록 짜여 있다.</strong> PPO·SAC는 유닛 12, Sim-to-Real·Domain Randomization은 유닛 13, Safe RL은 CP3에서 나온다. 위 표의 <code>산출 노트</code> 열이 곧 할 일 목록이다.</p>
+<blockquote class="callout tip" data-callout="tip">
+<div class="callout-title">
+                  <div class="callout-icon"></div>
+                  <div class="callout-title-inner"><p>노트가 안 나왔으면 그 유닛은 안 끝난 것이다. 다음 유닛으로 넘어가지 않는다. </p></div>
+                  
+                </div>
+</blockquote>
+<h2 id="이론만-5개월-하면-compare-칸은-그대로-비어-있다">이론만 5개월 하면 compare 칸은 그대로 비어 있다<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#이론만-5개월-하면-compare-칸은-그대로-비어-있다" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>체크포인트 세 개가 이걸 막는 장치다.</p>
+<p><strong>CP1 (유닛 5 이후) — tabular Q-learning으로 USV heading</strong>
+상태를 격자로 이산화한 조악한 버전. <code>[ψ_e, r]</code>를 몇 칸으로 나누고 타각을 3<del>5단계로 자른다.
+<strong>성능이 PID보다 나쁜 게 정상이다.</strong> 이 실패가 유닛 7</del>12를 읽는 이유가 된다.</p>
+<p><strong>CP2 (유닛 12 이후) — 같은 문제를 PPO로</strong>
+같은 플랫폼, 같은 task, 같은 지표. 여기서 <code>compare</code> 칸이 실제로 채워진다.
+숫자로 끝내야 한다 — tracking error, 정착 시간, 제어 노력, 외란 조건에서의 성공률.</p>
+<p><strong>CP3 (유닛 13 이후) — 경계 설계</strong>
+<code>u = u_PID + Δu_RL</code> 또는 RL이 reference를 내고 PID/MPC가 액추에이터를 잡는 구조.
+<a href="../Research-Direction" class="internal alias" data-slug="Research-Direction">Research Direction</a> 이 “이 칸이 채워지는 순간이 내 전문성이 생기는 지점”이라고 쓴 자리다.</p>
+<blockquote class="callout tip" data-callout="tip">
+<div class="callout-title">
+                  <div class="callout-icon"></div>
+                  <div class="callout-title-inner"><p>고전제어를 다 끝내고 RL을 시작하지 않기로 한 것과 같은 이유가 이론↔구현 사이에도 있다. </p></div>
+                  
+                </div>
+</blockquote>
+<h2 id="페이스는-주-1유닛-고비는-2주">페이스는 주 1유닛, 고비는 2주<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#페이스는-주-1유닛-고비는-2주" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<pre><code>유닛 0~5 + CP1     약 8주
+유닛 6~12 + CP2    약 10주
+유닛 13 + CP3      약 4주
+                   ─────
+                   약 22주 ≈ 5개월
+</code></pre>
+<p>2026-09 중순에 시작하면 2027-02 언저리다. <strong>학기 중이라 밀린다는 전제로 짰다.</strong>
+유닛 단위로 끊어 놓았으므로 몇 주 비어도 재개 지점이 분명하다. 밀렸을 때 줄일 것은 유닛이 아니라 체크포인트의 완성도다 — CP1은 “돌아가기만 하면” 통과다.</p>
+<h2 id="교재는-축을-둘로-나눈다">교재는 축을 둘로 나눈다<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#교재는-축을-둘로-나눈다" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>한 권으로 끝나는 책은 없다는 게 결론이었다.</p>
+<pre><code>진행 축   Siegen 14강        순서 · 제어 표기 · 영상 · 코드 실습
+깊이 축   Sutton &amp; Barto     유도의 끝 · 반례 · 미묘한 지점 · 연습문제
+번역      대화 중 매 유닛      HJB↔Bellman, 최적제어↔DP, MPC↔ADP
+</code></pre>
+<blockquote class="callout warning" data-callout="warning">
+<div class="callout-title">
+                  <div class="callout-icon"></div>
+                  <div class="callout-title-inner"><p>계획 변경 (2026-09-11) — 축을 하나로 줄였다. 주교재는 책이다 </p></div>
+                  
+                </div>
+<div class="callout-content">
+<p><strong>『단단한 강화학습』이 바로 이 S&amp;B의 완역본</strong>(제이펍, 김성우 옮김, 2020)이다. 따로 살 책이 아니었다.
+그리고 이 노트가 Li 슬라이드를 기각하며 쓴 문장 — <em>“슬라이드는 강의를 전제로 만든 물건이다”</em> — 이 <strong>Siegen에도 그대로 적용된다.</strong>
+혼자 펼쳐놓고 순서대로 따라갈 수 있는 건 슬라이드가 아니라 책이다.</p>
+<pre><code>주행 축   Sutton &amp; Barto (단단한 강화학습)   1장부터 순서대로
+보조      Siegen 14강                       제어 표기 대응 · 연습문제 코드가 필요할 때만
+도서관    단단한 심층 강화학습                DQN·PPO·SAC + 코드. tabular 1~8장 선행 가정이라 지금은 목차만
+</code></pre>
+<p>유닛 표의 <code>L</code>(Siegen) 열은 <strong>버리는 게 아니라 순서 확인용으로 남긴다.</strong> 진도는 S&amp;B 장 번호로 센다.</p>
+</div>
+</blockquote>
+<p><strong>자료 위치</strong> — <code>C:\Archive\RL\</code></p>
+<pre><code>RLbook2020.pdf          Sutton &amp; Barto 2판                    73 MB
+siegen-lecture.pdf      Siegen 14강 슬라이드 통합본             37 MB
+siegen-rl-course\       저장소 (CC-BY 4.0)
+  ├─ lecture\tex\       LaTeX 소스 14강 · 9,469줄
+  ├─ exercises\templates\   연습문제 12개
+  └─ exercises\solutions\   해답 코드 12개
+</code></pre>
+<blockquote class="callout tip" data-callout="tip">
+<div class="callout-title">
+                  <div class="callout-icon"></div>
+                  <div class="callout-title-inner"><p>교재를 고르는 문제가 아니라 <strong>역할을 나누는 문제</strong>였다.</p></div>
+                  
+                </div>
+</blockquote>
+<h2 id="sb에-빠진-건-내용이-아니라-이름표다">S&amp;B에 빠진 건 내용이 아니라 이름표다<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#sb에-빠진-건-내용이-아니라-이름표다" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>이번 결정의 핵심 논거다.</p>
+<p>S&amp;B 4장 Dynamic Programming은 <strong>그 자체로 이산시간 최적제어</strong>다. value iteration은 후진 재귀고, Bellman 방정식은 HJB의 이산판이다. 수식이 다른 게 아니라 <strong>그렇게 부르지 않을 뿐</strong>이다.</p>
+<ul>
+<li>빠진 것 — “이건 네가 아는 그것이다”라는 한두 문장 → <strong>가장 값싼 결손. 대화로 메운다.</strong></li>
+<li>가진 것 — 유도를 끝까지 미는 인내심, 반례, 초보자가 반드시 걸리는 미묘한 지점 → <strong>대체가 비싸다</strong></li>
+</ul>
+<p>미묘한 지점의 예: 왜 off-policy에 importance sampling이 필요한가 · bootstrapping이 왜 bias를 만드는가 · deadly triad는 왜 셋이 다 모여야 터지는가.</p>
+<blockquote class="callout tip" data-callout="tip">
+<div class="callout-title">
+                  <div class="callout-icon"></div>
+                  <div class="callout-title-inner"><p>비싼 걸 가져오고 싼 걸 메운다. 반대로 하면 손해다. </p></div>
+                  
+                </div>
+</blockquote>
+<h2 id="siegen-강의는-sb를-제어-표기로-다시-쓴-것이다">Siegen 강의는 S&amp;B를 제어 표기로 다시 쓴 것이다<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#siegen-강의는-sb를-제어-표기로-다시-쓴-것이다" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>LaTeX 소스를 직접 열어서 확인한 사실이다. 추측이 아니다.</p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="latex" data-theme="github-light github-dark"><code data-language="latex" data-theme="github-light github-dark" style="display:grid;"><span data-line><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">v_π(x_k) = Σ_{u_k∈𝒰} π(u_k|x_k) q_π(x_k, u_k)</span></span></code></pre></figure>
+<p><strong>상태 <code>x_k</code>, 행동 <code>u_k</code>, 시간 <code>k</code>, 상태공간 <code>𝒳</code>, 입력공간 <code>𝒰</code>.</strong> S&amp;B의 <code>s, a, t</code>가 아니라 제어 표기다. 그러면서 value·reward·γ 같은 RL 의미는 그대로 둔다.</p>
+<p>만든 곳이 Paderborn/Siegen 대학교 <strong>전기구동(electrical drives) 연구실</strong> — 제어공학과가 제어 전공자를 대상으로 만든 RL 강의라서 그렇다. README에 Sutton &amp; Barto와 David Silver 강의 기반이라고 credits가 명시돼 있다.</p>
+<p>확인된 밀도:</p>
+<ul>
+<li>Bellman expectation equation을 <strong>3장에 나눠 단계별 유도</strong> — <code>v→q</code> 연결 → <code>q→v</code> 연결 → 대입</li>
+<li>행렬형까지 가서 <code>v = (I − γP)⁻¹r</code> 로 직접 푼다 — 이 선형대수 취급은 S&amp;B보다 제어 쪽이다</li>
+<li>forest tree 예제를 숫자까지 끌고 가며 반복</li>
+<li>연습문제 6·7이 inverted pendulum, 8이 <strong>실제 전기구동 시스템</strong></li>
+<li>14강. DDPG · TRPO · PPO까지 — S&amp;B가 13장에서 끊기는 지점을 이어준다</li>
+</ul>
+<p>한계도 확인했다. <strong>슬라이드는 유도를 보여주지만 증명은 안 한다.</strong> 거기가 S&amp;B를 펴는 자리다.</p>
+<h2 id="표기가-세-갈래라-번역표가-먼저다">표기가 세 갈래라 번역표가 먼저다<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#표기가-세-갈래라-번역표가-먼저다" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>같은 식을 세 가지로 쓴다. 부호가 뒤집히는 자리(최대화↔최소화)가 특히 위험하다.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th>개념</th><th>S&amp;B (AI)</th><th>Siegen (하이브리드)</th><th>Bertsekas (제어/DP)</th></tr></thead><tbody><tr><td>상태</td><td><code>s ∈ S</code></td><td><code>x_k ∈ 𝒳</code></td><td><code>x_k</code></td></tr><tr><td>행동</td><td><code>a ∈ A</code></td><td><code>u_k ∈ 𝒰</code></td><td><code>u_k ∈ U(x_k)</code></td></tr><tr><td>정책</td><td><code>π(a|s)</code></td><td><code>π(u_k|x_k)</code></td><td><code>μ_k(x_k)</code>, 정책열 <code>π = {μ₀,…}</code></td></tr><tr><td>동역학</td><td><code>P(s'|s,a)</code></td><td><code>p_{xx'}^u</code></td><td><code>x_{k+1} = f(x_k,u_k,w_k)</code></td></tr><tr><td>목적</td><td>보상 최대화</td><td>보상 최대화</td><td><strong>비용 최소화</strong></td></tr><tr><td>가치함수</td><td><code>V^π(s)</code>, <code>Q(s,a)</code></td><td><code>v_π(x_k)</code>, <code>q_π(x_k,u_k)</code></td><td><code>J_μ(x)</code> (cost-to-go), Q-factor</td></tr><tr><td>감가</td><td><code>γ</code></td><td><code>γ</code></td><td><code>α</code></td></tr></tbody></table></div>
+<h2 id="bertsekas는-정책공간을-일부러-얇게-다룬다">Bertsekas는 정책공간을 일부러 얇게 다룬다<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#bertsekas는-정책공간을-일부러-얇게-다룬다" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>무료로 지금 접근 가능하지만(MIT, 2판 2025) <strong>주 레이어로 쓰면 안 되는</strong> 이유가 셋이다.</p>
+<p>RL에는 두 갈래가 있다.</p>
+<pre><code>approximation in value space    가치함수를 근사      rollout, fitted VI, approximate PI
+approximation in policy space   정책을 직접 최적화    policy gradient, actor-critic, PPO, SAC
+</code></pre>
+<ol>
+<li><strong>이 책은 value space에 집중하고 policy space는 제한적으로만 다룬다.</strong> 저자 본인이 밝히는 구성이다. 그런데 USV 타각처럼 연속 행동공간의 실무 표준(PPO·SAC)이 전부 policy space다. <strong>도착점이 이 책이 얇게 지나가는 쪽에 있다.</strong></li>
+<li><strong>유도를 이 책에서 안 한다.</strong> 시각화와 직관에 기대고 수학적 해석은 저자의 이전 책(<em>RL and Optimal Control</em> 2019, <em>Abstract DP</em>)으로 넘긴다. <strong>표기는 무겁고 증명은 없는</strong> 조합이라 “유도까지 전부”라는 목표에 최악이다.</li>
+<li>연습문제가 훈련용이 아니고, 코드가 없다.</li>
+</ol>
+<p>그럼에도 버리지 않는 이유 — <strong>rollout·value space 근사가 Bellman 방정식에 대한 Newton법 한 스텝이라는 관점</strong>은 대체재가 없다. <code>hybrid</code> 칸을 이론으로 설명해주는 유일한 자료라 CP3 직전에 꺼낸다.</p>
+<h2 id="li의-책은-유일하게-adpmpc를-다루지만-지금-볼-자료는-아니다">Li의 책은 유일하게 ADP↔MPC를 다루지만 지금 볼 자료는 아니다<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#li의-책은-유일하게-adpmpc를-다루지만-지금-볼-자료는-아니다" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>Shengbo Eben Li, <em>Reinforcement Learning for Sequential Decision and Optimal Control</em> (Springer 2023). 칭화대 자율주행/제어 교수.</p>
+<pre><code>3–4장   MDP, Bellman 최적조건, Monte Carlo     (예제: 로봇 청소)
+5장     stochastic DP, 함수근사                 (예제: 격자도로 자율주행차)
+6–7장   actor-critic, policy gradient
+8장     ADP — 무한구간/유한구간, MPC와의 연결     (예제: 차량 추종제어)   ← hybrid 칸
+9장     상태제약, 안전 보장                      (예제: 긴급제동)
+10장    DQN, DDPG, TD3, TRPO, PPO, SAC, DSAC
+11장    POMDP, robust RL, offline RL, multi-agent, inverse RL
+</code></pre>
+<p><strong>8장과 9장은 다른 어떤 입문서에도 없다.</strong> 예제가 전부 차량 제어고, 챕터별 Python 코드가 공개돼 있으며, 같은 연구실이 GOPS(General Optimal control Problem Solver)라는 산업용 제어 RL 툴킷도 낸다.</p>
+<p>막힌 지점 — <strong>Springer라 무료 경로가 없다.</strong> 오픈액세스가 아니고 저자 초고판도 없다. 저자가 같은 내용의 강의 슬라이드 11강을 ResearchGate에 올려두므로, 후반부에 Lecture 9~10만 꺼내 보는 쪽이 맞다.</p>
+<h2 id="슬라이드를-주교재로-삼지-않는다">슬라이드를 주교재로 삼지 않는다<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#슬라이드를-주교재로-삼지-않는다" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>Li 슬라이드로 배우는 선택지를 실제로 검토했고 접었다.</p>
+<ol>
+<li><strong>대화 상대가 그 자료를 못 읽는다.</strong> ResearchGate가 403으로 막는다. “강의 → 읽기 → 확인” 방식은 양쪽이 같은 자료를 볼 때만 성립한다.</li>
+<li><strong>연습문제가 없다.</strong> 채점할 게 없다.</li>
+<li><strong>슬라이드는 강의를 전제로 만든 물건이다.</strong> 유도의 중간 단계, 왜 이 정의를 이렇게 잡는가, 반례, 잘못된 직관 교정 — 말로 하는 부분은 슬라이드에 안 남는다.</li>
+</ol>
+<p>Siegen이 대안이 된 건 3번을 뚫어서가 아니라 <strong>CC-BY라 양쪽이 같이 볼 수 있고, 해답 코드가 붙어 있고, LaTeX 소스까지 읽을 수 있기</strong> 때문이다. 3번은 ①단계(강의)가 메운다.</p>
+<h2 id="헷갈렸던-점">헷갈렸던 점<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#헷갈렸던-점" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<h3 id="sb가-제어를-안-다루니-제어용-다른-책을-찾아야-한다">”S&amp;B가 제어를 안 다루니 제어용 다른 책을 찾아야 한다”<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#sb가-제어를-안-다루니-제어용-다른-책을-찾아야-한다" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>여기서 출발해 Li·Bertsekas·Meyn을 다 뒤졌는데, 결론은 <strong>빠진 게 내용이 아니라 이름표</strong>였다.
+DP 챕터는 그 자체로 최적제어고, 필요한 건 “이건 HJB의 이산판이다”라는 한 문장이다.
+대체가 비싼 쪽은 유도와 연습문제였다.</p>
+<h3 id="bertsekas는-제어-계보니까-유도가-빽빽할-것이다">”Bertsekas는 제어 계보니까 유도가 빽빽할 것이다”<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#bertsekas는-제어-계보니까-유도가-빽빽할-것이다" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>반대였다. 《A Course in RL》은 <strong>강의노트 성격이라 증명을 저자의 다른 책으로 넘긴다.</strong>
+표기는 무겁고 증명은 없는 조합이라, 유도를 원하는 사람에게 오히려 안 맞는다.</p>
+<h3 id="저자가-올린-강의-슬라이드면-책-대신-써도-된다">”저자가 올린 강의 슬라이드면 책 대신 써도 된다”<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#저자가-올린-강의-슬라이드면-책-대신-써도-된다" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>슬라이드는 강의를 전제로 만든 물건이라 말로 하는 층이 통째로 빠져 있다.
+그리고 실무적으로 — <strong>상대가 못 읽는 자료는 같이 공부할 수 없다.</strong></p>
+<h3 id="검증-없이-추천했던-것">검증 없이 추천했던 것<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#검증-없이-추천했던-것" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>Li 슬라이드를 열어보지 못한 채 한 번 추천했다가 ResearchGate 403을 확인하고 뒤집었다.
+Siegen은 같은 실수를 반복하지 않으려고 <strong>LaTeX 소스를 먼저 읽고</strong> 채택했다.</p>
+<h2 id="내가-실제로-써본-곳">내가 실제로 써본 곳<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#내가-실제로-써본-곳" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>아직 코드로 직접 쓴 적 없음. 선행 경험은 <a href="../20_Projects/DSC-Autonomous-Driving/DSC-Autonomous-Driving" class="internal alias" data-slug="20_Projects/DSC-Autonomous-Driving/DSC-Autonomous-Driving">DSC Autonomous Driving</a> 의 <a href="../30_Knowledge/Reward-Shaping" class="internal alias" data-slug="30_Knowledge/Reward-Shaping">Reward Shaping</a> 뿐이고, 그건 이론 없이 보상만 만진 것이다.</p>
+<p><code>Reward Shaping</code> 노트의 빈칸 다섯 개(ver1은 왜 실패했나 등)는 <strong>유닛 1과 4를 끝내면 답할 언어가 생긴다.</strong> 지금은 “이상하게 굴었다”밖에 못 쓰지만, 그때는 “reward가 sparse해서 credit assignment가 안 됐다” 또는 “discount가 짧아 근시안 정책으로 수렴했다”고 쓸 수 있다.</p>
+<h2 id="실제-진도는-계획표에-없는-2장밴딧에-가-있다">실제 진도는 계획표에 없는 2장(밴딧)에 가 있다<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#실제-진도는-계획표에-없는-2장밴딧에-가-있다" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>계획표는 유닛 0(S&amp;B 1장) 다음이 곧장 유닛 1(3장 MDP)이라 <strong>2장 다중선택문제를 건너뛰게 짜여 있었다.</strong> 실제로는 여기서 멈춰 있고, 그게 손해는 아니었다 — 탐색↔활용, 기댓값↔추정값, 연속 행동에서 ε-greedy가 깨지는 이유가 전부 2장에서 가장 단순한 형태로 한 번씩 나왔다.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th>날짜</th><th>한 것</th><th>산출</th></tr></thead><tbody><tr><td>2026-09-09</td><td>이 계획 수립</td><td>이 노트</td></tr><tr><td>2026-09-11</td><td>교재 축 변경 · 유닛 0(1장) · 2장 표기법~ε-greedy · 연습문제 2.1</td><td>2026-09-11</td></tr><tr><td>2026-09-13</td><td>2.3 10-armed testbed 진입</td><td>2026-09-13</td></tr><tr><td>2026-09-16</td><td>유닛 1(MDP) 재개 시도 — 착수 직전에 중단</td><td>—</td></tr><tr><td>2026-09-21</td><td><strong>2장 완주</strong>(2.3~2.9 + 2.10) · <strong>3.1 · 3.3</strong></td><td>2026-09-21 · <a href="../30_Knowledge/MDP" class="internal" data-slug="30_Knowledge/MDP">MDP</a> · <a href="../30_Knowledge/Extremum-Seeking-Control" class="internal alias" data-slug="30_Knowledge/Extremum-Seeking-Control">Extremum Seeking Control</a> · <a href="../30_Knowledge/Sim-to-Real" class="internal" data-slug="30_Knowledge/Sim-to-Real">Sim-to-Real</a></td></tr></tbody></table></div>
+<p><strong>지금 위치</strong> — 유닛 0 완료, <strong>2장 완료</strong>, <strong>유닛 1(3장) 3.1·3.3까지</strong>. 3.2는 혼자 읽음. 3.4~3.7 미착수.
+산출 노트는 <a href="../30_Knowledge/Multi-armed-Bandit" class="internal alias" data-slug="30_Knowledge/Multi-armed-Bandit">Multi-armed Bandit</a> · <a href="../30_Knowledge/MDP" class="internal" data-slug="30_Knowledge/MDP">MDP</a> 둘. 곁가지로 <a href="../30_Knowledge/Extremum-Seeking-Control" class="internal alias" data-slug="30_Knowledge/Extremum-Seeking-Control">Extremum Seeking Control</a> · <a href="../30_Knowledge/Sim-to-Real" class="internal" data-slug="30_Knowledge/Sim-to-Real">Sim-to-Real</a> 이 생겼다.</p>
+<blockquote class="callout tip" data-callout="tip">
+<div class="callout-title">
+                  <div class="callout-icon"></div>
+                  <div class="callout-title-inner"><p>페이스 계산(주 1유닛, 유닛 0~5+CP1 약 8주)은 2026-09 중순 시작 기준이었다. <strong>2주차 끝에서 유닛 0 + 계획표에 없던 2장 + 유닛 1의 절반</strong> — 대체로 계획대로다.</p></div>
+                  
+                </div>
+</blockquote>
+<blockquote class="callout warning" data-callout="warning">
+<div class="callout-title">
+                  <div class="callout-icon"></div>
+                  <div class="callout-title-inner"><p>계획표에 없던 것이 두 개 늘었다 (2026-09-21) </p></div>
+                  
+                </div>
+<div class="callout-content">
+<p>계획표는 <strong>개념 노트 = 계획된 유닛의 산출물</strong>로만 짜여 있었는데, 실제로는 대화 중 곁가지에서 두 개가 더 나왔다.</p>
+<pre><code>[[Extremum Seeking Control]]   2.8 경사 밴딧의 제어 쪽 대응물.  compare 칸 논거가 된다
+[[Sim-to-Real]]                유닛 13 자리인데 질문이 먼저 와서 지도만 그려둠. 미검증
+</code></pre>
+<p><strong><a href="../30_Knowledge/Sim-to-Real" class="internal" data-slug="30_Knowledge/Sim-to-Real">Sim-to-Real</a> 은 학습 전에 쓴 노트라 검증되지 않았다.</strong> 유닛 13에서 자료로 다시 쓴다.</p>
+</div>
+</blockquote>
+<h2 id="채워야-할-것">채워야 할 것<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#채워야-할-것" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" disabled/> 충남대 도서관에 Li 책 희망자료 신청 (전자책은 연 1~2회 구입이라 몇 주 걸림)</li>
+<li class="task-list-item"><input type="checkbox" disabled/> 학교 IP/프록시로 SpringerLink 기관 구독 여부 확인 — 되면 챕터별 PDF 즉시 확보</li>
+<li class="task-list-item"><input type="checkbox" disabled/> ANSL 랩 예산 구매 가능한지 타진</li>
+<li class="task-list-item"><input type="checkbox" disabled/> <code>siegen-rl-course/requirements.txt</code> 로 Python 환경 구성 (Gymnasium 기반)</li>
+<li class="task-list-item"><input type="checkbox" checked disabled/> <del><strong>유닛 0</strong></del> — S&amp;B 1장 + 강화학습이 푸는 문제 (2026-09-11)</li>
+<li class="task-list-item"><input type="checkbox" checked disabled/> <del><strong>2장 전체</strong></del> — 2.3~2.10. ε-greedy · 증분 구현 · 비정상 · 낙관적 초기값 · UCB · 경사 밴딧 · contextual bandit (2026-09-21) → <a href="../30_Knowledge/Multi-armed-Bandit" class="internal alias" data-slug="30_Knowledge/Multi-armed-Bandit">Multi-armed Bandit</a></li>
+<li class="task-list-item"><input type="checkbox" disabled/> <strong>유닛 1 마저</strong> — <strong>3.4 통합 표기 · 3.5 정책과 가치함수 · 3.6 최적 정책 · 3.7 최적성과 근사</strong> → <a href="../30_Knowledge/MDP" class="internal" data-slug="30_Knowledge/MDP">MDP</a> 의 <code>채워야 할 것</code>. 3.5가 <a href="../Bellman-Equation" class="internal alias" data-slug="Bellman-Equation">Bellman Equation</a> 이 나오는 자리</li>
+<li class="task-list-item"><input type="checkbox" disabled/> Siegen Lecture 2 로 표기 대응 확인 (<code>s→x</code>, <code>a→u</code>)</li>
+<li class="task-list-item"><input type="checkbox" disabled/> 유닛 2 직후 예정이던 <strong>Bertsekas 1장</strong> — 부호가 뒤집히는 자리(비용 최소화) 확인용</li>
+<li class="task-list-item"><input type="checkbox" disabled/> 2장 코드 실습 — <code>siegen-rl-course/exercises</code> 밴딧 문제로 그림 2.2·2.3·2.4·2.6 재현</li>
+<li class="task-list-item"><input type="checkbox" disabled/> 『단단한 심층 강화학습』 대출 — 목차·코드 구조만</li>
+<li class="task-list-item"><input type="checkbox" disabled/> CP1에 쓸 USV heading 시뮬레이터를 무엇으로 할지 정하기 — 기존 <a href="../20_Projects/Capstone-Otter-USV/Capstone-Otter-USV" class="internal alias" data-slug="20_Projects/Capstone-Otter-USV/Capstone-Otter-USV">Capstone Otter USV</a> 모델 재사용 여부</li>
+</ul>
+<h2 id="참고">참고<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#참고" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<ul>
+<li>교재 : Sutton &amp; Barto, <em>Reinforcement Learning: An Introduction</em> 2nd ed. — <a href="http://incompleteideas.net/book/RLbook2020.pdf" class="external">http://incompleteideas.net/book/RLbook2020.pdf<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a></li>
+<li>강의 : Paderborn/Siegen, <em>Reinforcement Learning Course Materials</em> (CC-BY 4.0) — <a href="https://github.com/upb-lea/reinforcement_learning_course_materials" class="external">https://github.com/upb-lea/reinforcement_learning_course_materials<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a></li>
+<li>교재 : Bertsekas, <em>A Course in Reinforcement Learning</em> 2nd ed. 2025 — <a href="https://www.mit.edu/~dimitrib/RLCOURSECOMPLETE%202ndEDITION.pdf" class="external">https://www.mit.edu/~dimitrib/RLCOURSECOMPLETE%202ndEDITION.pdf<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a></li>
+<li>교재 : Shengbo Eben Li, <em>RL for Sequential Decision and Optimal Control</em> (Springer 2023) — <a href="https://link.springer.com/book/10.1007/978-981-19-7784-8" class="external">https://link.springer.com/book/10.1007/978-981-19-7784-8<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a></li>
+<li>코드 : Li 책 챕터별 Python — <a href="https://github.com/Intelligent-Driving-Laboratory/Reinforcement-Learning-for-Sequential-Decision-and-Optimal-Control" class="external">https://github.com/Intelligent-Driving-Laboratory/Reinforcement-Learning-for-Sequential-Decision-and-Optimal-Control<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a></li>
+<li>슬라이드 : Li, <em>Reinforcement Learning and Control</em> 11강 — <a href="https://www.researchgate.net/profile/Shengbo-Li-2" class="external">https://www.researchgate.net/profile/Shengbo-Li-2<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a></li>
+<li>관련 노트 : <a href="../30_Knowledge/Multi-armed-Bandit" class="internal alias" data-slug="30_Knowledge/Multi-armed-Bandit">Multi-armed Bandit</a> · <a href="../30_Knowledge/고전제어와-강화학습" class="internal alias" data-slug="30_Knowledge/고전제어와-강화학습">고전제어와 강화학습</a> · <a href="../Research-Direction" class="internal alias" data-slug="Research-Direction">Research Direction</a> · <a href="../30_Knowledge/Reward-Shaping" class="internal alias" data-slug="30_Knowledge/Reward-Shaping">Reward Shaping</a> · <a href="../30_Knowledge/Learning-Path" class="internal alias" data-slug="30_Knowledge/Learning-Path">Learning Path</a></li>
+</ul></article><hr/><div class="page-footer"></div></div><div class="right sidebar"><div class="graph"><h3>그래프 뷰</h3><div class="graph-outer"><div class="graph-container" data-cfg="{&quot;drag&quot;:true,&quot;zoom&quot;:true,&quot;depth&quot;:1,&quot;scale&quot;:1.1,&quot;repelForce&quot;:0.5,&quot;centerForce&quot;:0.3,&quot;linkDistance&quot;:30,&quot;fontSize&quot;:0.6,&quot;opacityScale&quot;:1,&quot;showTags&quot;:true,&quot;removeTags&quot;:[],&quot;focusOnHover&quot;:false,&quot;enableRadial&quot;:false}"></div><button class="global-graph-icon" aria-label="Global Graph"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 55 55" fill="currentColor" xml:space="preserve"><path d="M49,0c-3.309,0-6,2.691-6,6c0,1.035,0.263,2.009,0.726,2.86l-9.829,9.829C32.542,17.634,30.846,17,29,17
+                s-3.542,0.634-4.898,1.688l-7.669-7.669C16.785,10.424,17,9.74,17,9c0-2.206-1.794-4-4-4S9,6.794,9,9s1.794,4,4,4
+                c0.74,0,1.424-0.215,2.019-0.567l7.669,7.669C21.634,21.458,21,23.154,21,25s0.634,3.542,1.688,4.897L10.024,42.562
+                C8.958,41.595,7.549,41,6,41c-3.309,0-6,2.691-6,6s2.691,6,6,6s6-2.691,6-6c0-1.035-0.263-2.009-0.726-2.86l12.829-12.829
+                c1.106,0.86,2.44,1.436,3.898,1.619v10.16c-2.833,0.478-5,2.942-5,5.91c0,3.309,2.691,6,6,6s6-2.691,6-6c0-2.967-2.167-5.431-5-5.91
+                v-10.16c1.458-0.183,2.792-0.759,3.898-1.619l7.669,7.669C41.215,39.576,41,40.26,41,41c0,2.206,1.794,4,4,4s4-1.794,4-4
+                s-1.794-4-4-4c-0.74,0-1.424,0.215-2.019,0.567l-7.669-7.669C36.366,28.542,37,26.846,37,25s-0.634-3.542-1.688-4.897l9.665-9.665
+                C46.042,11.405,47.451,12,49,12c3.309,0,6-2.691,6-6S52.309,0,49,0z M11,9c0-1.103,0.897-2,2-2s2,0.897,2,2s-0.897,2-2,2
+                S11,10.103,11,9z M6,51c-2.206,0-4-1.794-4-4s1.794-4,4-4s4,1.794,4,4S8.206,51,6,51z M33,49c0,2.206-1.794,4-4,4s-4-1.794-4-4
+                s1.794-4,4-4S33,46.794,33,49z M29,31c-3.309,0-6-2.691-6-6s2.691-6,6-6s6,2.691,6,6S32.309,31,29,31z M47,41c0,1.103-0.897,2-2,2
+                s-2-0.897-2-2s0.897-2,2-2S47,39.897,47,41z M49,10c-2.206,0-4-1.794-4-4s1.794-4,4-4s4,1.794,4,4S51.206,10,49,10z"></path></svg></button></div><div class="global-graph-outer"><div class="global-graph-container" data-cfg="{&quot;drag&quot;:true,&quot;zoom&quot;:true,&quot;depth&quot;:-1,&quot;scale&quot;:0.9,&quot;repelForce&quot;:0.5,&quot;centerForce&quot;:0.2,&quot;linkDistance&quot;:30,&quot;fontSize&quot;:0.6,&quot;opacityScale&quot;:1,&quot;showTags&quot;:true,&quot;removeTags&quot;:[],&quot;focusOnHover&quot;:true,&quot;enableRadial&quot;:true}"></div></div></div><div class="toc desktop-only"><button type="button" class="toc-header" aria-controls="toc-82" aria-expanded="true"><h3>목차</h3><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fold"><polyline points="6 9 12 15 18 9"></polyline></svg></button><ul id="list-1" class="toc-content overflow"><li class="depth-0"><a href="#강화학습-공부계획" data-for="강화학습-공부계획">강화학습 공부계획</a></li><li class="depth-1"><a href="#왜-필요한가" data-for="왜-필요한가">왜 필요한가</a></li><li class="depth-1"><a href="#계획의-뼈대--유닛-14개-체크포인트-3개" data-for="계획의-뼈대--유닛-14개-체크포인트-3개">계획의 뼈대 — 유닛 14개, 체크포인트 3개</a></li><li class="depth-1"><a href="#한-유닛은-네-단계로-돈다" data-for="한-유닛은-네-단계로-돈다">한 유닛은 네 단계로 돈다</a></li><li class="depth-1"><a href="#유닛마다-노트-하나가-게이트다" data-for="유닛마다-노트-하나가-게이트다">유닛마다 노트 하나가 게이트다</a></li><li class="depth-1"><a href="#이론만-5개월-하면-compare-칸은-그대로-비어-있다" data-for="이론만-5개월-하면-compare-칸은-그대로-비어-있다">이론만 5개월 하면 compare 칸은 그대로 비어 있다</a></li><li class="depth-1"><a href="#페이스는-주-1유닛-고비는-2주" data-for="페이스는-주-1유닛-고비는-2주">페이스는 주 1유닛, 고비는 2주</a></li><li class="depth-1"><a href="#교재는-축을-둘로-나눈다" data-for="교재는-축을-둘로-나눈다">교재는 축을 둘로 나눈다</a></li><li class="depth-1"><a href="#sb에-빠진-건-내용이-아니라-이름표다" data-for="sb에-빠진-건-내용이-아니라-이름표다">S&amp;B에 빠진 건 내용이 아니라 이름표다</a></li><li class="depth-1"><a href="#siegen-강의는-sb를-제어-표기로-다시-쓴-것이다" data-for="siegen-강의는-sb를-제어-표기로-다시-쓴-것이다">Siegen 강의는 S&amp;B를 제어 표기로 다시 쓴 것이다</a></li><li class="depth-1"><a href="#표기가-세-갈래라-번역표가-먼저다" data-for="표기가-세-갈래라-번역표가-먼저다">표기가 세 갈래라 번역표가 먼저다</a></li><li class="depth-1"><a href="#bertsekas는-정책공간을-일부러-얇게-다룬다" data-for="bertsekas는-정책공간을-일부러-얇게-다룬다">Bertsekas는 정책공간을 일부러 얇게 다룬다</a></li><li class="depth-1"><a href="#li의-책은-유일하게-adpmpc를-다루지만-지금-볼-자료는-아니다" data-for="li의-책은-유일하게-adpmpc를-다루지만-지금-볼-자료는-아니다">Li의 책은 유일하게 ADP↔MPC를 다루지만 지금 볼 자료는 아니다</a></li><li class="depth-1"><a href="#슬라이드를-주교재로-삼지-않는다" data-for="슬라이드를-주교재로-삼지-않는다">슬라이드를 주교재로 삼지 않는다</a></li><li class="depth-1"><a href="#헷갈렸던-점" data-for="헷갈렸던-점">헷갈렸던 점</a></li><li class="depth-2"><a href="#sb가-제어를-안-다루니-제어용-다른-책을-찾아야-한다" data-for="sb가-제어를-안-다루니-제어용-다른-책을-찾아야-한다">”S&amp;B가 제어를 안 다루니 제어용 다른 책을 찾아야 한다”</a></li><li class="depth-2"><a href="#bertsekas는-제어-계보니까-유도가-빽빽할-것이다" data-for="bertsekas는-제어-계보니까-유도가-빽빽할-것이다">”Bertsekas는 제어 계보니까 유도가 빽빽할 것이다”</a></li><li class="depth-2"><a href="#저자가-올린-강의-슬라이드면-책-대신-써도-된다" data-for="저자가-올린-강의-슬라이드면-책-대신-써도-된다">”저자가 올린 강의 슬라이드면 책 대신 써도 된다”</a></li><li class="depth-2"><a href="#검증-없이-추천했던-것" data-for="검증-없이-추천했던-것">검증 없이 추천했던 것</a></li><li class="depth-1"><a href="#내가-실제로-써본-곳" data-for="내가-실제로-써본-곳">내가 실제로 써본 곳</a></li><li class="depth-1"><a href="#실제-진도는-계획표에-없는-2장밴딧에-가-있다" data-for="실제-진도는-계획표에-없는-2장밴딧에-가-있다">실제 진도는 계획표에 없는 2장(밴딧)에 가 있다</a></li><li class="depth-1"><a href="#채워야-할-것" data-for="채워야-할-것">채워야 할 것</a></li><li class="depth-1"><a href="#참고" data-for="참고">참고</a></li><li class="overflow-end"></li></ul></div><div class="backlinks"><h3>백링크</h3><ul id="list-2" class="overflow"><li><a href="../10_Daily/2026-09-11" class="internal">2026-09-11</a></li><li><a href="../10_Daily/2026-09-13" class="internal">2026-09-13</a></li><li><a href="../10_Daily/2026-09-21" class="internal">2026-09-21</a></li><li><a href="../20_Projects/AUV-Control-Sim/AUV-Control-Simulation" class="internal">AUV Control Simulation</a></li><li><a href="../30_Knowledge/Extremum-Seeking-Control" class="internal">Extremum Seeking Control</a></li><li><a href="../30_Knowledge/MDP" class="internal">MDP</a></li><li><a href="../30_Knowledge/Multi-armed-Bandit" class="internal">Multi-armed Bandit</a></li><li><a href="../30_Knowledge/Reward-Shaping" class="internal">Reward Shaping</a></li><li><a href="../30_Knowledge/Sim-to-Real" class="internal">Sim-to-Real</a></li><li><a href="../" class="internal">Research Direction</a></li><li class="overflow-end"></li></ul></div></div><footer class><p>Created with <a href="https://quartz.jzhao.xyz/">Quartz v4.5.2</a> © 2026</p><ul></ul></footer></div></div></body><script type="application/javascript">function n(){let t=this.parentElement;t.classList.toggle("is-collapsed");let e=t.getElementsByClassName("callout-content")[0];if(!e)return;let l=t.classList.contains("is-collapsed");e.style.gridTemplateRows=l?"0fr":"1fr"}function c(){let t=document.getElementsByClassName("callout is-collapsible");for(let e of t){let l=e.getElementsByClassName("callout-title")[0],s=e.getElementsByClassName("callout-content")[0];if(!l||!s)continue;l.addEventListener("click",n),window.addCleanup(()=>l.removeEventListener("click",n));let o=e.classList.contains("is-collapsed");s.style.gridTemplateRows=o?"0fr":"1fr"}}document.addEventListener("nav",c);
+</script><script type="module">function f(i,e){if(!i)return;function r(o){o.target===this&&(o.preventDefault(),o.stopPropagation(),e())}function t(o){o.key.startsWith("Esc")&&(o.preventDefault(),e())}i?.addEventListener("click",r),window.addCleanup(()=>i?.removeEventListener("click",r)),document.addEventListener("keydown",t),window.addCleanup(()=>document.removeEventListener("keydown",t))}function y(i){for(;i.firstChild;)i.removeChild(i.firstChild)}var h=class{constructor(e,r){this.container=e;this.content=r;this.setupEventListeners(),this.setupNavigationControls(),this.resetTransform()}isDragging=!1;startPan={x:0,y:0};currentPan={x:0,y:0};scale=1;MIN_SCALE=.5;MAX_SCALE=3;cleanups=[];setupEventListeners(){let e=this.onMouseDown.bind(this),r=this.onMouseMove.bind(this),t=this.onMouseUp.bind(this),o=this.resetTransform.bind(this);this.container.addEventListener("mousedown",e),document.addEventListener("mousemove",r),document.addEventListener("mouseup",t),window.addEventListener("resize",o),this.cleanups.push(()=>this.container.removeEventListener("mousedown",e),()=>document.removeEventListener("mousemove",r),()=>document.removeEventListener("mouseup",t),()=>window.removeEventListener("resize",o))}cleanup(){for(let e of this.cleanups)e()}setupNavigationControls(){let e=document.createElement("div");e.className="mermaid-controls";let r=this.createButton("+",()=>this.zoom(.1)),t=this.createButton("-",()=>this.zoom(-.1)),o=this.createButton("Reset",()=>this.resetTransform());e.appendChild(t),e.appendChild(o),e.appendChild(r),this.container.appendChild(e)}createButton(e,r){let t=document.createElement("button");return t.textContent=e,t.className="mermaid-control-button",t.addEventListener("click",r),window.addCleanup(()=>t.removeEventListener("click",r)),t}onMouseDown(e){e.button===0&&(this.isDragging=!0,this.startPan={x:e.clientX-this.currentPan.x,y:e.clientY-this.currentPan.y},this.container.style.cursor="grabbing")}onMouseMove(e){this.isDragging&&(e.preventDefault(),this.currentPan={x:e.clientX-this.startPan.x,y:e.clientY-this.startPan.y},this.updateTransform())}onMouseUp(){this.isDragging=!1,this.container.style.cursor="grab"}zoom(e){let r=Math.min(Math.max(this.scale+e,this.MIN_SCALE),this.MAX_SCALE),t=this.content.getBoundingClientRect(),o=t.width/2,n=t.height/2,c=r-this.scale;this.currentPan.x-=o*c,this.currentPan.y-=n*c,this.scale=r,this.updateTransform()}updateTransform(){this.content.style.transform=`translate(${this.currentPan.x}px, ${this.currentPan.y}px) scale(${this.scale})`}resetTransform(){this.scale=1;let e=this.content.querySelector("svg");this.currentPan={x:e.getBoundingClientRect().width/2,y:e.getBoundingClientRect().height/2},this.updateTransform()}},C=["--secondary","--tertiary","--gray","--light","--lightgray","--highlight","--dark","--darkgray","--codeFont"],E;document.addEventListener("nav",async()=>{let e=document.querySelector(".center").querySelectorAll("code.mermaid");if(e.length===0)return;E||=await import("https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.4.0/mermaid.esm.min.mjs");let r=E.default,t=new WeakMap;for(let n of e)t.set(n,n.innerText);async function o(){for(let s of e){s.removeAttribute("data-processed");let a=t.get(s);a&&(s.innerHTML=a)}let n=C.reduce((s,a)=>(s[a]=window.getComputedStyle(document.documentElement).getPropertyValue(a),s),{}),c=document.documentElement.getAttribute("saved-theme")==="dark";r.initialize({startOnLoad:!1,securityLevel:"loose",theme:c?"dark":"base",themeVariables:{fontFamily:n["--codeFont"],primaryColor:n["--light"],primaryTextColor:n["--darkgray"],primaryBorderColor:n["--tertiary"],lineColor:n["--darkgray"],secondaryColor:n["--secondary"],tertiaryColor:n["--tertiary"],clusterBkg:n["--light"],edgeLabelBackground:n["--highlight"]}}),await r.run({nodes:e})}await o(),document.addEventListener("themechange",o),window.addCleanup(()=>document.removeEventListener("themechange",o));for(let n=0;n<e.length;n++){let v=function(){let g=l.querySelector("#mermaid-space"),m=l.querySelector(".mermaid-content");if(!m)return;y(m);let w=c.querySelector("svg").cloneNode(!0);m.appendChild(w),l.classList.add("active"),g.style.cursor="grab",u=new h(g,m)},M=function(){l.classList.remove("active"),u?.cleanup(),u=null},c=e[n],s=c.parentElement,a=s.querySelector(".clipboard-button"),d=s.querySelector(".expand-button"),p=window.getComputedStyle(a),L=a.offsetWidth+parseFloat(p.marginLeft||"0")+parseFloat(p.marginRight||"0");d.style.right=`calc(${L}px + 0.3rem)`,s.prepend(d);let l=s.querySelector("#mermaid-container");if(!l)return;let u=null;d.addEventListener("click",v),f(l,M),window.addCleanup(()=>{u?.cleanup(),d.removeEventListener("click",v)})}});
+</script><script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/copy-tex.min.js" type="application/javascript"></script><script src="../postscript.js" type="module"></script></html>

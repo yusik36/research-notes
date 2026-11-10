@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="ko" dir="ltr"><head><title>Delphin2 Actuator and Extra Drag</title><meta charset="utf-8"/><link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com"/><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto Sans KR:wght@400;700&amp;family=Noto Sans KR:ital,wght@0,400;0,600;1,400;1,600&amp;family=IBM Plex Mono:wght@400;600&amp;display=swap"/><link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin="anonymous"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta name="og:site_name" content="LabNote"/><meta property="og:title" content="Delphin2 Actuator and Extra Drag"/><meta property="og:type" content="website"/><meta name="twitter:card" content="summary_large_image"/><meta name="twitter:title" content="Delphin2 Actuator and Extra Drag"/><meta name="twitter:description" content="Delphin2 Actuator and Extra Drag 한 줄로 Delphin2 구동기 힘에는 속도가 들어간다."/><meta property="og:description" content="Delphin2 Actuator and Extra Drag 한 줄로 Delphin2 구동기 힘에는 속도가 들어간다."/><meta property="og:image:alt" content="Delphin2 Actuator and Extra Drag 한 줄로 Delphin2 구동기 힘에는 속도가 들어간다."/><meta property="og:image" content="https://yusik36.github.io/research-notes/static/og-image.png"/><meta property="og:image:url" content="https://yusik36.github.io/research-notes/static/og-image.png"/><meta name="twitter:image" content="https://yusik36.github.io/research-notes/static/og-image.png"/><meta property="og:image:type" content="image/.png"/><meta property="twitter:domain" content="yusik36.github.io/research-notes"/><meta property="og:url" content="https://yusik36.github.io/research-notes/30_Knowledge/Delphin2-Actuator-and-Extra-Drag"/><meta property="twitter:url" content="https://yusik36.github.io/research-notes/30_Knowledge/Delphin2-Actuator-and-Extra-Drag"/><link rel="icon" href="../static/icon.png"/><meta name="description" content="Delphin2 Actuator and Extra Drag 한 줄로 Delphin2 구동기 힘에는 속도가 들어간다."/><meta name="generator" content="Quartz"/><link href="../index.css" rel="stylesheet" type="text/css" spa-preserve/><style>.expand-button {
+  position: absolute;
+  display: flex;
+  float: right;
+  padding: 0.4rem;
+  margin: 0.3rem;
+  right: 0;
+  color: var(--gray);
+  border-color: var(--dark);
+  background-color: var(--light);
+  border: 1px solid;
+  border-radius: 5px;
+  opacity: 0;
+  transition: 0.2s;
+}
+.expand-button > svg {
+  fill: var(--light);
+  filter: contrast(0.3);
+}
+.expand-button:hover {
+  cursor: pointer;
+  border-color: var(--secondary);
+}
+.expand-button:focus {
+  outline: 0;
+}
+
+pre:hover > .expand-button {
+  opacity: 1;
+  transition: 0.2s;
+}
+
+#mermaid-container {
+  position: fixed;
+  contain: layout;
+  z-index: 999;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  display: none;
+  backdrop-filter: blur(4px);
+  background: rgba(0, 0, 0, 0.5);
+}
+#mermaid-container.active {
+  display: inline-block;
+}
+#mermaid-container > #mermaid-space {
+  border: 1px solid var(--lightgray);
+  background-color: var(--light);
+  border-radius: 5px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 80vh;
+  width: 80vw;
+  overflow: hidden;
+}
+#mermaid-container > #mermaid-space > .mermaid-content {
+  padding: 2rem;
+  position: relative;
+  transform-origin: 0 0;
+  transition: transform 0.1s ease;
+  overflow: visible;
+  min-height: 200px;
+  min-width: 200px;
+}
+#mermaid-container > #mermaid-space > .mermaid-content pre {
+  margin: 0;
+  border: none;
+}
+#mermaid-container > #mermaid-space > .mermaid-content svg {
+  max-width: none;
+  height: auto;
+}
+#mermaid-container > #mermaid-space > .mermaid-controls {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  gap: 8px;
+  padding: 8px;
+  background: var(--light);
+  border: 1px solid var(--lightgray);
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 2;
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 1px solid var(--lightgray);
+  background: var(--light);
+  color: var(--dark);
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  font-family: var(--bodyFont);
+  transition: all 0.2s ease;
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button:hover {
+  background: var(--lightgray);
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button:active {
+  transform: translateY(1px);
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button:nth-child(2) {
+  width: auto;
+  padding: 0 12px;
+  font-size: 14px;
+}
+/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VSb290IjoiQzpcXEFyY2hpdmVcXOyeoeuLpOq1rOumrFxcVVNU7J247YS0X+yngOybkOyEnFxcc2l0ZVxccXVhcnR6XFxjb21wb25lbnRzXFxzdHlsZXMiLCJzb3VyY2VzIjpbIm1lcm1haWQuaW5saW5lLnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDRTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTs7QUFFQTtFQUNFO0VBQ0E7O0FBR0Y7RUFDRTtFQUNBOztBQUdGO0VBQ0U7OztBQUtGO0VBQ0U7RUFDQTs7O0FBSUo7RUFDRTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBOztBQUVBO0VBQ0U7O0FBR0Y7RUFDRTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTs7QUFFQTtFQUNFO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBOztBQUVBO0VBQ0U7RUFDQTs7QUFHRjtFQUNFO0VBQ0E7O0FBSUo7RUFDRTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBOztBQUVBO0VBQ0U7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTs7QUFFQTtFQUNFOztBQUdGO0VBQ0U7O0FBSUY7RUFDRTtFQUNBO0VBQ0EiLCJzb3VyY2VzQ29udGVudCI6WyIuZXhwYW5kLWJ1dHRvbiB7XG4gIHBvc2l0aW9uOiBhYnNvbHV0ZTtcbiAgZGlzcGxheTogZmxleDtcbiAgZmxvYXQ6IHJpZ2h0O1xuICBwYWRkaW5nOiAwLjRyZW07XG4gIG1hcmdpbjogMC4zcmVtO1xuICByaWdodDogMDsgLy8gTk9URTogcmlnaHQgd2lsbCBiZSBzZXQgaW4gbWVybWFpZC5pbmxpbmUudHNcbiAgY29sb3I6IHZhcigtLWdyYXkpO1xuICBib3JkZXItY29sb3I6IHZhcigtLWRhcmspO1xuICBiYWNrZ3JvdW5kLWNvbG9yOiB2YXIoLS1saWdodCk7XG4gIGJvcmRlcjogMXB4IHNvbGlkO1xuICBib3JkZXItcmFkaXVzOiA1cHg7XG4gIG9wYWNpdHk6IDA7XG4gIHRyYW5zaXRpb246IDAuMnM7XG5cbiAgJiA+IHN2ZyB7XG4gICAgZmlsbDogdmFyKC0tbGlnaHQpO1xuICAgIGZpbHRlcjogY29udHJhc3QoMC4zKTtcbiAgfVxuXG4gICY6aG92ZXIge1xuICAgIGN1cnNvcjogcG9pbnRlcjtcbiAgICBib3JkZXItY29sb3I6IHZhcigtLXNlY29uZGFyeSk7XG4gIH1cblxuICAmOmZvY3VzIHtcbiAgICBvdXRsaW5lOiAwO1xuICB9XG59XG5cbnByZSB7XG4gICY6aG92ZXIgPiAuZXhwYW5kLWJ1dHRvbiB7XG4gICAgb3BhY2l0eTogMTtcbiAgICB0cmFuc2l0aW9uOiAwLjJzO1xuICB9XG59XG5cbiNtZXJtYWlkLWNvbnRhaW5lciB7XG4gIHBvc2l0aW9uOiBmaXhlZDtcbiAgY29udGFpbjogbGF5b3V0O1xuICB6LWluZGV4OiA5OTk7XG4gIGxlZnQ6IDA7XG4gIHRvcDogMDtcbiAgd2lkdGg6IDEwMHZ3O1xuICBoZWlnaHQ6IDEwMHZoO1xuICBvdmVyZmxvdzogaGlkZGVuO1xuICBkaXNwbGF5OiBub25lO1xuICBiYWNrZHJvcC1maWx0ZXI6IGJsdXIoNHB4KTtcbiAgYmFja2dyb3VuZDogcmdiYSgwLCAwLCAwLCAwLjUpO1xuXG4gICYuYWN0aXZlIHtcbiAgICBkaXNwbGF5OiBpbmxpbmUtYmxvY2s7XG4gIH1cblxuICAmID4gI21lcm1haWQtc3BhY2Uge1xuICAgIGJvcmRlcjogMXB4IHNvbGlkIHZhcigtLWxpZ2h0Z3JheSk7XG4gICAgYmFja2dyb3VuZC1jb2xvcjogdmFyKC0tbGlnaHQpO1xuICAgIGJvcmRlci1yYWRpdXM6IDVweDtcbiAgICBwb3NpdGlvbjogZml4ZWQ7XG4gICAgdG9wOiA1MCU7XG4gICAgbGVmdDogNTAlO1xuICAgIHRyYW5zZm9ybTogdHJhbnNsYXRlKC01MCUsIC01MCUpO1xuICAgIGhlaWdodDogODB2aDtcbiAgICB3aWR0aDogODB2dztcbiAgICBvdmVyZmxvdzogaGlkZGVuO1xuXG4gICAgJiA+IC5tZXJtYWlkLWNvbnRlbnQge1xuICAgICAgcGFkZGluZzogMnJlbTtcbiAgICAgIHBvc2l0aW9uOiByZWxhdGl2ZTtcbiAgICAgIHRyYW5zZm9ybS1vcmlnaW46IDAgMDtcbiAgICAgIHRyYW5zaXRpb246IHRyYW5zZm9ybSAwLjFzIGVhc2U7XG4gICAgICBvdmVyZmxvdzogdmlzaWJsZTtcbiAgICAgIG1pbi1oZWlnaHQ6IDIwMHB4O1xuICAgICAgbWluLXdpZHRoOiAyMDBweDtcblxuICAgICAgcHJlIHtcbiAgICAgICAgbWFyZ2luOiAwO1xuICAgICAgICBib3JkZXI6IG5vbmU7XG4gICAgICB9XG5cbiAgICAgIHN2ZyB7XG4gICAgICAgIG1heC13aWR0aDogbm9uZTtcbiAgICAgICAgaGVpZ2h0OiBhdXRvO1xuICAgICAgfVxuICAgIH1cblxuICAgICYgPiAubWVybWFpZC1jb250cm9scyB7XG4gICAgICBwb3NpdGlvbjogYWJzb2x1dGU7XG4gICAgICBib3R0b206IDIwcHg7XG4gICAgICByaWdodDogMjBweDtcbiAgICAgIGRpc3BsYXk6IGZsZXg7XG4gICAgICBnYXA6IDhweDtcbiAgICAgIHBhZGRpbmc6IDhweDtcbiAgICAgIGJhY2tncm91bmQ6IHZhcigtLWxpZ2h0KTtcbiAgICAgIGJvcmRlcjogMXB4IHNvbGlkIHZhcigtLWxpZ2h0Z3JheSk7XG4gICAgICBib3JkZXItcmFkaXVzOiA2cHg7XG4gICAgICBib3gtc2hhZG93OiAwIDJweCA0cHggcmdiYSgwLCAwLCAwLCAwLjEpO1xuICAgICAgei1pbmRleDogMjtcblxuICAgICAgLm1lcm1haWQtY29udHJvbC1idXR0b24ge1xuICAgICAgICBkaXNwbGF5OiBmbGV4O1xuICAgICAgICBhbGlnbi1pdGVtczogY2VudGVyO1xuICAgICAgICBqdXN0aWZ5LWNvbnRlbnQ6IGNlbnRlcjtcbiAgICAgICAgd2lkdGg6IDMycHg7XG4gICAgICAgIGhlaWdodDogMzJweDtcbiAgICAgICAgcGFkZGluZzogMDtcbiAgICAgICAgYm9yZGVyOiAxcHggc29saWQgdmFyKC0tbGlnaHRncmF5KTtcbiAgICAgICAgYmFja2dyb3VuZDogdmFyKC0tbGlnaHQpO1xuICAgICAgICBjb2xvcjogdmFyKC0tZGFyayk7XG4gICAgICAgIGJvcmRlci1yYWRpdXM6IDRweDtcbiAgICAgICAgY3Vyc29yOiBwb2ludGVyO1xuICAgICAgICBmb250LXNpemU6IDE2cHg7XG4gICAgICAgIGZvbnQtZmFtaWx5OiB2YXIoLS1ib2R5Rm9udCk7XG4gICAgICAgIHRyYW5zaXRpb246IGFsbCAwLjJzIGVhc2U7XG5cbiAgICAgICAgJjpob3ZlciB7XG4gICAgICAgICAgYmFja2dyb3VuZDogdmFyKC0tbGlnaHRncmF5KTtcbiAgICAgICAgfVxuXG4gICAgICAgICY6YWN0aXZlIHtcbiAgICAgICAgICB0cmFuc2Zvcm06IHRyYW5zbGF0ZVkoMXB4KTtcbiAgICAgICAgfVxuXG4gICAgICAgIC8vIFN0eWxlIHRoZSByZXNldCBidXR0b24gZGlmZmVyZW50bHlcbiAgICAgICAgJjpudGgtY2hpbGQoMikge1xuICAgICAgICAgIHdpZHRoOiBhdXRvO1xuICAgICAgICAgIHBhZGRpbmc6IDAgMTJweDtcbiAgICAgICAgICBmb250LXNpemU6IDE0cHg7XG4gICAgICAgIH1cbiAgICAgIH1cbiAgICB9XG4gIH1cbn1cbiJdfQ== */</style><link href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" rel="stylesheet" type="text/css" spa-preserve/><script src="../prescript.js" type="application/javascript" spa-preserve></script><script type="application/javascript" spa-preserve>const fetchData = fetch("../static/contentIndex.json").then(data => data.json())</script></head><body data-slug="30_Knowledge/Delphin2-Actuator-and-Extra-Drag"><div id="quartz-root" class="page"><div id="quartz-body"><div class="left sidebar"><h2 class="page-title"><a href="..">LabNote</a></h2><div class="spacer mobile-only"></div><div class="flex-component" style="flex-direction: row; flex-wrap: nowrap; gap: 1rem;"><div style="flex-grow: 1; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><div class="search"><button class="search-button"><svg role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19.9 19.7"><title>Search</title><g class="search-path" fill="none"><path stroke-linecap="square" d="M18.5 18.3l-5.4-5.4"></path><circle cx="8" cy="8" r="7"></circle></g></svg><p>검색</p></button><div class="search-container"><div class="search-space"><input autocomplete="off" class="search-bar" name="search" type="text" aria-label="검색어를 입력하세요" placeholder="검색어를 입력하세요"/><div class="search-layout" data-preview="true"></div></div></div></div></div><div style="flex-grow: 0; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><button class="darkmode"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="dayIcon" x="0px" y="0px" viewBox="0 0 35 35" style="enable-background:new 0 0 35 35" xml:space="preserve" aria-label="다크 모드"><title>다크 모드</title><path d="M6,17.5C6,16.672,5.328,16,4.5,16h-3C0.672,16,0,16.672,0,17.5    S0.672,19,1.5,19h3C5.328,19,6,18.328,6,17.5z M7.5,26c-0.414,0-0.789,0.168-1.061,0.439l-2,2C4.168,28.711,4,29.086,4,29.5    C4,30.328,4.671,31,5.5,31c0.414,0,0.789-0.168,1.06-0.44l2-2C8.832,28.289,9,27.914,9,27.5C9,26.672,8.329,26,7.5,26z M17.5,6    C18.329,6,19,5.328,19,4.5v-3C19,0.672,18.329,0,17.5,0S16,0.672,16,1.5v3C16,5.328,16.671,6,17.5,6z M27.5,9    c0.414,0,0.789-0.168,1.06-0.439l2-2C30.832,6.289,31,5.914,31,5.5C31,4.672,30.329,4,29.5,4c-0.414,0-0.789,0.168-1.061,0.44    l-2,2C26.168,6.711,26,7.086,26,7.5C26,8.328,26.671,9,27.5,9z M6.439,8.561C6.711,8.832,7.086,9,7.5,9C8.328,9,9,8.328,9,7.5    c0-0.414-0.168-0.789-0.439-1.061l-2-2C6.289,4.168,5.914,4,5.5,4C4.672,4,4,4.672,4,5.5c0,0.414,0.168,0.789,0.439,1.06    L6.439,8.561z M33.5,16h-3c-0.828,0-1.5,0.672-1.5,1.5s0.672,1.5,1.5,1.5h3c0.828,0,1.5-0.672,1.5-1.5S34.328,16,33.5,16z     M28.561,26.439C28.289,26.168,27.914,26,27.5,26c-0.828,0-1.5,0.672-1.5,1.5c0,0.414,0.168,0.789,0.439,1.06l2,2    C28.711,30.832,29.086,31,29.5,31c0.828,0,1.5-0.672,1.5-1.5c0-0.414-0.168-0.789-0.439-1.061L28.561,26.439z M17.5,29    c-0.829,0-1.5,0.672-1.5,1.5v3c0,0.828,0.671,1.5,1.5,1.5s1.5-0.672,1.5-1.5v-3C19,29.672,18.329,29,17.5,29z M17.5,7    C11.71,7,7,11.71,7,17.5S11.71,28,17.5,28S28,23.29,28,17.5S23.29,7,17.5,7z M17.5,25c-4.136,0-7.5-3.364-7.5-7.5    c0-4.136,3.364-7.5,7.5-7.5c4.136,0,7.5,3.364,7.5,7.5C25,21.636,21.636,25,17.5,25z"></path></svg><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="nightIcon" x="0px" y="0px" viewBox="0 0 100 100" style="enable-background:new 0 0 100 100" xml:space="preserve" aria-label="라이트 모드"><title>라이트 모드</title><path d="M96.76,66.458c-0.853-0.852-2.15-1.064-3.23-0.534c-6.063,2.991-12.858,4.571-19.655,4.571  C62.022,70.495,50.88,65.88,42.5,57.5C29.043,44.043,25.658,23.536,34.076,6.47c0.532-1.08,0.318-2.379-0.534-3.23  c-0.851-0.852-2.15-1.064-3.23-0.534c-4.918,2.427-9.375,5.619-13.246,9.491c-9.447,9.447-14.65,22.008-14.65,35.369  c0,13.36,5.203,25.921,14.65,35.368s22.008,14.65,35.368,14.65c13.361,0,25.921-5.203,35.369-14.65  c3.872-3.871,7.064-8.328,9.491-13.246C97.826,68.608,97.611,67.309,96.76,66.458z"></path></svg></button></div><div style="flex-grow: 0; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><button class="readermode"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="readerIcon" fill="currentColor" stroke="currentColor" stroke-width="0.2" stroke-linecap="round" stroke-linejoin="round" width="64px" height="64px" viewBox="0 0 24 24" aria-label="리더 모드"><title>리더 모드</title><g transform="translate(-1.8, -1.8) scale(1.15, 1.2)"><path d="M8.9891247,2.5 C10.1384702,2.5 11.2209868,2.96705384 12.0049645,3.76669482 C12.7883914,2.96705384 13.8709081,2.5 15.0202536,2.5 L18.7549359,2.5 C19.1691495,2.5 19.5049359,2.83578644 19.5049359,3.25 L19.5046891,4.004 L21.2546891,4.00457396 C21.6343849,4.00457396 21.9481801,4.28672784 21.9978425,4.6528034 L22.0046891,4.75457396 L22.0046891,20.25 C22.0046891,20.6296958 21.7225353,20.943491 21.3564597,20.9931534 L21.2546891,21 L2.75468914,21 C2.37499337,21 2.06119817,20.7178461 2.01153575,20.3517706 L2.00468914,20.25 L2.00468914,4.75457396 C2.00468914,4.37487819 2.28684302,4.061083 2.65291858,4.01142057 L2.75468914,4.00457396 L4.50368914,4.004 L4.50444233,3.25 C4.50444233,2.87030423 4.78659621,2.55650904 5.15267177,2.50684662 L5.25444233,2.5 L8.9891247,2.5 Z M4.50368914,5.504 L3.50468914,5.504 L3.50468914,19.5 L10.9478955,19.4998273 C10.4513189,18.9207296 9.73864328,18.5588115 8.96709342,18.5065584 L8.77307039,18.5 L5.25444233,18.5 C4.87474657,18.5 4.56095137,18.2178461 4.51128895,17.8517706 L4.50444233,17.75 L4.50368914,5.504 Z M19.5049359,17.75 C19.5049359,18.1642136 19.1691495,18.5 18.7549359,18.5 L15.2363079,18.5 C14.3910149,18.5 13.5994408,18.8724714 13.0614828,19.4998273 L20.5046891,19.5 L20.5046891,5.504 L19.5046891,5.504 L19.5049359,17.75 Z M18.0059359,3.999 L15.0202536,4 L14.8259077,4.00692283 C13.9889509,4.06666544 13.2254227,4.50975805 12.7549359,5.212 L12.7549359,17.777 L12.7782651,17.7601316 C13.4923805,17.2719483 14.3447024,17 15.2363079,17 L18.0059359,16.999 L18.0056891,4.798 L18.0033792,4.75457396 L18.0056891,4.71 L18.0059359,3.999 Z M8.9891247,4 L6.00368914,3.999 L6.00599909,4.75457396 L6.00599909,4.75457396 L6.00368914,4.783 L6.00368914,16.999 L8.77307039,17 C9.57551536,17 10.3461406,17.2202781 11.0128313,17.6202194 L11.2536891,17.776 L11.2536891,5.211 C10.8200889,4.56369974 10.1361548,4.13636104 9.37521067,4.02745763 L9.18347055,4.00692283 L8.9891247,4 Z"></path></g></svg></button></div></div><div class="explorer" data-behavior="link" data-collapsed="collapsed" data-savestate="true" data-data-fns="{&quot;order&quot;:[&quot;filter&quot;,&quot;map&quot;,&quot;sort&quot;],&quot;sortFn&quot;:&quot;(a,b)=>!a.isFolder&amp;&amp;!b.isFolder||a.isFolder&amp;&amp;b.isFolder?a.displayName.localeCompare(b.displayName,void 0,{numeric:!0,sensitivity:\&quot;base\&quot;}):!a.isFolder&amp;&amp;b.isFolder?1:-1&quot;,&quot;filterFn&quot;:&quot;node=>node.slugSegment!==\&quot;tags\&quot;&quot;,&quot;mapFn&quot;:&quot;node=>node&quot;}"><button type="button" class="explorer-toggle mobile-explorer hide-until-loaded" data-mobile="true" aria-controls="explorer-121"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide-menu"><line x1="4" x2="20" y1="12" y2="12"></line><line x1="4" x2="20" y1="6" y2="6"></line><line x1="4" x2="20" y1="18" y2="18"></line></svg></button><button type="button" class="title-button explorer-toggle desktop-explorer" data-mobile="false" aria-expanded="true"><h2>탐색기</h2><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="5 8 14 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fold"><polyline points="6 9 12 15 18 9"></polyline></svg></button><div id="explorer-121" class="explorer-content" aria-expanded="false" role="group"><ul class="explorer-ul overflow" id="list-0"><li class="overflow-end"></li></ul></div><template id="template-file"><li><a href="#"></a></li></template><template id="template-folder"><li><div class="folder-container"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="5 8 14 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="folder-icon"><polyline points="6 9 12 15 18 9"></polyline></svg><div><button class="folder-button"><span class="folder-title"></span></button></div></div><div class="folder-outer"><ul class="content"></ul></div></li></template></div></div><div class="center"><div class="page-header"><div class="popover-hint"><nav class="breadcrumb-container" aria-label="breadcrumbs"><div class="breadcrumb-element"><a href="../">Home</a><p> ❯ </p></div><div class="breadcrumb-element"><a href="../30_Knowledge/">30_Knowledge</a><p> ❯ </p></div><div class="breadcrumb-element"><a href>Delphin2 Actuator and Extra Drag</a></div></nav><h1 class="article-title">Delphin2 Actuator and Extra Drag</h1><p show-comma="true" class="content-meta"><time datetime="2026-10-22T15:00:00.000Z">2026년 10월 23일</time><span>21 min read</span></p><ul class="tags"><li><a href="../tags/modeling" class="internal tag-link">modeling</a></li><li><a href="../tags/naval-architecture" class="internal tag-link">naval-architecture</a></li><li><a href="../tags/actuator" class="internal tag-link">actuator</a></li></ul></div></div><article class="popover-hint"><h1 id="delphin2-actuator-and-extra-drag">Delphin2 Actuator and Extra Drag<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#delphin2-actuator-and-extra-drag" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h1>
+<blockquote class="callout abstract" data-callout="abstract">
+<div class="callout-title">
+                  <div class="callout-icon"></div>
+                  <div class="callout-title-inner"><p>한 줄로 </p></div>
+                  
+                </div>
+<div class="callout-content">
+<p>Delphin2 구동기 힘에는 <strong>속도가 들어간다</strong>. 핀은 저속에서, 터널 쓰러스터는 고속에서 힘을 잃고,
+기본 <code>D(ν)</code> 가 못 잡는 저항(스러스터 제트, 수면 조파)은 Extra Drag 블록이 조건부로 더한다.</p>
+</div>
+</blockquote>
+<p>출처: 제어공학특론 <code>2. 동역학 모델 (Dynamic Model Simulation)</code> p37–39, p45–47 / <code>4. AUV 제어기 설계 Part 2</code> p33–38 / Tanakitkorn (2017) 1.3절, 3.5절 (<code>C:\Archive\AUV\제어공학특론\PDF\참고논문\Tanakitkorn_2017_PhD_AUV_GNC.pdf</code>)
+<strong>어디에 앉는가</strong> — <a href="../30_Knowledge/6-DOF-Marine-Craft-Model" class="internal alias" data-slug="30_Knowledge/6-DOF-Marine-Craft-Model">6-DOF Marine Craft Model</a> 의 <code>τ</code> 칸과 <a href="../30_Knowledge/Hydrodynamic-and-Restoring-Forces" class="internal alias" data-slug="30_Knowledge/Hydrodynamic-and-Restoring-Forces">Hydrodynamic and Restoring Forces</a> 의 <code>D(ν)</code> 보정
+손풀이 원본은 랩미팅 <a href="../2026-10-23" class="internal" data-slug="2026-10-23">2026-10-23</a> · <a href="../20_Projects/ANSL-Undergrad-Research/weekly/2026-10-30" class="internal" data-slug="20_Projects/ANSL-Undergrad-Research/weekly/2026-10-30">2026-10-30</a> weekly 에 있음</p>
+<p><img src="../_attachments/ANSL-Undergrad-Research/2026-10-16/2026-10-16-s03-image1.png" width="auto" height="auto" alt/></p>
+<p><em>Delphin2 구동기 배치와 부호 규약: 선미 프로펠러 1, 러더·스턴 핀, 터널 쓰러스터 4 (수평 앞·뒤, 수직 앞·뒤)</em></p>
+<h2 id="핀러더스턴-힘">핀(러더·스턴) 힘<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#핀러더스턴-힘" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p><img src="../_attachments/ANSL-Undergrad-Research/2026-10-23/2026-10-23-s02-image1.png" width="auto" height="auto" alt/></p>
+<p><img src="../_attachments/ANSL-Undergrad-Research/2026-10-23/2026-10-23-s02-image2.png" width="auto" height="auto" alt/></p>
+<ul>
+<li>핀 힘은 각도 δ에 비례하고, 그 힘이 핀과 함께 δ만큼 기울어 일부가 뒤를 향함 <span>→</span> 옆힘(Y·Z)엔 δ 한 번, 항력(X)엔 δ 두 번 곱해짐</li>
+<li>러더·스턴 힘엔 <code>u</code> 항이 있어 surge 속도에 비례함 <span>→</span> 전진속도가 없으면 힘을 못 만듦</li>
+<li>그래서 저속에선 러더·스턴만으로 자세제어가 힘듦 <span>→</span> 터널 쓰러스터가 필요한 이유</li>
+</ul>
+<h3 id="항력-x_r-을-계수--속도--각도로-쪼개-읽기">항력 X_R 을 계수 · 속도 · 각도로 쪼개 읽기<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#항력-x_r-을-계수--속도--각도로-쪼개-읽기" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p><img src="../_attachments/ANSL-Undergrad-Research/2026-10-23/2026-10-23-s03-image1.png" width="auto" height="auto" alt/></p>
+<ul>
+<li><code>X_R = X_|u|uδRδR · |u|u · δR²</code> <span>→</span> 꺾여서 늘어난 항력</li>
+<li>계수 <code>X_|u|uδRδR ≈ −½·ρ·S·K·C_Lα²</code> : 물밀도, 핀 면적, 항력계수(양력을 대가로 생기는 항력), 양력 기울기(핀을 1 rad 돌렸을 때 양력 증가분)</li>
+<li><code>|u|u</code> : 핀에 부딪히는 물이 미는 세기는 속도의 제곱에 비례. <code>u²</code>로 쓰면 후진할 때 부호가 사라져서 <code>|u|u</code>로 씀</li>
+<li><code>δR²</code> : 각도가 0이면 항력이 거의 없고, 각도가 커질수록 급격하게 증가</li>
+</ul>
+<p><img src="../_attachments/ANSL-Undergrad-Research/2026-10-30/2026-10-30-s04-image1.png" width="auto" height="auto" alt/></p>
+<p><em>Simulink 러더 블록(위)과 터널 쓰러스터 블록(아래)에 손으로 단 분석</em></p>
+<ul>
+<li>Simulink 러더 블록: 항력 X는 타각의 제곱, 모든 힘은 <code>u²</code>에 비례하도록 구현돼 있음</li>
+</ul>
+<h2 id="프로펠러-추력에-속도가-들어가는-이유">프로펠러 추력에 속도가 들어가는 이유<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#프로펠러-추력에-속도가-들어가는-이유" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p><img src="../_attachments/ANSL-Undergrad-Research/2026-10-23/2026-10-23-s04-image1.png" width="auto" height="auto" alt/></p>
+<ul>
+<li><code>T = ρD⁴·K_T(J)·|n|n</code>, 전진비 <code>J = Va/(nD)</code>, <code>Va = (1−w)u</code></li>
+<li>식은 두 덩어리: <code>ρn²D⁴K_T</code> 는 <strong>open water</strong> 추력(선체 없이 물속에서 프로펠러만 돌렸을 때), <code>(1 − t)</code> 는 <strong>추력감소계수</strong>(deduction factor). 프로펠러가 물을 빨아들이면 선체 뒤쪽 압력이 떨어져 추가 저항이 생기는 몫</li>
+<li>같은 rpm이라도 빨라지면 물이 이미 들어오고 있어 받음각이 줄고 K_T가 떨어짐 <span>→</span> 추력 감소</li>
+</ul>
+<h3 id="simulink-프로펠러-블록을-따라가며-읽은-것">Simulink 프로펠러 블록을 따라가며 읽은 것<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#simulink-프로펠러-블록을-따라가며-읽은-것" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p><img src="../_attachments/ANSL-Undergrad-Research/2026-10-30/2026-10-30-s03-image1.png" width="auto" height="auto" alt/></p>
+<ul>
+<li><strong>deadband</strong>: <code>u_prop ≥ 10</code> 일 때만 통과, 아니면 0</li>
+<li><strong>demand → rpm</strong>: <code>n_prop = −0.0055·u² + 0.4165·u − 1.7895</code>. 입력이 커질수록 회전수 증가분이 작아짐</li>
+<li><strong>전진비</strong>: <code>J = u·(1 − w_t) / (n·D_prop)</code>, 반류계수 <code>w_t = 0.36</code> <span>→</span> 프로펠러로 들어가는 유속은 <code>V_a = 0.64·u</code> (선체가 물을 끌고 다녀서 AUV가 1 m/s로 가도 프로펠러는 0.64 m/s로 느낌)</li>
+<li><strong>추력계수</strong>: <code>K_T = K_T0·(1 − (J/a)^b)</code>. J = 0일 때 최대, J가 커질수록 작아지고 <code>J = a (= 0.7)</code>에서 0. 전진비가 a 이상이면 추력을 더 못 냄</li>
+<li><strong>출력</strong>: <code>F_prop = ρ·n²·D⁴·K_T·(1 − t)</code></li>
+<li>추력은 u↑에 따라 줄고 항력은 u|u|로 커져 속도가 스스로 수렴함</li>
+<li>비교: ROS2 USV 텀프로젝트는 속도와 무관한 고정 <code>base_thrust</code> + surge 속도 제어기 없음 <span>→</span> 전진속도 계속 증가, speed governor로 잘라야 했음 → <a href="../20_Projects/ROS2-USV-TermProject/ROS2-USV-Term-Project" class="internal alias" data-slug="20_Projects/ROS2-USV-TermProject/ROS2-USV-Term-Project">ROS2 USV Term Project</a></li>
+</ul>
+<h2 id="u_prop--n_prop-u_th--n_th">u_prop / n_prop (u_th / n_th)<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#u_prop--n_prop-u_th--n_th" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<ul>
+<li>이 강의 표기에서 <code>u</code> = 명령값(demand), <code>n</code> = 실제 회전수</li>
+<li>Tanakitkorn 1.3절: <code>u_prop = {0, 10, 16, 22}</code> 는 모터 보드 setpoint, 수중 약 <code>u = {0, 0.26, 0.6, 1.0} m/s</code></li>
+<li>터널 스러스터: <code>u_th ∈ [−2500, −150] ∪ [150, 2500]</code> 가 rpm과 거의 1:1, ±150은 deadband</li>
+</ul>
+<p><img src="../_attachments/ANSL-Undergrad-Research/2026-10-30/2026-10-30-s02-image2.png" width="auto" height="auto" alt/></p>
+<p><em>터널 쓰러스터 demand vs rpm: 0 근처 평평한 구간이 deadband</em></p>
+<ul>
+<li>처음엔 u_prop을 유입속도 Va로 잘못 설명했었음 <span>→</span> 강의 슬라이드로 정정</li>
+</ul>
+<h2 id="터널-스러스터-모델-p3738">터널 스러스터 모델 (p37–38)<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#터널-스러스터-모델-p3738" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<pre><code>F_th = ρ|n_th|n_th D_th⁴ K_T,th · e^(−c_th,1·u²) · [1 − c_th,2·(v/(n_th D_th))]
+       └── static thrust ──┘   └──── 운동에 의한 deduction factor ────┘
+</code></pre>
+<p><img src="../_attachments/ANSL-Undergrad-Research/2026-10-30/2026-10-30-s02-image1.png" width="auto" height="auto" alt/></p>
+<ul>
+<li><strong>정지추력</strong> <code>ρ|n|n D⁴ K_T</code>: 메인 프로펠러와 같음. 회전수의 제곱, 지름의 4제곱에 비례</li>
+<li><strong>전진감소</strong> <code>e^(−c·u²)</code>: AUV가 전진하면 주변 유체가 body 기준 −u로 흐름 <span>→</span> 터널에서 나온 제트가 휘고, 휜 제트가 선체 표면을 따라 흐름. 이 빠른 흐름이 선체 표면에 압력 차이를 만들어 추력 반대 방향의 <strong>suction force</strong>가 생김 <span>→</span> 핀과 정반대로 <strong>고속에서 힘을 잃음</strong></li>
+<li><strong>축방향 유입감소</strong> <code>[1 − c·v/(nD)]</code>: 쓰러스터가 미는 방향으로 선체가 이미 움직이고 있으면 프로펠러가 물을 덜 세게 때리게 됨 (메인 프로펠러 전진비와 같은 원리). Simulink에선 수직 스러스터에 heave, 수평에 sway 속도가 들어감</li>
+<li>Simulink 블록(위 러더 그림의 아래쪽): 정지추력엔 지연·deadband가 구현돼 있지 않고 rpm 참값이 바로 들어감. <code>~= 0</code> 스위치는 deadband가 아니라 0 나누기 보호용</li>
+<li>계수는 Palmer (2009)</li>
+</ul>
+<h2 id="속도마다-제어-게인이-달라지는-이유-part-2-p3538">속도마다 제어 게인이 달라지는 이유 (Part 2 p35–38)<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#속도마다-제어-게인이-달라지는-이유-part-2-p3538" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<ul>
+<li>VTT 피치 제어, 같은 구조(바깥 PI + 안쪽 q 게인 <code>Kd = 12000</code>)</li>
+<li>U = 1 m/s: <code>C1 = 0.8(s+0.5)/s</code>, GM 13.6 dB, PM 63.1°</li>
+<li>Hover: <code>C1 = 0.4(s+0.5)/s</code>, GM 11.6 dB, PM 74.1° <span>→</span> 오버슈트 거의 없고 조금 느림</li>
+<li>hover에선 <code>e^(−c·u²) = 1</code> 이라 VTT가 추력을 다 냄 <span>→</span> 게인 절반으로 충분. trim 데이터를 속도별로 따로 불러와 튜닝함 (gain scheduling의 출발점)</li>
+</ul>
+<h2 id="구동기-지연-모델-차수-p45-p47">구동기 지연 모델 차수 (p45, p47)<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#구동기-지연-모델-차수-p45-p47" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th>차수</th><th>식</th><th>반영하는 것</th><th>최대 위상 지연</th></tr></thead><tbody><tr><td>1차</td><td><code>1/(τs+1)</code></td><td>바로 움직이기 시작, 오버슈트 없음</td><td>−90°</td></tr><tr><td>2차</td><td><code>ωn²/(s²+2ζωn s+ωn²)</code></td><td>서보·핀 관성, S자 출발, ζ&lt;1이면 출렁임</td><td>−180°</td></tr><tr><td>3차</td><td>2차 × 1차 등</td><td>모터 전류(인덕턴스), 센서 필터, 시간지연 Padé 근사</td><td>−270°</td></tr></tbody></table></div>
+<ul>
+<li>강의는 1차만 씀: 러더·스턴 <code>1/(0.3s+1)</code>, 스러스터 <code>ṅ = K_u·u − K_n·n</code></li>
+<li>p47: τ = 0.3 vs 10 <span>→</span> τ가 크면 r 응답이 늦고 크기도 절반</li>
+<li>실무에선 고차 선형 모델보다 1차 + 각도 포화 + rate limit 을 많이 씀</li>
+</ul>
+<h2 id="extra-drag-p39">Extra Drag (p39)<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#extra-drag-p39" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>출처: 강의 2강 p39(블록), p42(Force Projection), p49(검증) / Tanakitkorn (2017) <strong>3.5 Correction Terms</strong> p61–64(PDF p93–96), 검증 3.9.1 p74. 강의 슬라이드는 이 논문을 그대로 옮긴 것(계수 일치). 슬라이드 하단 출처는 Fossen TTK4190 강의노트지만 Extra Drag는 Fossen(2011) 모델에 없던 걸 논문이 추가한 부분</p>
+<p><img src="../_attachments/AUV-Control-Sim/2026-11-03-extra-drag-equations.png" width="auto" height="auto" alt/></p>
+<p><em>손풀이: Extra Drag 전체 식, 조파저항 블록 분석, 쓰러스터 jet 항력 식</em></p>
+<pre><code>ΔX = ΔX_wave + ΔX_th,hf + ΔX_th,ha + ΔX_th,vf + ΔX_th,va
+     조파저항   수평 앞     수평 뒤     수직 앞     수직 뒤  (터널 쓰러스터)
+</code></pre>
+<ul>
+<li>surge(X)에만 작용 (논문 식 3.32의 보정 벡터 <code>[ΔX, 0, 0]ᵀ</code>). p42 Force Projection에서 <code>X = prop + X_fin_rud + X_fin_stern + extra_Drag</code></li>
+<li>두 피팅식(3.29, 3.30)은 논문에 <strong>숫자 계수로만</strong> 나옴. 기호 일반형은 없음. 꼴은 둘 다 <code>a₁e^(b₁x) + a₂e^(b₂x)</code> (논문 표현 “second order exponential”, MATLAB <code>exp2</code>와 같은 꼴)</li>
+<li>계수는 물리 상수가 아니라 곡선 모양을 맞춘 숫자 <span>→</span> 하나하나에 의미를 붙이기 어렵고, 피팅 범위 밖에선 믿으면 안 됨</li>
+</ul>
+<h3 id="1-조파저항-δx_wave-논문-351-식-329">1. 조파저항 ΔX_wave (논문 3.5.1, 식 3.29)<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#1-조파저항-δx_wave-논문-351-식-329" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<pre><code>ΔX_wave = −𝟙(depth &lt; 0.5) · [ a₁e^(b₁u) + a₂e^(b₂u) ]
+          a₁ = −12.353, b₁ = 7.1416,  a₂ = 12.363, b₂ = 7.1410
+        ≈ −𝟙(depth &lt; 0.5) · e^(7.14u) · (0.0107 − 0.0069u)
+</code></pre>
+<ul>
+<li>두 항은 각각 수만 N인데 거의 상쇄되고 차이만 남음 (u = 1: −15,606 + 15,611 = 4.7 N) <span>→</span> 항 하나하나는 의미 없음</li>
+<li>아랫줄 근사식은 논문에 있는 게 아니라 계수가 거의 같다는 점(a₁ ≈ −a₂, b₁ ≈ b₂)을 이용해 정리한 것</li>
+<li><code>e^(7.14u)</code>: 지수에 u가 있음 <span>→</span> 저속에서는 조파저항이 작다가 속도에 따라 급격히 증가. 파도 길이 <code>λ = 2πu²/g</code>가 속도 제곱에 비례 (Delphin2 길이 1.96 m 기준 0.5 m/s에서 0.16 m, 1.3 m/s에서 1.08 m) <span>→</span> 빨라질수록 파도가 길고 높아져 가져가는 에너지가 커짐. 7.14라는 숫자 자체엔 의미 없음</li>
+<li><code>0.0107</code>: 수면(z = 0)에서 이 AUV의 전체 크기 배율</li>
+<li><code>−0.0069u</code>: 피팅이 남긴 흔적, 물리 의미 없음. <strong>u ≈ 1.55 m/s에서 0, 그 위로는 음수</strong></li>
+<li>바깥 <code>−</code>: 저항 크기(양수)를 진행 반대 방향 힘으로 바꿈</li>
+<li><code>depth &lt; 0.5</code> 스위치: 잠항 시 조파저항은 크게 줄어들기 때문에 depth 0.5 이상에서는 0으로 처리. 직관용 근사로 파도 에너지는 깊이 h에서 약 <code>e^(−2kh)</code>(k = g/u²)만큼 줄어듦 <span>→</span> u = 1 m/s, h = 0.25 m에서 0.7% (논문 Fig 3.10에서 z = 0.25, 0.5 m 점이 0에 붙어 있는 이유). 이 감쇠식은 논문 식이 아니라 설명용</li>
+</ul>
+<p><strong>블록 (<code>Extra Drags/drag due to wave</code>)</strong></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th>순서</th><th>블록</th><th>하는 일</th></tr></thead><tbody><tr><td>1</td><td><code>Switch3</code> + <code>uMax</code>(1.6)</td><td>u > 1.6이면 1.6</td></tr><tr><td>2</td><td><code>Add1</code></td><td><code>depthSat(0.5) − depth</code> (슬라이드엔 이름이 <code>depthSet</code>)</td></tr><tr><td>3</td><td><code>Switch1</code></td><td>얕으면 u_sat, 깊으면 −1 (어차피 <code>Switch2</code>가 0으로 막아서 결과엔 영향 없음)</td></tr><tr><td>4–5</td><td><code>Gain1/3</code> → <code>e^u</code> → <code>Gain2/4</code></td><td>a₁e^(b₁u), a₂e^(b₂u) 따로 계산</td></tr><tr><td>6</td><td><code>Add13</code></td><td>두 항을 더함 <span>→</span> <strong>여기서 상쇄되고 저항 크기만 남음</strong></td></tr><tr><td>7</td><td><code>K_u2</code>(−1)</td><td>진행 반대 방향</td></tr><tr><td>8</td><td><code>Switch2</code></td><td>깊으면 0</td></tr></tbody></table></div>
+<ul>
+<li><code>depth</code> 입력은 시뮬레이션 중 실제 수심이 아니라 상위 <code>Constant1</code>의 <strong>워크스페이스 변수</strong> <code>depth</code> <span>→</span> 실행 전에 수면(0)/잠항(2) 조건을 정함 (p49 “@depth=0 and @depth=2m”)</li>
+<li>흘려보기: 수면 u = 1 <span>→</span> −4.74 N / depth = 2 <span>→</span> 0 N / 수면 u = 2 <span>→</span> uMax로 1.6 <span>→</span> <strong>+35.9 N (앞으로 미는 힘)</strong></li>
+<li>⚠️ 논문 피팅 범위는 0–1.3 m/s인데 <code>uMax</code>가 1.6이라 포화 지점에서 이미 부호가 뒤집힌 상태. 1.3으로 낮춰야 맞음 (수업 범위 속도에선 문제 없음)</li>
+</ul>
+<h3 id="2-터널-쓰러스터-jet-항력-δx_thi-논문-352-식-330331">2. 터널 쓰러스터 jet 항력 ΔX_th,i (논문 3.5.2, 식 3.30–3.31)<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#2-터널-쓰러스터-jet-항력-δx_thi-논문-352-식-330331" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<pre><code>ΔX_th,i = −𝟙(nᵢ ≠ 0) · ½ρ∇^(2/3) · ΔC_d,th(xᵢ) · u|u|
+  xᵢ         = u / u_j,i
+  u_j        = √(4F_th/(ρπD_th²)),  모델에선 F_th = K_T′n²  ->  u_j = (2|n|/D_th)·√(K_T′/(ρπ))
+  ΔC_d,th(x) = 0.566·e^(−7.61x) + 0.0565·e^(−0.897x)        (Palmer 2009 실험 피팅, Fig 3.12)
+숫자 대입:  ½ρ∇^(2/3) = 92.8,  u_j ≈ 0.000896·|n| [m/s]
+</code></pre>
+<p><img src="../_attachments/AUV-Control-Sim/2026-11-03-tunnel-jet-sketch.png" width="auto" height="auto" alt/></p>
+<p><em>손그림: x가 작을 때(jet이 벽처럼 작용) vs x가 클 때(jet이 꺾여 선체에 붙음)</em></p>
+<ul>
+<li><strong>일반 항력식 <code>−½ρA·C_d·u|u|</code>과 같은 꼴</strong>에서 A와 C_d만 바뀜 <span>→</span> 쓰러스터를 켜면 항력계수가 ΔC_d만큼 커진 것 (몸통이 뚱뚱해진 효과)</li>
+<li><code>½ρ∇^(2/3)</code>: 일반 항력식의 <code>½ρA</code> 자리. 러더·스턴 식에서 핀 면적 S가 들어가던 자리와 같은 역할이지만, 여기선 핀이 아니라 <strong>선체 전체의 기준 면적</strong>(배수량 체적^(2/3) = 0.186 m²)</li>
+<li><code>u|u|</code>: 속도의 제곱에 비례해서 항력 증가, 후진해도 부호 유지</li>
+<li><code>x = u/u_j</code>: 앞에서 오는 상대유속 u에 비해 jet이 얼마나 강한지
+<ul>
+<li>u ≪ u_j (x 작음): jet이 물살보다 훨씬 세고 옆으로 멀리 뻗어나가 벽처럼 작용</li>
+<li>u ≫ u_j (x 큼): 물살이 jet보다 강하고 jet이 나오자마자 꺾여 선체에 붙음</li>
+<li>바람 부는 날 옆으로 뿌린 호스 물줄기와 같음 (jet in crossflow)</li>
+</ul>
+</li>
+<li>ΔC_d 두 항: <code>0.566e^(−7.61x)</code>는 크게 시작해 빨리 사라지는 센 jet 구간, <code>0.0565e^(−0.897x)</code>는 작게 남는 꼬리. 조파저항과 달리 둘 다 양수라 상쇄 없음, 범위 밖에서도 0으로 부드럽게 줄어듦</li>
+<li>𝟙(n ≠ 0): 쓰러스터 꺼지면 jet 없음</li>
+</ul>
+<p><strong>크기 감 (쓰러스터 1개당, N)</strong></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th></th><th>u = 0.2</th><th>0.5</th><th>1.0</th><th>1.3 m/s</th></tr></thead><tbody><tr><td>500 rpm</td><td>−0.21</td><td>−0.48</td><td>−0.71</td><td>−0.66</td></tr><tr><td>1000 rpm</td><td>−0.56</td><td>−0.98</td><td>−1.94</td><td>−2.42</td></tr><tr><td>2500 rpm</td><td>−1.26</td><td>−3.48</td><td><strong>−5.28</strong></td><td>−6.34</td></tr></tbody></table></div>
+<ul>
+<li>선체 기본 항력 <code>X_uu = −6.49</code> (<code>Delphin2.m</code>) <span>→</span> u = 1에서 약 −6.5 N. 쓰러스터 4개를 2500 rpm으로 다 돌리면 jet 항력만 약 −21 N, <strong>기본 항력의 3배 이상</strong> <span>→</span> 고속에선 쓰러스터보다 핀이 유리</li>
+</ul>
+<p><strong>블록 (<code>Extra Drags/drag due to V. front thruster jet:</code>, 나머지 3개는 복사본)</strong></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th>블록</th><th>하는 일</th></tr></thead><tbody><tr><td><code>Compare To Zero</code></td><td>rpm ≠ 0 판정</td></tr><tr><td><code>Switch1</code></td><td>꺼져 있으면 rpm 대신 −1 (u_j = 0 <span>→</span> x = u/0 방지)</td></tr><tr><td><code>thruster speed to jet speed</code></td><td><code>K_u3</code>(×2) → <code>Divide2</code>(÷D_th) × <code>Sqrt</code>(K_T′/(ρπ)) → <code>Abs2</code> → u_j</td></tr><tr><td><code>Subsystem</code></td><td><code>Divide1</code>(u/u_j) → 두 경로 <code>Gain→e^x→Gain</code> → <code>Add13</code> → ΔC_d</td></tr><tr><td><code>K_u1</code>(−0.5) → <code>K_u</code>(ρ), <code>Math Function</code>(V_AUV^(2/3))</td><td>−½ρ∇^(2/3)</td></tr><tr><td><code>Abs1</code> → <code>Product3</code></td><td>u|u|</td></tr><tr><td><code>Switch2</code></td><td>꺼져 있으면 0</td></tr></tbody></table></div>
+<ul>
+<li>블록 이름 <code>K_u</code>, <code>K_T_prime1~4</code>는 복사 흔적, 실제 값은 ρ, −0.5, −1, 2/3, V_AUV, 0</li>
+<li><code>Abs2</code> 때문에 rpm이 음수(반대쪽 분사)여도 u_j는 양수 <span>→</span> 방향과 무관하게 벽은 생김 (맞는 처리)</li>
+<li>흘려보기: u = 1, 2500 rpm <span>→</span> u_j = 2.240, x = 0.446, ΔC_d = 0.0190 + 0.0379 = 0.0568, 출력 <strong>−5.28 N</strong></li>
+<li>⚠️ 모델은 F_th를 <strong>정지추력 K_T′n²만으로</strong> 계산. 논문은 식 3.19(<code>e^(−cu²)</code> 전진감소 포함)를 쓴다고 했지만 구현에선 두 효과가 연결돼 있지 않음 <span>→</span> u_j가 실제보다 조금 크게 잡힘</li>
+<li>⚠️ <code>Divide1</code>이 부호 있는 u를 씀 <span>→</span> 후진(u &lt; 0)이면 x &lt; 0이 돼 지수가 커짐. u = −0.5, 2500 rpm에서 ΔC_d = 3.16, <strong>+73 N</strong>. Fig 3.12 데이터는 x > 0뿐이라 범위 밖. 감속 중 잠깐 u ≈ −0.05 정도면 0.17 N이라 무해. 고치려면 <code>Divide1</code> 앞에 <code>Abs</code></li>
+</ul>
+<h3 id="터널-쓰러스터-한-현상-두-손해">터널 쓰러스터 한 현상, 두 손해<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#터널-쓰러스터-한-현상-두-손해" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th></th><th>추력 감소 (p37–38)</th><th>jet 항력 (p39)</th></tr></thead><tbody><tr><td>바뀌는 것</td><td>쓰러스터 추력 F_th</td><td>선체 surge 항력</td></tr><tr><td>식</td><td><code>e^(−c·u²)</code></td><td><code>−½ρ∇^(2/3)·ΔC_d·u|u|</code></td></tr><tr><td>원인</td><td>전진 유동에 jet이 휘고 suction force</td><td>jet이 앞 유동을 막는 벽</td></tr><tr><td>작용</td><td>sway·heave·yaw·pitch 제어력</td><td>X만</td></tr><tr><td>논문</td><td>3.4.2 (식 3.19)</td><td>3.5.2 (식 3.30–3.31)</td></tr></tbody></table></div>
+<p><span>→</span> 고속에서 쓰러스터를 쓰면 추력 손실 + 저항 증가로 두 배 손해</p>
+<h3 id="이-파일delphin_model2_fullslx에선-꺼져-있음">이 파일(<code>Delphin_Model2_Full.slx</code>)에선 꺼져 있음<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#이-파일delphin_model2_fullslx에선-꺼져-있음" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ul>
+<li>루트 <code>Constant2 = 0</code>이 쓰러스터 rpm 4개 입력 <span>→</span> jet 항력 항상 0</li>
+<li>루트 <code>Extra Drags</code> 출력 → <code>Gain2 = 0</code> → <code>Add4</code> <span>→</span> Extra Drag 전체가 0. <code>Gain2</code>가 p49의 <code>extra_Drag = 0/1</code> 스위치 역할</li>
+<li>확인하려면 <code>Gain2 = 1</code>, <code>Constant2 = 2500</code>, <code>depth = 0</code>으로 바꾸고 출력에 Display (u ≈ 1에서 쓰러스터 1개당 약 −5.3 N이면 맞음)</li>
+</ul>
+<h3 id="조파저항을-이해한-흐름">조파저항을 이해한 흐름<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#조파저항을-이해한-흐름" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ul>
+<li>잔잔한 바다여도 생김. 바다의 파도가 아니라 AUV가 <strong>스스로 만드는 파도</strong> 때문</li>
+<li>파도가 생기려면 자유 수면 + 중력 복원이 필요 <span>→</span> 깊은 물속엔 수면이 없어 파도가 안 생김. 물을 밀고 유동을 만드는 건 똑같지만 교란이 몸 주변에만 머물다 닫힘</li>
+<li><strong>압력저항이 0이 된다는 말 (d’Alembert)</strong>: 앞은 막혀서 압력↑(뒤로 밂), 옆구리는 빨라져 압력↓, 뒤는 다시 모이며 압력↑(앞으로 밂). 점성이 없으면 앞뒤가 상쇄됨. 실제론 점성 때문에 뒤쪽에서 박리 <span>→</span> 압력 회복이 덜 돼 형상저항이 남음</li>
+<li>수면 근처에선 몸 위의 수면 굴곡이 AUV와 같이 따라다님. 이 굴곡과 뒤로 남는 물결은 <strong>같은 하나의 파도 덩어리</strong>임 (원인-결과가 아님)</li>
+<li>파도가 뒤로만 퍼지니 굴곡이 앞뒤 비대칭 <span>→</span> 뒤에서 압력을 덜 돌려받음 <span>→</span> 그 차이가 조파저항. 파도는 부수 현상이 아니라 저항 그 자체</li>
+<li>힘으로 보면 지금 몸에 걸린 앞뒤 압력 비대칭, 에너지로 보면 뒤에 남은 파도 에너지 = 추진기가 한 일. 같은 걸 두 방향에서 본 것</li>
+<li>수면 근처에선 위쪽 유속이 빨라 수면 쪽으로 빨려 올라가는 suction force도 생김 (강의 모델엔 없음)</li>
+</ul>
+<h2 id="확인할-것">확인할 것<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#확인할-것" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" checked disabled/> <code>Extra Drags</code> 블록 스위치 방향과 조파저항 피팅 곡선을 Simulink 파일에서 직접 확인 (11-03, 위 블록 표. 조파 uMax 1.6 부호 뒤집힘, jet 후진 시 과대 발견)</li>
+<li class="task-list-item"><input type="checkbox" disabled/> <code>Gain2 = 1</code>로 켜고 p49 surge 검증(<code>extra_Drag</code> 0 vs 1) 직접 돌려보기</li>
+<li class="task-list-item"><input type="checkbox" checked disabled/> 터널 스러스터 <code>[1 − c·v/(nD)]</code> 항의 v가 수직 스러스터에서 heave로 들어가는지 블록 연결 재확인 (10-30 Simulink 손 분석에서 확인)</li>
+</ul></article><hr/><div class="page-footer"></div></div><div class="right sidebar"><div class="graph"><h3>그래프 뷰</h3><div class="graph-outer"><div class="graph-container" data-cfg="{&quot;drag&quot;:true,&quot;zoom&quot;:true,&quot;depth&quot;:1,&quot;scale&quot;:1.1,&quot;repelForce&quot;:0.5,&quot;centerForce&quot;:0.3,&quot;linkDistance&quot;:30,&quot;fontSize&quot;:0.6,&quot;opacityScale&quot;:1,&quot;showTags&quot;:true,&quot;removeTags&quot;:[],&quot;focusOnHover&quot;:false,&quot;enableRadial&quot;:false}"></div><button class="global-graph-icon" aria-label="Global Graph"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 55 55" fill="currentColor" xml:space="preserve"><path d="M49,0c-3.309,0-6,2.691-6,6c0,1.035,0.263,2.009,0.726,2.86l-9.829,9.829C32.542,17.634,30.846,17,29,17
+                s-3.542,0.634-4.898,1.688l-7.669-7.669C16.785,10.424,17,9.74,17,9c0-2.206-1.794-4-4-4S9,6.794,9,9s1.794,4,4,4
+                c0.74,0,1.424-0.215,2.019-0.567l7.669,7.669C21.634,21.458,21,23.154,21,25s0.634,3.542,1.688,4.897L10.024,42.562
+                C8.958,41.595,7.549,41,6,41c-3.309,0-6,2.691-6,6s2.691,6,6,6s6-2.691,6-6c0-1.035-0.263-2.009-0.726-2.86l12.829-12.829
+                c1.106,0.86,2.44,1.436,3.898,1.619v10.16c-2.833,0.478-5,2.942-5,5.91c0,3.309,2.691,6,6,6s6-2.691,6-6c0-2.967-2.167-5.431-5-5.91
+                v-10.16c1.458-0.183,2.792-0.759,3.898-1.619l7.669,7.669C41.215,39.576,41,40.26,41,41c0,2.206,1.794,4,4,4s4-1.794,4-4
+                s-1.794-4-4-4c-0.74,0-1.424,0.215-2.019,0.567l-7.669-7.669C36.366,28.542,37,26.846,37,25s-0.634-3.542-1.688-4.897l9.665-9.665
+                C46.042,11.405,47.451,12,49,12c3.309,0,6-2.691,6-6S52.309,0,49,0z M11,9c0-1.103,0.897-2,2-2s2,0.897,2,2s-0.897,2-2,2
+                S11,10.103,11,9z M6,51c-2.206,0-4-1.794-4-4s1.794-4,4-4s4,1.794,4,4S8.206,51,6,51z M33,49c0,2.206-1.794,4-4,4s-4-1.794-4-4
+                s1.794-4,4-4S33,46.794,33,49z M29,31c-3.309,0-6-2.691-6-6s2.691-6,6-6s6,2.691,6,6S32.309,31,29,31z M47,41c0,1.103-0.897,2-2,2
+                s-2-0.897-2-2s0.897-2,2-2S47,39.897,47,41z M49,10c-2.206,0-4-1.794-4-4s1.794-4,4-4s4,1.794,4,4S51.206,10,49,10z"></path></svg></button></div><div class="global-graph-outer"><div class="global-graph-container" data-cfg="{&quot;drag&quot;:true,&quot;zoom&quot;:true,&quot;depth&quot;:-1,&quot;scale&quot;:0.9,&quot;repelForce&quot;:0.5,&quot;centerForce&quot;:0.2,&quot;linkDistance&quot;:30,&quot;fontSize&quot;:0.6,&quot;opacityScale&quot;:1,&quot;showTags&quot;:true,&quot;removeTags&quot;:[],&quot;focusOnHover&quot;:true,&quot;enableRadial&quot;:true}"></div></div></div><div class="toc desktop-only"><button type="button" class="toc-header" aria-controls="toc-63" aria-expanded="true"><h3>목차</h3><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fold"><polyline points="6 9 12 15 18 9"></polyline></svg></button><ul id="list-1" class="toc-content overflow"><li class="depth-0"><a href="#delphin2-actuator-and-extra-drag" data-for="delphin2-actuator-and-extra-drag">Delphin2 Actuator and Extra Drag</a></li><li class="depth-1"><a href="#핀러더스턴-힘" data-for="핀러더스턴-힘">핀(러더·스턴) 힘</a></li><li class="depth-2"><a href="#항력-x_r-을-계수--속도--각도로-쪼개-읽기" data-for="항력-x_r-을-계수--속도--각도로-쪼개-읽기">항력 X_R 을 계수 · 속도 · 각도로 쪼개 읽기</a></li><li class="depth-1"><a href="#프로펠러-추력에-속도가-들어가는-이유" data-for="프로펠러-추력에-속도가-들어가는-이유">프로펠러 추력에 속도가 들어가는 이유</a></li><li class="depth-2"><a href="#simulink-프로펠러-블록을-따라가며-읽은-것" data-for="simulink-프로펠러-블록을-따라가며-읽은-것">Simulink 프로펠러 블록을 따라가며 읽은 것</a></li><li class="depth-1"><a href="#u_prop--n_prop-u_th--n_th" data-for="u_prop--n_prop-u_th--n_th">u_prop / n_prop (u_th / n_th)</a></li><li class="depth-1"><a href="#터널-스러스터-모델-p3738" data-for="터널-스러스터-모델-p3738">터널 스러스터 모델 (p37–38)</a></li><li class="depth-1"><a href="#속도마다-제어-게인이-달라지는-이유-part-2-p3538" data-for="속도마다-제어-게인이-달라지는-이유-part-2-p3538">속도마다 제어 게인이 달라지는 이유 (Part 2 p35–38)</a></li><li class="depth-1"><a href="#구동기-지연-모델-차수-p45-p47" data-for="구동기-지연-모델-차수-p45-p47">구동기 지연 모델 차수 (p45, p47)</a></li><li class="depth-1"><a href="#extra-drag-p39" data-for="extra-drag-p39">Extra Drag (p39)</a></li><li class="depth-2"><a href="#1-조파저항-δx_wave-논문-351-식-329" data-for="1-조파저항-δx_wave-논문-351-식-329">1. 조파저항 ΔX_wave (논문 3.5.1, 식 3.29)</a></li><li class="depth-2"><a href="#2-터널-쓰러스터-jet-항력-δx_thi-논문-352-식-330331" data-for="2-터널-쓰러스터-jet-항력-δx_thi-논문-352-식-330331">2. 터널 쓰러스터 jet 항력 ΔX_th,i (논문 3.5.2, 식 3.30–3.31)</a></li><li class="depth-2"><a href="#터널-쓰러스터-한-현상-두-손해" data-for="터널-쓰러스터-한-현상-두-손해">터널 쓰러스터 한 현상, 두 손해</a></li><li class="depth-2"><a href="#이-파일delphin_model2_fullslx에선-꺼져-있음" data-for="이-파일delphin_model2_fullslx에선-꺼져-있음">이 파일(Delphin_Model2_Full.slx)에선 꺼져 있음</a></li><li class="depth-2"><a href="#조파저항을-이해한-흐름" data-for="조파저항을-이해한-흐름">조파저항을 이해한 흐름</a></li><li class="depth-1"><a href="#확인할-것" data-for="확인할-것">확인할 것</a></li><li class="overflow-end"></li></ul></div><div class="backlinks"><h3>백링크</h3><ul id="list-2" class="overflow"><li><a href="../10_Daily/2026-10-23" class="internal">2026-10-23</a></li><li class="overflow-end"></li></ul></div></div><footer class><p>Created with <a href="https://quartz.jzhao.xyz/">Quartz v4.5.2</a> © 2026</p><ul></ul></footer></div></div></body><script type="application/javascript">function n(){let t=this.parentElement;t.classList.toggle("is-collapsed");let e=t.getElementsByClassName("callout-content")[0];if(!e)return;let l=t.classList.contains("is-collapsed");e.style.gridTemplateRows=l?"0fr":"1fr"}function c(){let t=document.getElementsByClassName("callout is-collapsible");for(let e of t){let l=e.getElementsByClassName("callout-title")[0],s=e.getElementsByClassName("callout-content")[0];if(!l||!s)continue;l.addEventListener("click",n),window.addCleanup(()=>l.removeEventListener("click",n));let o=e.classList.contains("is-collapsed");s.style.gridTemplateRows=o?"0fr":"1fr"}}document.addEventListener("nav",c);
+</script><script type="module">function f(i,e){if(!i)return;function r(o){o.target===this&&(o.preventDefault(),o.stopPropagation(),e())}function t(o){o.key.startsWith("Esc")&&(o.preventDefault(),e())}i?.addEventListener("click",r),window.addCleanup(()=>i?.removeEventListener("click",r)),document.addEventListener("keydown",t),window.addCleanup(()=>document.removeEventListener("keydown",t))}function y(i){for(;i.firstChild;)i.removeChild(i.firstChild)}var h=class{constructor(e,r){this.container=e;this.content=r;this.setupEventListeners(),this.setupNavigationControls(),this.resetTransform()}isDragging=!1;startPan={x:0,y:0};currentPan={x:0,y:0};scale=1;MIN_SCALE=.5;MAX_SCALE=3;cleanups=[];setupEventListeners(){let e=this.onMouseDown.bind(this),r=this.onMouseMove.bind(this),t=this.onMouseUp.bind(this),o=this.resetTransform.bind(this);this.container.addEventListener("mousedown",e),document.addEventListener("mousemove",r),document.addEventListener("mouseup",t),window.addEventListener("resize",o),this.cleanups.push(()=>this.container.removeEventListener("mousedown",e),()=>document.removeEventListener("mousemove",r),()=>document.removeEventListener("mouseup",t),()=>window.removeEventListener("resize",o))}cleanup(){for(let e of this.cleanups)e()}setupNavigationControls(){let e=document.createElement("div");e.className="mermaid-controls";let r=this.createButton("+",()=>this.zoom(.1)),t=this.createButton("-",()=>this.zoom(-.1)),o=this.createButton("Reset",()=>this.resetTransform());e.appendChild(t),e.appendChild(o),e.appendChild(r),this.container.appendChild(e)}createButton(e,r){let t=document.createElement("button");return t.textContent=e,t.className="mermaid-control-button",t.addEventListener("click",r),window.addCleanup(()=>t.removeEventListener("click",r)),t}onMouseDown(e){e.button===0&&(this.isDragging=!0,this.startPan={x:e.clientX-this.currentPan.x,y:e.clientY-this.currentPan.y},this.container.style.cursor="grabbing")}onMouseMove(e){this.isDragging&&(e.preventDefault(),this.currentPan={x:e.clientX-this.startPan.x,y:e.clientY-this.startPan.y},this.updateTransform())}onMouseUp(){this.isDragging=!1,this.container.style.cursor="grab"}zoom(e){let r=Math.min(Math.max(this.scale+e,this.MIN_SCALE),this.MAX_SCALE),t=this.content.getBoundingClientRect(),o=t.width/2,n=t.height/2,c=r-this.scale;this.currentPan.x-=o*c,this.currentPan.y-=n*c,this.scale=r,this.updateTransform()}updateTransform(){this.content.style.transform=`translate(${this.currentPan.x}px, ${this.currentPan.y}px) scale(${this.scale})`}resetTransform(){this.scale=1;let e=this.content.querySelector("svg");this.currentPan={x:e.getBoundingClientRect().width/2,y:e.getBoundingClientRect().height/2},this.updateTransform()}},C=["--secondary","--tertiary","--gray","--light","--lightgray","--highlight","--dark","--darkgray","--codeFont"],E;document.addEventListener("nav",async()=>{let e=document.querySelector(".center").querySelectorAll("code.mermaid");if(e.length===0)return;E||=await import("https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.4.0/mermaid.esm.min.mjs");let r=E.default,t=new WeakMap;for(let n of e)t.set(n,n.innerText);async function o(){for(let s of e){s.removeAttribute("data-processed");let a=t.get(s);a&&(s.innerHTML=a)}let n=C.reduce((s,a)=>(s[a]=window.getComputedStyle(document.documentElement).getPropertyValue(a),s),{}),c=document.documentElement.getAttribute("saved-theme")==="dark";r.initialize({startOnLoad:!1,securityLevel:"loose",theme:c?"dark":"base",themeVariables:{fontFamily:n["--codeFont"],primaryColor:n["--light"],primaryTextColor:n["--darkgray"],primaryBorderColor:n["--tertiary"],lineColor:n["--darkgray"],secondaryColor:n["--secondary"],tertiaryColor:n["--tertiary"],clusterBkg:n["--light"],edgeLabelBackground:n["--highlight"]}}),await r.run({nodes:e})}await o(),document.addEventListener("themechange",o),window.addCleanup(()=>document.removeEventListener("themechange",o));for(let n=0;n<e.length;n++){let v=function(){let g=l.querySelector("#mermaid-space"),m=l.querySelector(".mermaid-content");if(!m)return;y(m);let w=c.querySelector("svg").cloneNode(!0);m.appendChild(w),l.classList.add("active"),g.style.cursor="grab",u=new h(g,m)},M=function(){l.classList.remove("active"),u?.cleanup(),u=null},c=e[n],s=c.parentElement,a=s.querySelector(".clipboard-button"),d=s.querySelector(".expand-button"),p=window.getComputedStyle(a),L=a.offsetWidth+parseFloat(p.marginLeft||"0")+parseFloat(p.marginRight||"0");d.style.right=`calc(${L}px + 0.3rem)`,s.prepend(d);let l=s.querySelector("#mermaid-container");if(!l)return;let u=null;d.addEventListener("click",v),f(l,M),window.addCleanup(()=>{u?.cleanup(),d.removeEventListener("click",v)})}});
+</script><script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/copy-tex.min.js" type="application/javascript"></script><script src="../postscript.js" type="module"></script></html>

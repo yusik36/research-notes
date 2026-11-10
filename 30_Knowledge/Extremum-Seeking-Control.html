@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="ko" dir="ltr"><head><title>Extremum Seeking Control</title><meta charset="utf-8"/><link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com"/><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto Sans KR:wght@400;700&amp;family=Noto Sans KR:ital,wght@0,400;0,600;1,400;1,600&amp;family=IBM Plex Mono:wght@400;600&amp;display=swap"/><link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin="anonymous"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta name="og:site_name" content="LabNote"/><meta property="og:title" content="Extremum Seeking Control"/><meta property="og:type" content="website"/><meta name="twitter:card" content="summary_large_image"/><meta name="twitter:title" content="Extremum Seeking Control"/><meta name="twitter:description" content="Extremum Seeking Control 한 줄로 성능곡선의 모양을 모르는 채로, 입력을 일부러 흔들어 기울기를 재고 그 방향으로 올라가는 제어. 안대를 쓰고 언덕에 서서, 한 발짝 흔들어보고 어느 쪽이 높은지 느낀 다음 그쪽으로 이동하는 것."/><meta property="og:description" content="Extremum Seeking Control 한 줄로 성능곡선의 모양을 모르는 채로, 입력을 일부러 흔들어 기울기를 재고 그 방향으로 올라가는 제어. 안대를 쓰고 언덕에 서서, 한 발짝 흔들어보고 어느 쪽이 높은지 느낀 다음 그쪽으로 이동하는 것."/><meta property="og:image:alt" content="Extremum Seeking Control 한 줄로 성능곡선의 모양을 모르는 채로, 입력을 일부러 흔들어 기울기를 재고 그 방향으로 올라가는 제어. 안대를 쓰고 언덕에 서서, 한 발짝 흔들어보고 어느 쪽이 높은지 느낀 다음 그쪽으로 이동하는 것."/><meta property="og:image" content="https://yusik36.github.io/research-notes/static/og-image.png"/><meta property="og:image:url" content="https://yusik36.github.io/research-notes/static/og-image.png"/><meta name="twitter:image" content="https://yusik36.github.io/research-notes/static/og-image.png"/><meta property="og:image:type" content="image/.png"/><meta property="twitter:domain" content="yusik36.github.io/research-notes"/><meta property="og:url" content="https://yusik36.github.io/research-notes/30_Knowledge/Extremum-Seeking-Control"/><meta property="twitter:url" content="https://yusik36.github.io/research-notes/30_Knowledge/Extremum-Seeking-Control"/><link rel="icon" href="../static/icon.png"/><meta name="description" content="Extremum Seeking Control 한 줄로 성능곡선의 모양을 모르는 채로, 입력을 일부러 흔들어 기울기를 재고 그 방향으로 올라가는 제어. 안대를 쓰고 언덕에 서서, 한 발짝 흔들어보고 어느 쪽이 높은지 느낀 다음 그쪽으로 이동하는 것."/><meta name="generator" content="Quartz"/><link href="../index.css" rel="stylesheet" type="text/css" spa-preserve/><style>.expand-button {
+  position: absolute;
+  display: flex;
+  float: right;
+  padding: 0.4rem;
+  margin: 0.3rem;
+  right: 0;
+  color: var(--gray);
+  border-color: var(--dark);
+  background-color: var(--light);
+  border: 1px solid;
+  border-radius: 5px;
+  opacity: 0;
+  transition: 0.2s;
+}
+.expand-button > svg {
+  fill: var(--light);
+  filter: contrast(0.3);
+}
+.expand-button:hover {
+  cursor: pointer;
+  border-color: var(--secondary);
+}
+.expand-button:focus {
+  outline: 0;
+}
+
+pre:hover > .expand-button {
+  opacity: 1;
+  transition: 0.2s;
+}
+
+#mermaid-container {
+  position: fixed;
+  contain: layout;
+  z-index: 999;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  display: none;
+  backdrop-filter: blur(4px);
+  background: rgba(0, 0, 0, 0.5);
+}
+#mermaid-container.active {
+  display: inline-block;
+}
+#mermaid-container > #mermaid-space {
+  border: 1px solid var(--lightgray);
+  background-color: var(--light);
+  border-radius: 5px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 80vh;
+  width: 80vw;
+  overflow: hidden;
+}
+#mermaid-container > #mermaid-space > .mermaid-content {
+  padding: 2rem;
+  position: relative;
+  transform-origin: 0 0;
+  transition: transform 0.1s ease;
+  overflow: visible;
+  min-height: 200px;
+  min-width: 200px;
+}
+#mermaid-container > #mermaid-space > .mermaid-content pre {
+  margin: 0;
+  border: none;
+}
+#mermaid-container > #mermaid-space > .mermaid-content svg {
+  max-width: none;
+  height: auto;
+}
+#mermaid-container > #mermaid-space > .mermaid-controls {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  gap: 8px;
+  padding: 8px;
+  background: var(--light);
+  border: 1px solid var(--lightgray);
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 2;
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 1px solid var(--lightgray);
+  background: var(--light);
+  color: var(--dark);
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  font-family: var(--bodyFont);
+  transition: all 0.2s ease;
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button:hover {
+  background: var(--lightgray);
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button:active {
+  transform: translateY(1px);
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button:nth-child(2) {
+  width: auto;
+  padding: 0 12px;
+  font-size: 14px;
+}
+/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VSb290IjoiQzpcXEFyY2hpdmVcXOyeoeuLpOq1rOumrFxcVVNU7J247YS0X+yngOybkOyEnFxcc2l0ZVxccXVhcnR6XFxjb21wb25lbnRzXFxzdHlsZXMiLCJzb3VyY2VzIjpbIm1lcm1haWQuaW5saW5lLnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDRTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTs7QUFFQTtFQUNFO0VBQ0E7O0FBR0Y7RUFDRTtFQUNBOztBQUdGO0VBQ0U7OztBQUtGO0VBQ0U7RUFDQTs7O0FBSUo7RUFDRTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBOztBQUVBO0VBQ0U7O0FBR0Y7RUFDRTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTs7QUFFQTtFQUNFO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBOztBQUVBO0VBQ0U7RUFDQTs7QUFHRjtFQUNFO0VBQ0E7O0FBSUo7RUFDRTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBOztBQUVBO0VBQ0U7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTs7QUFFQTtFQUNFOztBQUdGO0VBQ0U7O0FBSUY7RUFDRTtFQUNBO0VBQ0EiLCJzb3VyY2VzQ29udGVudCI6WyIuZXhwYW5kLWJ1dHRvbiB7XG4gIHBvc2l0aW9uOiBhYnNvbHV0ZTtcbiAgZGlzcGxheTogZmxleDtcbiAgZmxvYXQ6IHJpZ2h0O1xuICBwYWRkaW5nOiAwLjRyZW07XG4gIG1hcmdpbjogMC4zcmVtO1xuICByaWdodDogMDsgLy8gTk9URTogcmlnaHQgd2lsbCBiZSBzZXQgaW4gbWVybWFpZC5pbmxpbmUudHNcbiAgY29sb3I6IHZhcigtLWdyYXkpO1xuICBib3JkZXItY29sb3I6IHZhcigtLWRhcmspO1xuICBiYWNrZ3JvdW5kLWNvbG9yOiB2YXIoLS1saWdodCk7XG4gIGJvcmRlcjogMXB4IHNvbGlkO1xuICBib3JkZXItcmFkaXVzOiA1cHg7XG4gIG9wYWNpdHk6IDA7XG4gIHRyYW5zaXRpb246IDAuMnM7XG5cbiAgJiA+IHN2ZyB7XG4gICAgZmlsbDogdmFyKC0tbGlnaHQpO1xuICAgIGZpbHRlcjogY29udHJhc3QoMC4zKTtcbiAgfVxuXG4gICY6aG92ZXIge1xuICAgIGN1cnNvcjogcG9pbnRlcjtcbiAgICBib3JkZXItY29sb3I6IHZhcigtLXNlY29uZGFyeSk7XG4gIH1cblxuICAmOmZvY3VzIHtcbiAgICBvdXRsaW5lOiAwO1xuICB9XG59XG5cbnByZSB7XG4gICY6aG92ZXIgPiAuZXhwYW5kLWJ1dHRvbiB7XG4gICAgb3BhY2l0eTogMTtcbiAgICB0cmFuc2l0aW9uOiAwLjJzO1xuICB9XG59XG5cbiNtZXJtYWlkLWNvbnRhaW5lciB7XG4gIHBvc2l0aW9uOiBmaXhlZDtcbiAgY29udGFpbjogbGF5b3V0O1xuICB6LWluZGV4OiA5OTk7XG4gIGxlZnQ6IDA7XG4gIHRvcDogMDtcbiAgd2lkdGg6IDEwMHZ3O1xuICBoZWlnaHQ6IDEwMHZoO1xuICBvdmVyZmxvdzogaGlkZGVuO1xuICBkaXNwbGF5OiBub25lO1xuICBiYWNrZHJvcC1maWx0ZXI6IGJsdXIoNHB4KTtcbiAgYmFja2dyb3VuZDogcmdiYSgwLCAwLCAwLCAwLjUpO1xuXG4gICYuYWN0aXZlIHtcbiAgICBkaXNwbGF5OiBpbmxpbmUtYmxvY2s7XG4gIH1cblxuICAmID4gI21lcm1haWQtc3BhY2Uge1xuICAgIGJvcmRlcjogMXB4IHNvbGlkIHZhcigtLWxpZ2h0Z3JheSk7XG4gICAgYmFja2dyb3VuZC1jb2xvcjogdmFyKC0tbGlnaHQpO1xuICAgIGJvcmRlci1yYWRpdXM6IDVweDtcbiAgICBwb3NpdGlvbjogZml4ZWQ7XG4gICAgdG9wOiA1MCU7XG4gICAgbGVmdDogNTAlO1xuICAgIHRyYW5zZm9ybTogdHJhbnNsYXRlKC01MCUsIC01MCUpO1xuICAgIGhlaWdodDogODB2aDtcbiAgICB3aWR0aDogODB2dztcbiAgICBvdmVyZmxvdzogaGlkZGVuO1xuXG4gICAgJiA+IC5tZXJtYWlkLWNvbnRlbnQge1xuICAgICAgcGFkZGluZzogMnJlbTtcbiAgICAgIHBvc2l0aW9uOiByZWxhdGl2ZTtcbiAgICAgIHRyYW5zZm9ybS1vcmlnaW46IDAgMDtcbiAgICAgIHRyYW5zaXRpb246IHRyYW5zZm9ybSAwLjFzIGVhc2U7XG4gICAgICBvdmVyZmxvdzogdmlzaWJsZTtcbiAgICAgIG1pbi1oZWlnaHQ6IDIwMHB4O1xuICAgICAgbWluLXdpZHRoOiAyMDBweDtcblxuICAgICAgcHJlIHtcbiAgICAgICAgbWFyZ2luOiAwO1xuICAgICAgICBib3JkZXI6IG5vbmU7XG4gICAgICB9XG5cbiAgICAgIHN2ZyB7XG4gICAgICAgIG1heC13aWR0aDogbm9uZTtcbiAgICAgICAgaGVpZ2h0OiBhdXRvO1xuICAgICAgfVxuICAgIH1cblxuICAgICYgPiAubWVybWFpZC1jb250cm9scyB7XG4gICAgICBwb3NpdGlvbjogYWJzb2x1dGU7XG4gICAgICBib3R0b206IDIwcHg7XG4gICAgICByaWdodDogMjBweDtcbiAgICAgIGRpc3BsYXk6IGZsZXg7XG4gICAgICBnYXA6IDhweDtcbiAgICAgIHBhZGRpbmc6IDhweDtcbiAgICAgIGJhY2tncm91bmQ6IHZhcigtLWxpZ2h0KTtcbiAgICAgIGJvcmRlcjogMXB4IHNvbGlkIHZhcigtLWxpZ2h0Z3JheSk7XG4gICAgICBib3JkZXItcmFkaXVzOiA2cHg7XG4gICAgICBib3gtc2hhZG93OiAwIDJweCA0cHggcmdiYSgwLCAwLCAwLCAwLjEpO1xuICAgICAgei1pbmRleDogMjtcblxuICAgICAgLm1lcm1haWQtY29udHJvbC1idXR0b24ge1xuICAgICAgICBkaXNwbGF5OiBmbGV4O1xuICAgICAgICBhbGlnbi1pdGVtczogY2VudGVyO1xuICAgICAgICBqdXN0aWZ5LWNvbnRlbnQ6IGNlbnRlcjtcbiAgICAgICAgd2lkdGg6IDMycHg7XG4gICAgICAgIGhlaWdodDogMzJweDtcbiAgICAgICAgcGFkZGluZzogMDtcbiAgICAgICAgYm9yZGVyOiAxcHggc29saWQgdmFyKC0tbGlnaHRncmF5KTtcbiAgICAgICAgYmFja2dyb3VuZDogdmFyKC0tbGlnaHQpO1xuICAgICAgICBjb2xvcjogdmFyKC0tZGFyayk7XG4gICAgICAgIGJvcmRlci1yYWRpdXM6IDRweDtcbiAgICAgICAgY3Vyc29yOiBwb2ludGVyO1xuICAgICAgICBmb250LXNpemU6IDE2cHg7XG4gICAgICAgIGZvbnQtZmFtaWx5OiB2YXIoLS1ib2R5Rm9udCk7XG4gICAgICAgIHRyYW5zaXRpb246IGFsbCAwLjJzIGVhc2U7XG5cbiAgICAgICAgJjpob3ZlciB7XG4gICAgICAgICAgYmFja2dyb3VuZDogdmFyKC0tbGlnaHRncmF5KTtcbiAgICAgICAgfVxuXG4gICAgICAgICY6YWN0aXZlIHtcbiAgICAgICAgICB0cmFuc2Zvcm06IHRyYW5zbGF0ZVkoMXB4KTtcbiAgICAgICAgfVxuXG4gICAgICAgIC8vIFN0eWxlIHRoZSByZXNldCBidXR0b24gZGlmZmVyZW50bHlcbiAgICAgICAgJjpudGgtY2hpbGQoMikge1xuICAgICAgICAgIHdpZHRoOiBhdXRvO1xuICAgICAgICAgIHBhZGRpbmc6IDAgMTJweDtcbiAgICAgICAgICBmb250LXNpemU6IDE0cHg7XG4gICAgICAgIH1cbiAgICAgIH1cbiAgICB9XG4gIH1cbn1cbiJdfQ== */</style><link href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" rel="stylesheet" type="text/css" spa-preserve/><script src="../prescript.js" type="application/javascript" spa-preserve></script><script type="application/javascript" spa-preserve>const fetchData = fetch("../static/contentIndex.json").then(data => data.json())</script></head><body data-slug="30_Knowledge/Extremum-Seeking-Control"><div id="quartz-root" class="page"><div id="quartz-body"><div class="left sidebar"><h2 class="page-title"><a href="..">LabNote</a></h2><div class="spacer mobile-only"></div><div class="flex-component" style="flex-direction: row; flex-wrap: nowrap; gap: 1rem;"><div style="flex-grow: 1; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><div class="search"><button class="search-button"><svg role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19.9 19.7"><title>Search</title><g class="search-path" fill="none"><path stroke-linecap="square" d="M18.5 18.3l-5.4-5.4"></path><circle cx="8" cy="8" r="7"></circle></g></svg><p>검색</p></button><div class="search-container"><div class="search-space"><input autocomplete="off" class="search-bar" name="search" type="text" aria-label="검색어를 입력하세요" placeholder="검색어를 입력하세요"/><div class="search-layout" data-preview="true"></div></div></div></div></div><div style="flex-grow: 0; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><button class="darkmode"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="dayIcon" x="0px" y="0px" viewBox="0 0 35 35" style="enable-background:new 0 0 35 35" xml:space="preserve" aria-label="다크 모드"><title>다크 모드</title><path d="M6,17.5C6,16.672,5.328,16,4.5,16h-3C0.672,16,0,16.672,0,17.5    S0.672,19,1.5,19h3C5.328,19,6,18.328,6,17.5z M7.5,26c-0.414,0-0.789,0.168-1.061,0.439l-2,2C4.168,28.711,4,29.086,4,29.5    C4,30.328,4.671,31,5.5,31c0.414,0,0.789-0.168,1.06-0.44l2-2C8.832,28.289,9,27.914,9,27.5C9,26.672,8.329,26,7.5,26z M17.5,6    C18.329,6,19,5.328,19,4.5v-3C19,0.672,18.329,0,17.5,0S16,0.672,16,1.5v3C16,5.328,16.671,6,17.5,6z M27.5,9    c0.414,0,0.789-0.168,1.06-0.439l2-2C30.832,6.289,31,5.914,31,5.5C31,4.672,30.329,4,29.5,4c-0.414,0-0.789,0.168-1.061,0.44    l-2,2C26.168,6.711,26,7.086,26,7.5C26,8.328,26.671,9,27.5,9z M6.439,8.561C6.711,8.832,7.086,9,7.5,9C8.328,9,9,8.328,9,7.5    c0-0.414-0.168-0.789-0.439-1.061l-2-2C6.289,4.168,5.914,4,5.5,4C4.672,4,4,4.672,4,5.5c0,0.414,0.168,0.789,0.439,1.06    L6.439,8.561z M33.5,16h-3c-0.828,0-1.5,0.672-1.5,1.5s0.672,1.5,1.5,1.5h3c0.828,0,1.5-0.672,1.5-1.5S34.328,16,33.5,16z     M28.561,26.439C28.289,26.168,27.914,26,27.5,26c-0.828,0-1.5,0.672-1.5,1.5c0,0.414,0.168,0.789,0.439,1.06l2,2    C28.711,30.832,29.086,31,29.5,31c0.828,0,1.5-0.672,1.5-1.5c0-0.414-0.168-0.789-0.439-1.061L28.561,26.439z M17.5,29    c-0.829,0-1.5,0.672-1.5,1.5v3c0,0.828,0.671,1.5,1.5,1.5s1.5-0.672,1.5-1.5v-3C19,29.672,18.329,29,17.5,29z M17.5,7    C11.71,7,7,11.71,7,17.5S11.71,28,17.5,28S28,23.29,28,17.5S23.29,7,17.5,7z M17.5,25c-4.136,0-7.5-3.364-7.5-7.5    c0-4.136,3.364-7.5,7.5-7.5c4.136,0,7.5,3.364,7.5,7.5C25,21.636,21.636,25,17.5,25z"></path></svg><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="nightIcon" x="0px" y="0px" viewBox="0 0 100 100" style="enable-background:new 0 0 100 100" xml:space="preserve" aria-label="라이트 모드"><title>라이트 모드</title><path d="M96.76,66.458c-0.853-0.852-2.15-1.064-3.23-0.534c-6.063,2.991-12.858,4.571-19.655,4.571  C62.022,70.495,50.88,65.88,42.5,57.5C29.043,44.043,25.658,23.536,34.076,6.47c0.532-1.08,0.318-2.379-0.534-3.23  c-0.851-0.852-2.15-1.064-3.23-0.534c-4.918,2.427-9.375,5.619-13.246,9.491c-9.447,9.447-14.65,22.008-14.65,35.369  c0,13.36,5.203,25.921,14.65,35.368s22.008,14.65,35.368,14.65c13.361,0,25.921-5.203,35.369-14.65  c3.872-3.871,7.064-8.328,9.491-13.246C97.826,68.608,97.611,67.309,96.76,66.458z"></path></svg></button></div><div style="flex-grow: 0; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><button class="readermode"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="readerIcon" fill="currentColor" stroke="currentColor" stroke-width="0.2" stroke-linecap="round" stroke-linejoin="round" width="64px" height="64px" viewBox="0 0 24 24" aria-label="리더 모드"><title>리더 모드</title><g transform="translate(-1.8, -1.8) scale(1.15, 1.2)"><path d="M8.9891247,2.5 C10.1384702,2.5 11.2209868,2.96705384 12.0049645,3.76669482 C12.7883914,2.96705384 13.8709081,2.5 15.0202536,2.5 L18.7549359,2.5 C19.1691495,2.5 19.5049359,2.83578644 19.5049359,3.25 L19.5046891,4.004 L21.2546891,4.00457396 C21.6343849,4.00457396 21.9481801,4.28672784 21.9978425,4.6528034 L22.0046891,4.75457396 L22.0046891,20.25 C22.0046891,20.6296958 21.7225353,20.943491 21.3564597,20.9931534 L21.2546891,21 L2.75468914,21 C2.37499337,21 2.06119817,20.7178461 2.01153575,20.3517706 L2.00468914,20.25 L2.00468914,4.75457396 C2.00468914,4.37487819 2.28684302,4.061083 2.65291858,4.01142057 L2.75468914,4.00457396 L4.50368914,4.004 L4.50444233,3.25 C4.50444233,2.87030423 4.78659621,2.55650904 5.15267177,2.50684662 L5.25444233,2.5 L8.9891247,2.5 Z M4.50368914,5.504 L3.50468914,5.504 L3.50468914,19.5 L10.9478955,19.4998273 C10.4513189,18.9207296 9.73864328,18.5588115 8.96709342,18.5065584 L8.77307039,18.5 L5.25444233,18.5 C4.87474657,18.5 4.56095137,18.2178461 4.51128895,17.8517706 L4.50444233,17.75 L4.50368914,5.504 Z M19.5049359,17.75 C19.5049359,18.1642136 19.1691495,18.5 18.7549359,18.5 L15.2363079,18.5 C14.3910149,18.5 13.5994408,18.8724714 13.0614828,19.4998273 L20.5046891,19.5 L20.5046891,5.504 L19.5046891,5.504 L19.5049359,17.75 Z M18.0059359,3.999 L15.0202536,4 L14.8259077,4.00692283 C13.9889509,4.06666544 13.2254227,4.50975805 12.7549359,5.212 L12.7549359,17.777 L12.7782651,17.7601316 C13.4923805,17.2719483 14.3447024,17 15.2363079,17 L18.0059359,16.999 L18.0056891,4.798 L18.0033792,4.75457396 L18.0056891,4.71 L18.0059359,3.999 Z M8.9891247,4 L6.00368914,3.999 L6.00599909,4.75457396 L6.00599909,4.75457396 L6.00368914,4.783 L6.00368914,16.999 L8.77307039,17 C9.57551536,17 10.3461406,17.2202781 11.0128313,17.6202194 L11.2536891,17.776 L11.2536891,5.211 C10.8200889,4.56369974 10.1361548,4.13636104 9.37521067,4.02745763 L9.18347055,4.00692283 L8.9891247,4 Z"></path></g></svg></button></div></div><div class="explorer" data-behavior="link" data-collapsed="collapsed" data-savestate="true" data-data-fns="{&quot;order&quot;:[&quot;filter&quot;,&quot;map&quot;,&quot;sort&quot;],&quot;sortFn&quot;:&quot;(a,b)=>!a.isFolder&amp;&amp;!b.isFolder||a.isFolder&amp;&amp;b.isFolder?a.displayName.localeCompare(b.displayName,void 0,{numeric:!0,sensitivity:\&quot;base\&quot;}):!a.isFolder&amp;&amp;b.isFolder?1:-1&quot;,&quot;filterFn&quot;:&quot;node=>node.slugSegment!==\&quot;tags\&quot;&quot;,&quot;mapFn&quot;:&quot;node=>node&quot;}"><button type="button" class="explorer-toggle mobile-explorer hide-until-loaded" data-mobile="true" aria-controls="explorer-123"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide-menu"><line x1="4" x2="20" y1="12" y2="12"></line><line x1="4" x2="20" y1="6" y2="6"></line><line x1="4" x2="20" y1="18" y2="18"></line></svg></button><button type="button" class="title-button explorer-toggle desktop-explorer" data-mobile="false" aria-expanded="true"><h2>탐색기</h2><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="5 8 14 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fold"><polyline points="6 9 12 15 18 9"></polyline></svg></button><div id="explorer-123" class="explorer-content" aria-expanded="false" role="group"><ul class="explorer-ul overflow" id="list-0"><li class="overflow-end"></li></ul></div><template id="template-file"><li><a href="#"></a></li></template><template id="template-folder"><li><div class="folder-container"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="5 8 14 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="folder-icon"><polyline points="6 9 12 15 18 9"></polyline></svg><div><button class="folder-button"><span class="folder-title"></span></button></div></div><div class="folder-outer"><ul class="content"></ul></div></li></template></div></div><div class="center"><div class="page-header"><div class="popover-hint"><nav class="breadcrumb-container" aria-label="breadcrumbs"><div class="breadcrumb-element"><a href="../">Home</a><p> ❯ </p></div><div class="breadcrumb-element"><a href="../30_Knowledge/">30_Knowledge</a><p> ❯ </p></div><div class="breadcrumb-element"><a href>Extremum Seeking Control</a></div></nav><h1 class="article-title">Extremum Seeking Control</h1><p show-comma="true" class="content-meta"><time datetime="2026-09-20T15:00:00.000Z">2026년 9월 21일</time><span>13 min read</span></p><ul class="tags"><li><a href="../tags/control-theory" class="internal tag-link">control-theory</a></li><li><a href="../tags/reinforcement-learning" class="internal tag-link">reinforcement-learning</a></li></ul></div></div><article class="popover-hint"><h1 id="extremum-seeking-control">Extremum Seeking Control<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#extremum-seeking-control" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h1>
+<blockquote class="callout abstract" data-callout="abstract">
+<div class="callout-title">
+                  <div class="callout-icon"></div>
+                  <div class="callout-title-inner"><p>한 줄로 </p></div>
+                  
+                </div>
+<div class="callout-content">
+<p><strong>성능곡선의 모양을 모르는 채로, 입력을 일부러 흔들어 기울기를 재고 그 방향으로 올라가는 제어.</strong>
+안대를 쓰고 언덕에 서서, 한 발짝 흔들어보고 어느 쪽이 높은지 느낀 다음 그쪽으로 이동하는 것.</p>
+</div>
+</blockquote>
+<p><strong>어디에 앉는가</strong> — 제어 쪽에서 <strong>policy gradient와 가장 가까운 물건.</strong> S&amp;B 2.8 경사 밴딧과 부품이 일대일로 대응한다. → <a href="../30_Knowledge/Multi-armed-Bandit" class="internal alias" data-slug="30_Knowledge/Multi-armed-Bandit">Multi-armed Bandit</a> · <a href="../30_Knowledge/고전제어와-강화학습" class="internal alias" data-slug="30_Knowledge/고전제어와-강화학습">고전제어와 강화학습</a></p>
+<blockquote class="callout warning" data-callout="warning">
+<div class="callout-title">
+                  <div class="callout-icon"></div>
+                  <div class="callout-title-inner"><p>이 노트는 S&amp;B 진도가 아니다. 2026-09-21 경사 밴딧(2.8)을 설명하다 나온 곁가지를 정리한 것. </p></div>
+                  
+                </div>
+</blockquote>
+<h2 id="왜-필요한가">왜 필요한가<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#왜-필요한가" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>경사상승법 <code>θ ← θ + k·J'(θ)</code> 를 쓰고 싶은데 <strong><code>J'(θ)</code>를 계산할 수 없는</strong> 상황이 있다.</p>
+<pre><code>θ 를 내가 조절할 수 있다              예: 태양광 패널 동작 전압
+성능 J(θ) 가 있고 최댓값이 존재한다    예: 출력 전력
+그런데 J 의 식도 최적점 θ* 도 모른다
+측정할 수 있는 건 지금 θ 에서의 J 값 하나뿐
+</code></pre>
+<p>ESC의 답 — <strong>계산이 안 되면 실험으로 재면 된다.</strong></p>
+<h2 id="가장-단순한-형태는-흔들어보고-관찰하기다">가장 단순한 형태는 “흔들어보고 관찰하기”다<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#가장-단순한-형태는-흔들어보고-관찰하기다" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>태양광 MPPT의 Perturb &amp; Observe. 세상에서 제일 많이 돌아가고 있는 ESC다.</p>
+<pre><code>1.  전압을 조금 올려본다 (Δθ = +0.1V)
+2.  전력이 늘었나?
+        늘었다  →  올리는 게 맞구나.  다음에도 올린다
+        줄었다  →  반대구나.         다음엔 내린다
+3.  반복
+</code></pre>
+<p>끝이다. 패널의 I–V 곡선을 몰라도, 구름이 끼어 곡선이 통째로 바뀌어도 계속 꼭대기를 따라간다.</p>
+<blockquote class="callout tip" data-callout="tip">
+<div class="callout-title">
+                  <div class="callout-icon"></div>
+                  <div class="callout-title-inner"><p> <strong>모델이 없어도 되고, 모델이 변해도 된다.</strong> 이 두 성질이 ESC가 실무에서 살아남은 이유다.</p></div>
+                  
+                </div>
+</blockquote>
+<h2 id="정현파-esc는-흔들림과-출력의-상관으로-기울기를-읽는다">정현파 ESC는 흔들림과 출력의 상관으로 기울기를 읽는다<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#정현파-esc는-흔들림과-출력의-상관으로-기울기를-읽는다" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>P&amp;O를 연속시간으로 매끄럽게 만든 교과서 구조.</p>
+<pre><code>                          ┌───────────────┐
+   θ̂ ──(+)──── θ ───────→ │  플랜트  J(θ)  │ ────→ y
+        ↑                 └───────────────┘        │
+        │                                          ↓
+   a·sin(ωt)   ← 디더(dither)                 [ 고역통과 ]   DC 제거
+        │                                          │
+        │                                          ↓
+        │                                   ×  a·sin(ωt)    복조
+        │                                          │
+        │                                          ↓
+        │                                   [ 저역통과 ]     평균만 추출
+        │                                          │
+        │                                          ↓
+        └──────────────────────────────────  [ 적분기 k/s ] ──→ θ̂
+</code></pre>
+<p>입력에 작은 정현파를 얹고 출력을 1차 테일러 전개하면 <strong>기울기 정보가 흔들림에 실려 나온다.</strong></p>
+<pre><code>y = J(θ̂ + a sin ωt)  ≈  J(θ̂)  +  J'(θ̂) · a sin ωt
+                          └─┬─┘     └──────┬──────┘
+                          상수(DC)      기울기 × 흔들림
+</code></pre>
+<p>이제 꺼내면 된다.</p>
+<pre><code>① 고역통과     J(θ̂) 를 버린다          →  J'(θ̂)·a sin ωt
+② × a sin ωt   같은 신호를 곱한다        →  a²J'(θ̂) sin²ωt = (a²J'/2)(1 − cos2ωt)
+③ 저역통과     cos2ωt 를 버린다         →  a²J'(θ̂)/2         ← 기울기에 비례
+④ 적분         θ̂̇ = k·a²J'(θ̂)/2                             ← 경사상승
+</code></pre>
+<p><strong>②가 핵심이다.</strong> 흔든 신호와 출력의 흔들림을 곱해 평균내면 <strong>같은 위상이면 양수, 반대 위상이면 음수</strong>가 나온다. 상관(correlation)으로 부호를 읽는다.</p>
+<h2 id="꼭대기에서는-1차-항이-사라져-저절로-멈춘다">꼭대기에서는 1차 항이 사라져 저절로 멈춘다<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#꼭대기에서는-1차-항이-사라져-저절로-멈춘다" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<pre><code>θ 가 최적점 왼쪽    올리면 성능 ↑   위상 일치    →  평균 +  →  θ 증가 ✓
+θ 가 최적점 오른쪽  올리면 성능 ↓   위상 반대    →  평균 −  →  θ 감소 ✓
+θ 가 최적점         어느 쪽이든 ↓   2ω 성분만    →  평균 0  →  정지 ✓
+</code></pre>
+<p>최적점에서는 <code>J'(θ*) = 0</code> 이라 <strong>복조 결과가 2ω 성분만 남고 저역통과가 그걸 지운다.</strong> 정지 조건을 따로 넣을 필요가 없다.</p>
+<blockquote class="callout tip" data-callout="tip">
+<div class="callout-title">
+                  <div class="callout-icon"></div>
+                  <div class="callout-title-inner"><p>사람이 &quot;여기가 꼭대기다&quot;를 판정해주지 않아도 된다는 것. 판정이 <strong>수식 구조 안에 이미 들어 있다.</strong></p></div>
+                  
+                </div>
+</blockquote>
+<h2 id="실제로-돌아가고-있는-곳">실제로 돌아가고 있는 곳<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#실제로-돌아가고-있는-곳" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th>분야</th><th>θ</th><th>J</th></tr></thead><tbody><tr><td>태양광 MPPT</td><td>동작 전압</td><td>출력 전력</td></tr><tr><td>풍력 터빈</td><td>블레이드 피치 / 회전수</td><td>발전량</td></tr><tr><td>ABS 브레이크</td><td>슬립률</td><td>마찰계수</td></tr><tr><td>연소기</td><td>연료 분사 위상</td><td>열음향 진동 억제</td></tr><tr><td><strong>선박 트림 최적화</strong></td><td><strong>트림·밸러스트</strong></td><td><strong>저항 최소화 / 연비</strong></td></tr></tbody></table></div>
+<p>마지막 줄이 조선해양 사례다. 실선의 저항곡선은 선형·흘수·해상상태에 따라 매번 달라 <strong>미리 계산해둘 수가 없어서</strong>, 운항 중에 트림을 조금씩 바꿔보며 연비를 따라가는 시스템이 상용화돼 있다.</p>
+<h2 id="경사-밴딧과-부품이-일대일로-대응한다">경사 밴딧과 부품이 일대일로 대응한다<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#경사-밴딧과-부품이-일대일로-대응한다" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>S&amp;B 2.8의 경사 밴딧과 같은 전략이다 — <strong>모델 없이, 미분 없이, 시도와 관측만으로 기울기를 추정해 올라간다.</strong></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th>ESC</th><th>경사 밴딧 (S&amp;B 2.8)</th><th>하는 일</th></tr></thead><tbody><tr><td><code>J(θ)</code> 성능곡선 — 모름</td><td><code>q_*(a)</code> — 모름</td><td>최적화 대상</td></tr><tr><td>디더 <code>a·sin(ωt)</code></td><td>소프트맥스 확률적 선택</td><td><strong>일부러 흔들기</strong></td></tr><tr><td><strong>고역통과 (DC 제거)</strong></td><td><strong><code>R_t − R̄_t</code> 기준선 빼기</strong></td><td>절대값 버리고 편차만</td></tr><tr><td>복조 <code>× sin ωt</code></td><td><code>(1_{a=A_t} − π(a))</code></td><td>흔든 방향과 결과의 상관</td></tr><tr><td>적분기 <code>k/s</code></td><td><code>H</code> 누적</td><td>추정한 기울기를 쌓아 이동</td></tr><tr><td>이득 <code>k</code></td><td>보폭 <code>α</code></td><td>얼마나 빨리 움직일지</td></tr></tbody></table></div>
+<blockquote class="callout tip" data-callout="tip">
+<div class="callout-title">
+                  <div class="callout-icon"></div>
+                  <div class="callout-title-inner"><p> <strong>고역통과 ↔ 기준선</strong>이 특히 정확히 같은 역할이다. ESC에서 DC를 안 빼면 큰 상수가 복조를 덮어 기울기 정보가 묻히는데, 이게 S&amp;B 그림 2.5의 <code>+4</code> 실험에서 기준선을 없앴을 때 망가진 것과 <strong>같은 고장</strong>이다.</p></div>
+                  
+                </div>
+</blockquote>
+<h2 id="점-하나를-흔드느냐-분포를-들고-다니느냐가-rl과의-갈림길이다">점 하나를 흔드느냐 분포를 들고 다니느냐가 RL과의 갈림길이다<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#점-하나를-흔드느냐-분포를-들고-다니느냐가-rl과의-갈림길이다" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th></th><th>ESC</th><th>경사 밴딧 / policy gradient</th></tr></thead><tbody><tr><td>행동</td><td>연속 <code>θ ∈ ℝ</code></td><td>이산 <code>k</code>개 (또는 연속 분포)</td></tr><tr><td>흔들기</td><td><strong>결정론적</strong> 정현파</td><td><strong>확률적</strong> 샘플링</td></tr><tr><td>들고 다니는 것</td><td><strong>값 하나 <code>θ̂</code></strong></td><td><strong>분포 <code>π</code></strong></td></tr><tr><td>보장</td><td>국소 최적 (곡선이 볼록해야)</td><td>밴딧은 볼록성 무관</td></tr><tr><td>시간</td><td>연속시간 미분방정식</td><td>이산 스텝</td></tr></tbody></table></div>
+<p>세 번째 줄이 결정적이다. <strong>분포를 들고 다니면 “얼마나 확신하는가”까지 표현할 수 있어서</strong>, <a href="../SAC" class="internal" data-slug="SAC">SAC</a>가 정책의 <strong>분산까지 학습</strong>하는 게 가능해진다.</p>
+<h2 id="시간척도-분리가-안정성의-근거다">시간척도 분리가 안정성의 근거다<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#시간척도-분리가-안정성의-근거다" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>ESC의 안정성 증명은 <strong>평균화(averaging) + 특이섭동(singular perturbation)</strong> 에 기댄다. 세 시간척도가 분리돼야 한다.</p>
+<pre><code>빠름   디더 ω            기울기 정보를 실어 나른다
+중간   필터              평균을 뽑는다
+느림   θ 적응 (이득 k)   실제로 움직인다
+</code></pre>
+<p><strong>적응이 너무 빠르면 기울기 추정이 끝나기 전에 움직여서 발산한다.</strong></p>
+<blockquote class="callout tip" data-callout="tip">
+<div class="callout-title">
+                  <div class="callout-icon"></div>
+                  <div class="callout-title-inner"><p>RL에서 학습률 <code>α</code>를 작게 두는 이유가 정확히 같다. 유닛 9의 <a href="../Deadly-Triad" class="internal alias" data-slug="Deadly-Triad">Deadly Triad</a> 에서 &quot;왜 학습률이 크면 터지는가&quot;를 다룰 때 이 감각이 그대로 쓰인다.</p></div>
+                  
+                </div>
+</blockquote>
+<h2 id="수식">수식<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#수식" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p><strong>디더를 얹은 출력</strong></p>
+<pre><code>y = J(θ̂ + a sin ωt)  ≈  J(θ̂) + J'(θ̂)·a sin ωt
+</code></pre>
+<p><strong>복조 후 평균 (기울기 추정)</strong></p>
+<pre><code>HPF → y − J(θ̂) = J'(θ̂)·a sin ωt
+
+× a sin ωt  →  a²J'(θ̂) sin²ωt = (a²J'(θ̂)/2)(1 − cos 2ωt)
+
+LPF →  a²J'(θ̂)/2
+</code></pre>
+<p><strong>적응 법칙</strong></p>
+<pre><code>θ̂̇  =  k · a²J'(θ̂) / 2                 ← 경사상승
+θ   =  θ̂ + a sin ωt
+</code></pre>
+<p><strong>읽는 법</strong></p>
+<pre><code>J(θ)     성능곡선.  식을 모른다.  측정만 가능
+θ̂        추정한 최적점.  실제로 적분기가 들고 있는 상태
+a        디더 진폭.  작을수록 정확하고 느리다
+ω        디더 주파수.  플랜트 동특성보다 느리고 적응보다 빨라야 한다
+k        적응 이득.  RL 의 학습률 α
+</code></pre>
+<ul>
+<li><code>sin²ωt = (1 − cos2ωt)/2</code> 라서 복조 후 <strong>DC 성분이 생긴다.</strong> 저역통과는 그 DC만 남기는 것.</li>
+<li>진폭이 <code>a²</code> 로 들어간다 — 디더를 절반으로 줄이면 기울기 추정 신호가 1/4이 된다. <strong>정확도와 속도의 맞바꿈이 여기 있다.</strong></li>
+</ul>
+<h2 id="검산">검산<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#검산" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th>조건</th><th>결과</th><th>맞는 이유</th></tr></thead><tbody><tr><td><code>θ̂ = θ*</code> (꼭대기)</td><td><code>θ̂̇ = 0</code></td><td><code>J'(θ*)=0</code> 이라 복조 결과에 DC가 없다</td></tr><tr><td><code>J</code> 가 선형 (<code>J' = c</code>)</td><td><code>θ̂</code> 가 등속으로 무한히 이동</td><td>꼭대기가 없으니 멈출 이유가 없다</td></tr><tr><td><code>a → 0</code></td><td>기울기 추정 신호 → 0</td><td><code>a²</code> 에 비례. 안 흔들면 아무것도 모른다</td></tr><tr><td>DC 제거 안 함</td><td><code>J(θ̂)</code> 가 복조를 덮음</td><td>기준선 없는 경사 밴딧과 같은 고장</td></tr><tr><td><code>k</code> 를 크게</td><td>발산 위험</td><td>시간척도 분리가 깨진다</td></tr><tr><td><code>J</code> 가 최소점 문제</td><td>부호만 뒤집으면 됨</td><td><code>−J</code> 의 최대화</td></tr></tbody></table></div>
+<h2 id="헷갈렸던-점">헷갈렸던 점<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#헷갈렸던-점" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<h3 id="모델-없이-최적점을-찾는-건-rl-고유의-발상이다-2026-09-21">”모델 없이 최적점을 찾는 건 RL 고유의 발상이다” (2026-09-21)<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#모델-없이-최적점을-찾는-건-rl-고유의-발상이다-2026-09-21" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>아니다. <strong>제어에 ESC가 이미 있다.</strong> 태양광 MPPT로 수십 년째 대량 양산되고 있다.
+S&amp;B 2.8 경사 밴딧과 부품이 일대일로 대응하고, 특히 <strong>기준선 = 고역통과 DC 제거</strong>는 같은 고장까지 공유한다.
+다른 것은 “점 하나를 흔드느냐, 분포를 들고 다니느냐” 하나뿐.</p>
+<h2 id="내가-실제로-써본-곳">내가 실제로 써본 곳<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#내가-실제로-써본-곳" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>아직 코드로 직접 쓴 적 없음. 2026-09-21에 경사 밴딧을 이해하려다 제어 쪽 대응물로 처음 접했다.</p>
+<p>선박 트림 최적화가 직접적인 조선해양 사례이고, <a href="../Research-Direction" class="internal alias" data-slug="Research-Direction">Research Direction</a> 의 <code>hybrid</code> 칸을 <strong>제어 언어로 설명해주는 자료</strong>로 쓸 수 있다 — “RL의 policy gradient는 제어에서 이미 하던 ESC의 확률판”이라는 문장은 <code>compare</code> 칸에서 쓸 논거가 된다.</p>
+<h2 id="참고">참고<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#참고" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<ul>
+<li>관련 노트 : <a href="../30_Knowledge/Multi-armed-Bandit" class="internal alias" data-slug="30_Knowledge/Multi-armed-Bandit">Multi-armed Bandit</a> · <a href="../30_Knowledge/고전제어와-강화학습" class="internal alias" data-slug="30_Knowledge/고전제어와-강화학습">고전제어와 강화학습</a> · <a href="../Policy-Gradient" class="internal alias" data-slug="Policy-Gradient">Policy Gradient</a> · <a href="../SAC" class="internal" data-slug="SAC">SAC</a> · <a href="../Deadly-Triad" class="internal alias" data-slug="Deadly-Triad">Deadly Triad</a> · <a href="../30_Knowledge/강화학습" class="internal alias" data-slug="30_Knowledge/강화학습">강화학습</a></li>
+<li>표준 교재 : Krstić &amp; Wang, <em>Stability of extremum seeking feedback for general nonlinear dynamic systems</em>, Automatica 2000 — 평균화·특이섭동 기반 안정성 증명의 출발점 (미확인, 이름만)</li>
+<li>실무 : 태양광 MPPT Perturb &amp; Observe — 가장 널리 쓰이는 ESC 구현</li>
+</ul></article><hr/><div class="page-footer"></div></div><div class="right sidebar"><div class="graph"><h3>그래프 뷰</h3><div class="graph-outer"><div class="graph-container" data-cfg="{&quot;drag&quot;:true,&quot;zoom&quot;:true,&quot;depth&quot;:1,&quot;scale&quot;:1.1,&quot;repelForce&quot;:0.5,&quot;centerForce&quot;:0.3,&quot;linkDistance&quot;:30,&quot;fontSize&quot;:0.6,&quot;opacityScale&quot;:1,&quot;showTags&quot;:true,&quot;removeTags&quot;:[],&quot;focusOnHover&quot;:false,&quot;enableRadial&quot;:false}"></div><button class="global-graph-icon" aria-label="Global Graph"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 55 55" fill="currentColor" xml:space="preserve"><path d="M49,0c-3.309,0-6,2.691-6,6c0,1.035,0.263,2.009,0.726,2.86l-9.829,9.829C32.542,17.634,30.846,17,29,17
+                s-3.542,0.634-4.898,1.688l-7.669-7.669C16.785,10.424,17,9.74,17,9c0-2.206-1.794-4-4-4S9,6.794,9,9s1.794,4,4,4
+                c0.74,0,1.424-0.215,2.019-0.567l7.669,7.669C21.634,21.458,21,23.154,21,25s0.634,3.542,1.688,4.897L10.024,42.562
+                C8.958,41.595,7.549,41,6,41c-3.309,0-6,2.691-6,6s2.691,6,6,6s6-2.691,6-6c0-1.035-0.263-2.009-0.726-2.86l12.829-12.829
+                c1.106,0.86,2.44,1.436,3.898,1.619v10.16c-2.833,0.478-5,2.942-5,5.91c0,3.309,2.691,6,6,6s6-2.691,6-6c0-2.967-2.167-5.431-5-5.91
+                v-10.16c1.458-0.183,2.792-0.759,3.898-1.619l7.669,7.669C41.215,39.576,41,40.26,41,41c0,2.206,1.794,4,4,4s4-1.794,4-4
+                s-1.794-4-4-4c-0.74,0-1.424,0.215-2.019,0.567l-7.669-7.669C36.366,28.542,37,26.846,37,25s-0.634-3.542-1.688-4.897l9.665-9.665
+                C46.042,11.405,47.451,12,49,12c3.309,0,6-2.691,6-6S52.309,0,49,0z M11,9c0-1.103,0.897-2,2-2s2,0.897,2,2s-0.897,2-2,2
+                S11,10.103,11,9z M6,51c-2.206,0-4-1.794-4-4s1.794-4,4-4s4,1.794,4,4S8.206,51,6,51z M33,49c0,2.206-1.794,4-4,4s-4-1.794-4-4
+                s1.794-4,4-4S33,46.794,33,49z M29,31c-3.309,0-6-2.691-6-6s2.691-6,6-6s6,2.691,6,6S32.309,31,29,31z M47,41c0,1.103-0.897,2-2,2
+                s-2-0.897-2-2s0.897-2,2-2S47,39.897,47,41z M49,10c-2.206,0-4-1.794-4-4s1.794-4,4-4s4,1.794,4,4S51.206,10,49,10z"></path></svg></button></div><div class="global-graph-outer"><div class="global-graph-container" data-cfg="{&quot;drag&quot;:true,&quot;zoom&quot;:true,&quot;depth&quot;:-1,&quot;scale&quot;:0.9,&quot;repelForce&quot;:0.5,&quot;centerForce&quot;:0.2,&quot;linkDistance&quot;:30,&quot;fontSize&quot;:0.6,&quot;opacityScale&quot;:1,&quot;showTags&quot;:true,&quot;removeTags&quot;:[],&quot;focusOnHover&quot;:true,&quot;enableRadial&quot;:true}"></div></div></div><div class="toc desktop-only"><button type="button" class="toc-header" aria-controls="toc-65" aria-expanded="true"><h3>목차</h3><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fold"><polyline points="6 9 12 15 18 9"></polyline></svg></button><ul id="list-1" class="toc-content overflow"><li class="depth-0"><a href="#extremum-seeking-control" data-for="extremum-seeking-control">Extremum Seeking Control</a></li><li class="depth-1"><a href="#왜-필요한가" data-for="왜-필요한가">왜 필요한가</a></li><li class="depth-1"><a href="#가장-단순한-형태는-흔들어보고-관찰하기다" data-for="가장-단순한-형태는-흔들어보고-관찰하기다">가장 단순한 형태는 “흔들어보고 관찰하기”다</a></li><li class="depth-1"><a href="#정현파-esc는-흔들림과-출력의-상관으로-기울기를-읽는다" data-for="정현파-esc는-흔들림과-출력의-상관으로-기울기를-읽는다">정현파 ESC는 흔들림과 출력의 상관으로 기울기를 읽는다</a></li><li class="depth-1"><a href="#꼭대기에서는-1차-항이-사라져-저절로-멈춘다" data-for="꼭대기에서는-1차-항이-사라져-저절로-멈춘다">꼭대기에서는 1차 항이 사라져 저절로 멈춘다</a></li><li class="depth-1"><a href="#실제로-돌아가고-있는-곳" data-for="실제로-돌아가고-있는-곳">실제로 돌아가고 있는 곳</a></li><li class="depth-1"><a href="#경사-밴딧과-부품이-일대일로-대응한다" data-for="경사-밴딧과-부품이-일대일로-대응한다">경사 밴딧과 부품이 일대일로 대응한다</a></li><li class="depth-1"><a href="#점-하나를-흔드느냐-분포를-들고-다니느냐가-rl과의-갈림길이다" data-for="점-하나를-흔드느냐-분포를-들고-다니느냐가-rl과의-갈림길이다">점 하나를 흔드느냐 분포를 들고 다니느냐가 RL과의 갈림길이다</a></li><li class="depth-1"><a href="#시간척도-분리가-안정성의-근거다" data-for="시간척도-분리가-안정성의-근거다">시간척도 분리가 안정성의 근거다</a></li><li class="depth-1"><a href="#수식" data-for="수식">수식</a></li><li class="depth-1"><a href="#검산" data-for="검산">검산</a></li><li class="depth-1"><a href="#헷갈렸던-점" data-for="헷갈렸던-점">헷갈렸던 점</a></li><li class="depth-2"><a href="#모델-없이-최적점을-찾는-건-rl-고유의-발상이다-2026-09-21" data-for="모델-없이-최적점을-찾는-건-rl-고유의-발상이다-2026-09-21">”모델 없이 최적점을 찾는 건 RL 고유의 발상이다” (2026-09-21)</a></li><li class="depth-1"><a href="#내가-실제로-써본-곳" data-for="내가-실제로-써본-곳">내가 실제로 써본 곳</a></li><li class="depth-1"><a href="#참고" data-for="참고">참고</a></li><li class="overflow-end"></li></ul></div><div class="backlinks"><h3>백링크</h3><ul id="list-2" class="overflow"><li><a href="../10_Daily/2026-09-21" class="internal">2026-09-21</a></li><li><a href="../30_Knowledge/Multi-armed-Bandit" class="internal">Multi-armed Bandit</a></li><li><a href="../30_Knowledge/강화학습" class="internal">강화학습</a></li><li><a href="../" class="internal">Research Direction</a></li><li class="overflow-end"></li></ul></div></div><footer class><p>Created with <a href="https://quartz.jzhao.xyz/">Quartz v4.5.2</a> © 2026</p><ul></ul></footer></div></div></body><script type="application/javascript">function n(){let t=this.parentElement;t.classList.toggle("is-collapsed");let e=t.getElementsByClassName("callout-content")[0];if(!e)return;let l=t.classList.contains("is-collapsed");e.style.gridTemplateRows=l?"0fr":"1fr"}function c(){let t=document.getElementsByClassName("callout is-collapsible");for(let e of t){let l=e.getElementsByClassName("callout-title")[0],s=e.getElementsByClassName("callout-content")[0];if(!l||!s)continue;l.addEventListener("click",n),window.addCleanup(()=>l.removeEventListener("click",n));let o=e.classList.contains("is-collapsed");s.style.gridTemplateRows=o?"0fr":"1fr"}}document.addEventListener("nav",c);
+</script><script type="module">function f(i,e){if(!i)return;function r(o){o.target===this&&(o.preventDefault(),o.stopPropagation(),e())}function t(o){o.key.startsWith("Esc")&&(o.preventDefault(),e())}i?.addEventListener("click",r),window.addCleanup(()=>i?.removeEventListener("click",r)),document.addEventListener("keydown",t),window.addCleanup(()=>document.removeEventListener("keydown",t))}function y(i){for(;i.firstChild;)i.removeChild(i.firstChild)}var h=class{constructor(e,r){this.container=e;this.content=r;this.setupEventListeners(),this.setupNavigationControls(),this.resetTransform()}isDragging=!1;startPan={x:0,y:0};currentPan={x:0,y:0};scale=1;MIN_SCALE=.5;MAX_SCALE=3;cleanups=[];setupEventListeners(){let e=this.onMouseDown.bind(this),r=this.onMouseMove.bind(this),t=this.onMouseUp.bind(this),o=this.resetTransform.bind(this);this.container.addEventListener("mousedown",e),document.addEventListener("mousemove",r),document.addEventListener("mouseup",t),window.addEventListener("resize",o),this.cleanups.push(()=>this.container.removeEventListener("mousedown",e),()=>document.removeEventListener("mousemove",r),()=>document.removeEventListener("mouseup",t),()=>window.removeEventListener("resize",o))}cleanup(){for(let e of this.cleanups)e()}setupNavigationControls(){let e=document.createElement("div");e.className="mermaid-controls";let r=this.createButton("+",()=>this.zoom(.1)),t=this.createButton("-",()=>this.zoom(-.1)),o=this.createButton("Reset",()=>this.resetTransform());e.appendChild(t),e.appendChild(o),e.appendChild(r),this.container.appendChild(e)}createButton(e,r){let t=document.createElement("button");return t.textContent=e,t.className="mermaid-control-button",t.addEventListener("click",r),window.addCleanup(()=>t.removeEventListener("click",r)),t}onMouseDown(e){e.button===0&&(this.isDragging=!0,this.startPan={x:e.clientX-this.currentPan.x,y:e.clientY-this.currentPan.y},this.container.style.cursor="grabbing")}onMouseMove(e){this.isDragging&&(e.preventDefault(),this.currentPan={x:e.clientX-this.startPan.x,y:e.clientY-this.startPan.y},this.updateTransform())}onMouseUp(){this.isDragging=!1,this.container.style.cursor="grab"}zoom(e){let r=Math.min(Math.max(this.scale+e,this.MIN_SCALE),this.MAX_SCALE),t=this.content.getBoundingClientRect(),o=t.width/2,n=t.height/2,c=r-this.scale;this.currentPan.x-=o*c,this.currentPan.y-=n*c,this.scale=r,this.updateTransform()}updateTransform(){this.content.style.transform=`translate(${this.currentPan.x}px, ${this.currentPan.y}px) scale(${this.scale})`}resetTransform(){this.scale=1;let e=this.content.querySelector("svg");this.currentPan={x:e.getBoundingClientRect().width/2,y:e.getBoundingClientRect().height/2},this.updateTransform()}},C=["--secondary","--tertiary","--gray","--light","--lightgray","--highlight","--dark","--darkgray","--codeFont"],E;document.addEventListener("nav",async()=>{let e=document.querySelector(".center").querySelectorAll("code.mermaid");if(e.length===0)return;E||=await import("https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.4.0/mermaid.esm.min.mjs");let r=E.default,t=new WeakMap;for(let n of e)t.set(n,n.innerText);async function o(){for(let s of e){s.removeAttribute("data-processed");let a=t.get(s);a&&(s.innerHTML=a)}let n=C.reduce((s,a)=>(s[a]=window.getComputedStyle(document.documentElement).getPropertyValue(a),s),{}),c=document.documentElement.getAttribute("saved-theme")==="dark";r.initialize({startOnLoad:!1,securityLevel:"loose",theme:c?"dark":"base",themeVariables:{fontFamily:n["--codeFont"],primaryColor:n["--light"],primaryTextColor:n["--darkgray"],primaryBorderColor:n["--tertiary"],lineColor:n["--darkgray"],secondaryColor:n["--secondary"],tertiaryColor:n["--tertiary"],clusterBkg:n["--light"],edgeLabelBackground:n["--highlight"]}}),await r.run({nodes:e})}await o(),document.addEventListener("themechange",o),window.addCleanup(()=>document.removeEventListener("themechange",o));for(let n=0;n<e.length;n++){let v=function(){let g=l.querySelector("#mermaid-space"),m=l.querySelector(".mermaid-content");if(!m)return;y(m);let w=c.querySelector("svg").cloneNode(!0);m.appendChild(w),l.classList.add("active"),g.style.cursor="grab",u=new h(g,m)},M=function(){l.classList.remove("active"),u?.cleanup(),u=null},c=e[n],s=c.parentElement,a=s.querySelector(".clipboard-button"),d=s.querySelector(".expand-button"),p=window.getComputedStyle(a),L=a.offsetWidth+parseFloat(p.marginLeft||"0")+parseFloat(p.marginRight||"0");d.style.right=`calc(${L}px + 0.3rem)`,s.prepend(d);let l=s.querySelector("#mermaid-container");if(!l)return;let u=null;d.addEventListener("click",v),f(l,M),window.addCleanup(()=>{u?.cleanup(),d.removeEventListener("click",v)})}});
+</script><script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/copy-tex.min.js" type="application/javascript"></script><script src="../postscript.js" type="module"></script></html>

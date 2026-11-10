@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="ko" dir="ltr"><head><title>Rigid-Body Kinetics</title><meta charset="utf-8"/><link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com"/><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto Sans KR:wght@400;700&amp;family=Noto Sans KR:ital,wght@0,400;0,600;1,400;1,600&amp;family=IBM Plex Mono:wght@400;600&amp;display=swap"/><link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin="anonymous"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta name="og:site_name" content="LabNote"/><meta property="og:title" content="Rigid-Body Kinetics"/><meta property="og:type" content="website"/><meta name="twitter:card" content="summary_large_image"/><meta name="twitter:title" content="Rigid-Body Kinetics"/><meta name="twitter:description" content="Rigid-Body Kinetics 한 줄로 CG 기준으로 세운 Newton-Euler 식을 CO 기준으로 옮기는 일. Hᵀ( · )H 샌드위치 한 번에 M_RB 와 C_RB 가 동시에 나온다."/><meta property="og:description" content="Rigid-Body Kinetics 한 줄로 CG 기준으로 세운 Newton-Euler 식을 CO 기준으로 옮기는 일. Hᵀ( · )H 샌드위치 한 번에 M_RB 와 C_RB 가 동시에 나온다."/><meta property="og:image:alt" content="Rigid-Body Kinetics 한 줄로 CG 기준으로 세운 Newton-Euler 식을 CO 기준으로 옮기는 일. Hᵀ( · )H 샌드위치 한 번에 M_RB 와 C_RB 가 동시에 나온다."/><meta property="og:image" content="https://yusik36.github.io/research-notes/static/og-image.png"/><meta property="og:image:url" content="https://yusik36.github.io/research-notes/static/og-image.png"/><meta name="twitter:image" content="https://yusik36.github.io/research-notes/static/og-image.png"/><meta property="og:image:type" content="image/.png"/><meta property="twitter:domain" content="yusik36.github.io/research-notes"/><meta property="og:url" content="https://yusik36.github.io/research-notes/30_Knowledge/Rigid-Body-Kinetics"/><meta property="twitter:url" content="https://yusik36.github.io/research-notes/30_Knowledge/Rigid-Body-Kinetics"/><link rel="icon" href="../static/icon.png"/><meta name="description" content="Rigid-Body Kinetics 한 줄로 CG 기준으로 세운 Newton-Euler 식을 CO 기준으로 옮기는 일. Hᵀ( · )H 샌드위치 한 번에 M_RB 와 C_RB 가 동시에 나온다."/><meta name="generator" content="Quartz"/><link href="../index.css" rel="stylesheet" type="text/css" spa-preserve/><style>.expand-button {
+  position: absolute;
+  display: flex;
+  float: right;
+  padding: 0.4rem;
+  margin: 0.3rem;
+  right: 0;
+  color: var(--gray);
+  border-color: var(--dark);
+  background-color: var(--light);
+  border: 1px solid;
+  border-radius: 5px;
+  opacity: 0;
+  transition: 0.2s;
+}
+.expand-button > svg {
+  fill: var(--light);
+  filter: contrast(0.3);
+}
+.expand-button:hover {
+  cursor: pointer;
+  border-color: var(--secondary);
+}
+.expand-button:focus {
+  outline: 0;
+}
+
+pre:hover > .expand-button {
+  opacity: 1;
+  transition: 0.2s;
+}
+
+#mermaid-container {
+  position: fixed;
+  contain: layout;
+  z-index: 999;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  display: none;
+  backdrop-filter: blur(4px);
+  background: rgba(0, 0, 0, 0.5);
+}
+#mermaid-container.active {
+  display: inline-block;
+}
+#mermaid-container > #mermaid-space {
+  border: 1px solid var(--lightgray);
+  background-color: var(--light);
+  border-radius: 5px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 80vh;
+  width: 80vw;
+  overflow: hidden;
+}
+#mermaid-container > #mermaid-space > .mermaid-content {
+  padding: 2rem;
+  position: relative;
+  transform-origin: 0 0;
+  transition: transform 0.1s ease;
+  overflow: visible;
+  min-height: 200px;
+  min-width: 200px;
+}
+#mermaid-container > #mermaid-space > .mermaid-content pre {
+  margin: 0;
+  border: none;
+}
+#mermaid-container > #mermaid-space > .mermaid-content svg {
+  max-width: none;
+  height: auto;
+}
+#mermaid-container > #mermaid-space > .mermaid-controls {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  gap: 8px;
+  padding: 8px;
+  background: var(--light);
+  border: 1px solid var(--lightgray);
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 2;
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 1px solid var(--lightgray);
+  background: var(--light);
+  color: var(--dark);
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  font-family: var(--bodyFont);
+  transition: all 0.2s ease;
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button:hover {
+  background: var(--lightgray);
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button:active {
+  transform: translateY(1px);
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button:nth-child(2) {
+  width: auto;
+  padding: 0 12px;
+  font-size: 14px;
+}
+/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VSb290IjoiQzpcXEFyY2hpdmVcXOyeoeuLpOq1rOumrFxcVVNU7J247YS0X+yngOybkOyEnFxcc2l0ZVxccXVhcnR6XFxjb21wb25lbnRzXFxzdHlsZXMiLCJzb3VyY2VzIjpbIm1lcm1haWQuaW5saW5lLnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDRTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTs7QUFFQTtFQUNFO0VBQ0E7O0FBR0Y7RUFDRTtFQUNBOztBQUdGO0VBQ0U7OztBQUtGO0VBQ0U7RUFDQTs7O0FBSUo7RUFDRTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBOztBQUVBO0VBQ0U7O0FBR0Y7RUFDRTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTs7QUFFQTtFQUNFO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBOztBQUVBO0VBQ0U7RUFDQTs7QUFHRjtFQUNFO0VBQ0E7O0FBSUo7RUFDRTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBOztBQUVBO0VBQ0U7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTs7QUFFQTtFQUNFOztBQUdGO0VBQ0U7O0FBSUY7RUFDRTtFQUNBO0VBQ0EiLCJzb3VyY2VzQ29udGVudCI6WyIuZXhwYW5kLWJ1dHRvbiB7XG4gIHBvc2l0aW9uOiBhYnNvbHV0ZTtcbiAgZGlzcGxheTogZmxleDtcbiAgZmxvYXQ6IHJpZ2h0O1xuICBwYWRkaW5nOiAwLjRyZW07XG4gIG1hcmdpbjogMC4zcmVtO1xuICByaWdodDogMDsgLy8gTk9URTogcmlnaHQgd2lsbCBiZSBzZXQgaW4gbWVybWFpZC5pbmxpbmUudHNcbiAgY29sb3I6IHZhcigtLWdyYXkpO1xuICBib3JkZXItY29sb3I6IHZhcigtLWRhcmspO1xuICBiYWNrZ3JvdW5kLWNvbG9yOiB2YXIoLS1saWdodCk7XG4gIGJvcmRlcjogMXB4IHNvbGlkO1xuICBib3JkZXItcmFkaXVzOiA1cHg7XG4gIG9wYWNpdHk6IDA7XG4gIHRyYW5zaXRpb246IDAuMnM7XG5cbiAgJiA+IHN2ZyB7XG4gICAgZmlsbDogdmFyKC0tbGlnaHQpO1xuICAgIGZpbHRlcjogY29udHJhc3QoMC4zKTtcbiAgfVxuXG4gICY6aG92ZXIge1xuICAgIGN1cnNvcjogcG9pbnRlcjtcbiAgICBib3JkZXItY29sb3I6IHZhcigtLXNlY29uZGFyeSk7XG4gIH1cblxuICAmOmZvY3VzIHtcbiAgICBvdXRsaW5lOiAwO1xuICB9XG59XG5cbnByZSB7XG4gICY6aG92ZXIgPiAuZXhwYW5kLWJ1dHRvbiB7XG4gICAgb3BhY2l0eTogMTtcbiAgICB0cmFuc2l0aW9uOiAwLjJzO1xuICB9XG59XG5cbiNtZXJtYWlkLWNvbnRhaW5lciB7XG4gIHBvc2l0aW9uOiBmaXhlZDtcbiAgY29udGFpbjogbGF5b3V0O1xuICB6LWluZGV4OiA5OTk7XG4gIGxlZnQ6IDA7XG4gIHRvcDogMDtcbiAgd2lkdGg6IDEwMHZ3O1xuICBoZWlnaHQ6IDEwMHZoO1xuICBvdmVyZmxvdzogaGlkZGVuO1xuICBkaXNwbGF5OiBub25lO1xuICBiYWNrZHJvcC1maWx0ZXI6IGJsdXIoNHB4KTtcbiAgYmFja2dyb3VuZDogcmdiYSgwLCAwLCAwLCAwLjUpO1xuXG4gICYuYWN0aXZlIHtcbiAgICBkaXNwbGF5OiBpbmxpbmUtYmxvY2s7XG4gIH1cblxuICAmID4gI21lcm1haWQtc3BhY2Uge1xuICAgIGJvcmRlcjogMXB4IHNvbGlkIHZhcigtLWxpZ2h0Z3JheSk7XG4gICAgYmFja2dyb3VuZC1jb2xvcjogdmFyKC0tbGlnaHQpO1xuICAgIGJvcmRlci1yYWRpdXM6IDVweDtcbiAgICBwb3NpdGlvbjogZml4ZWQ7XG4gICAgdG9wOiA1MCU7XG4gICAgbGVmdDogNTAlO1xuICAgIHRyYW5zZm9ybTogdHJhbnNsYXRlKC01MCUsIC01MCUpO1xuICAgIGhlaWdodDogODB2aDtcbiAgICB3aWR0aDogODB2dztcbiAgICBvdmVyZmxvdzogaGlkZGVuO1xuXG4gICAgJiA+IC5tZXJtYWlkLWNvbnRlbnQge1xuICAgICAgcGFkZGluZzogMnJlbTtcbiAgICAgIHBvc2l0aW9uOiByZWxhdGl2ZTtcbiAgICAgIHRyYW5zZm9ybS1vcmlnaW46IDAgMDtcbiAgICAgIHRyYW5zaXRpb246IHRyYW5zZm9ybSAwLjFzIGVhc2U7XG4gICAgICBvdmVyZmxvdzogdmlzaWJsZTtcbiAgICAgIG1pbi1oZWlnaHQ6IDIwMHB4O1xuICAgICAgbWluLXdpZHRoOiAyMDBweDtcblxuICAgICAgcHJlIHtcbiAgICAgICAgbWFyZ2luOiAwO1xuICAgICAgICBib3JkZXI6IG5vbmU7XG4gICAgICB9XG5cbiAgICAgIHN2ZyB7XG4gICAgICAgIG1heC13aWR0aDogbm9uZTtcbiAgICAgICAgaGVpZ2h0OiBhdXRvO1xuICAgICAgfVxuICAgIH1cblxuICAgICYgPiAubWVybWFpZC1jb250cm9scyB7XG4gICAgICBwb3NpdGlvbjogYWJzb2x1dGU7XG4gICAgICBib3R0b206IDIwcHg7XG4gICAgICByaWdodDogMjBweDtcbiAgICAgIGRpc3BsYXk6IGZsZXg7XG4gICAgICBnYXA6IDhweDtcbiAgICAgIHBhZGRpbmc6IDhweDtcbiAgICAgIGJhY2tncm91bmQ6IHZhcigtLWxpZ2h0KTtcbiAgICAgIGJvcmRlcjogMXB4IHNvbGlkIHZhcigtLWxpZ2h0Z3JheSk7XG4gICAgICBib3JkZXItcmFkaXVzOiA2cHg7XG4gICAgICBib3gtc2hhZG93OiAwIDJweCA0cHggcmdiYSgwLCAwLCAwLCAwLjEpO1xuICAgICAgei1pbmRleDogMjtcblxuICAgICAgLm1lcm1haWQtY29udHJvbC1idXR0b24ge1xuICAgICAgICBkaXNwbGF5OiBmbGV4O1xuICAgICAgICBhbGlnbi1pdGVtczogY2VudGVyO1xuICAgICAgICBqdXN0aWZ5LWNvbnRlbnQ6IGNlbnRlcjtcbiAgICAgICAgd2lkdGg6IDMycHg7XG4gICAgICAgIGhlaWdodDogMzJweDtcbiAgICAgICAgcGFkZGluZzogMDtcbiAgICAgICAgYm9yZGVyOiAxcHggc29saWQgdmFyKC0tbGlnaHRncmF5KTtcbiAgICAgICAgYmFja2dyb3VuZDogdmFyKC0tbGlnaHQpO1xuICAgICAgICBjb2xvcjogdmFyKC0tZGFyayk7XG4gICAgICAgIGJvcmRlci1yYWRpdXM6IDRweDtcbiAgICAgICAgY3Vyc29yOiBwb2ludGVyO1xuICAgICAgICBmb250LXNpemU6IDE2cHg7XG4gICAgICAgIGZvbnQtZmFtaWx5OiB2YXIoLS1ib2R5Rm9udCk7XG4gICAgICAgIHRyYW5zaXRpb246IGFsbCAwLjJzIGVhc2U7XG5cbiAgICAgICAgJjpob3ZlciB7XG4gICAgICAgICAgYmFja2dyb3VuZDogdmFyKC0tbGlnaHRncmF5KTtcbiAgICAgICAgfVxuXG4gICAgICAgICY6YWN0aXZlIHtcbiAgICAgICAgICB0cmFuc2Zvcm06IHRyYW5zbGF0ZVkoMXB4KTtcbiAgICAgICAgfVxuXG4gICAgICAgIC8vIFN0eWxlIHRoZSByZXNldCBidXR0b24gZGlmZmVyZW50bHlcbiAgICAgICAgJjpudGgtY2hpbGQoMikge1xuICAgICAgICAgIHdpZHRoOiBhdXRvO1xuICAgICAgICAgIHBhZGRpbmc6IDAgMTJweDtcbiAgICAgICAgICBmb250LXNpemU6IDE0cHg7XG4gICAgICAgIH1cbiAgICAgIH1cbiAgICB9XG4gIH1cbn1cbiJdfQ== */</style><link href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" rel="stylesheet" type="text/css" spa-preserve/><script src="../prescript.js" type="application/javascript" spa-preserve></script><script type="application/javascript" spa-preserve>const fetchData = fetch("../static/contentIndex.json").then(data => data.json())</script></head><body data-slug="30_Knowledge/Rigid-Body-Kinetics"><div id="quartz-root" class="page"><div id="quartz-body"><div class="left sidebar"><h2 class="page-title"><a href="..">LabNote</a></h2><div class="spacer mobile-only"></div><div class="flex-component" style="flex-direction: row; flex-wrap: nowrap; gap: 1rem;"><div style="flex-grow: 1; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><div class="search"><button class="search-button"><svg role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19.9 19.7"><title>Search</title><g class="search-path" fill="none"><path stroke-linecap="square" d="M18.5 18.3l-5.4-5.4"></path><circle cx="8" cy="8" r="7"></circle></g></svg><p>검색</p></button><div class="search-container"><div class="search-space"><input autocomplete="off" class="search-bar" name="search" type="text" aria-label="검색어를 입력하세요" placeholder="검색어를 입력하세요"/><div class="search-layout" data-preview="true"></div></div></div></div></div><div style="flex-grow: 0; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><button class="darkmode"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="dayIcon" x="0px" y="0px" viewBox="0 0 35 35" style="enable-background:new 0 0 35 35" xml:space="preserve" aria-label="다크 모드"><title>다크 모드</title><path d="M6,17.5C6,16.672,5.328,16,4.5,16h-3C0.672,16,0,16.672,0,17.5    S0.672,19,1.5,19h3C5.328,19,6,18.328,6,17.5z M7.5,26c-0.414,0-0.789,0.168-1.061,0.439l-2,2C4.168,28.711,4,29.086,4,29.5    C4,30.328,4.671,31,5.5,31c0.414,0,0.789-0.168,1.06-0.44l2-2C8.832,28.289,9,27.914,9,27.5C9,26.672,8.329,26,7.5,26z M17.5,6    C18.329,6,19,5.328,19,4.5v-3C19,0.672,18.329,0,17.5,0S16,0.672,16,1.5v3C16,5.328,16.671,6,17.5,6z M27.5,9    c0.414,0,0.789-0.168,1.06-0.439l2-2C30.832,6.289,31,5.914,31,5.5C31,4.672,30.329,4,29.5,4c-0.414,0-0.789,0.168-1.061,0.44    l-2,2C26.168,6.711,26,7.086,26,7.5C26,8.328,26.671,9,27.5,9z M6.439,8.561C6.711,8.832,7.086,9,7.5,9C8.328,9,9,8.328,9,7.5    c0-0.414-0.168-0.789-0.439-1.061l-2-2C6.289,4.168,5.914,4,5.5,4C4.672,4,4,4.672,4,5.5c0,0.414,0.168,0.789,0.439,1.06    L6.439,8.561z M33.5,16h-3c-0.828,0-1.5,0.672-1.5,1.5s0.672,1.5,1.5,1.5h3c0.828,0,1.5-0.672,1.5-1.5S34.328,16,33.5,16z     M28.561,26.439C28.289,26.168,27.914,26,27.5,26c-0.828,0-1.5,0.672-1.5,1.5c0,0.414,0.168,0.789,0.439,1.06l2,2    C28.711,30.832,29.086,31,29.5,31c0.828,0,1.5-0.672,1.5-1.5c0-0.414-0.168-0.789-0.439-1.061L28.561,26.439z M17.5,29    c-0.829,0-1.5,0.672-1.5,1.5v3c0,0.828,0.671,1.5,1.5,1.5s1.5-0.672,1.5-1.5v-3C19,29.672,18.329,29,17.5,29z M17.5,7    C11.71,7,7,11.71,7,17.5S11.71,28,17.5,28S28,23.29,28,17.5S23.29,7,17.5,7z M17.5,25c-4.136,0-7.5-3.364-7.5-7.5    c0-4.136,3.364-7.5,7.5-7.5c4.136,0,7.5,3.364,7.5,7.5C25,21.636,21.636,25,17.5,25z"></path></svg><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="nightIcon" x="0px" y="0px" viewBox="0 0 100 100" style="enable-background:new 0 0 100 100" xml:space="preserve" aria-label="라이트 모드"><title>라이트 모드</title><path d="M96.76,66.458c-0.853-0.852-2.15-1.064-3.23-0.534c-6.063,2.991-12.858,4.571-19.655,4.571  C62.022,70.495,50.88,65.88,42.5,57.5C29.043,44.043,25.658,23.536,34.076,6.47c0.532-1.08,0.318-2.379-0.534-3.23  c-0.851-0.852-2.15-1.064-3.23-0.534c-4.918,2.427-9.375,5.619-13.246,9.491c-9.447,9.447-14.65,22.008-14.65,35.369  c0,13.36,5.203,25.921,14.65,35.368s22.008,14.65,35.368,14.65c13.361,0,25.921-5.203,35.369-14.65  c3.872-3.871,7.064-8.328,9.491-13.246C97.826,68.608,97.611,67.309,96.76,66.458z"></path></svg></button></div><div style="flex-grow: 0; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><button class="readermode"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="readerIcon" fill="currentColor" stroke="currentColor" stroke-width="0.2" stroke-linecap="round" stroke-linejoin="round" width="64px" height="64px" viewBox="0 0 24 24" aria-label="리더 모드"><title>리더 모드</title><g transform="translate(-1.8, -1.8) scale(1.15, 1.2)"><path d="M8.9891247,2.5 C10.1384702,2.5 11.2209868,2.96705384 12.0049645,3.76669482 C12.7883914,2.96705384 13.8709081,2.5 15.0202536,2.5 L18.7549359,2.5 C19.1691495,2.5 19.5049359,2.83578644 19.5049359,3.25 L19.5046891,4.004 L21.2546891,4.00457396 C21.6343849,4.00457396 21.9481801,4.28672784 21.9978425,4.6528034 L22.0046891,4.75457396 L22.0046891,20.25 C22.0046891,20.6296958 21.7225353,20.943491 21.3564597,20.9931534 L21.2546891,21 L2.75468914,21 C2.37499337,21 2.06119817,20.7178461 2.01153575,20.3517706 L2.00468914,20.25 L2.00468914,4.75457396 C2.00468914,4.37487819 2.28684302,4.061083 2.65291858,4.01142057 L2.75468914,4.00457396 L4.50368914,4.004 L4.50444233,3.25 C4.50444233,2.87030423 4.78659621,2.55650904 5.15267177,2.50684662 L5.25444233,2.5 L8.9891247,2.5 Z M4.50368914,5.504 L3.50468914,5.504 L3.50468914,19.5 L10.9478955,19.4998273 C10.4513189,18.9207296 9.73864328,18.5588115 8.96709342,18.5065584 L8.77307039,18.5 L5.25444233,18.5 C4.87474657,18.5 4.56095137,18.2178461 4.51128895,17.8517706 L4.50444233,17.75 L4.50368914,5.504 Z M19.5049359,17.75 C19.5049359,18.1642136 19.1691495,18.5 18.7549359,18.5 L15.2363079,18.5 C14.3910149,18.5 13.5994408,18.8724714 13.0614828,19.4998273 L20.5046891,19.5 L20.5046891,5.504 L19.5046891,5.504 L19.5049359,17.75 Z M18.0059359,3.999 L15.0202536,4 L14.8259077,4.00692283 C13.9889509,4.06666544 13.2254227,4.50975805 12.7549359,5.212 L12.7549359,17.777 L12.7782651,17.7601316 C13.4923805,17.2719483 14.3447024,17 15.2363079,17 L18.0059359,16.999 L18.0056891,4.798 L18.0033792,4.75457396 L18.0056891,4.71 L18.0059359,3.999 Z M8.9891247,4 L6.00368914,3.999 L6.00599909,4.75457396 L6.00599909,4.75457396 L6.00368914,4.783 L6.00368914,16.999 L8.77307039,17 C9.57551536,17 10.3461406,17.2202781 11.0128313,17.6202194 L11.2536891,17.776 L11.2536891,5.211 C10.8200889,4.56369974 10.1361548,4.13636104 9.37521067,4.02745763 L9.18347055,4.00692283 L8.9891247,4 Z"></path></g></svg></button></div></div><div class="explorer" data-behavior="link" data-collapsed="collapsed" data-savestate="true" data-data-fns="{&quot;order&quot;:[&quot;filter&quot;,&quot;map&quot;,&quot;sort&quot;],&quot;sortFn&quot;:&quot;(a,b)=>!a.isFolder&amp;&amp;!b.isFolder||a.isFolder&amp;&amp;b.isFolder?a.displayName.localeCompare(b.displayName,void 0,{numeric:!0,sensitivity:\&quot;base\&quot;}):!a.isFolder&amp;&amp;b.isFolder?1:-1&quot;,&quot;filterFn&quot;:&quot;node=>node.slugSegment!==\&quot;tags\&quot;&quot;,&quot;mapFn&quot;:&quot;node=>node&quot;}"><button type="button" class="explorer-toggle mobile-explorer hide-until-loaded" data-mobile="true" aria-controls="explorer-133"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide-menu"><line x1="4" x2="20" y1="12" y2="12"></line><line x1="4" x2="20" y1="6" y2="6"></line><line x1="4" x2="20" y1="18" y2="18"></line></svg></button><button type="button" class="title-button explorer-toggle desktop-explorer" data-mobile="false" aria-expanded="true"><h2>탐색기</h2><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="5 8 14 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fold"><polyline points="6 9 12 15 18 9"></polyline></svg></button><div id="explorer-133" class="explorer-content" aria-expanded="false" role="group"><ul class="explorer-ul overflow" id="list-0"><li class="overflow-end"></li></ul></div><template id="template-file"><li><a href="#"></a></li></template><template id="template-folder"><li><div class="folder-container"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="5 8 14 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="folder-icon"><polyline points="6 9 12 15 18 9"></polyline></svg><div><button class="folder-button"><span class="folder-title"></span></button></div></div><div class="folder-outer"><ul class="content"></ul></div></li></template></div></div><div class="center"><div class="page-header"><div class="popover-hint"><nav class="breadcrumb-container" aria-label="breadcrumbs"><div class="breadcrumb-element"><a href="../">Home</a><p> ❯ </p></div><div class="breadcrumb-element"><a href="../30_Knowledge/">30_Knowledge</a><p> ❯ </p></div><div class="breadcrumb-element"><a href>Rigid Body Kinetics</a></div></nav><h1 class="article-title">Rigid-Body Kinetics</h1><p show-comma="true" class="content-meta"><time datetime="2026-09-09T15:00:00.000Z">2026년 9월 10일</time><span>20 min read</span></p><ul class="tags"><li><a href="../tags/modeling" class="internal tag-link">modeling</a></li><li><a href="../tags/naval-architecture" class="internal tag-link">naval-architecture</a></li><li><a href="../tags/control-theory" class="internal tag-link">control-theory</a></li></ul></div></div><article class="popover-hint"><h1 id="rigid-body-kinetics">Rigid-Body Kinetics<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#rigid-body-kinetics" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h1>
+<blockquote class="callout abstract" data-callout="abstract">
+<div class="callout-title">
+                  <div class="callout-icon"></div>
+                  <div class="callout-title-inner"><p>한 줄로 </p></div>
+                  
+                </div>
+<div class="callout-content">
+<p>CG 기준으로 세운 Newton-Euler 식을 <strong>CO 기준으로 옮기는 일</strong>.
+<code>Hᵀ( · )H</code> 샌드위치 <strong>한 번</strong>에 <code>M_RB</code> 와 <code>C_RB</code> 가 동시에 나온다.</p>
+</div>
+</blockquote>
+<pre><code>M_RB ν̇  +  C_RB(ν) ν  =  τ_RB
+</code></pre>
+<p><strong>어디에 앉는가</strong> — <a href="../30_Knowledge/6-DOF-Marine-Craft-Model" class="internal alias" data-slug="30_Knowledge/6-DOF-Marine-Craft-Model">6-DOF Marine Craft Model</a> 의 <code>Mν̇ + C(ν)ν + D(ν)ν + g(η) = τ</code> 에서 <strong><code>M</code> 과 <code>C</code> 의 강체 몫</strong>을 만든다. <a href="../30_Knowledge/Transport-Theorem" class="internal alias" data-slug="30_Knowledge/Transport-Theorem">Transport Theorem</a> 이 CG 기준까지 끌고 온 식을 받아 CO 기준으로 넘긴다. → <a href="../30_Knowledge/6-DOF-Marine-Craft-Model" class="internal alias" data-slug="30_Knowledge/6-DOF-Marine-Craft-Model">6-DOF Marine Craft Model</a></p>
+<h2 id="왜-필요한가">왜 필요한가<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#왜-필요한가" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p><a href="../30_Knowledge/Transport-Theorem" class="internal alias" data-slug="30_Knowledge/Transport-Theorem">Transport Theorem</a> 이 만든 식은 <strong>CG 기준</strong>이었다.</p>
+<pre><code>m [ v̇_ng + S(ω_nb)·v_ng ] = f_g
+I_g·ω̇_nb − S(I_g·ω_nb)·ω_nb = m_g
+</code></pre>
+<p>틀리지 않았다. <strong>쓸 수가 없을 뿐이다.</strong> <code>v_g</code> 는 “무게중심이 움직이는 속도”인데, 무게중심에는 센서를 못 박고 게다가 연료를 태우면 자리가 바뀐다. <strong>상태변수의 정의가 항해 중에 변한다.</strong></p>
+<p>그래서 우리가 고른 고정점 CO 로 식을 다시 써야 한다. 필요한 건 딱 하나 — “CO 의 속도를 알 때 CG 의 속도는 얼마인가”.</p>
+<h2 id="물리는-v_g--v_o--ω--r_g-한-줄이-전부다">물리는 <code>v_g = v_o + ω × r_g</code> 한 줄이 전부다<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#물리는-v_g--v_o--ω--r_g-한-줄이-전부다" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>강체라서 <code>r^b_g</code> 는 <strong>BODY 에서</strong> 상수다. 그런데 NED 에서 보면 배와 함께 돈다 — <a href="../30_Knowledge/Transport-Theorem" class="internal alias" data-slug="30_Knowledge/Transport-Theorem">Transport Theorem</a> 이 이미 푼 문제다.</p>
+<pre><code>ⁿd/dt (r_g) = ᵇd/dt (r_g) + ω × r_g  =  0 + ω × r_g
+</code></pre>
+<p><code>p_g = p_o + r_g</code> 를 NED 에서 미분하면 그대로:</p>
+<pre><code>v_g = v_o + ω × r_g            ← 속도의 덧셈. 회전목마 위를 걷는 사람
+ω_g = ω                        ← 각속도는 안 바뀐다
+</code></pre>
+<p>두 번째가 시시해 보여도 <strong>이것도 식이다.</strong> 강체는 어느 점을 잡아도 같은 각속도로 돈다.</p>
+<blockquote class="callout tip" data-callout="tip">
+<div class="callout-title">
+                  <div class="callout-icon"></div>
+                  <div class="callout-title-inner"><p>&quot;고정&quot;은 두 겹이다. <code>r_g</code> 는 <strong>BODY 에서만</strong> 상수고, ① NED 에서는 돈다(그래서 <code>ω × r_g</code> 가 남았다) ② 연료·화물로 천천히 변한다(애초에 CO 를 도입한 이유). 물리 상수가 아니라 <strong>BODY 에서 잰, 천천히 변하는 설계 파라미터</strong>다.</p></div>
+                  
+                </div>
+</blockquote>
+<h2 id="h-의-마이너스는-외운-게-아니라-ω-를-변수-자리로-끌어낸-대가다"><code>H</code> 의 마이너스는 외운 게 아니라 <code>ω</code> 를 변수 자리로 끌어낸 대가다<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#h-의-마이너스는-외운-게-아니라-ω-를-변수-자리로-끌어낸-대가다" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>외적을 행렬로 바꾸는 방법이 둘인데, 목적이 하나를 강제한다.</p>
+<pre><code>방법 A :  ω × r_g =  S(ω)·r_g      → 행렬이 매 스텝 바뀐다.          ✗
+방법 B :  ω × r_g = −S(r_g)·ω      → 행렬은 상수, ω 가 입력.          ✓
+</code></pre>
+<p>우리가 만드는 건 <code>ν_o = [v_o; ω]</code> 를 <strong>입력으로 받는</strong> 기계다. <code>ω</code> 가 변수고 <code>r_g</code> 는 설계도 상수이므로 B 만 쓸 수 있다. <code>S(a)b = −S(b)a</code> 를 여기서 쓴다.</p>
+<blockquote class="callout tip" data-callout="tip">
+<div class="callout-title">
+                  <div class="callout-icon"></div>
+                  <div class="callout-title-inner"><p> <code>H</code> 우상단이 <code>−S(r_g)</code> 인 건 부호를 외운 결과가 아니라 <strong><code>ω</code> 를 곱해지는 쪽으로 옮기면서 딸려 나온 마이너스</strong>다.</p></div>
+                  
+                </div>
+</blockquote>
+<h2 id="블록-하나하나가-물리-문장이다">블록 하나하나가 물리 문장이다<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#블록-하나하나가-물리-문장이다" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p><code>ν_g = H ν_o</code> 를 성분까지 펼치면 여섯 줄이 나온다.</p>
+<pre><code>u_g = u          + z_g·q − y_g·r
+v_g = v − z_g·p          + x_g·r
+w_g = w + y_g·p − x_g·q
+─────────────────────────────────
+p_g = p      q_g = q      r_g = r
+</code></pre>
+<p>각 항의 형태가 전부 <code>(회전율) × (그 축에서 떨어진 거리)</code> — <code>v = ωR</code> 이 축마다 한 번씩 나온 것이다.</p>
+<blockquote class="callout warning" data-callout="warning">
+<div class="callout-title">
+                  <div class="callout-icon"></div>
+                  <div class="callout-title-inner"><p>기호 충돌 — <code>r</code> 이 두 개다. <strong>yaw rate <code>r</code></strong> 과 <strong>위치벡터 <code>r_g</code></strong>. 아래첨자 <code>g</code> 가 붙으면 위치, 없으면 각속도.</p></div>
+                  
+                </div>
+</blockquote>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th>구조</th><th>읽는 법</th></tr></thead><tbody><tr><td><code>S(·)</code> 의 <strong>대각이 0</strong></td><td>회전축 위의 점은 안 움직인다. <code>u_g</code> 줄에 <code>p</code> 가 없다</td></tr><tr><td><strong>축 방향 거리가 빠짐</strong></td><td><code>u_g</code> 줄에 <code>x_g</code> 가 없다. <a href="../30_Knowledge/Moment-of-Inertia" class="internal alias" data-slug="30_Knowledge/Moment-of-Inertia">Moment of Inertia</a> 의 “<code>I_xx</code> 에 <code>x_g</code> 가 안 들어간다”와 <strong>같은 사실</strong></td></tr><tr><td><strong>아래 절반이 <code>I₃</code></strong></td><td>자이로는 어디 붙여도 같은 값. 선속도·가속도만 lever arm 보정이 필요하다</td></tr></tbody></table></div>
+<p>세 번째가 실전에서 바로 쓰인다 — <strong>IMU lever arm 보정.</strong> MSS <code>Hmtrx(r)</code> 의 인자가 <code>r_bg</code> 가 아니라 <code>r_bp</code>(CO 에서 임의의 점 P) 인 이유도 이것. CG 든 IMU 든 같은 행렬을 쓴다.</p>
+<h2 id="에너지가-행렬-변환-규칙을-강제한다">에너지가 행렬 변환 규칙을 강제한다<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#에너지가-행렬-변환-규칙을-강제한다" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p><code>H</code> 는 <strong>벡터</strong> 옮기는 법만 알려준다. 행렬은 어떻게 옮기나 — 여기서 물리가 들어온다.</p>
+<blockquote>
+<p><strong>운동에너지는 물리량이라, 어느 점 기준으로 계산하든 같은 숫자여야 한다.</strong></p>
+</blockquote>
+<pre><code>T = ½ ν_gᵀ M^CG ν_g = ½ (Hν_o)ᵀ M^CG (Hν_o) = ½ ν_oᵀ ( Hᵀ M^CG H ) ν_o
+                                                    └──────┬──────┘
+                                                         M_RB
+</code></pre>
+<p>앞뒤로 감싸는 이 형태를 <strong>합동변환(congruence)</strong> 이라 한다. 벡터는 <code>H</code> 한 번, 행렬은 두 번 — <strong>에너지가 <code>ν</code> 를 두 번 먹는 이차형식</strong>이라서 그렇다.</p>
+<p>같은 논리가 세 번 쓰인다.</p>
+<pre><code>속도   ν_g  = H ν_o          벡터라서 한 번
+관성   M_RB = Hᵀ M^CG H      에너지 T = ½νᵀMν 가 불변이므로
+힘     τ_o  = Hᵀ τ_g         일률  P = νᵀτ   가 불변이므로
+</code></pre>
+<blockquote class="callout tip" data-callout="tip">
+<div class="callout-title">
+                  <div class="callout-icon"></div>
+                  <div class="callout-title-inner"><p> <code>Hᵀ</code> 는 벡터에는 안 쓴다. <strong>행렬을 감쌀 때만</strong> 나온다.</p></div>
+                  
+                </div>
+</blockquote>
+<h2 id="평행축-정리는-별도-공식이-아니라-기준점-이동의-부산물이다">평행축 정리는 별도 공식이 아니라 기준점 이동의 부산물이다<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#평행축-정리는-별도-공식이-아니라-기준점-이동의-부산물이다" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>곱셈을 끝내면 우하단 블록에 이게 나온다.</p>
+<pre><code>I_b = I_g − m S²(r_g)
+</code></pre>
+<p><a href="../30_Knowledge/Moment-of-Inertia" class="internal alias" data-slug="30_Knowledge/Moment-of-Inertia">Moment of Inertia</a> 에 이미 써 둔 평행축 정리다. <strong>따로 유도하지 않았고, <code>Hᵀ(·)H</code> 를 곱했더니 나왔다.</strong></p>
+<h2 id="비대각-블록은-cg-가-co-에서-얼마나-어긋났는가의-값이다">비대각 블록은 “CG 가 CO 에서 얼마나 어긋났는가”의 값이다<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#비대각-블록은-cg-가-co-에서-얼마나-어긋났는가의-값이다" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<pre><code>r_g = 0  (CO = CG)  →  M_RB 블록대각. 밀기와 돌기 완전 분리
+r_g ≠ 0             →  커플링 발생.  이것이 CO 를 쓰는 대가
+</code></pre>
+<p><a href="../30_Knowledge/6-DOF-Marine-Craft-Model" class="internal alias" data-slug="30_Knowledge/6-DOF-Marine-Craft-Model">6-DOF Marine Craft Model</a> 이 “BODY 를 쓰는 대가는 <code>J(η)</code> 와 <code>C(ν)ν</code>” 라고 썼는데, <strong>하나 더 있다 — CO 를 쓰는 대가가 <code>M_RB</code> 의 비대각 블록이다.</strong></p>
+<p><strong>커플링 지도</strong> — 규칙은 <code>모멘트 = r × F</code> 하나뿐이다. 어긋난 축과 수직인 힘만 회전을 만들고, 그 회전축은 둘 다에 수직이다.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th>어긋난 방향</th><th>켜지는 커플링</th><th>현상</th></tr></thead><tbody><tr><td><code>x_g</code> (앞뒤)</td><td>sway ↔ yaw · heave ↔ pitch</td><td>옆으로 밀면 돈다</td></tr><tr><td><code>y_g</code> (좌우)</td><td>surge ↔ yaw · heave ↔ roll</td><td><strong>전진만 해도 돈다</strong> (화물 편적)</td></tr><tr><td><code>z_g</code> (상하)</td><td>surge ↔ pitch · sway ↔ roll</td><td>가속하면 앞뒤로 기울고, <strong>선회하면 눕는다</strong></td></tr></tbody></table></div>
+<p><code>z_g</code> 의 두 번째가 실제 배에서 이름이 붙은 현상 — <strong>선회 시 내방 경사(heel during turn)</strong>. Otter USV 처럼 <code>r_g = [0,0,z_g]ᵀ</code> 인 배가 여기 해당하고, 4-DOF 모델에 roll 을 넣는 이유이기도 하다.</p>
+<p><strong>자기 방향은 자기를 못 묶는다.</strong> <code>x_g</code> 가 있어도 surge 커플링은 없다 — 힘이 <code>r_g</code> 와 나란하면 <code>r × F = 0</code>. <code>S(·)</code> 대각이 0인 사실이 세 번째로 나온 자리.</p>
+<h2 id="c_rb-는-같은-샌드위치로-따라-옮겨진다"><code>C_RB</code> 는 같은 샌드위치로 따라 옮겨진다<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#c_rb-는-같은-샌드위치로-따라-옮겨진다" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p><code>C_RB</code> 는 새 물건이 아니라 <a href="../30_Knowledge/Transport-Theorem" class="internal alias" data-slug="30_Knowledge/Transport-Theorem">Transport Theorem</a> 의 <code>ω×</code> 항 두 개를 포장한 것이다.</p>
+<pre><code>M_RB ν̇     +    C_RB(ν) ν      =  τ
+└──┬──┘         └───┬───┘
+원래 알던 것      회전좌표계의 대가
+(F=ma, M=Iα)     (ω× 항들)
+</code></pre>
+<p>변환도 똑같다.</p>
+<pre><code>M_RB = Hᵀ M^CG H
+C_RB = Hᵀ C^CG H            ← 같은 샌드위치
+</code></pre>
+<p><strong>왜 같은가</strong> — CG 기준 식 전체에 <code>ν_g = Hν_o</code> 를 넣고 앞에 <code>Hᵀ</code> 를 곱하면 두 항이 동시에 변환된다. 두 가지가 결정적이다.</p>
+<pre><code>①  Ḣ = 0        r_g 가 BODY 상수라서 미분항이 안 생긴다
+②  τ_o = Hᵀτ_g  일률이 기준점에 무관해야 하므로
+</code></pre>
+<p><code>C_RB</code> 에 <code>(ν)</code> 가 붙어 있는 것이 <strong>시스템이 비선형이 되는 지점</strong>이다. <code>C_RB(ν)ν</code> 는 속도의 이차항 — 배 동역학이 선형 제어이론으로 안 끝나는 이유의 절반.</p>
+<h2 id="반대칭성--coriolis-는-일을-하지-않는다">반대칭성 — Coriolis 는 일을 하지 않는다<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#반대칭성--coriolis-는-일을-하지-않는다" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<pre><code>C_RB = −C_RBᵀ        ⟹        νᵀ C_RB(ν) ν = 0     (모든 ν 에 대해)
+</code></pre>
+<p>운동에너지 수지를 쓰면 이 항이 통째로 사라진다.</p>
+<pre><code>Ṫ = νᵀ M ν̇ = νᵀτ − νᵀCν − νᵀDν − νᵀg
+                    └─┬─┘
+                      0
+</code></pre>
+<p>남는 건 “추진기가 넣는 에너지 − 물이 빼는 에너지”뿐. <strong>선박 제어의 passivity 기반 설계와 Lyapunov 안정성 증명이 서 있는 토대</strong>가 이것이다. <code>V = ½νᵀMν</code> 를 Lyapunov 함수로 잡는 순간 <code>C</code> 가 저절로 빠진다.</p>
+<blockquote class="callout tip" data-callout="tip">
+<div class="callout-title">
+                  <div class="callout-icon"></div>
+                  <div class="callout-title-inner"><p> <a href="../30_Knowledge/Transport-Theorem" class="internal alias" data-slug="30_Knowledge/Transport-Theorem">Transport Theorem</a> 에 &quot;<code>C(ν)ν</code> 는 실제 힘이 아니라 좌표계 선택의 대가&quot;라고 써 뒀는데, <strong>반대칭성이 그 문장의 수학적 증거다.</strong> 진짜 힘이면 일을 할 텐데 안 한다.</p></div>
+                  
+                </div>
+</blockquote>
+<h2 id="c_rb-가-ν-에만-의존하는-것이-해류를-공짜로-만든다"><code>C_RB</code> 가 <code>ν₂</code> 에만 의존하는 것이 해류를 공짜로 만든다<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#c_rb-가-ν-에만-의존하는-것이-해류를-공짜로-만든다" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p><code>C_RB</code> 안에는 <code>S(ω)</code> 와 <code>S(I_bω)</code> 뿐 — <strong>선속도 <code>[u,v,w]</code> 가 한 번도 안 나온다.</strong></p>
+<p><code>C</code> 는 <strong>유일하지 않다.</strong> 같은 <code>Cν</code> 를 주는 파라미터화가 여럿인데, Fossen 이 굳이 이 형태를 고른 이유가 이것이다.</p>
+<pre><code>해류는 선속도만 바꾸고 각속도는 안 바꾼다  (ω_r = ω)
+        ↓
+C_RB 가 ν₁ 을 안 보므로 방정식을 상대속도 ν_r = ν − ν_c 로 통째로 갈아 끼울 수 있다
+</code></pre>
+<p>MSS <code>rbody.m</code> 첫 줄 주석이 정확히 이 말이다.</p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="matlab" data-theme="github-light github-dark"><code data-language="matlab" data-theme="github-light github-dark" style="display:grid;"><span data-line><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;">% MRB * d/dt nu + CRB(nu) * nu = MRB * d/dt nu_r + CRB(nu_r) * nu_r = tau</span></span>
+<span data-line><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;">% CRB = CRB(nu2) - Coriolis-centripetal matrix, independent of nu1</span></span></code></pre></figure>
+<h2 id="수식">수식<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#수식" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p><strong>변환행렬 <code>H</code></strong> — MSS <code>Hmtrx(r)</code></p>
+<pre><code>          ⎡ I₃   Sᵀ(r) ⎤     ⎡ I₃  −S(r) ⎤
+H(r)  =   ⎢             ⎥  =  ⎢            ⎥          ν_g = H(r_g) ν_o
+          ⎣ 0₃    I₃    ⎦     ⎣ 0₃    I₃   ⎦
+
+        ┌                                   ┐
+        │  1   0   0  │   0    z_g  −y_g    │
+        │  0   1   0  │ −z_g    0    x_g    │
+        │  0   0   1  │  y_g  −x_g    0     │
+H  =    │ ────────────┼──────────────────── │
+        │  0   0   0  │   1     0     0     │
+        │  0   0   0  │   0     1     0     │
+        │  0   0   0  │   0     0     1     │
+        └                                   ┘
+</code></pre>
+<p><strong>관성행렬</strong> — <code>M_RB = Hᵀ M_RB^CG H</code>, <code>M_RB^CG = diag(mI₃, I_g)</code></p>
+<pre><code>           ⎡  m I₃        −m S(r_g)  ⎤
+M_RB  =    ⎢                          ⎥          I_b = I_g − m S²(r_g)
+           ⎣ m S(r_g)         I_b     ⎦
+
+        ⎡  m      0      0    │   0      m z_g  −m y_g ⎤
+        ⎢  0      m      0    │ −m z_g     0     m x_g ⎥
+        ⎢  0      0      m    │  m y_g  −m x_g     0   ⎥
+M_RB =  ⎢─────────────────────┼────────────────────────⎥
+        ⎢  0   −m z_g  m y_g  │  I_x    −I_xy   −I_xz  ⎥
+        ⎢ m z_g   0   −m x_g  │ −I_yx     I_y   −I_yz  ⎥
+        ⎣−m y_g m x_g    0    │ −I_zx   −I_zy     I_z  ⎦
+</code></pre>
+<p><strong>Coriolis 행렬</strong> — <code>C_RB = Hᵀ C_RB^CG H</code></p>
+<pre><code>              ⎡   m S(ω)          −m S(ω) S(r_g)  ⎤
+C_RB(ν)  =    ⎢                                    ⎥
+              ⎣ m S(r_g) S(ω)      −S(I_b ω)       ⎦
+
+r_g = 0 이면      ⎡ m S(ω)     0₃     ⎤
+                 ⎢                    ⎥  →  C_RB ν = [ m ω×v ; ω×(I_g ω) ]
+                 ⎣   0₃    −S(I_g ω) ⎦     = Transport Theorem 의 두 항 그대로
+</code></pre>
+<p><strong>읽는 법</strong></p>
+<ul>
+<li><code>M_RB</code> 의 좌상·우하는 <strong>아는 것</strong>(<code>F=ma</code>, 평행축 관성). <strong>새 정보는 비대각뿐</strong>이고 그건 <code>r_g</code> 의 값이다.</li>
+<li><code>C_RB</code> 에서 선속도가 안 보이면 파라미터화가 맞게 된 것이다.</li>
+<li><code>M_RB</code> 는 상수, <code>C_RB</code> 는 매 스텝 재계산. 이 차이가 곧 선형/비선형의 경계.</li>
+</ul>
+<p><strong>성질</strong></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th>성질</th><th>근거</th><th>실전에서</th></tr></thead><tbody><tr><td><code>M_RB = M_RBᵀ</code></td><td>합동변환이 대칭을 보존 <code>(HᵀMH)ᵀ = HᵀMᵀH</code></td><td>독립 성분 21개</td></tr><tr><td><code>M_RB > 0</code></td><td><code>det H = 1</code> 이라 항상 가역, 양정치 보존</td><td><strong><code>ν̇ = M⁻¹(τ−⋯)</code> 가 항상 풀린다</strong></td></tr><tr><td><code>C_RB = −C_RBᵀ</code></td><td>외적의 반교환성</td><td><code>νᵀCν = 0</code> → Lyapunov·passivity</td></tr><tr><td><code>C_RB = C_RB(ν₂)</code></td><td>파라미터화 선택</td><td>해류를 <code>ν_r</code> 치환으로 흡수</td></tr></tbody></table></div>
+<h2 id="검산">검산<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#검산" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th>조건</th><th>결과</th><th>맞는 이유</th></tr></thead><tbody><tr><td><code>r_g = 0</code> 일 때 <code>H</code></td><td><code>I₆</code></td><td>CO = CG 면 옮길 게 없다</td></tr><tr><td><code>r_g=[2,0,0]ᵀ</code>, <code>v_o=0</code>, <code>ω=[0,0,r]ᵀ</code></td><td><code>v_g = [0, 2r, 0]ᵀ</code></td><td>회전목마. <code>ω × 반지름 = 2r</code>, 우현 방향</td></tr><tr><td><code>r_g = 0</code> 일 때 <code>M_RB</code></td><td><code>diag(mI₃, I_g)</code></td><td>커플링은 어긋남에서만 나온다</td></tr><tr><td><code>r_g = 0</code> 일 때 <code>C_RB ν</code></td><td><code>[mω×v ; ω×(I_gω)]</code></td><td><a href="../30_Knowledge/Transport-Theorem" class="internal alias" data-slug="30_Knowledge/Transport-Theorem">Transport Theorem</a> 결과와 일치</td></tr><tr><td>화물 좌현 편적(<code>y_g&lt;0</code>)한 배를 CO 에서 전진 추력</td><td>선수가 <strong>좌현</strong>으로 돌아감</td><td><code>N = y_g·X &lt; 0</code>. 쇼핑카트 오른쪽 손잡이만 밀면 왼쪽으로 틀어진다</td></tr><tr><td>쓰러스터 <code>z_p</code>, CG <code>z_g</code> 일 때 pitch</td><td><code>I_y q̇ = (z_p − z_g)·X</code></td><td><strong>CO 가 소거된다.</strong> 기준점을 어디 잡든 물리는 불변 — 유도가 맞았다는 증거</td></tr></tbody></table></div>
+<h2 id="헷갈렸던-점">헷갈렸던 점<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#헷갈렸던-점" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<h3 id="쓰러스터가-cg-보다-아래라서-뱃머리가-들린다--이게-m_rb-커플링이다">”쓰러스터가 CG 보다 아래라서 뱃머리가 들린다 — 이게 <code>M_RB</code> 커플링이다”<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#쓰러스터가-cg-보다-아래라서-뱃머리가-들린다--이게-m_rb-커플링이다" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p><strong>물리는 맞는데 항을 잘못 짚었다.</strong> 둘은 다른 자리에 산다.</p>
+<pre><code>쓰러스터가 CG 보다 아래   →  실제 모멘트    →  τ 에 들어간다
+CG 가 CO 에서 어긋남      →  M_RB 비대각    →  왼쪽 항에 들어간다
+</code></pre>
+<p><strong><code>M_RB</code> 는 쓰러스터 위치를 모른다.</strong> 질량분포만 알지 힘을 어디서 주는지는 관심이 없다. 그런데 두 식을 같이 풀면 <code>I_y q̇ = (z_p − z_g)X</code> 가 나와 <strong>CO 가 소거되고</strong>, 결국 “쓰러스터에서 CG 까지의 거리”만 남는다. 문장은 맞고, 그 사실이 <code>M_RB</code> 한 곳에 적혀 있는 게 아니라 <strong><code>M_RB</code> 와 <code>τ</code> 가 협력해서</strong> 만든다.</p>
+<h3 id="ν_g--hᵀ-ν_o-아닌가">”<code>ν_g = Hᵀ ν_o</code> 아닌가”<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#ν_g--hᵀ-ν_o-아닌가" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p><code>ν_g = H ν_o</code> 다. <code>Hᵀ</code> 는 <strong>벡터를 옮길 때는 안 쓴다.</strong> 행렬을 <code>Hᵀ(·)H</code> 로 감쌀 때만 나온다. 벡터는 한 번, 이차형식은 두 번.</p>
+<h3 id="평행축-정리는-관성모멘트의-별도-공식이다">”평행축 정리는 관성모멘트의 별도 공식이다”<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#평행축-정리는-관성모멘트의-별도-공식이다" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p><code>Hᵀ M^CG H</code> 를 곱하면 우하단에 저절로 나온다. <strong>기준점 이동의 부산물</strong>이지 따로 외울 공식이 아니다.</p>
+<h3 id="ω--r_g-를-sωr_g-로-써도-되지-않나">”<code>ω × r_g</code> 를 <code>S(ω)r_g</code> 로 써도 되지 않나”<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#ω--r_g-를-sωr_g-로-써도-되지-않나" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>값은 같지만 <strong>쓸 수 없다.</strong> <code>ω</code> 가 변수라서 행렬이 매 스텝 바뀐다. <code>−S(r_g)ω</code> 로 뒤집어야 상수 행렬 <code>H</code> 안에 박힌다.</p>
+<h3 id="cνν-는-배에-걸리는-실제-힘이다">”<code>C(ν)ν</code> 는 배에 걸리는 실제 힘이다”<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#cνν-는-배에-걸리는-실제-힘이다" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p><a href="../30_Knowledge/Transport-Theorem" class="internal alias" data-slug="30_Knowledge/Transport-Theorem">Transport Theorem</a> 에서 한 번 정리했는데, 여기서 <strong>증거가 나왔다</strong> — 반대칭이라 <code>νᵀCν = 0</code>, 즉 일을 하지 않는다. 진짜 힘이면 에너지를 주고받을 텐데 안 한다.</p>
+<h2 id="내가-실제로-써본-곳">내가 실제로 써본 곳<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#내가-실제로-써본-곳" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<ul>
+<li>
+<p><strong>2026-09-10 — <code>H(r_g)</code> 유도 전 과정을 손으로 재현.</strong> 랩미팅 발표자료 제작과 함께 진행.
+<code>외적 → 행렬</code> 변환부터 블록 계수비교, 6×6 조립까지 6장. <strong>오류 없음 — 강의를 다시 보지 않고 재현됨.</strong></p>
+<p>① 실제 선박 변수(<code>p,q,r</code> · <code>x_g,y_g,z_g</code>)로 외적을 펼치고 <code>ω</code> 로 묶어 <code>−S(r_g)</code> 를 얻는다
+<img src="../_attachments/ANSL-Undergrad-Research/2026-09-10/2026-09-10-p01-cross-product-to-matrix.png" width="auto" height="auto" alt/>
+② 같은 외적을 <code>r_g</code> 로 묶으면 <code>S(ω)</code> 가 나온다 — 두 형태를 나란히 놓고 비교
+<img src="../_attachments/ANSL-Undergrad-Research/2026-09-10/2026-09-10-p02-factored-by-rg.png" width="auto" height="auto" alt/>
+③ <code>H</code> 를 <code>A·B·C·D</code> 네 블록으로 두고, 블록곱이 성분곱의 괄호치기일 뿐임을 1행으로 확인
+<img src="../_attachments/ANSL-Undergrad-Research/2026-09-10/2026-09-10-p03-h-block-setup.png" width="auto" height="auto" alt/>
+④ <code>ω=0</code> 과 <code>v_o=0</code> 을 대입해 <code>A = I₃</code>, <code>B = −S(r_g)</code> 를 고립시킴
+<img src="../_attachments/ANSL-Undergrad-Research/2026-09-10/2026-09-10-p04-coeff-match-AB.png" width="auto" height="auto" alt/>
+⑤ 아랫줄에 같은 절차로 <code>C = 0₃</code>, <code>D = I₃</code>
+<img src="../_attachments/ANSL-Undergrad-Research/2026-09-10/2026-09-10-p05-coeff-match-CD.png" width="auto" height="auto" alt/>
+⑥ 조립 — 6×6 전개에 네 블록을 색으로 표시
+<img src="../_attachments/ANSL-Undergrad-Research/2026-09-10/2026-09-10-p06-h-assembled.png" width="auto" height="auto" alt/></p>
+<blockquote class="callout warning" data-callout="warning">
+<div class="callout-title">
+                  <div class="callout-icon"></div>
+                  <div class="callout-title-inner"><p>위 손계산·발표자료에서 잡힌 슬립 (2026-09-10) <code>r_g</code> 로 적었다. <strong><code>w_g</code>(heave)</strong> 가 맞다. <code>r_g</code> 는 위치벡터라 기호가 겹친다. p06 에서는 <code>w_g</code> 로 바르게 적혀 있으므로 그 장에서만 난 전사 실수.
+② 발표자료에 &quot;선체에 고정된 <strong>IMU 위치 CO</strong>&quot; 라고 적었는데, <strong>CO 는 IMU 위치가 아니다.</strong> CO 는 제어 목적에 맞춰 우리가 고르는 원점이고, IMU 는 <code>r_bp</code> 로 따로 지정한다. 실무에서 CO 를 IMU 자리에 두는 선택은 흔하지만 정의가 아니다.
+③ 발표자료에 <code>v_o = [v_o ; ω]</code> 로 적힌 곳 — 6×1 전체는 <strong><code>ν_o</code></strong>(뉴)다. <a href="../30_Knowledge/6-DOF-Marine-Craft-Model" class="internal alias" data-slug="30_Knowledge/6-DOF-Marine-Craft-Model">6-DOF Marine Craft Model</a> 이 경고한 <code>ν</code> vs <code>v</code> 충돌이 그대로 재발.</p></div>
+                  
+                </div>
+<p>① p03 의 상태벡터 3번째 성분을 </p>
+</blockquote>
+</li>
+<li>
+<p><strong>발표자료</strong> — <code>C:\Archive\제어공학특론\Weekly Study Report_26.09.10_전유식.pptx</code> (6장)</p>
+</li>
+</ul>
+<p>아직 코드로 구현한 적 없음. 다음에 붙을 자리는 이렇다.</p>
+<ul>
+<li><a href="../30_Knowledge/6-DOF-Marine-Craft-Model" class="internal alias" data-slug="30_Knowledge/6-DOF-Marine-Craft-Model">6-DOF Marine Craft Model</a> 의 시뮬레이션 루프 — <code>ν̇ = M⁻¹(τ − Cν − Dν − g)</code> 에서 <code>M</code>, <code>C</code> 의 강체 몫이 이 노트의 결과다</li>
+<li><strong>IMU lever arm 보정</strong> — <code>H</code> 의 아래 절반이 <code>I₃</code> 라 자이로는 그대로, 가속도계만 <code>r_bp</code> 로 보정. ANSL 에서 IMU 를 CO 아닌 곳에 달았을 때 바로 쓰는 것</li>
+<li><a href="../20_Projects/Capstone-Otter-USV/Capstone-Otter-USV" class="internal alias" data-slug="20_Projects/Capstone-Otter-USV/Capstone-Otter-USV">Capstone Otter USV</a> 의 Otter 모델이 <code>r_g = [0,0,z_g]ᵀ</code> 구조라 <strong>surge↔pitch, sway↔roll</strong> 커플링을 갖는다</li>
+</ul>
+<p><strong>아직 안 한 것</strong> — <code>M_A</code>(added mass), <code>D(ν)</code>(감쇠), <code>g(η)</code>(복원력). 지금까지는 <strong>진공 속의 배</strong>다.
+→ 2026-09-26 에 이어서 정리함: <a href="../30_Knowledge/Hydrodynamic-and-Restoring-Forces" class="internal alias" data-slug="30_Knowledge/Hydrodynamic-and-Restoring-Forces">Hydrodynamic and Restoring Forces</a> (Lagrangian 파라미터화 <code>m2c</code>, 복원력, 부가질량, 해류, 3-DOF 분리)</p>
+<h2 id="참고">참고<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#참고" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<ul>
+<li>강의 : 제어공학특론 — Dynamic Model of Marine Craft, 슬라이드 58~68 (윤원근 교수, CNU AVSE)</li>
+<li>교재 : T. I. Fossen, <em>Handbook of Marine Craft Hydrodynamics and Motion Control</em> 2nd ed., §3.3</li>
+<li>Lecture Notes TTK 4190 (NTNU, Fossen)</li>
+<li>코드 : MSS Toolbox — <code>rbody.m</code>, <code>Hmtrx.m</code>, <code>Smtrx.m</code> — <a href="https://github.com/cybergalactic/MSS" class="external">https://github.com/cybergalactic/MSS<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a></li>
+<li>관련 노트 : <a href="../30_Knowledge/6-DOF-Marine-Craft-Model" class="internal alias" data-slug="30_Knowledge/6-DOF-Marine-Craft-Model">6-DOF Marine Craft Model</a> · <a href="../30_Knowledge/Transport-Theorem" class="internal alias" data-slug="30_Knowledge/Transport-Theorem">Transport Theorem</a> · <a href="../30_Knowledge/Moment-of-Inertia" class="internal alias" data-slug="30_Knowledge/Moment-of-Inertia">Moment of Inertia</a> · <a href="../30_Knowledge/Rotation-Matrix" class="internal alias" data-slug="30_Knowledge/Rotation-Matrix">Rotation Matrix</a> · <a href="../30_Knowledge/Euler-Angle-Rates" class="internal alias" data-slug="30_Knowledge/Euler-Angle-Rates">Euler Angle Rates</a></li>
+</ul></article><hr/><div class="page-footer"></div></div><div class="right sidebar"><div class="graph"><h3>그래프 뷰</h3><div class="graph-outer"><div class="graph-container" data-cfg="{&quot;drag&quot;:true,&quot;zoom&quot;:true,&quot;depth&quot;:1,&quot;scale&quot;:1.1,&quot;repelForce&quot;:0.5,&quot;centerForce&quot;:0.3,&quot;linkDistance&quot;:30,&quot;fontSize&quot;:0.6,&quot;opacityScale&quot;:1,&quot;showTags&quot;:true,&quot;removeTags&quot;:[],&quot;focusOnHover&quot;:false,&quot;enableRadial&quot;:false}"></div><button class="global-graph-icon" aria-label="Global Graph"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 55 55" fill="currentColor" xml:space="preserve"><path d="M49,0c-3.309,0-6,2.691-6,6c0,1.035,0.263,2.009,0.726,2.86l-9.829,9.829C32.542,17.634,30.846,17,29,17
+                s-3.542,0.634-4.898,1.688l-7.669-7.669C16.785,10.424,17,9.74,17,9c0-2.206-1.794-4-4-4S9,6.794,9,9s1.794,4,4,4
+                c0.74,0,1.424-0.215,2.019-0.567l7.669,7.669C21.634,21.458,21,23.154,21,25s0.634,3.542,1.688,4.897L10.024,42.562
+                C8.958,41.595,7.549,41,6,41c-3.309,0-6,2.691-6,6s2.691,6,6,6s6-2.691,6-6c0-1.035-0.263-2.009-0.726-2.86l12.829-12.829
+                c1.106,0.86,2.44,1.436,3.898,1.619v10.16c-2.833,0.478-5,2.942-5,5.91c0,3.309,2.691,6,6,6s6-2.691,6-6c0-2.967-2.167-5.431-5-5.91
+                v-10.16c1.458-0.183,2.792-0.759,3.898-1.619l7.669,7.669C41.215,39.576,41,40.26,41,41c0,2.206,1.794,4,4,4s4-1.794,4-4
+                s-1.794-4-4-4c-0.74,0-1.424,0.215-2.019,0.567l-7.669-7.669C36.366,28.542,37,26.846,37,25s-0.634-3.542-1.688-4.897l9.665-9.665
+                C46.042,11.405,47.451,12,49,12c3.309,0,6-2.691,6-6S52.309,0,49,0z M11,9c0-1.103,0.897-2,2-2s2,0.897,2,2s-0.897,2-2,2
+                S11,10.103,11,9z M6,51c-2.206,0-4-1.794-4-4s1.794-4,4-4s4,1.794,4,4S8.206,51,6,51z M33,49c0,2.206-1.794,4-4,4s-4-1.794-4-4
+                s1.794-4,4-4S33,46.794,33,49z M29,31c-3.309,0-6-2.691-6-6s2.691-6,6-6s6,2.691,6,6S32.309,31,29,31z M47,41c0,1.103-0.897,2-2,2
+                s-2-0.897-2-2s0.897-2,2-2S47,39.897,47,41z M49,10c-2.206,0-4-1.794-4-4s1.794-4,4-4s4,1.794,4,4S51.206,10,49,10z"></path></svg></button></div><div class="global-graph-outer"><div class="global-graph-container" data-cfg="{&quot;drag&quot;:true,&quot;zoom&quot;:true,&quot;depth&quot;:-1,&quot;scale&quot;:0.9,&quot;repelForce&quot;:0.5,&quot;centerForce&quot;:0.2,&quot;linkDistance&quot;:30,&quot;fontSize&quot;:0.6,&quot;opacityScale&quot;:1,&quot;showTags&quot;:true,&quot;removeTags&quot;:[],&quot;focusOnHover&quot;:true,&quot;enableRadial&quot;:true}"></div></div></div><div class="toc desktop-only"><button type="button" class="toc-header" aria-controls="toc-75" aria-expanded="true"><h3>목차</h3><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fold"><polyline points="6 9 12 15 18 9"></polyline></svg></button><ul id="list-1" class="toc-content overflow"><li class="depth-0"><a href="#rigid-body-kinetics" data-for="rigid-body-kinetics">Rigid-Body Kinetics</a></li><li class="depth-1"><a href="#왜-필요한가" data-for="왜-필요한가">왜 필요한가</a></li><li class="depth-1"><a href="#물리는-v_g--v_o--ω--r_g-한-줄이-전부다" data-for="물리는-v_g--v_o--ω--r_g-한-줄이-전부다">물리는 v_g = v_o + ω × r_g 한 줄이 전부다</a></li><li class="depth-1"><a href="#h-의-마이너스는-외운-게-아니라-ω-를-변수-자리로-끌어낸-대가다" data-for="h-의-마이너스는-외운-게-아니라-ω-를-변수-자리로-끌어낸-대가다">H 의 마이너스는 외운 게 아니라 ω 를 변수 자리로 끌어낸 대가다</a></li><li class="depth-1"><a href="#블록-하나하나가-물리-문장이다" data-for="블록-하나하나가-물리-문장이다">블록 하나하나가 물리 문장이다</a></li><li class="depth-1"><a href="#에너지가-행렬-변환-규칙을-강제한다" data-for="에너지가-행렬-변환-규칙을-강제한다">에너지가 행렬 변환 규칙을 강제한다</a></li><li class="depth-1"><a href="#평행축-정리는-별도-공식이-아니라-기준점-이동의-부산물이다" data-for="평행축-정리는-별도-공식이-아니라-기준점-이동의-부산물이다">평행축 정리는 별도 공식이 아니라 기준점 이동의 부산물이다</a></li><li class="depth-1"><a href="#비대각-블록은-cg-가-co-에서-얼마나-어긋났는가의-값이다" data-for="비대각-블록은-cg-가-co-에서-얼마나-어긋났는가의-값이다">비대각 블록은 “CG 가 CO 에서 얼마나 어긋났는가”의 값이다</a></li><li class="depth-1"><a href="#c_rb-는-같은-샌드위치로-따라-옮겨진다" data-for="c_rb-는-같은-샌드위치로-따라-옮겨진다">C_RB 는 같은 샌드위치로 따라 옮겨진다</a></li><li class="depth-1"><a href="#반대칭성--coriolis-는-일을-하지-않는다" data-for="반대칭성--coriolis-는-일을-하지-않는다">반대칭성 — Coriolis 는 일을 하지 않는다</a></li><li class="depth-1"><a href="#c_rb-가-ν-에만-의존하는-것이-해류를-공짜로-만든다" data-for="c_rb-가-ν-에만-의존하는-것이-해류를-공짜로-만든다">C_RB 가 ν₂ 에만 의존하는 것이 해류를 공짜로 만든다</a></li><li class="depth-1"><a href="#수식" data-for="수식">수식</a></li><li class="depth-1"><a href="#검산" data-for="검산">검산</a></li><li class="depth-1"><a href="#헷갈렸던-점" data-for="헷갈렸던-점">헷갈렸던 점</a></li><li class="depth-2"><a href="#쓰러스터가-cg-보다-아래라서-뱃머리가-들린다--이게-m_rb-커플링이다" data-for="쓰러스터가-cg-보다-아래라서-뱃머리가-들린다--이게-m_rb-커플링이다">”쓰러스터가 CG 보다 아래라서 뱃머리가 들린다 — 이게 M_RB 커플링이다”</a></li><li class="depth-2"><a href="#ν_g--hᵀ-ν_o-아닌가" data-for="ν_g--hᵀ-ν_o-아닌가">”ν_g = Hᵀ ν_o 아닌가”</a></li><li class="depth-2"><a href="#평행축-정리는-관성모멘트의-별도-공식이다" data-for="평행축-정리는-관성모멘트의-별도-공식이다">”평행축 정리는 관성모멘트의 별도 공식이다”</a></li><li class="depth-2"><a href="#ω--r_g-를-sωr_g-로-써도-되지-않나" data-for="ω--r_g-를-sωr_g-로-써도-되지-않나">”ω × r_g 를 S(ω)r_g 로 써도 되지 않나”</a></li><li class="depth-2"><a href="#cνν-는-배에-걸리는-실제-힘이다" data-for="cνν-는-배에-걸리는-실제-힘이다">”C(ν)ν 는 배에 걸리는 실제 힘이다”</a></li><li class="depth-1"><a href="#내가-실제로-써본-곳" data-for="내가-실제로-써본-곳">내가 실제로 써본 곳</a></li><li class="depth-1"><a href="#참고" data-for="참고">참고</a></li><li class="overflow-end"></li></ul></div><div class="backlinks"><h3>백링크</h3><ul id="list-2" class="overflow"><li><a href="../20_Projects/AUV-Control-Sim/AUV-Control-Simulation" class="internal">AUV Control Simulation</a></li><li><a href="../30_Knowledge/6-DOF-Marine-Craft-Model" class="internal">6-DOF Marine Craft Model</a></li><li><a href="../30_Knowledge/Hydrodynamic-and-Restoring-Forces" class="internal">Hydrodynamic and Restoring Forces</a></li><li class="overflow-end"></li></ul></div></div><footer class><p>Created with <a href="https://quartz.jzhao.xyz/">Quartz v4.5.2</a> © 2026</p><ul></ul></footer></div></div></body><script type="application/javascript">function n(){let t=this.parentElement;t.classList.toggle("is-collapsed");let e=t.getElementsByClassName("callout-content")[0];if(!e)return;let l=t.classList.contains("is-collapsed");e.style.gridTemplateRows=l?"0fr":"1fr"}function c(){let t=document.getElementsByClassName("callout is-collapsible");for(let e of t){let l=e.getElementsByClassName("callout-title")[0],s=e.getElementsByClassName("callout-content")[0];if(!l||!s)continue;l.addEventListener("click",n),window.addCleanup(()=>l.removeEventListener("click",n));let o=e.classList.contains("is-collapsed");s.style.gridTemplateRows=o?"0fr":"1fr"}}document.addEventListener("nav",c);
+</script><script type="module">function f(i,e){if(!i)return;function r(o){o.target===this&&(o.preventDefault(),o.stopPropagation(),e())}function t(o){o.key.startsWith("Esc")&&(o.preventDefault(),e())}i?.addEventListener("click",r),window.addCleanup(()=>i?.removeEventListener("click",r)),document.addEventListener("keydown",t),window.addCleanup(()=>document.removeEventListener("keydown",t))}function y(i){for(;i.firstChild;)i.removeChild(i.firstChild)}var h=class{constructor(e,r){this.container=e;this.content=r;this.setupEventListeners(),this.setupNavigationControls(),this.resetTransform()}isDragging=!1;startPan={x:0,y:0};currentPan={x:0,y:0};scale=1;MIN_SCALE=.5;MAX_SCALE=3;cleanups=[];setupEventListeners(){let e=this.onMouseDown.bind(this),r=this.onMouseMove.bind(this),t=this.onMouseUp.bind(this),o=this.resetTransform.bind(this);this.container.addEventListener("mousedown",e),document.addEventListener("mousemove",r),document.addEventListener("mouseup",t),window.addEventListener("resize",o),this.cleanups.push(()=>this.container.removeEventListener("mousedown",e),()=>document.removeEventListener("mousemove",r),()=>document.removeEventListener("mouseup",t),()=>window.removeEventListener("resize",o))}cleanup(){for(let e of this.cleanups)e()}setupNavigationControls(){let e=document.createElement("div");e.className="mermaid-controls";let r=this.createButton("+",()=>this.zoom(.1)),t=this.createButton("-",()=>this.zoom(-.1)),o=this.createButton("Reset",()=>this.resetTransform());e.appendChild(t),e.appendChild(o),e.appendChild(r),this.container.appendChild(e)}createButton(e,r){let t=document.createElement("button");return t.textContent=e,t.className="mermaid-control-button",t.addEventListener("click",r),window.addCleanup(()=>t.removeEventListener("click",r)),t}onMouseDown(e){e.button===0&&(this.isDragging=!0,this.startPan={x:e.clientX-this.currentPan.x,y:e.clientY-this.currentPan.y},this.container.style.cursor="grabbing")}onMouseMove(e){this.isDragging&&(e.preventDefault(),this.currentPan={x:e.clientX-this.startPan.x,y:e.clientY-this.startPan.y},this.updateTransform())}onMouseUp(){this.isDragging=!1,this.container.style.cursor="grab"}zoom(e){let r=Math.min(Math.max(this.scale+e,this.MIN_SCALE),this.MAX_SCALE),t=this.content.getBoundingClientRect(),o=t.width/2,n=t.height/2,c=r-this.scale;this.currentPan.x-=o*c,this.currentPan.y-=n*c,this.scale=r,this.updateTransform()}updateTransform(){this.content.style.transform=`translate(${this.currentPan.x}px, ${this.currentPan.y}px) scale(${this.scale})`}resetTransform(){this.scale=1;let e=this.content.querySelector("svg");this.currentPan={x:e.getBoundingClientRect().width/2,y:e.getBoundingClientRect().height/2},this.updateTransform()}},C=["--secondary","--tertiary","--gray","--light","--lightgray","--highlight","--dark","--darkgray","--codeFont"],E;document.addEventListener("nav",async()=>{let e=document.querySelector(".center").querySelectorAll("code.mermaid");if(e.length===0)return;E||=await import("https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.4.0/mermaid.esm.min.mjs");let r=E.default,t=new WeakMap;for(let n of e)t.set(n,n.innerText);async function o(){for(let s of e){s.removeAttribute("data-processed");let a=t.get(s);a&&(s.innerHTML=a)}let n=C.reduce((s,a)=>(s[a]=window.getComputedStyle(document.documentElement).getPropertyValue(a),s),{}),c=document.documentElement.getAttribute("saved-theme")==="dark";r.initialize({startOnLoad:!1,securityLevel:"loose",theme:c?"dark":"base",themeVariables:{fontFamily:n["--codeFont"],primaryColor:n["--light"],primaryTextColor:n["--darkgray"],primaryBorderColor:n["--tertiary"],lineColor:n["--darkgray"],secondaryColor:n["--secondary"],tertiaryColor:n["--tertiary"],clusterBkg:n["--light"],edgeLabelBackground:n["--highlight"]}}),await r.run({nodes:e})}await o(),document.addEventListener("themechange",o),window.addCleanup(()=>document.removeEventListener("themechange",o));for(let n=0;n<e.length;n++){let v=function(){let g=l.querySelector("#mermaid-space"),m=l.querySelector(".mermaid-content");if(!m)return;y(m);let w=c.querySelector("svg").cloneNode(!0);m.appendChild(w),l.classList.add("active"),g.style.cursor="grab",u=new h(g,m)},M=function(){l.classList.remove("active"),u?.cleanup(),u=null},c=e[n],s=c.parentElement,a=s.querySelector(".clipboard-button"),d=s.querySelector(".expand-button"),p=window.getComputedStyle(a),L=a.offsetWidth+parseFloat(p.marginLeft||"0")+parseFloat(p.marginRight||"0");d.style.right=`calc(${L}px + 0.3rem)`,s.prepend(d);let l=s.querySelector("#mermaid-container");if(!l)return;let u=null;d.addEventListener("click",v),f(l,M),window.addCleanup(()=>{u?.cleanup(),d.removeEventListener("click",v)})}});
+</script><script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/copy-tex.min.js" type="application/javascript"></script><script src="../postscript.js" type="module"></script></html>

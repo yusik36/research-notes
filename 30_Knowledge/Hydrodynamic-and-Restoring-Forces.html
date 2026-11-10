@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="ko" dir="ltr"><head><title>Hydrodynamic and Restoring Forces</title><meta charset="utf-8"/><link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com"/><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto Sans KR:wght@400;700&amp;family=Noto Sans KR:ital,wght@0,400;0,600;1,400;1,600&amp;family=IBM Plex Mono:wght@400;600&amp;display=swap"/><link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin="anonymous"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta name="og:site_name" content="LabNote"/><meta property="og:title" content="Hydrodynamic and Restoring Forces"/><meta property="og:type" content="website"/><meta name="twitter:card" content="summary_large_image"/><meta name="twitter:title" content="Hydrodynamic and Restoring Forces"/><meta name="twitter:description" content="Hydrodynamic and Restoring Forces 한 줄로 진공 속의 배(Rigid-Body Kinetics)를 물에 넣는 일. 물이 만드는 항(M_A, C_A, D)은 물에 대한 속도로, 무게·부력(g)은 자세로 계산한다."/><meta property="og:description" content="Hydrodynamic and Restoring Forces 한 줄로 진공 속의 배(Rigid-Body Kinetics)를 물에 넣는 일. 물이 만드는 항(M_A, C_A, D)은 물에 대한 속도로, 무게·부력(g)은 자세로 계산한다."/><meta property="og:image:alt" content="Hydrodynamic and Restoring Forces 한 줄로 진공 속의 배(Rigid-Body Kinetics)를 물에 넣는 일. 물이 만드는 항(M_A, C_A, D)은 물에 대한 속도로, 무게·부력(g)은 자세로 계산한다."/><meta property="og:image" content="https://yusik36.github.io/research-notes/static/og-image.png"/><meta property="og:image:url" content="https://yusik36.github.io/research-notes/static/og-image.png"/><meta name="twitter:image" content="https://yusik36.github.io/research-notes/static/og-image.png"/><meta property="og:image:type" content="image/.png"/><meta property="twitter:domain" content="yusik36.github.io/research-notes"/><meta property="og:url" content="https://yusik36.github.io/research-notes/30_Knowledge/Hydrodynamic-and-Restoring-Forces"/><meta property="twitter:url" content="https://yusik36.github.io/research-notes/30_Knowledge/Hydrodynamic-and-Restoring-Forces"/><link rel="icon" href="../static/icon.png"/><meta name="description" content="Hydrodynamic and Restoring Forces 한 줄로 진공 속의 배(Rigid-Body Kinetics)를 물에 넣는 일. 물이 만드는 항(M_A, C_A, D)은 물에 대한 속도로, 무게·부력(g)은 자세로 계산한다."/><meta name="generator" content="Quartz"/><link href="../index.css" rel="stylesheet" type="text/css" spa-preserve/><style>.expand-button {
+  position: absolute;
+  display: flex;
+  float: right;
+  padding: 0.4rem;
+  margin: 0.3rem;
+  right: 0;
+  color: var(--gray);
+  border-color: var(--dark);
+  background-color: var(--light);
+  border: 1px solid;
+  border-radius: 5px;
+  opacity: 0;
+  transition: 0.2s;
+}
+.expand-button > svg {
+  fill: var(--light);
+  filter: contrast(0.3);
+}
+.expand-button:hover {
+  cursor: pointer;
+  border-color: var(--secondary);
+}
+.expand-button:focus {
+  outline: 0;
+}
+
+pre:hover > .expand-button {
+  opacity: 1;
+  transition: 0.2s;
+}
+
+#mermaid-container {
+  position: fixed;
+  contain: layout;
+  z-index: 999;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  display: none;
+  backdrop-filter: blur(4px);
+  background: rgba(0, 0, 0, 0.5);
+}
+#mermaid-container.active {
+  display: inline-block;
+}
+#mermaid-container > #mermaid-space {
+  border: 1px solid var(--lightgray);
+  background-color: var(--light);
+  border-radius: 5px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 80vh;
+  width: 80vw;
+  overflow: hidden;
+}
+#mermaid-container > #mermaid-space > .mermaid-content {
+  padding: 2rem;
+  position: relative;
+  transform-origin: 0 0;
+  transition: transform 0.1s ease;
+  overflow: visible;
+  min-height: 200px;
+  min-width: 200px;
+}
+#mermaid-container > #mermaid-space > .mermaid-content pre {
+  margin: 0;
+  border: none;
+}
+#mermaid-container > #mermaid-space > .mermaid-content svg {
+  max-width: none;
+  height: auto;
+}
+#mermaid-container > #mermaid-space > .mermaid-controls {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  gap: 8px;
+  padding: 8px;
+  background: var(--light);
+  border: 1px solid var(--lightgray);
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 2;
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 1px solid var(--lightgray);
+  background: var(--light);
+  color: var(--dark);
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  font-family: var(--bodyFont);
+  transition: all 0.2s ease;
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button:hover {
+  background: var(--lightgray);
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button:active {
+  transform: translateY(1px);
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button:nth-child(2) {
+  width: auto;
+  padding: 0 12px;
+  font-size: 14px;
+}
+/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VSb290IjoiQzpcXEFyY2hpdmVcXOyeoeuLpOq1rOumrFxcVVNU7J247YS0X+yngOybkOyEnFxcc2l0ZVxccXVhcnR6XFxjb21wb25lbnRzXFxzdHlsZXMiLCJzb3VyY2VzIjpbIm1lcm1haWQuaW5saW5lLnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDRTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTs7QUFFQTtFQUNFO0VBQ0E7O0FBR0Y7RUFDRTtFQUNBOztBQUdGO0VBQ0U7OztBQUtGO0VBQ0U7RUFDQTs7O0FBSUo7RUFDRTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBOztBQUVBO0VBQ0U7O0FBR0Y7RUFDRTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTs7QUFFQTtFQUNFO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBOztBQUVBO0VBQ0U7RUFDQTs7QUFHRjtFQUNFO0VBQ0E7O0FBSUo7RUFDRTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBOztBQUVBO0VBQ0U7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTs7QUFFQTtFQUNFOztBQUdGO0VBQ0U7O0FBSUY7RUFDRTtFQUNBO0VBQ0EiLCJzb3VyY2VzQ29udGVudCI6WyIuZXhwYW5kLWJ1dHRvbiB7XG4gIHBvc2l0aW9uOiBhYnNvbHV0ZTtcbiAgZGlzcGxheTogZmxleDtcbiAgZmxvYXQ6IHJpZ2h0O1xuICBwYWRkaW5nOiAwLjRyZW07XG4gIG1hcmdpbjogMC4zcmVtO1xuICByaWdodDogMDsgLy8gTk9URTogcmlnaHQgd2lsbCBiZSBzZXQgaW4gbWVybWFpZC5pbmxpbmUudHNcbiAgY29sb3I6IHZhcigtLWdyYXkpO1xuICBib3JkZXItY29sb3I6IHZhcigtLWRhcmspO1xuICBiYWNrZ3JvdW5kLWNvbG9yOiB2YXIoLS1saWdodCk7XG4gIGJvcmRlcjogMXB4IHNvbGlkO1xuICBib3JkZXItcmFkaXVzOiA1cHg7XG4gIG9wYWNpdHk6IDA7XG4gIHRyYW5zaXRpb246IDAuMnM7XG5cbiAgJiA+IHN2ZyB7XG4gICAgZmlsbDogdmFyKC0tbGlnaHQpO1xuICAgIGZpbHRlcjogY29udHJhc3QoMC4zKTtcbiAgfVxuXG4gICY6aG92ZXIge1xuICAgIGN1cnNvcjogcG9pbnRlcjtcbiAgICBib3JkZXItY29sb3I6IHZhcigtLXNlY29uZGFyeSk7XG4gIH1cblxuICAmOmZvY3VzIHtcbiAgICBvdXRsaW5lOiAwO1xuICB9XG59XG5cbnByZSB7XG4gICY6aG92ZXIgPiAuZXhwYW5kLWJ1dHRvbiB7XG4gICAgb3BhY2l0eTogMTtcbiAgICB0cmFuc2l0aW9uOiAwLjJzO1xuICB9XG59XG5cbiNtZXJtYWlkLWNvbnRhaW5lciB7XG4gIHBvc2l0aW9uOiBmaXhlZDtcbiAgY29udGFpbjogbGF5b3V0O1xuICB6LWluZGV4OiA5OTk7XG4gIGxlZnQ6IDA7XG4gIHRvcDogMDtcbiAgd2lkdGg6IDEwMHZ3O1xuICBoZWlnaHQ6IDEwMHZoO1xuICBvdmVyZmxvdzogaGlkZGVuO1xuICBkaXNwbGF5OiBub25lO1xuICBiYWNrZHJvcC1maWx0ZXI6IGJsdXIoNHB4KTtcbiAgYmFja2dyb3VuZDogcmdiYSgwLCAwLCAwLCAwLjUpO1xuXG4gICYuYWN0aXZlIHtcbiAgICBkaXNwbGF5OiBpbmxpbmUtYmxvY2s7XG4gIH1cblxuICAmID4gI21lcm1haWQtc3BhY2Uge1xuICAgIGJvcmRlcjogMXB4IHNvbGlkIHZhcigtLWxpZ2h0Z3JheSk7XG4gICAgYmFja2dyb3VuZC1jb2xvcjogdmFyKC0tbGlnaHQpO1xuICAgIGJvcmRlci1yYWRpdXM6IDVweDtcbiAgICBwb3NpdGlvbjogZml4ZWQ7XG4gICAgdG9wOiA1MCU7XG4gICAgbGVmdDogNTAlO1xuICAgIHRyYW5zZm9ybTogdHJhbnNsYXRlKC01MCUsIC01MCUpO1xuICAgIGhlaWdodDogODB2aDtcbiAgICB3aWR0aDogODB2dztcbiAgICBvdmVyZmxvdzogaGlkZGVuO1xuXG4gICAgJiA+IC5tZXJtYWlkLWNvbnRlbnQge1xuICAgICAgcGFkZGluZzogMnJlbTtcbiAgICAgIHBvc2l0aW9uOiByZWxhdGl2ZTtcbiAgICAgIHRyYW5zZm9ybS1vcmlnaW46IDAgMDtcbiAgICAgIHRyYW5zaXRpb246IHRyYW5zZm9ybSAwLjFzIGVhc2U7XG4gICAgICBvdmVyZmxvdzogdmlzaWJsZTtcbiAgICAgIG1pbi1oZWlnaHQ6IDIwMHB4O1xuICAgICAgbWluLXdpZHRoOiAyMDBweDtcblxuICAgICAgcHJlIHtcbiAgICAgICAgbWFyZ2luOiAwO1xuICAgICAgICBib3JkZXI6IG5vbmU7XG4gICAgICB9XG5cbiAgICAgIHN2ZyB7XG4gICAgICAgIG1heC13aWR0aDogbm9uZTtcbiAgICAgICAgaGVpZ2h0OiBhdXRvO1xuICAgICAgfVxuICAgIH1cblxuICAgICYgPiAubWVybWFpZC1jb250cm9scyB7XG4gICAgICBwb3NpdGlvbjogYWJzb2x1dGU7XG4gICAgICBib3R0b206IDIwcHg7XG4gICAgICByaWdodDogMjBweDtcbiAgICAgIGRpc3BsYXk6IGZsZXg7XG4gICAgICBnYXA6IDhweDtcbiAgICAgIHBhZGRpbmc6IDhweDtcbiAgICAgIGJhY2tncm91bmQ6IHZhcigtLWxpZ2h0KTtcbiAgICAgIGJvcmRlcjogMXB4IHNvbGlkIHZhcigtLWxpZ2h0Z3JheSk7XG4gICAgICBib3JkZXItcmFkaXVzOiA2cHg7XG4gICAgICBib3gtc2hhZG93OiAwIDJweCA0cHggcmdiYSgwLCAwLCAwLCAwLjEpO1xuICAgICAgei1pbmRleDogMjtcblxuICAgICAgLm1lcm1haWQtY29udHJvbC1idXR0b24ge1xuICAgICAgICBkaXNwbGF5OiBmbGV4O1xuICAgICAgICBhbGlnbi1pdGVtczogY2VudGVyO1xuICAgICAgICBqdXN0aWZ5LWNvbnRlbnQ6IGNlbnRlcjtcbiAgICAgICAgd2lkdGg6IDMycHg7XG4gICAgICAgIGhlaWdodDogMzJweDtcbiAgICAgICAgcGFkZGluZzogMDtcbiAgICAgICAgYm9yZGVyOiAxcHggc29saWQgdmFyKC0tbGlnaHRncmF5KTtcbiAgICAgICAgYmFja2dyb3VuZDogdmFyKC0tbGlnaHQpO1xuICAgICAgICBjb2xvcjogdmFyKC0tZGFyayk7XG4gICAgICAgIGJvcmRlci1yYWRpdXM6IDRweDtcbiAgICAgICAgY3Vyc29yOiBwb2ludGVyO1xuICAgICAgICBmb250LXNpemU6IDE2cHg7XG4gICAgICAgIGZvbnQtZmFtaWx5OiB2YXIoLS1ib2R5Rm9udCk7XG4gICAgICAgIHRyYW5zaXRpb246IGFsbCAwLjJzIGVhc2U7XG5cbiAgICAgICAgJjpob3ZlciB7XG4gICAgICAgICAgYmFja2dyb3VuZDogdmFyKC0tbGlnaHRncmF5KTtcbiAgICAgICAgfVxuXG4gICAgICAgICY6YWN0aXZlIHtcbiAgICAgICAgICB0cmFuc2Zvcm06IHRyYW5zbGF0ZVkoMXB4KTtcbiAgICAgICAgfVxuXG4gICAgICAgIC8vIFN0eWxlIHRoZSByZXNldCBidXR0b24gZGlmZmVyZW50bHlcbiAgICAgICAgJjpudGgtY2hpbGQoMikge1xuICAgICAgICAgIHdpZHRoOiBhdXRvO1xuICAgICAgICAgIHBhZGRpbmc6IDAgMTJweDtcbiAgICAgICAgICBmb250LXNpemU6IDE0cHg7XG4gICAgICAgIH1cbiAgICAgIH1cbiAgICB9XG4gIH1cbn1cbiJdfQ== */</style><link href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" rel="stylesheet" type="text/css" spa-preserve/><script src="../prescript.js" type="application/javascript" spa-preserve></script><script type="application/javascript" spa-preserve>const fetchData = fetch("../static/contentIndex.json").then(data => data.json())</script></head><body data-slug="30_Knowledge/Hydrodynamic-and-Restoring-Forces"><div id="quartz-root" class="page"><div id="quartz-body"><div class="left sidebar"><h2 class="page-title"><a href="..">LabNote</a></h2><div class="spacer mobile-only"></div><div class="flex-component" style="flex-direction: row; flex-wrap: nowrap; gap: 1rem;"><div style="flex-grow: 1; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><div class="search"><button class="search-button"><svg role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19.9 19.7"><title>Search</title><g class="search-path" fill="none"><path stroke-linecap="square" d="M18.5 18.3l-5.4-5.4"></path><circle cx="8" cy="8" r="7"></circle></g></svg><p>검색</p></button><div class="search-container"><div class="search-space"><input autocomplete="off" class="search-bar" name="search" type="text" aria-label="검색어를 입력하세요" placeholder="검색어를 입력하세요"/><div class="search-layout" data-preview="true"></div></div></div></div></div><div style="flex-grow: 0; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><button class="darkmode"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="dayIcon" x="0px" y="0px" viewBox="0 0 35 35" style="enable-background:new 0 0 35 35" xml:space="preserve" aria-label="다크 모드"><title>다크 모드</title><path d="M6,17.5C6,16.672,5.328,16,4.5,16h-3C0.672,16,0,16.672,0,17.5    S0.672,19,1.5,19h3C5.328,19,6,18.328,6,17.5z M7.5,26c-0.414,0-0.789,0.168-1.061,0.439l-2,2C4.168,28.711,4,29.086,4,29.5    C4,30.328,4.671,31,5.5,31c0.414,0,0.789-0.168,1.06-0.44l2-2C8.832,28.289,9,27.914,9,27.5C9,26.672,8.329,26,7.5,26z M17.5,6    C18.329,6,19,5.328,19,4.5v-3C19,0.672,18.329,0,17.5,0S16,0.672,16,1.5v3C16,5.328,16.671,6,17.5,6z M27.5,9    c0.414,0,0.789-0.168,1.06-0.439l2-2C30.832,6.289,31,5.914,31,5.5C31,4.672,30.329,4,29.5,4c-0.414,0-0.789,0.168-1.061,0.44    l-2,2C26.168,6.711,26,7.086,26,7.5C26,8.328,26.671,9,27.5,9z M6.439,8.561C6.711,8.832,7.086,9,7.5,9C8.328,9,9,8.328,9,7.5    c0-0.414-0.168-0.789-0.439-1.061l-2-2C6.289,4.168,5.914,4,5.5,4C4.672,4,4,4.672,4,5.5c0,0.414,0.168,0.789,0.439,1.06    L6.439,8.561z M33.5,16h-3c-0.828,0-1.5,0.672-1.5,1.5s0.672,1.5,1.5,1.5h3c0.828,0,1.5-0.672,1.5-1.5S34.328,16,33.5,16z     M28.561,26.439C28.289,26.168,27.914,26,27.5,26c-0.828,0-1.5,0.672-1.5,1.5c0,0.414,0.168,0.789,0.439,1.06l2,2    C28.711,30.832,29.086,31,29.5,31c0.828,0,1.5-0.672,1.5-1.5c0-0.414-0.168-0.789-0.439-1.061L28.561,26.439z M17.5,29    c-0.829,0-1.5,0.672-1.5,1.5v3c0,0.828,0.671,1.5,1.5,1.5s1.5-0.672,1.5-1.5v-3C19,29.672,18.329,29,17.5,29z M17.5,7    C11.71,7,7,11.71,7,17.5S11.71,28,17.5,28S28,23.29,28,17.5S23.29,7,17.5,7z M17.5,25c-4.136,0-7.5-3.364-7.5-7.5    c0-4.136,3.364-7.5,7.5-7.5c4.136,0,7.5,3.364,7.5,7.5C25,21.636,21.636,25,17.5,25z"></path></svg><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="nightIcon" x="0px" y="0px" viewBox="0 0 100 100" style="enable-background:new 0 0 100 100" xml:space="preserve" aria-label="라이트 모드"><title>라이트 모드</title><path d="M96.76,66.458c-0.853-0.852-2.15-1.064-3.23-0.534c-6.063,2.991-12.858,4.571-19.655,4.571  C62.022,70.495,50.88,65.88,42.5,57.5C29.043,44.043,25.658,23.536,34.076,6.47c0.532-1.08,0.318-2.379-0.534-3.23  c-0.851-0.852-2.15-1.064-3.23-0.534c-4.918,2.427-9.375,5.619-13.246,9.491c-9.447,9.447-14.65,22.008-14.65,35.369  c0,13.36,5.203,25.921,14.65,35.368s22.008,14.65,35.368,14.65c13.361,0,25.921-5.203,35.369-14.65  c3.872-3.871,7.064-8.328,9.491-13.246C97.826,68.608,97.611,67.309,96.76,66.458z"></path></svg></button></div><div style="flex-grow: 0; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><button class="readermode"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="readerIcon" fill="currentColor" stroke="currentColor" stroke-width="0.2" stroke-linecap="round" stroke-linejoin="round" width="64px" height="64px" viewBox="0 0 24 24" aria-label="리더 모드"><title>리더 모드</title><g transform="translate(-1.8, -1.8) scale(1.15, 1.2)"><path d="M8.9891247,2.5 C10.1384702,2.5 11.2209868,2.96705384 12.0049645,3.76669482 C12.7883914,2.96705384 13.8709081,2.5 15.0202536,2.5 L18.7549359,2.5 C19.1691495,2.5 19.5049359,2.83578644 19.5049359,3.25 L19.5046891,4.004 L21.2546891,4.00457396 C21.6343849,4.00457396 21.9481801,4.28672784 21.9978425,4.6528034 L22.0046891,4.75457396 L22.0046891,20.25 C22.0046891,20.6296958 21.7225353,20.943491 21.3564597,20.9931534 L21.2546891,21 L2.75468914,21 C2.37499337,21 2.06119817,20.7178461 2.01153575,20.3517706 L2.00468914,20.25 L2.00468914,4.75457396 C2.00468914,4.37487819 2.28684302,4.061083 2.65291858,4.01142057 L2.75468914,4.00457396 L4.50368914,4.004 L4.50444233,3.25 C4.50444233,2.87030423 4.78659621,2.55650904 5.15267177,2.50684662 L5.25444233,2.5 L8.9891247,2.5 Z M4.50368914,5.504 L3.50468914,5.504 L3.50468914,19.5 L10.9478955,19.4998273 C10.4513189,18.9207296 9.73864328,18.5588115 8.96709342,18.5065584 L8.77307039,18.5 L5.25444233,18.5 C4.87474657,18.5 4.56095137,18.2178461 4.51128895,17.8517706 L4.50444233,17.75 L4.50368914,5.504 Z M19.5049359,17.75 C19.5049359,18.1642136 19.1691495,18.5 18.7549359,18.5 L15.2363079,18.5 C14.3910149,18.5 13.5994408,18.8724714 13.0614828,19.4998273 L20.5046891,19.5 L20.5046891,5.504 L19.5046891,5.504 L19.5049359,17.75 Z M18.0059359,3.999 L15.0202536,4 L14.8259077,4.00692283 C13.9889509,4.06666544 13.2254227,4.50975805 12.7549359,5.212 L12.7549359,17.777 L12.7782651,17.7601316 C13.4923805,17.2719483 14.3447024,17 15.2363079,17 L18.0059359,16.999 L18.0056891,4.798 L18.0033792,4.75457396 L18.0056891,4.71 L18.0059359,3.999 Z M8.9891247,4 L6.00368914,3.999 L6.00599909,4.75457396 L6.00599909,4.75457396 L6.00368914,4.783 L6.00368914,16.999 L8.77307039,17 C9.57551536,17 10.3461406,17.2202781 11.0128313,17.6202194 L11.2536891,17.776 L11.2536891,5.211 C10.8200889,4.56369974 10.1361548,4.13636104 9.37521067,4.02745763 L9.18347055,4.00692283 L8.9891247,4 Z"></path></g></svg></button></div></div><div class="explorer" data-behavior="link" data-collapsed="collapsed" data-savestate="true" data-data-fns="{&quot;order&quot;:[&quot;filter&quot;,&quot;map&quot;,&quot;sort&quot;],&quot;sortFn&quot;:&quot;(a,b)=>!a.isFolder&amp;&amp;!b.isFolder||a.isFolder&amp;&amp;b.isFolder?a.displayName.localeCompare(b.displayName,void 0,{numeric:!0,sensitivity:\&quot;base\&quot;}):!a.isFolder&amp;&amp;b.isFolder?1:-1&quot;,&quot;filterFn&quot;:&quot;node=>node.slugSegment!==\&quot;tags\&quot;&quot;,&quot;mapFn&quot;:&quot;node=>node&quot;}"><button type="button" class="explorer-toggle mobile-explorer hide-until-loaded" data-mobile="true" aria-controls="explorer-124"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide-menu"><line x1="4" x2="20" y1="12" y2="12"></line><line x1="4" x2="20" y1="6" y2="6"></line><line x1="4" x2="20" y1="18" y2="18"></line></svg></button><button type="button" class="title-button explorer-toggle desktop-explorer" data-mobile="false" aria-expanded="true"><h2>탐색기</h2><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="5 8 14 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fold"><polyline points="6 9 12 15 18 9"></polyline></svg></button><div id="explorer-124" class="explorer-content" aria-expanded="false" role="group"><ul class="explorer-ul overflow" id="list-0"><li class="overflow-end"></li></ul></div><template id="template-file"><li><a href="#"></a></li></template><template id="template-folder"><li><div class="folder-container"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="5 8 14 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="folder-icon"><polyline points="6 9 12 15 18 9"></polyline></svg><div><button class="folder-button"><span class="folder-title"></span></button></div></div><div class="folder-outer"><ul class="content"></ul></div></li></template></div></div><div class="center"><div class="page-header"><div class="popover-hint"><nav class="breadcrumb-container" aria-label="breadcrumbs"><div class="breadcrumb-element"><a href="../">Home</a><p> ❯ </p></div><div class="breadcrumb-element"><a href="../30_Knowledge/">30_Knowledge</a><p> ❯ </p></div><div class="breadcrumb-element"><a href>Hydrodynamic and Restoring Forces</a></div></nav><h1 class="article-title">Hydrodynamic and Restoring Forces</h1><p show-comma="true" class="content-meta"><time datetime="2026-09-25T15:00:00.000Z">2026년 9월 26일</time><span>14 min read</span></p><ul class="tags"><li><a href="../tags/modeling" class="internal tag-link">modeling</a></li><li><a href="../tags/naval-architecture" class="internal tag-link">naval-architecture</a></li></ul></div></div><article class="popover-hint"><h1 id="hydrodynamic-and-restoring-forces">Hydrodynamic and Restoring Forces<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#hydrodynamic-and-restoring-forces" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h1>
+<blockquote class="callout abstract" data-callout="abstract">
+<div class="callout-title">
+                  <div class="callout-icon"></div>
+                  <div class="callout-title-inner"><p>한 줄로 </p></div>
+                  
+                </div>
+<div class="callout-content">
+<p>진공 속의 배(<a href="../30_Knowledge/Rigid-Body-Kinetics" class="internal alias" data-slug="30_Knowledge/Rigid-Body-Kinetics">Rigid-Body Kinetics</a>)를 <strong>물에 넣는 일</strong>.
+물이 만드는 항(<code>M_A</code>, <code>C_A</code>, <code>D</code>)은 <strong>물에 대한 속도</strong>로, 무게·부력(<code>g</code>)은 <strong>자세</strong>로 계산한다.</p>
+</div>
+</blockquote>
+<pre><code>(M_RB + M_A) ν̇_r + (C_RB + C_A)(ν_r) ν_r + D(ν_r) ν_r + g(η) = τ
+η̇ = J(η) ν
+</code></pre>
+<p><strong>어디에 앉는가</strong> — <a href="../30_Knowledge/6-DOF-Marine-Craft-Model" class="internal alias" data-slug="30_Knowledge/6-DOF-Marine-Craft-Model">6-DOF Marine Craft Model</a> 의 <code>Mν̇ + C(ν)ν + D(ν)ν + g(η) = τ</code> 에서 <strong>강체 몫을 뺀 나머지 전부</strong>를 채운다. → <a href="../30_Knowledge/6-DOF-Marine-Craft-Model" class="internal alias" data-slug="30_Knowledge/6-DOF-Marine-Craft-Model">6-DOF Marine Craft Model</a></p>
+<h2 id="왜-필요한가">왜 필요한가<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#왜-필요한가" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p><a href="../30_Knowledge/Rigid-Body-Kinetics" class="internal alias" data-slug="30_Knowledge/Rigid-Body-Kinetics">Rigid-Body Kinetics</a> 는 <code>M_RB</code>, <code>C_RB</code> 까지만 만들었다. 거기서 멈추면 배는 <strong>진공 속에서</strong> 움직인다 — 저항도, 부력도, 주변 물의 관성도 없다. 시뮬레이션 루프 <code>ν̇ = M⁻¹(τ − Cν − Dν − g)</code> 를 채우려면 남은 칸이 필요하다.</p>
+<h2 id="로드맵--각-항이-실제-배에서-무엇인가">로드맵 — 각 항이 실제 배에서 무엇인가<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#로드맵--각-항이-실제-배에서-무엇인가" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th>항</th><th>실제 현상</th><th>진짜 외력인가</th></tr></thead><tbody><tr><td><code>M_RB ν̇</code></td><td>배 자신의 관성</td><td>관성</td></tr><tr><td><code>C_RB(ν)ν</code></td><td>선회 시 원심력·코리올리. 예: sway 방향 <code>m·u·r</code></td><td>❌ 회전 좌표계에서 식을 쓴 대가. 일을 안 한다</td></tr><tr><td><code>M_A ν̇</code></td><td>가속할 때 주변 물도 밀어야 해서 <strong>더 무거운 것처럼</strong></td><td>유체 관성</td></tr><tr><td><code>C_A(ν)ν</code></td><td>비스듬히 미끄러지면 선수를 더 돌리는 <strong>Munk 모멘트</strong></td><td>유체 압력</td></tr><tr><td><code>D(ν)ν</code></td><td>저항 (표면 마찰·조파·와류). 저속 선형, 고속 `</td><td>u</td></tr><tr><td><code>g(η)</code></td><td>무게와 부력 — <strong>오뚝이</strong></td><td>✅ 자세에만 의존</td></tr><tr><td><code>τ</code></td><td>추진기·타·바람·파도</td><td>✅</td></tr></tbody></table></div>
+<blockquote class="callout tip" data-callout="tip">
+<div class="callout-title">
+                  <div class="callout-icon"></div>
+                  <div class="callout-title-inner"><p> <code>g(η)</code> 만 <code>η</code>(자세)의 함수이고 나머지는 전부 속도·가속도의 함수다. 그래서 복원력은 heave·roll·pitch 에만 있고 <strong>surge·sway·yaw 는 되돌려 주는 힘이 없다</strong> → 수평면은 제어기가 전부 책임진다.</p></div>
+                  
+                </div>
+</blockquote>
+<h2 id="m-만-알면-c-는-공짜다--lagrangian-파라미터화"><code>M</code> 만 알면 <code>C</code> 는 공짜다 — Lagrangian 파라미터화<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#m-만-알면-c-는-공짜다--lagrangian-파라미터화" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>괄호 속은 <strong>운동량</strong>이다. <code>T = ½νᵀMν</code> 를 속도로 미분하면 나온다.</p>
+<pre><code>p = ∂T/∂ν₁ = M₁₁ν₁ + M₁₂ν₂      (선운동량)
+h = ∂T/∂ν₂ = M₂₁ν₁ + M₂₂ν₂      (각운동량)
+
+C(ν) = [  0     −S(p) ]          ← MSS: C = m2c(M, nu)
+       [ −S(p)  −S(h) ]
+</code></pre>
+<ul>
+<li>Kirchhoff 방정식 <code>ṗ + ν₂×p = τ₁</code>, <code>ḣ + ν₂×h + ν₁×p = τ₂</code> 는 <a href="../30_Knowledge/Transport-Theorem" class="internal alias" data-slug="30_Knowledge/Transport-Theorem">Transport Theorem</a> 을 운동량에 쓴 것이다.</li>
+<li><code>ν × p = −S(p)ν</code> 로 뒤집는 건 <code>H</code> 를 만들 때 <code>ω × r_g = −S(r_g)ω</code> 로 뒤집은 것과 <strong>같은 수</strong>다. 변수 <code>ν</code> 를 곱해지는 자리로 빼기 위해서.</li>
+<li>대각 블록이 반대칭, 비대각이 서로 전치 → <strong><code>C = −Cᵀ</code> 가 저절로</strong> 성립.</li>
+<li>모멘트 식의 <code>ν₁ × p</code> 는 질점이면 0 (<code>p ∥ ν₁</code>). <strong><code>M₁₂ ≠ 0</code></strong> 일 때 — CG 가 CO 에서 어긋났거나, 선체 모양 때문에 — 살아난다. 부가질량에서는 이게 Munk 모멘트다.</li>
+</ul>
+<blockquote class="callout tip" data-callout="tip">
+<div class="callout-title">
+                  <div class="callout-icon"></div>
+                  <div class="callout-title-inner"><p>이 방법이 중요한 이유는 <code>C_A</code> 다. 부가질량의 코리올리는 Newton–Euler 로 유도하기 어렵지만 <code>C_A = m2c(M_A, ν_r)</code> 한 줄이면 된다.</p></div>
+                  
+                </div>
+</blockquote>
+<h2 id="c-행렬은-유일하지-않다--유일한-건-cνν-뿐"><code>C</code> 행렬은 유일하지 않다 — 유일한 건 <code>C(ν)ν</code> 뿐<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#c-행렬은-유일하지-않다--유일한-건-cνν-뿐" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>실습(강의 86쪽 조건 <code>m=1000</code>, <code>r_g=[10,0,1]</code>, <code>ν₁=[8,0.5,0.1]</code>, <code>ν₂=[0.2,−0.3,0.2]</code>)으로 확인:</p>
+<pre><code>C(3.56, rbody 형태) − C(m2c)  ≠ 0      (예: 1행 = [0 0 0 200 0 −200])
+C·ν 는 두 방식 모두 [−1390  920  2770  21580  −26090  −8800]ᵀ
+두 행렬 모두 ‖C + Cᵀ‖ = 0
+</code></pre>
+<ul>
+<li><code>S(a)a = 0</code> 이라 <code>N(ν)ν = 0</code> 인 행렬은 얼마든지 있다. 1행 검산: <code>200·p − 200·r = 200·0.2 − 200·0.2 = 0</code>.</li>
+<li>시뮬레이션은 <code>Cν</code> 만 쓰니 상관없다. Lyapunov 증명(<code>νᵀCν = 0</code>)도 둘 다 반대칭이라 된다.</li>
+</ul>
+<h2 id="복원력--무게와-부력-작용점이-달라서-모멘트가-생긴다">복원력 — 무게와 부력, 작용점이 달라서 모멘트가 생긴다<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#복원력--무게와-부력-작용점이-달라서-모멘트가-생긴다" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<pre><code>W = mg  (CG 에 작용)        B = ρg∇  (CB 에 작용)
+g(η) = − [ f_g + f_b ; r_g × f_g + r_b × f_b ]      (BODY 로 옮긴 힘, 좌변으로 넘겨 마이너스)
+</code></pre>
+<p>성분으로 보면 <strong><code>φ, θ</code> 만</strong> 나온다(위치·<code>ψ</code> 없음). 중성부력(<code>W=B</code>) + CG·CB 수직선 정렬이면:</p>
+<pre><code>g(η) = [0, 0, 0,  BG_z·W·cθ·sφ,  BG_z·W·sθ,  0]ᵀ        BG_z = z_g − z_b
+</code></pre>
+<ul>
+<li>작은 각에서 <code>g₄ ≈ (BG_z·W)·φ</code> → <strong>스프링 상수 <code>BG_z·W</code> 인 스프링</strong>.</li>
+<li>MSS: <code>g = gvect(W, B, theta, phi, r_g, r_b)</code>.</li>
+</ul>
+<blockquote class="callout warning" data-callout="warning">
+<div class="callout-title">
+                  <div class="callout-icon"></div>
+                  <div class="callout-title-inner"><p>강의 슬라이드 91 에는 <code>r_bg</code>=CB, <code>r_bb</code>=CG 로 <strong>설명이 바뀌어</strong> 있다. 슬라이드 90 이 맞다.</p></div>
+                  
+                </div>
+</blockquote>
+<blockquote class="callout note" data-callout="note">
+<div class="callout-title">
+                  <div class="callout-icon"></div>
+                  <div class="callout-title-inner"><p>이 식은 <strong>잠수체</strong> 용(<code>∇</code> 일정). 수상선(Otter)은 기울면 잠긴 부피와 CB 가 변하므로 <code>BG</code> 대신 <strong>metacentric height <code>GM</code></strong> 을 쓴다.</p></div>
+                  
+                </div>
+</blockquote>
+<h2 id="부가질량--물이-달라붙는-게-아니라-압력장이-가속을-방해한다">부가질량 — 물이 달라붙는 게 아니라 압력장이 가속을 방해한다<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#부가질량--물이-달라붙는-게-아니라-압력장이-가속을-방해한다" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p><code>T_A = ½ νᵀ M_A ν</code> — 주변 물의 운동에너지를 배의 속도로 적은 것. <code>T_RB</code> 와 모양이 같아서 Kirchhoff/<code>m2c</code> 를 그대로 쓸 수 있다.</p>
+<ul>
+<li><code>X_u̇ = ∂X/∂u̇</code> : surge 가속 → surge 힘. 보통 <strong>음수</strong> → <code>M_A = −[…]</code> 로 양수 행렬.</li>
+<li><strong>방향마다 다르다</strong>: 길쭉한 배는 surge 작고 sway 큼(배 질량과 맞먹기도). 구(sphere)는 방향 무관 <code>½ρ∇</code>.</li>
+<li>대칭 가정 <code>M_A = M_Aᵀ</code> → 독립 계수 36 → <strong>21개</strong>. 실험값은 <code>½(M + Mᵀ)</code> 로 강제 대칭화.</li>
+<li><code>Ṁ_A = 0</code> : 깊은 물·이상유체 가정. 수상선은 실제로 주파수 의존 — “infinity frequency” 값을 상수로 쓴다.</li>
+</ul>
+<p>Imlay 전개식(강의 99쪽)에서 대각 성분만 남기면:</p>
+<pre><code>X_A = X_u̇ u̇ + Z_ẇ wq − Y_v̇ vr
+N_A = N_ṙ ṙ − (X_u̇ − Y_v̇) u v            ← Munk moment
+</code></pre>
+<p><code>|Y_v̇| ≫ |X_u̇|</code> 이므로 <code>u>0, v>0</code> 이면 <code>N_A &lt; 0</code> → 선수가 흐름에서 <strong>더 비스듬해지는</strong> 쪽으로 돈다 → 방향 불안정 → 타·핀이 필요한 이유. <code>m2c</code> 3-DOF 분기에 <code>M_A = diag(−X_u̇, −Y_v̇, −N_ṙ)</code> 를 넣은 결과와 정확히 같다.</p>
+<h2 id="해류--물이-만드는-힘은-물에서-본-속도로">해류 — 물이 만드는 힘은 물에서 본 속도로<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#해류--물이-만드는-힘은-물에서-본-속도로" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p><code>ν_r = ν − ν_c</code>. 저항·부가질량은 물이 느끼는 속도만 안다(떠내려가는 배는 저항 0). 강체 관성은 땅 기준(뉴턴 법칙).</p>
+<p><strong>일정하고 소용돌이 없는 해류</strong>면 강체 항도 <code>ν_r</code> 로 바꿔 쓸 수 있다:</p>
+<pre><code>M_RB ν̇_c = [ −m S(ω)v_c ; −m S(r_g)S(ω)v_c ]
+C_RB ν_c  = [ +m S(ω)v_c ; +m S(r_g)S(ω)v_c ]     → 합 0
+</code></pre>
+<p>배가 도는 효과가, 해류가 BODY 에서 돌아 보이는 효과를 정확히 지운다. → 해류 없는 식에 <strong><code>ν</code> 대신 <code>ν_r</code> 만 넣으면 끝</strong>.</p>
+<blockquote class="callout warning" data-callout="warning">
+<div class="callout-title">
+                  <div class="callout-icon"></div>
+                  <div class="callout-title-inner"><p>운동학 <code>η̇ = J(η)ν</code> 에는 <strong><code>ν_r</code> 이 아니라 <code>ν</code></strong> (땅 기준). 위치 갱신 때 해류 속도를 다시 더해야 배가 떠내려간다.</p></div>
+                  
+                </div>
+</blockquote>
+<p>바람·파도는 우변 외력(<code>τ_wind</code>, <code>τ_wave</code>), 밸러스트 <code>g_o</code> 는 좌변(복원력 계열). 해류는 <strong>매질 자체</strong>가 움직이는 것이라 속도 치환, 바람·파도는 <strong>미는 힘</strong>이라 외력.</p>
+<h2 id="6-dof-를-3-dof-두-개로--수평면--수직면">6-DOF 를 3-DOF 두 개로 — 수평면 / 수직면<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#6-dof-를-3-dof-두-개로--수평면--수직면" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>roll 이 스스로 안정(<code>BG_z > 0</code>)하고 길쭉한 대칭 몸체면 두 평면이 거의 간섭하지 않는다.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th></th><th>수평면 (steering)</th><th>수직면 (diving)</th></tr></thead><tbody><tr><td>상태</td><td><code>η=[x,y,ψ]</code>, <code>ν=[u,v,r]</code></td><td><code>η=[x,z,θ]</code>, <code>ν=[u,w,q]</code></td></tr><tr><td>구동</td><td>러더, 수평 쓰러스터</td><td>선미 수평타, 수직 쓰러스터</td></tr><tr><td>복원력</td><td><strong>없음</strong> (heave·roll·pitch 고정)</td><td><strong>있음</strong> — <code>(W−B)</code>, <code>(z_gW − z_bB)sinθ</code></td></tr></tbody></table></div>
+<p>Otter USV 캡스톤 모델이 수평면 형태다.</p>
+<blockquote class="callout warning" data-callout="warning">
+<div class="callout-title">
+                  <div class="callout-icon"></div>
+                  <div class="callout-title-inner"><p>시뮬레이션 강의 12쪽 수직면 모델 오류로 보이는 곳 — 관성행렬 비대각 <code>m y_g</code> 는 heave–roll 칸 값이다. heave–pitch 는 <code>−m x_g</code>, surge–pitch 는 <code>m z_g</code>. 운동학도 <code>ψ</code> 가 아니라 <code>θ</code> 로 돌려야 하고, z 가 아래 방향이라 <code>ż = −u sinθ + w cosθ</code>.</p></div>
+                  
+                </div>
+</blockquote>
+<h2 id="수식--시뮬레이션-루프-강의-116쪽">수식 — 시뮬레이션 루프 (강의 116쪽)<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#수식--시뮬레이션-루프-강의-116쪽" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<pre><code>x = [ν ; η]  (12×1)
+ν̇ = M⁻¹ ( τ − C(ν)ν − D(ν)ν − g(η) )
+η̇ = J(η) ν,     J = [ R(Θ)  0 ; 0  T(Θ) ]        ← [J,R,T] = eulerang(phi,theta,psi)
+</code></pre>
+<p><strong>읽는 법</strong></p>
+<ul>
+<li>첫 줄은 <code>a = F/m</code>. 괄호 안이 알짜힘.</li>
+<li>두 식이 꼬리를 문다: 속도가 위치를 만들고(<code>Jν</code>), 자세가 다시 힘을 만든다(<code>g(η)</code>) → <strong>동시에</strong> 적분.</li>
+<li><code>T</code> 의 <code>1/cθ</code> → <code>θ = ±90°</code> 발산 = <a href="../30_Knowledge/Euler-Angle-Rates" class="internal alias" data-slug="30_Knowledge/Euler-Angle-Rates">Euler Angle Rates</a> 의 gimbal lock.</li>
+<li><code>m2c</code> 는 <code>M</code> 에 선형이라 <code>m2c(MRB+MA, nu)</code> 로 한 번에 써도 된다(해류 있으면 <code>C_A</code> 에는 <code>ν_r</code> 이라 분리).</li>
+</ul>
+<h2 id="검산">검산<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#검산" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th>조건</th><th>결과</th><th>맞는 이유</th></tr></thead><tbody><tr><td>MINERVA ROV: <code>r_b=[0,0,−10]</code>, <code>W=B=9810</code>, <code>θ=20°</code>, <code>φ=30°</code></td><td><code>g₄ = 46,092</code>, <code>g₅ = 33,552</code></td><td><code>98100·cos20°·sin30°</code>, <code>98100·sin20°</code> — 강의 93쪽 <code>gvect</code> 출력과 일치</td></tr><tr><td><code>W=B</code>, <code>BG_x=0.1</code>, <code>BG_z=0.5</code></td><td>평형 trim `</td><td>θ</td></tr><tr><td>강의 86쪽 조건, <code>C(3.56)</code> vs <code>m2c</code></td><td>행렬은 다르고 <code>Cν</code> 는 같음</td><td><code>S(a)a=0</code></td></tr></tbody></table></div>
+<h2 id="헷갈렸던-점">헷갈렸던 점<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#헷갈렸던-점" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<h3 id="cg-와-cb-는-xy-가-반드시-일치해야-한다">”CG 와 CB 는 xy 가 반드시 일치해야 한다”<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#cg-와-cb-는-xy-가-반드시-일치해야-한다" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p><strong>반은 맞다.</strong> 정지 평형에서는 <strong>NED 기준으로 항상</strong> 같은 수직선 위에 있다 — 어긋나 있으면 배가 돌아서라도 맞춘다. <strong>BODY 기준으로 xy 를 일치</strong>시키는 건 필수가 아니라 설계 선택이고, 그래야 그 평형 자세가 <strong>수평</strong>이 된다. 안 맞추면 <code>tanθ = −BG_x/BG_z</code> 만큼 기운 채 떠 있다(trim). 강의 94쪽 식은 잘 트림된 기체를 <strong>가정</strong>한 것.</p>
+<h3 id="c_rb-의-mur-이-선회의-구심력이다">”<code>C_RB</code> 의 <code>m·u·r</code> 이 선회의 구심력이다”<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#c_rb-의-mur-이-선회의-구심력이다" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>구심력을 <strong>실제로 공급하는 건 물</strong>이다 — drift 로 생긴 옆방향 유체력(<code>D</code>, <code>M_A</code> 쪽). <code>m·u·r</code> 은 BODY 좌표계에서 그 구심 가속도가 보이는 모양일 뿐, 정상선회에서 유체력과 균형을 이룬다.</p>
+<h3 id="부가질량--선체에-달라붙어-끌려가는-물">”부가질량 = 선체에 달라붙어 끌려가는 물”<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#부가질량--선체에-달라붙어-끌려가는-물" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>딸려 가는 물 덩어리는 없다. 선체 주변 <strong>압력장</strong>이 가속을 방해하는 효과를 질량처럼 센 것 — 그래서 “가상” 질량.</p>
+<h2 id="내가-실제로-써본-곳">내가 실제로 써본 곳<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#내가-실제로-써본-곳" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<ul>
+<li><strong>2026-09-26 — <code>C_RB</code> 비유일성 수치 확인.</strong> 강의 86쪽 실습 조건으로 <code>(3.56)</code> 형태와 Lagrangian(<code>m2c</code>) 형태를 Python 으로 직접 구현해 비교. 행렬 차이와 <code>Cν</code> 일치, 반대칭을 확인.</li>
+<li><strong>2026-09-26 — Tanakitkorn (2017) 11~27쪽 복습.</strong> 같은 식을 <strong>질점 합(원점 기준)</strong> 으로 유도하는 다른 경로. 원문 오타 4곳 확인((2.47) <code>m</code> 누락, (2.53) <code>u̇</code> 점 누락 등). 요약 PDF: <code>C:\Archive\제어공학특론\PDF\참고논문\Tanakitkorn_2017_p11-27_한국어_요약.pdf</code></li>
+</ul>
+<p>아직 코드로 전체 루프를 돌린 적은 없다. 다음에 붙을 자리:</p>
+<ul>
+<li>시뮬레이션 강의(2강) — Remus100(MSS <code>remus100.m</code>: 타원체 근사 <code>spheroid</code>, <code>imlay61</code>, 시정수 기반 <code>Dmtrx</code>) vs Delphin2(실측 <code>rbody</code> + 논문 계수, 선형+2차 감쇠, 과구동)</li>
+<li><a href="../20_Projects/Capstone-Otter-USV/Capstone-Otter-USV" class="internal alias" data-slug="20_Projects/Capstone-Otter-USV/Capstone-Otter-USV">Capstone Otter USV</a> — 수평면 3-DOF 모델</li>
+<li>Gazebo 로 옮길 때: 강체·중력은 물리엔진, <code>M_A</code>·<code>D</code>·해류는 Hydrodynamics 플러그인, <code>B</code> 는 Buoyancy, <code>τ</code> 는 Thruster 플러그인이 나눠 맡는다 → <a href="../30_Knowledge/고전제어와-강화학습" class="internal alias" data-slug="30_Knowledge/고전제어와-강화학습">고전제어와 강화학습</a></li>
+</ul>
+<h2 id="참고">참고<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#참고" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<ul>
+<li>강의 : 제어공학특론 — Dynamic Model of Marine Craft 슬라이드 82<del>116, Dynamic Model Simulation 1</del>21 (윤원근 교수, CNU AVSE)</li>
+<li>교재 : T. I. Fossen, <em>Handbook of Marine Craft Hydrodynamics and Motion Control</em> 2nd ed., Ch. 4 (Hydrostatics), Ch. 6 (Added mass, damping), §8 (currents)</li>
+<li>논문 : K. Tanakitkorn, <em>Guidance, Control and Path Planning for AUVs</em>, PhD Thesis, Univ. of Southampton, 2017, §2.2 — <a href="https://eprints.soton.ac.uk/412635/" class="external">https://eprints.soton.ac.uk/412635/<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a></li>
+<li>코드 : MSS <code>m2c.m</code>, <code>gvect.m</code>, <code>imlay61.m</code>, <code>Dmtrx.m</code>, <code>eulerang.m</code> — 로컬 <code>C:\Archive\제어공학특론\MSS</code></li>
+<li>관련 노트 : <a href="../30_Knowledge/Rigid-Body-Kinetics" class="internal alias" data-slug="30_Knowledge/Rigid-Body-Kinetics">Rigid-Body Kinetics</a> · <a href="../30_Knowledge/6-DOF-Marine-Craft-Model" class="internal alias" data-slug="30_Knowledge/6-DOF-Marine-Craft-Model">6-DOF Marine Craft Model</a> · <a href="../30_Knowledge/Transport-Theorem" class="internal alias" data-slug="30_Knowledge/Transport-Theorem">Transport Theorem</a> · <a href="../30_Knowledge/Euler-Angle-Rates" class="internal alias" data-slug="30_Knowledge/Euler-Angle-Rates">Euler Angle Rates</a> · <a href="../30_Knowledge/Rotation-Matrix" class="internal alias" data-slug="30_Knowledge/Rotation-Matrix">Rotation Matrix</a></li>
+</ul></article><hr/><div class="page-footer"></div></div><div class="right sidebar"><div class="graph"><h3>그래프 뷰</h3><div class="graph-outer"><div class="graph-container" data-cfg="{&quot;drag&quot;:true,&quot;zoom&quot;:true,&quot;depth&quot;:1,&quot;scale&quot;:1.1,&quot;repelForce&quot;:0.5,&quot;centerForce&quot;:0.3,&quot;linkDistance&quot;:30,&quot;fontSize&quot;:0.6,&quot;opacityScale&quot;:1,&quot;showTags&quot;:true,&quot;removeTags&quot;:[],&quot;focusOnHover&quot;:false,&quot;enableRadial&quot;:false}"></div><button class="global-graph-icon" aria-label="Global Graph"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 55 55" fill="currentColor" xml:space="preserve"><path d="M49,0c-3.309,0-6,2.691-6,6c0,1.035,0.263,2.009,0.726,2.86l-9.829,9.829C32.542,17.634,30.846,17,29,17
+                s-3.542,0.634-4.898,1.688l-7.669-7.669C16.785,10.424,17,9.74,17,9c0-2.206-1.794-4-4-4S9,6.794,9,9s1.794,4,4,4
+                c0.74,0,1.424-0.215,2.019-0.567l7.669,7.669C21.634,21.458,21,23.154,21,25s0.634,3.542,1.688,4.897L10.024,42.562
+                C8.958,41.595,7.549,41,6,41c-3.309,0-6,2.691-6,6s2.691,6,6,6s6-2.691,6-6c0-1.035-0.263-2.009-0.726-2.86l12.829-12.829
+                c1.106,0.86,2.44,1.436,3.898,1.619v10.16c-2.833,0.478-5,2.942-5,5.91c0,3.309,2.691,6,6,6s6-2.691,6-6c0-2.967-2.167-5.431-5-5.91
+                v-10.16c1.458-0.183,2.792-0.759,3.898-1.619l7.669,7.669C41.215,39.576,41,40.26,41,41c0,2.206,1.794,4,4,4s4-1.794,4-4
+                s-1.794-4-4-4c-0.74,0-1.424,0.215-2.019,0.567l-7.669-7.669C36.366,28.542,37,26.846,37,25s-0.634-3.542-1.688-4.897l9.665-9.665
+                C46.042,11.405,47.451,12,49,12c3.309,0,6-2.691,6-6S52.309,0,49,0z M11,9c0-1.103,0.897-2,2-2s2,0.897,2,2s-0.897,2-2,2
+                S11,10.103,11,9z M6,51c-2.206,0-4-1.794-4-4s1.794-4,4-4s4,1.794,4,4S8.206,51,6,51z M33,49c0,2.206-1.794,4-4,4s-4-1.794-4-4
+                s1.794-4,4-4S33,46.794,33,49z M29,31c-3.309,0-6-2.691-6-6s2.691-6,6-6s6,2.691,6,6S32.309,31,29,31z M47,41c0,1.103-0.897,2-2,2
+                s-2-0.897-2-2s0.897-2,2-2S47,39.897,47,41z M49,10c-2.206,0-4-1.794-4-4s1.794-4,4-4s4,1.794,4,4S51.206,10,49,10z"></path></svg></button></div><div class="global-graph-outer"><div class="global-graph-container" data-cfg="{&quot;drag&quot;:true,&quot;zoom&quot;:true,&quot;depth&quot;:-1,&quot;scale&quot;:0.9,&quot;repelForce&quot;:0.5,&quot;centerForce&quot;:0.2,&quot;linkDistance&quot;:30,&quot;fontSize&quot;:0.6,&quot;opacityScale&quot;:1,&quot;showTags&quot;:true,&quot;removeTags&quot;:[],&quot;focusOnHover&quot;:true,&quot;enableRadial&quot;:true}"></div></div></div><div class="toc desktop-only"><button type="button" class="toc-header" aria-controls="toc-66" aria-expanded="true"><h3>목차</h3><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fold"><polyline points="6 9 12 15 18 9"></polyline></svg></button><ul id="list-1" class="toc-content overflow"><li class="depth-0"><a href="#hydrodynamic-and-restoring-forces" data-for="hydrodynamic-and-restoring-forces">Hydrodynamic and Restoring Forces</a></li><li class="depth-1"><a href="#왜-필요한가" data-for="왜-필요한가">왜 필요한가</a></li><li class="depth-1"><a href="#로드맵--각-항이-실제-배에서-무엇인가" data-for="로드맵--각-항이-실제-배에서-무엇인가">로드맵 — 각 항이 실제 배에서 무엇인가</a></li><li class="depth-1"><a href="#m-만-알면-c-는-공짜다--lagrangian-파라미터화" data-for="m-만-알면-c-는-공짜다--lagrangian-파라미터화">M 만 알면 C 는 공짜다 — Lagrangian 파라미터화</a></li><li class="depth-1"><a href="#c-행렬은-유일하지-않다--유일한-건-cνν-뿐" data-for="c-행렬은-유일하지-않다--유일한-건-cνν-뿐">C 행렬은 유일하지 않다 — 유일한 건 C(ν)ν 뿐</a></li><li class="depth-1"><a href="#복원력--무게와-부력-작용점이-달라서-모멘트가-생긴다" data-for="복원력--무게와-부력-작용점이-달라서-모멘트가-생긴다">복원력 — 무게와 부력, 작용점이 달라서 모멘트가 생긴다</a></li><li class="depth-1"><a href="#부가질량--물이-달라붙는-게-아니라-압력장이-가속을-방해한다" data-for="부가질량--물이-달라붙는-게-아니라-압력장이-가속을-방해한다">부가질량 — 물이 달라붙는 게 아니라 압력장이 가속을 방해한다</a></li><li class="depth-1"><a href="#해류--물이-만드는-힘은-물에서-본-속도로" data-for="해류--물이-만드는-힘은-물에서-본-속도로">해류 — 물이 만드는 힘은 물에서 본 속도로</a></li><li class="depth-1"><a href="#6-dof-를-3-dof-두-개로--수평면--수직면" data-for="6-dof-를-3-dof-두-개로--수평면--수직면">6-DOF 를 3-DOF 두 개로 — 수평면 / 수직면</a></li><li class="depth-1"><a href="#수식--시뮬레이션-루프-강의-116쪽" data-for="수식--시뮬레이션-루프-강의-116쪽">수식 — 시뮬레이션 루프 (강의 116쪽)</a></li><li class="depth-1"><a href="#검산" data-for="검산">검산</a></li><li class="depth-1"><a href="#헷갈렸던-점" data-for="헷갈렸던-점">헷갈렸던 점</a></li><li class="depth-2"><a href="#cg-와-cb-는-xy-가-반드시-일치해야-한다" data-for="cg-와-cb-는-xy-가-반드시-일치해야-한다">”CG 와 CB 는 xy 가 반드시 일치해야 한다”</a></li><li class="depth-2"><a href="#c_rb-의-mur-이-선회의-구심력이다" data-for="c_rb-의-mur-이-선회의-구심력이다">”C_RB 의 m·u·r 이 선회의 구심력이다”</a></li><li class="depth-2"><a href="#부가질량--선체에-달라붙어-끌려가는-물" data-for="부가질량--선체에-달라붙어-끌려가는-물">”부가질량 = 선체에 달라붙어 끌려가는 물”</a></li><li class="depth-1"><a href="#내가-실제로-써본-곳" data-for="내가-실제로-써본-곳">내가 실제로 써본 곳</a></li><li class="depth-1"><a href="#참고" data-for="참고">참고</a></li><li class="overflow-end"></li></ul></div><div class="backlinks"><h3>백링크</h3><ul id="list-2" class="overflow"><li><a href="../20_Projects/AUV-Control-Sim/AUV-Control-Simulation" class="internal">AUV Control Simulation</a></li><li><a href="../30_Knowledge/Delphin2-Actuator-and-Extra-Drag" class="internal">Delphin2 Actuator and Extra Drag</a></li><li><a href="../30_Knowledge/Rigid-Body-Kinetics" class="internal">Rigid-Body Kinetics</a></li><li><a href="../30_Knowledge/정위치-유지-자세-선택" class="internal">정위치 유지 자세 선택</a></li><li class="overflow-end"></li></ul></div></div><footer class><p>Created with <a href="https://quartz.jzhao.xyz/">Quartz v4.5.2</a> © 2026</p><ul></ul></footer></div></div></body><script type="application/javascript">function n(){let t=this.parentElement;t.classList.toggle("is-collapsed");let e=t.getElementsByClassName("callout-content")[0];if(!e)return;let l=t.classList.contains("is-collapsed");e.style.gridTemplateRows=l?"0fr":"1fr"}function c(){let t=document.getElementsByClassName("callout is-collapsible");for(let e of t){let l=e.getElementsByClassName("callout-title")[0],s=e.getElementsByClassName("callout-content")[0];if(!l||!s)continue;l.addEventListener("click",n),window.addCleanup(()=>l.removeEventListener("click",n));let o=e.classList.contains("is-collapsed");s.style.gridTemplateRows=o?"0fr":"1fr"}}document.addEventListener("nav",c);
+</script><script type="module">function f(i,e){if(!i)return;function r(o){o.target===this&&(o.preventDefault(),o.stopPropagation(),e())}function t(o){o.key.startsWith("Esc")&&(o.preventDefault(),e())}i?.addEventListener("click",r),window.addCleanup(()=>i?.removeEventListener("click",r)),document.addEventListener("keydown",t),window.addCleanup(()=>document.removeEventListener("keydown",t))}function y(i){for(;i.firstChild;)i.removeChild(i.firstChild)}var h=class{constructor(e,r){this.container=e;this.content=r;this.setupEventListeners(),this.setupNavigationControls(),this.resetTransform()}isDragging=!1;startPan={x:0,y:0};currentPan={x:0,y:0};scale=1;MIN_SCALE=.5;MAX_SCALE=3;cleanups=[];setupEventListeners(){let e=this.onMouseDown.bind(this),r=this.onMouseMove.bind(this),t=this.onMouseUp.bind(this),o=this.resetTransform.bind(this);this.container.addEventListener("mousedown",e),document.addEventListener("mousemove",r),document.addEventListener("mouseup",t),window.addEventListener("resize",o),this.cleanups.push(()=>this.container.removeEventListener("mousedown",e),()=>document.removeEventListener("mousemove",r),()=>document.removeEventListener("mouseup",t),()=>window.removeEventListener("resize",o))}cleanup(){for(let e of this.cleanups)e()}setupNavigationControls(){let e=document.createElement("div");e.className="mermaid-controls";let r=this.createButton("+",()=>this.zoom(.1)),t=this.createButton("-",()=>this.zoom(-.1)),o=this.createButton("Reset",()=>this.resetTransform());e.appendChild(t),e.appendChild(o),e.appendChild(r),this.container.appendChild(e)}createButton(e,r){let t=document.createElement("button");return t.textContent=e,t.className="mermaid-control-button",t.addEventListener("click",r),window.addCleanup(()=>t.removeEventListener("click",r)),t}onMouseDown(e){e.button===0&&(this.isDragging=!0,this.startPan={x:e.clientX-this.currentPan.x,y:e.clientY-this.currentPan.y},this.container.style.cursor="grabbing")}onMouseMove(e){this.isDragging&&(e.preventDefault(),this.currentPan={x:e.clientX-this.startPan.x,y:e.clientY-this.startPan.y},this.updateTransform())}onMouseUp(){this.isDragging=!1,this.container.style.cursor="grab"}zoom(e){let r=Math.min(Math.max(this.scale+e,this.MIN_SCALE),this.MAX_SCALE),t=this.content.getBoundingClientRect(),o=t.width/2,n=t.height/2,c=r-this.scale;this.currentPan.x-=o*c,this.currentPan.y-=n*c,this.scale=r,this.updateTransform()}updateTransform(){this.content.style.transform=`translate(${this.currentPan.x}px, ${this.currentPan.y}px) scale(${this.scale})`}resetTransform(){this.scale=1;let e=this.content.querySelector("svg");this.currentPan={x:e.getBoundingClientRect().width/2,y:e.getBoundingClientRect().height/2},this.updateTransform()}},C=["--secondary","--tertiary","--gray","--light","--lightgray","--highlight","--dark","--darkgray","--codeFont"],E;document.addEventListener("nav",async()=>{let e=document.querySelector(".center").querySelectorAll("code.mermaid");if(e.length===0)return;E||=await import("https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.4.0/mermaid.esm.min.mjs");let r=E.default,t=new WeakMap;for(let n of e)t.set(n,n.innerText);async function o(){for(let s of e){s.removeAttribute("data-processed");let a=t.get(s);a&&(s.innerHTML=a)}let n=C.reduce((s,a)=>(s[a]=window.getComputedStyle(document.documentElement).getPropertyValue(a),s),{}),c=document.documentElement.getAttribute("saved-theme")==="dark";r.initialize({startOnLoad:!1,securityLevel:"loose",theme:c?"dark":"base",themeVariables:{fontFamily:n["--codeFont"],primaryColor:n["--light"],primaryTextColor:n["--darkgray"],primaryBorderColor:n["--tertiary"],lineColor:n["--darkgray"],secondaryColor:n["--secondary"],tertiaryColor:n["--tertiary"],clusterBkg:n["--light"],edgeLabelBackground:n["--highlight"]}}),await r.run({nodes:e})}await o(),document.addEventListener("themechange",o),window.addCleanup(()=>document.removeEventListener("themechange",o));for(let n=0;n<e.length;n++){let v=function(){let g=l.querySelector("#mermaid-space"),m=l.querySelector(".mermaid-content");if(!m)return;y(m);let w=c.querySelector("svg").cloneNode(!0);m.appendChild(w),l.classList.add("active"),g.style.cursor="grab",u=new h(g,m)},M=function(){l.classList.remove("active"),u?.cleanup(),u=null},c=e[n],s=c.parentElement,a=s.querySelector(".clipboard-button"),d=s.querySelector(".expand-button"),p=window.getComputedStyle(a),L=a.offsetWidth+parseFloat(p.marginLeft||"0")+parseFloat(p.marginRight||"0");d.style.right=`calc(${L}px + 0.3rem)`,s.prepend(d);let l=s.querySelector("#mermaid-container");if(!l)return;let u=null;d.addEventListener("click",v),f(l,M),window.addCleanup(()=>{u?.cleanup(),d.removeEventListener("click",v)})}});
+</script><script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/copy-tex.min.js" type="application/javascript"></script><script src="../postscript.js" type="module"></script></html>

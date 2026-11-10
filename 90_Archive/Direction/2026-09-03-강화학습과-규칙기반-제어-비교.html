@@ -1,0 +1,2300 @@
+<!DOCTYPE html>
+<html lang="ko" dir="ltr"><head><title>2026-09-03 강화학습과 규칙기반 제어 비교</title><meta charset="utf-8"/><link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com"/><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto Sans KR:wght@400;700&amp;family=Noto Sans KR:ital,wght@0,400;0,600;1,400;1,600&amp;family=IBM Plex Mono:wght@400;600&amp;display=swap"/><link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin="anonymous"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta name="og:site_name" content="LabNote"/><meta property="og:title" content="2026-09-03 강화학습과 규칙기반 제어 비교"/><meta property="og:type" content="website"/><meta name="twitter:card" content="summary_large_image"/><meta name="twitter:title" content="2026-09-03 강화학습과 규칙기반 제어 비교"/><meta name="twitter:description" content="강화학습과 규칙기반 제어 비교 — ChatGPT 대화 전문 Source ChatGPT 공유 링크 · 46개 메시지 · 웹검색 호출 23건 제외 chatgpt.com/share/6a991ac3-38d8-83ee-aada-ea28d71c86ce 원문 그대로 보존."/><meta property="og:description" content="강화학습과 규칙기반 제어 비교 — ChatGPT 대화 전문 Source ChatGPT 공유 링크 · 46개 메시지 · 웹검색 호출 23건 제외 chatgpt.com/share/6a991ac3-38d8-83ee-aada-ea28d71c86ce 원문 그대로 보존."/><meta property="og:image:alt" content="강화학습과 규칙기반 제어 비교 — ChatGPT 대화 전문 Source ChatGPT 공유 링크 · 46개 메시지 · 웹검색 호출 23건 제외 chatgpt.com/share/6a991ac3-38d8-83ee-aada-ea28d71c86ce 원문 그대로 보존."/><meta property="og:image" content="https://yusik36.github.io/research-notes/static/og-image.png"/><meta property="og:image:url" content="https://yusik36.github.io/research-notes/static/og-image.png"/><meta name="twitter:image" content="https://yusik36.github.io/research-notes/static/og-image.png"/><meta property="og:image:type" content="image/.png"/><meta property="twitter:domain" content="yusik36.github.io/research-notes"/><meta property="og:url" content="https://yusik36.github.io/research-notes/90_Archive/Direction/2026-09-03-강화학습과-규칙기반-제어-비교"/><meta property="twitter:url" content="https://yusik36.github.io/research-notes/90_Archive/Direction/2026-09-03-강화학습과-규칙기반-제어-비교"/><link rel="icon" href="../../static/icon.png"/><meta name="description" content="강화학습과 규칙기반 제어 비교 — ChatGPT 대화 전문 Source ChatGPT 공유 링크 · 46개 메시지 · 웹검색 호출 23건 제외 chatgpt.com/share/6a991ac3-38d8-83ee-aada-ea28d71c86ce 원문 그대로 보존."/><meta name="generator" content="Quartz"/><link href="../../index.css" rel="stylesheet" type="text/css" spa-preserve/><style>.expand-button {
+  position: absolute;
+  display: flex;
+  float: right;
+  padding: 0.4rem;
+  margin: 0.3rem;
+  right: 0;
+  color: var(--gray);
+  border-color: var(--dark);
+  background-color: var(--light);
+  border: 1px solid;
+  border-radius: 5px;
+  opacity: 0;
+  transition: 0.2s;
+}
+.expand-button > svg {
+  fill: var(--light);
+  filter: contrast(0.3);
+}
+.expand-button:hover {
+  cursor: pointer;
+  border-color: var(--secondary);
+}
+.expand-button:focus {
+  outline: 0;
+}
+
+pre:hover > .expand-button {
+  opacity: 1;
+  transition: 0.2s;
+}
+
+#mermaid-container {
+  position: fixed;
+  contain: layout;
+  z-index: 999;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  display: none;
+  backdrop-filter: blur(4px);
+  background: rgba(0, 0, 0, 0.5);
+}
+#mermaid-container.active {
+  display: inline-block;
+}
+#mermaid-container > #mermaid-space {
+  border: 1px solid var(--lightgray);
+  background-color: var(--light);
+  border-radius: 5px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 80vh;
+  width: 80vw;
+  overflow: hidden;
+}
+#mermaid-container > #mermaid-space > .mermaid-content {
+  padding: 2rem;
+  position: relative;
+  transform-origin: 0 0;
+  transition: transform 0.1s ease;
+  overflow: visible;
+  min-height: 200px;
+  min-width: 200px;
+}
+#mermaid-container > #mermaid-space > .mermaid-content pre {
+  margin: 0;
+  border: none;
+}
+#mermaid-container > #mermaid-space > .mermaid-content svg {
+  max-width: none;
+  height: auto;
+}
+#mermaid-container > #mermaid-space > .mermaid-controls {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  gap: 8px;
+  padding: 8px;
+  background: var(--light);
+  border: 1px solid var(--lightgray);
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 2;
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 1px solid var(--lightgray);
+  background: var(--light);
+  color: var(--dark);
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  font-family: var(--bodyFont);
+  transition: all 0.2s ease;
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button:hover {
+  background: var(--lightgray);
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button:active {
+  transform: translateY(1px);
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button:nth-child(2) {
+  width: auto;
+  padding: 0 12px;
+  font-size: 14px;
+}
+/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VSb290IjoiQzpcXEFyY2hpdmVcXOyeoeuLpOq1rOumrFxcVVNU7J247YS0X+yngOybkOyEnFxcc2l0ZVxccXVhcnR6XFxjb21wb25lbnRzXFxzdHlsZXMiLCJzb3VyY2VzIjpbIm1lcm1haWQuaW5saW5lLnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDRTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTs7QUFFQTtFQUNFO0VBQ0E7O0FBR0Y7RUFDRTtFQUNBOztBQUdGO0VBQ0U7OztBQUtGO0VBQ0U7RUFDQTs7O0FBSUo7RUFDRTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBOztBQUVBO0VBQ0U7O0FBR0Y7RUFDRTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTs7QUFFQTtFQUNFO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBOztBQUVBO0VBQ0U7RUFDQTs7QUFHRjtFQUNFO0VBQ0E7O0FBSUo7RUFDRTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBOztBQUVBO0VBQ0U7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTs7QUFFQTtFQUNFOztBQUdGO0VBQ0U7O0FBSUY7RUFDRTtFQUNBO0VBQ0EiLCJzb3VyY2VzQ29udGVudCI6WyIuZXhwYW5kLWJ1dHRvbiB7XG4gIHBvc2l0aW9uOiBhYnNvbHV0ZTtcbiAgZGlzcGxheTogZmxleDtcbiAgZmxvYXQ6IHJpZ2h0O1xuICBwYWRkaW5nOiAwLjRyZW07XG4gIG1hcmdpbjogMC4zcmVtO1xuICByaWdodDogMDsgLy8gTk9URTogcmlnaHQgd2lsbCBiZSBzZXQgaW4gbWVybWFpZC5pbmxpbmUudHNcbiAgY29sb3I6IHZhcigtLWdyYXkpO1xuICBib3JkZXItY29sb3I6IHZhcigtLWRhcmspO1xuICBiYWNrZ3JvdW5kLWNvbG9yOiB2YXIoLS1saWdodCk7XG4gIGJvcmRlcjogMXB4IHNvbGlkO1xuICBib3JkZXItcmFkaXVzOiA1cHg7XG4gIG9wYWNpdHk6IDA7XG4gIHRyYW5zaXRpb246IDAuMnM7XG5cbiAgJiA+IHN2ZyB7XG4gICAgZmlsbDogdmFyKC0tbGlnaHQpO1xuICAgIGZpbHRlcjogY29udHJhc3QoMC4zKTtcbiAgfVxuXG4gICY6aG92ZXIge1xuICAgIGN1cnNvcjogcG9pbnRlcjtcbiAgICBib3JkZXItY29sb3I6IHZhcigtLXNlY29uZGFyeSk7XG4gIH1cblxuICAmOmZvY3VzIHtcbiAgICBvdXRsaW5lOiAwO1xuICB9XG59XG5cbnByZSB7XG4gICY6aG92ZXIgPiAuZXhwYW5kLWJ1dHRvbiB7XG4gICAgb3BhY2l0eTogMTtcbiAgICB0cmFuc2l0aW9uOiAwLjJzO1xuICB9XG59XG5cbiNtZXJtYWlkLWNvbnRhaW5lciB7XG4gIHBvc2l0aW9uOiBmaXhlZDtcbiAgY29udGFpbjogbGF5b3V0O1xuICB6LWluZGV4OiA5OTk7XG4gIGxlZnQ6IDA7XG4gIHRvcDogMDtcbiAgd2lkdGg6IDEwMHZ3O1xuICBoZWlnaHQ6IDEwMHZoO1xuICBvdmVyZmxvdzogaGlkZGVuO1xuICBkaXNwbGF5OiBub25lO1xuICBiYWNrZHJvcC1maWx0ZXI6IGJsdXIoNHB4KTtcbiAgYmFja2dyb3VuZDogcmdiYSgwLCAwLCAwLCAwLjUpO1xuXG4gICYuYWN0aXZlIHtcbiAgICBkaXNwbGF5OiBpbmxpbmUtYmxvY2s7XG4gIH1cblxuICAmID4gI21lcm1haWQtc3BhY2Uge1xuICAgIGJvcmRlcjogMXB4IHNvbGlkIHZhcigtLWxpZ2h0Z3JheSk7XG4gICAgYmFja2dyb3VuZC1jb2xvcjogdmFyKC0tbGlnaHQpO1xuICAgIGJvcmRlci1yYWRpdXM6IDVweDtcbiAgICBwb3NpdGlvbjogZml4ZWQ7XG4gICAgdG9wOiA1MCU7XG4gICAgbGVmdDogNTAlO1xuICAgIHRyYW5zZm9ybTogdHJhbnNsYXRlKC01MCUsIC01MCUpO1xuICAgIGhlaWdodDogODB2aDtcbiAgICB3aWR0aDogODB2dztcbiAgICBvdmVyZmxvdzogaGlkZGVuO1xuXG4gICAgJiA+IC5tZXJtYWlkLWNvbnRlbnQge1xuICAgICAgcGFkZGluZzogMnJlbTtcbiAgICAgIHBvc2l0aW9uOiByZWxhdGl2ZTtcbiAgICAgIHRyYW5zZm9ybS1vcmlnaW46IDAgMDtcbiAgICAgIHRyYW5zaXRpb246IHRyYW5zZm9ybSAwLjFzIGVhc2U7XG4gICAgICBvdmVyZmxvdzogdmlzaWJsZTtcbiAgICAgIG1pbi1oZWlnaHQ6IDIwMHB4O1xuICAgICAgbWluLXdpZHRoOiAyMDBweDtcblxuICAgICAgcHJlIHtcbiAgICAgICAgbWFyZ2luOiAwO1xuICAgICAgICBib3JkZXI6IG5vbmU7XG4gICAgICB9XG5cbiAgICAgIHN2ZyB7XG4gICAgICAgIG1heC13aWR0aDogbm9uZTtcbiAgICAgICAgaGVpZ2h0OiBhdXRvO1xuICAgICAgfVxuICAgIH1cblxuICAgICYgPiAubWVybWFpZC1jb250cm9scyB7XG4gICAgICBwb3NpdGlvbjogYWJzb2x1dGU7XG4gICAgICBib3R0b206IDIwcHg7XG4gICAgICByaWdodDogMjBweDtcbiAgICAgIGRpc3BsYXk6IGZsZXg7XG4gICAgICBnYXA6IDhweDtcbiAgICAgIHBhZGRpbmc6IDhweDtcbiAgICAgIGJhY2tncm91bmQ6IHZhcigtLWxpZ2h0KTtcbiAgICAgIGJvcmRlcjogMXB4IHNvbGlkIHZhcigtLWxpZ2h0Z3JheSk7XG4gICAgICBib3JkZXItcmFkaXVzOiA2cHg7XG4gICAgICBib3gtc2hhZG93OiAwIDJweCA0cHggcmdiYSgwLCAwLCAwLCAwLjEpO1xuICAgICAgei1pbmRleDogMjtcblxuICAgICAgLm1lcm1haWQtY29udHJvbC1idXR0b24ge1xuICAgICAgICBkaXNwbGF5OiBmbGV4O1xuICAgICAgICBhbGlnbi1pdGVtczogY2VudGVyO1xuICAgICAgICBqdXN0aWZ5LWNvbnRlbnQ6IGNlbnRlcjtcbiAgICAgICAgd2lkdGg6IDMycHg7XG4gICAgICAgIGhlaWdodDogMzJweDtcbiAgICAgICAgcGFkZGluZzogMDtcbiAgICAgICAgYm9yZGVyOiAxcHggc29saWQgdmFyKC0tbGlnaHRncmF5KTtcbiAgICAgICAgYmFja2dyb3VuZDogdmFyKC0tbGlnaHQpO1xuICAgICAgICBjb2xvcjogdmFyKC0tZGFyayk7XG4gICAgICAgIGJvcmRlci1yYWRpdXM6IDRweDtcbiAgICAgICAgY3Vyc29yOiBwb2ludGVyO1xuICAgICAgICBmb250LXNpemU6IDE2cHg7XG4gICAgICAgIGZvbnQtZmFtaWx5OiB2YXIoLS1ib2R5Rm9udCk7XG4gICAgICAgIHRyYW5zaXRpb246IGFsbCAwLjJzIGVhc2U7XG5cbiAgICAgICAgJjpob3ZlciB7XG4gICAgICAgICAgYmFja2dyb3VuZDogdmFyKC0tbGlnaHRncmF5KTtcbiAgICAgICAgfVxuXG4gICAgICAgICY6YWN0aXZlIHtcbiAgICAgICAgICB0cmFuc2Zvcm06IHRyYW5zbGF0ZVkoMXB4KTtcbiAgICAgICAgfVxuXG4gICAgICAgIC8vIFN0eWxlIHRoZSByZXNldCBidXR0b24gZGlmZmVyZW50bHlcbiAgICAgICAgJjpudGgtY2hpbGQoMikge1xuICAgICAgICAgIHdpZHRoOiBhdXRvO1xuICAgICAgICAgIHBhZGRpbmc6IDAgMTJweDtcbiAgICAgICAgICBmb250LXNpemU6IDE0cHg7XG4gICAgICAgIH1cbiAgICAgIH1cbiAgICB9XG4gIH1cbn1cbiJdfQ== */</style><link href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" rel="stylesheet" type="text/css" spa-preserve/><script src="../../prescript.js" type="application/javascript" spa-preserve></script><script type="application/javascript" spa-preserve>const fetchData = fetch("../../static/contentIndex.json").then(data => data.json())</script></head><body data-slug="90_Archive/Direction/2026-09-03-강화학습과-규칙기반-제어-비교"><div id="quartz-root" class="page"><div id="quartz-body"><div class="left sidebar"><h2 class="page-title"><a href="../..">LabNote</a></h2><div class="spacer mobile-only"></div><div class="flex-component" style="flex-direction: row; flex-wrap: nowrap; gap: 1rem;"><div style="flex-grow: 1; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><div class="search"><button class="search-button"><svg role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19.9 19.7"><title>Search</title><g class="search-path" fill="none"><path stroke-linecap="square" d="M18.5 18.3l-5.4-5.4"></path><circle cx="8" cy="8" r="7"></circle></g></svg><p>검색</p></button><div class="search-container"><div class="search-space"><input autocomplete="off" class="search-bar" name="search" type="text" aria-label="검색어를 입력하세요" placeholder="검색어를 입력하세요"/><div class="search-layout" data-preview="true"></div></div></div></div></div><div style="flex-grow: 0; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><button class="darkmode"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="dayIcon" x="0px" y="0px" viewBox="0 0 35 35" style="enable-background:new 0 0 35 35" xml:space="preserve" aria-label="다크 모드"><title>다크 모드</title><path d="M6,17.5C6,16.672,5.328,16,4.5,16h-3C0.672,16,0,16.672,0,17.5    S0.672,19,1.5,19h3C5.328,19,6,18.328,6,17.5z M7.5,26c-0.414,0-0.789,0.168-1.061,0.439l-2,2C4.168,28.711,4,29.086,4,29.5    C4,30.328,4.671,31,5.5,31c0.414,0,0.789-0.168,1.06-0.44l2-2C8.832,28.289,9,27.914,9,27.5C9,26.672,8.329,26,7.5,26z M17.5,6    C18.329,6,19,5.328,19,4.5v-3C19,0.672,18.329,0,17.5,0S16,0.672,16,1.5v3C16,5.328,16.671,6,17.5,6z M27.5,9    c0.414,0,0.789-0.168,1.06-0.439l2-2C30.832,6.289,31,5.914,31,5.5C31,4.672,30.329,4,29.5,4c-0.414,0-0.789,0.168-1.061,0.44    l-2,2C26.168,6.711,26,7.086,26,7.5C26,8.328,26.671,9,27.5,9z M6.439,8.561C6.711,8.832,7.086,9,7.5,9C8.328,9,9,8.328,9,7.5    c0-0.414-0.168-0.789-0.439-1.061l-2-2C6.289,4.168,5.914,4,5.5,4C4.672,4,4,4.672,4,5.5c0,0.414,0.168,0.789,0.439,1.06    L6.439,8.561z M33.5,16h-3c-0.828,0-1.5,0.672-1.5,1.5s0.672,1.5,1.5,1.5h3c0.828,0,1.5-0.672,1.5-1.5S34.328,16,33.5,16z     M28.561,26.439C28.289,26.168,27.914,26,27.5,26c-0.828,0-1.5,0.672-1.5,1.5c0,0.414,0.168,0.789,0.439,1.06l2,2    C28.711,30.832,29.086,31,29.5,31c0.828,0,1.5-0.672,1.5-1.5c0-0.414-0.168-0.789-0.439-1.061L28.561,26.439z M17.5,29    c-0.829,0-1.5,0.672-1.5,1.5v3c0,0.828,0.671,1.5,1.5,1.5s1.5-0.672,1.5-1.5v-3C19,29.672,18.329,29,17.5,29z M17.5,7    C11.71,7,7,11.71,7,17.5S11.71,28,17.5,28S28,23.29,28,17.5S23.29,7,17.5,7z M17.5,25c-4.136,0-7.5-3.364-7.5-7.5    c0-4.136,3.364-7.5,7.5-7.5c4.136,0,7.5,3.364,7.5,7.5C25,21.636,21.636,25,17.5,25z"></path></svg><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="nightIcon" x="0px" y="0px" viewBox="0 0 100 100" style="enable-background:new 0 0 100 100" xml:space="preserve" aria-label="라이트 모드"><title>라이트 모드</title><path d="M96.76,66.458c-0.853-0.852-2.15-1.064-3.23-0.534c-6.063,2.991-12.858,4.571-19.655,4.571  C62.022,70.495,50.88,65.88,42.5,57.5C29.043,44.043,25.658,23.536,34.076,6.47c0.532-1.08,0.318-2.379-0.534-3.23  c-0.851-0.852-2.15-1.064-3.23-0.534c-4.918,2.427-9.375,5.619-13.246,9.491c-9.447,9.447-14.65,22.008-14.65,35.369  c0,13.36,5.203,25.921,14.65,35.368s22.008,14.65,35.368,14.65c13.361,0,25.921-5.203,35.369-14.65  c3.872-3.871,7.064-8.328,9.491-13.246C97.826,68.608,97.611,67.309,96.76,66.458z"></path></svg></button></div><div style="flex-grow: 0; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><button class="readermode"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="readerIcon" fill="currentColor" stroke="currentColor" stroke-width="0.2" stroke-linecap="round" stroke-linejoin="round" width="64px" height="64px" viewBox="0 0 24 24" aria-label="리더 모드"><title>리더 모드</title><g transform="translate(-1.8, -1.8) scale(1.15, 1.2)"><path d="M8.9891247,2.5 C10.1384702,2.5 11.2209868,2.96705384 12.0049645,3.76669482 C12.7883914,2.96705384 13.8709081,2.5 15.0202536,2.5 L18.7549359,2.5 C19.1691495,2.5 19.5049359,2.83578644 19.5049359,3.25 L19.5046891,4.004 L21.2546891,4.00457396 C21.6343849,4.00457396 21.9481801,4.28672784 21.9978425,4.6528034 L22.0046891,4.75457396 L22.0046891,20.25 C22.0046891,20.6296958 21.7225353,20.943491 21.3564597,20.9931534 L21.2546891,21 L2.75468914,21 C2.37499337,21 2.06119817,20.7178461 2.01153575,20.3517706 L2.00468914,20.25 L2.00468914,4.75457396 C2.00468914,4.37487819 2.28684302,4.061083 2.65291858,4.01142057 L2.75468914,4.00457396 L4.50368914,4.004 L4.50444233,3.25 C4.50444233,2.87030423 4.78659621,2.55650904 5.15267177,2.50684662 L5.25444233,2.5 L8.9891247,2.5 Z M4.50368914,5.504 L3.50468914,5.504 L3.50468914,19.5 L10.9478955,19.4998273 C10.4513189,18.9207296 9.73864328,18.5588115 8.96709342,18.5065584 L8.77307039,18.5 L5.25444233,18.5 C4.87474657,18.5 4.56095137,18.2178461 4.51128895,17.8517706 L4.50444233,17.75 L4.50368914,5.504 Z M19.5049359,17.75 C19.5049359,18.1642136 19.1691495,18.5 18.7549359,18.5 L15.2363079,18.5 C14.3910149,18.5 13.5994408,18.8724714 13.0614828,19.4998273 L20.5046891,19.5 L20.5046891,5.504 L19.5046891,5.504 L19.5049359,17.75 Z M18.0059359,3.999 L15.0202536,4 L14.8259077,4.00692283 C13.9889509,4.06666544 13.2254227,4.50975805 12.7549359,5.212 L12.7549359,17.777 L12.7782651,17.7601316 C13.4923805,17.2719483 14.3447024,17 15.2363079,17 L18.0059359,16.999 L18.0056891,4.798 L18.0033792,4.75457396 L18.0056891,4.71 L18.0059359,3.999 Z M8.9891247,4 L6.00368914,3.999 L6.00599909,4.75457396 L6.00599909,4.75457396 L6.00368914,4.783 L6.00368914,16.999 L8.77307039,17 C9.57551536,17 10.3461406,17.2202781 11.0128313,17.6202194 L11.2536891,17.776 L11.2536891,5.211 C10.8200889,4.56369974 10.1361548,4.13636104 9.37521067,4.02745763 L9.18347055,4.00692283 L8.9891247,4 Z"></path></g></svg></button></div></div><div class="explorer" data-behavior="link" data-collapsed="collapsed" data-savestate="true" data-data-fns="{&quot;order&quot;:[&quot;filter&quot;,&quot;map&quot;,&quot;sort&quot;],&quot;sortFn&quot;:&quot;(a,b)=>!a.isFolder&amp;&amp;!b.isFolder||a.isFolder&amp;&amp;b.isFolder?a.displayName.localeCompare(b.displayName,void 0,{numeric:!0,sensitivity:\&quot;base\&quot;}):!a.isFolder&amp;&amp;b.isFolder?1:-1&quot;,&quot;filterFn&quot;:&quot;node=>node.slugSegment!==\&quot;tags\&quot;&quot;,&quot;mapFn&quot;:&quot;node=>node&quot;}"><button type="button" class="explorer-toggle mobile-explorer hide-until-loaded" data-mobile="true" aria-controls="explorer-147"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide-menu"><line x1="4" x2="20" y1="12" y2="12"></line><line x1="4" x2="20" y1="6" y2="6"></line><line x1="4" x2="20" y1="18" y2="18"></line></svg></button><button type="button" class="title-button explorer-toggle desktop-explorer" data-mobile="false" aria-expanded="true"><h2>탐색기</h2><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="5 8 14 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fold"><polyline points="6 9 12 15 18 9"></polyline></svg></button><div id="explorer-147" class="explorer-content" aria-expanded="false" role="group"><ul class="explorer-ul overflow" id="list-0"><li class="overflow-end"></li></ul></div><template id="template-file"><li><a href="#"></a></li></template><template id="template-folder"><li><div class="folder-container"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="5 8 14 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="folder-icon"><polyline points="6 9 12 15 18 9"></polyline></svg><div><button class="folder-button"><span class="folder-title"></span></button></div></div><div class="folder-outer"><ul class="content"></ul></div></li></template></div></div><div class="center"><div class="page-header"><div class="popover-hint"><nav class="breadcrumb-container" aria-label="breadcrumbs"><div class="breadcrumb-element"><a href="../../">Home</a><p> ❯ </p></div><div class="breadcrumb-element"><a href="../../90_Archive/">90_Archive</a><p> ❯ </p></div><div class="breadcrumb-element"><a href="../../90_Archive/Direction/">Direction</a><p> ❯ </p></div><div class="breadcrumb-element"><a href>2026 09 03 강화학습과 규칙기반 제어 비교</a></div></nav><h1 class="article-title">2026-09-03 강화학습과 규칙기반 제어 비교</h1><p show-comma="true" class="content-meta"><time datetime="2026-09-02T15:00:00.000Z">2026년 9월 03일</time><span>148 min read</span></p><ul class="tags"><li><a href="../../tags/control-theory" class="internal tag-link">control-theory</a></li><li><a href="../../tags/reinforcement-learning" class="internal tag-link">reinforcement-learning</a></li></ul></div></div><article class="popover-hint"><h1 id="강화학습과-규칙기반-제어-비교--chatgpt-대화-전문">강화학습과 규칙기반 제어 비교 — ChatGPT 대화 전문<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#강화학습과-규칙기반-제어-비교--chatgpt-대화-전문" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h1>
+<blockquote class="callout info" data-callout="info">
+<div class="callout-title">
+                  <div class="callout-icon"></div>
+                  <div class="callout-title-inner"><p>Source </p></div>
+                  
+                </div>
+<div class="callout-content">
+<p>ChatGPT 공유 링크 · 46개 메시지 · 웹검색 호출 23건 제외
+<a href="https://chatgpt.com/share/6a991ac3-38d8-83ee-aada-ea28d71c86ce" class="external">https://chatgpt.com/share/6a991ac3-38d8-83ee-aada-ea28d71c86ce<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>
+원문 그대로 보존. 유일하게 손댄 것은 수식 구분자를 Obsidian이 렌더링하도록 바꾼 것뿐이다 (<code>\[ \]</code> → <code>$$</code>, <code>\( \)</code> → <code>$</code>).
+ChatGPT 내부 인용 토큰(<code>citeturn…</code>, <code>memcite</code>)은 원문에 있던 그대로 남겨 뒀다 — 그 문장이 웹검색 근거를 달고 있었다는 표시다.
+이 대화에서 뽑아낸 결론은 → <a href="../../Research-Direction" class="internal alias" data-slug="Research-Direction">Research Direction</a></p>
+</div>
+</blockquote>
+<hr/>
+<h3 id="나">나<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#나" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>강화학습은 기존의 사람들이 형성해놓은 규칙기반의 제어랑 아예 다르잖아</p>
+<h3 id="chatgpt">ChatGPT<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#chatgpt" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>맞아. <strong>접근 방식 자체가 꽤 다르다</strong>고 보면 돼.</p>
+<p>규칙 기반 제어는 사람이 먼저 “이 상황에서는 이렇게 행동해야 한다”라는 구조를 설계해. 예를 들어 장애물이 오른쪽에 있으면 왼쪽으로 조향하고, 차선 중심에서 10 cm 벗어나면 반대 방향으로 일정량 보정하는 식이지. 즉,</p>
+<p><strong>센서 입력 → 사람이 만든 규칙/알고리즘 → 제어 출력</strong></p>
+<p>구조야. PID, Pure Pursuit, Stanley, 상태 머신 기반 장애물 회피 같은 것도 넓게 보면 사람이 제어 원리를 명시적으로 설계한다는 점에서 이쪽에 가까워.</p>
+<p>반면 강화학습은 사람이 <strong>구체적인 행동 규칙을 일일이 작성하지 않고</strong>, 대신 “무엇이 좋은 행동인가”를 보상으로 정의해. 에이전트가 여러 행동을 시도하면서 장기적으로 보상을 크게 만드는 정책<span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">p</span><span class="mord mathnormal">o</span><span class="mord mathnormal" style="margin-right:0.01968em;">l</span><span class="mord mathnormal">i</span><span class="mord mathnormal" style="margin-right:0.03588em;">cy</span></span></span></span>을 학습하는 거지.</p>
+<p><strong>상태 → 학습된 정책 → 행동 → 결과 → 보상 → 정책 개선</strong></p>
+<p>예를 들어 RC 자율주행이라면 사람이</p>
+<blockquote>
+<p>장애물이 40 cm 앞에 있으면 조향각 +7°를 줘라</p>
+</blockquote>
+<p>라고 작성하는 대신,</p>
+<ul>
+<li>충돌하면 -100</li>
+<li>트랙을 벗어나면 -50</li>
+<li>앞으로 빠르게 진행하면 +보상</li>
+<li>랩타임이 짧으면 +보상</li>
+<li>조향이 지나치게 출렁이면 -보상</li>
+</ul>
+<p>정도만 설계하고, <strong>실제로 장애물을 어느 거리에서 어느 정도 꺾어 피할지는 학습시키는 것</strong>이 가능해.</p>
+<p>다만 한 가지 중요한 점은 강화학습이 <strong>“인간이 만든 규칙이 전혀 없는 방식”은 아니라는 것</strong>이야. 사람이 여전히 상태<span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6151em;"></span><span class="mord mathnormal">s</span><span class="mord mathnormal">t</span><span class="mord mathnormal">a</span><span class="mord mathnormal">t</span><span class="mord mathnormal">e</span></span></span></span>, 행동<span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6595em;"></span><span class="mord mathnormal">a</span><span class="mord mathnormal">c</span><span class="mord mathnormal">t</span><span class="mord mathnormal">i</span><span class="mord mathnormal">o</span><span class="mord mathnormal">n</span></span></span></span>, 보상<span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal">re</span><span class="mord mathnormal" style="margin-right:0.02691em;">w</span><span class="mord mathnormal">a</span><span class="mord mathnormal" style="margin-right:0.02778em;">r</span><span class="mord mathnormal">d</span></span></span></span>, 학습 알고리즘, 네트워크 구조, 안전 제한 등을 설계해. 달라지는 건 <strong>제어 법칙 자체를 사람이 직접 기술하느냐, 경험을 통해 정책으로 학습시키느냐</strong>야.</p>
+<p>그래서 네가 지금 만들고 있는 장애물 회피를 비교하면 꽤 명확해.</p>
+<p><strong>현재 방식</strong>
+<code>카메라/거리 → 장애물 위치 판단 → LEFT/RIGHT_AVOID 상태 결정 → 목표점 이동 → 조향각 계산</code></p>
+<p>여기에는 “어느 상황에서 오른쪽으로 피하고”, “얼마나 shift하고”, “white line이 안 보이면 어떤 조향을 주고” 같은 판단이 사람이 만든 논리로 들어가 있지.</p>
+<p>강화학습으로 만들면 대략</p>
+<p><code>카메라/거리/차량상태 → Neural Network Policy → steer, throttle</code></p>
+<p>가 되고, 네가 지금 로그에서 조정하는 <code>avoid_shift=-0.196</code>, <code>steer=+6.4°</code> 같은 값을 <strong>상황에 따라 정책이 스스로 결정하도록 학습</strong>시킬 수도 있어.</p>
+<p>그래서 재미있는 점은 네가 지금 하는 규칙 기반 장애물 회피가 강화학습의 정반대편에 있는 좋은 비교 대상이라는 거야. 지금은 우리가 로그를 보고 **“여기서 1~2도 더 틀자”**라고 사람이 직접 정책을 개선하고 있는데, 강화학습에서는 바로 그 개선 과정을 수많은 시행착오와 reward를 통해 자동으로 하는 셈이야. memcite</p>
+<h3 id="나-1">나<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#나-1" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>그러니까 아무것도 모르는 상태에서 높은 보상을 추종하면서 반복학습을 하다보니까 결국은 설계자가 원하는 제어에서 만나는거지</p>
+<h3 id="chatgpt-1">ChatGPT<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#chatgpt-1" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>응, 거의 그렇게 이해하면 돼. 다만 정확히는 <strong>“설계자가 원하는 제어법 자체”를 만난다기보다, 설계자가 정의한 보상을 가장 잘 얻는 행동 정책에 수렴하려고 한다</strong>가 맞아.</p>
+<p>예를 들어 설계자가 “충돌하지 않고, 빠르게, 트랙 중앙을 유지하며 달리기”에 높은 보상을 주면, 에이전트는 그 보상을 최대화하는 방향으로 반복 학습해. 그 결과가 우리가 생각한 이상적인 제어와 비슷할 수도 있고, 오히려 사람이 생각하지 못한 방식일 수도 있어.</p>
+<p>핵심은 이거야.</p>
+<p><strong>규칙 기반 제어:</strong><br/>
+사람이 “어떻게 해야 하는지”를 직접 설계함.</p>
+<p><strong>강화학습:</strong><br/>
+사람이 “무엇이 좋은 결과인지”를 설계하고, “어떻게 할지는” 에이전트가 찾음.</p>
+<p>그래서 보상 설계가 정말 중요해. 보상을 잘못 만들면 에이전트가 설계자의 의도와 다르게 <strong>보상만 잘 먹는 이상한 전략</strong>을 찾을 수도 있어. 이걸 흔히 reward hacking이라고 해.</p>
+<p>즉 네 표현을 조금 다듬으면,</p>
+<blockquote>
+<p>“아무것도 모르는 상태에서 시행착오를 반복하며 높은 보상을 추종하다가, 결과적으로 설계자가 의도한 목표 행동을 만들어내는 제어 정책을 학습한다.”</p>
+</blockquote>
+<p>라고 하면 꽤 정확해.</p>
+<h3 id="나-2">나<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#나-2" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>그럼 만약에 인간들이 쌓아올린 아카이브가 전혀 없는 상태에서 강화학습이 먼저 생겨난 상황이라면 동역학 지식 전혀없이도 비행기화 로켓이 날수 있을거같아?</p>
+<h3 id="chatgpt-2">ChatGPT<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#chatgpt-2" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>가능은 한데, **“어디까지를 아무 지식 없이 시작하느냐”**에 따라 답이 크게 달라져.</p>
+<p>이미 <strong>비행 가능한 형상의 비행기나 로켓, 센서, 조종면/추력 제어장치가 주어져 있다면</strong>, 동역학 방정식을 전혀 몰라도 강화학습이 비행 제어를 배울 가능성은 충분히 있어. 에이전트 입장에서는 굳이</p>
+<p>$$
+L=\frac12\rho V^2SC_L
+$$</p>
+<p>같은 양력식을 알 필요가 없어. 그냥</p>
+<blockquote>
+<p>엘리베이터를 이렇게 움직였더니 기수가 올라갔다<br/>
+너무 많이 움직였더니 실속하거나 자세가 무너졌다<br/>
+이 정도 움직이면 자세가 안정된다</p>
+</blockquote>
+<p>를 시행착오로 학습하면 돼.</p>
+<p>즉 인간이 수학적으로 만든 <strong>공기역학 모델을 배우는 게 아니라, 그 물리법칙이 만들어내는 입출력 관계를 몸으로 익히는 것</strong>에 가까워.</p>
+<p>예를 들어 처음에는</p>
+<p><code>조종 입력 → ? → 결과</code></p>
+<p>밖에 모르지만 수백만 번 경험하다 보면 정책 내부에 사실상</p>
+<p><code>이 속도 + 이 자세 + 이 각속도에서는 → 이 정도 조종</code></p>
+<p>이라는 암묵적인 동역학 지식이 형성돼. 명시적인 방정식은 없지만 <strong>제어에 필요한 물리적 관계를 정책이 내재화한 것</strong>이지.</p>
+<p>하지만 문제가 하나 엄청나게 커.</p>
+<p><strong>실물로 학습하면 거의 불가능에 가까울 정도로 비싸고 위험해.</strong></p>
+<p>비행기라면 초기 학습 과정에서 수없이:</p>
+<ul>
+<li>추락하고</li>
+<li>실속하고</li>
+<li>뒤집히고</li>
+<li>지면에 충돌하고</li>
+</ul>
+<p>로켓이면 더 심해서 한 번 잘못 행동하면 기체가 사라져.</p>
+<p>그래서 현대 강화학습에서도 비행/로봇 제어는 보통 <strong>시뮬레이터에서 수십만~수억 번 시행착오 → 실제 기체로 이전<span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7667em;vertical-align:-0.0833em;"></span><span class="mord mathnormal" style="margin-right:0.05764em;">S</span><span class="mord mathnormal">im</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6984em;vertical-align:-0.0833em;"></span><span class="mord mathnormal">t</span><span class="mord mathnormal">o</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal" style="margin-right:0.00773em;">R</span><span class="mord mathnormal">e</span><span class="mord mathnormal">a</span><span class="mord mathnormal" style="margin-right:0.01968em;">l</span></span></span></span></strong> 구조를 많이 쓰는 거야.</p>
+<p>그리고 더 근본적인 문제가 있어.</p>
+<h3 id="비행기를-조종하는-것과-비행기를-발명하는-것은-완전히-다름">비행기를 ‘조종하는 것’과 비행기를 ‘발명하는 것’은 완전히 다름<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#비행기를-조종하는-것과-비행기를-발명하는-것은-완전히-다름" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>만약 질문이</p>
+<blockquote>
+<p>인간이 공기역학 지식은 없지만 비행기는 누군가 만들어서 RL에게 줬다.</p>
+</blockquote>
+<p>라면 나는 <strong>충분히 가능하다</strong>고 봐.</p>
+<p>그런데</p>
+<blockquote>
+<p>인류가 비행기라는 개념조차 없고, 날개가 뭔지도 모르고, 로켓 노즐이 뭔지도 모르는 상태에서 강화학습만 있었다.</p>
+</blockquote>
+<p>라면 훨씬 어려워.</p>
+<p>강화학습에게 처음부터</p>
+<ul>
+<li>날개 크기</li>
+<li>날개 단면</li>
+<li>무게중심</li>
+<li>동체 형상</li>
+<li>엔진 위치</li>
+<li>조종면</li>
+<li>추진 방식</li>
+</ul>
+<p>까지 모두 행동 공간으로 열어주고, 실패해도 무한정 다시 시험할 수 있는 <strong>물리 시뮬레이션 세계</strong>가 있다면 이론적으로는 비행체까지 발견할 가능성이 있어.</p>
+<p>예를 들어 에이전트가 수많은 형상을 만들어보다가 우연히</p>
+<blockquote>
+<p>“이렇게 생긴 판을 앞으로 빠르게 움직이면 위쪽 힘이 생기네?”</p>
+</blockquote>
+<p>를 발견하고 그걸 점점 최적화할 수도 있지.</p>
+<p>그러면 굉장히 재미있는 일이 생겨.</p>
+<p>에이전트는 <strong>베르누이 방정식도 모르고, 받음각이라는 단어도 모르고, 양력계수라는 개념도 모르는데 비행할 수 있는 물체를 만들 수 있어.</strong></p>
+<p>그리고 사람은 나중에 그 결과를 분석하면서</p>
+<blockquote>
+<p>“얘가 왜 날지?”</p>
+</blockquote>
+<p>라고 역으로 물리를 발견할 수도 있고.</p>
+<p>다만 로켓은 한 단계 더 어려워. 비행 제어 이전에 <strong>추진기관 자체를 발견</strong>해야 하기 때문이야. 연소, 노즐, 고온재료, 추진제 같은 거대한 탐색공간까지 RL에게 던지면 무작위 탐색으로는 현실적으로 거의 감당하기 어렵지.</p>
+<p>그래서 중요한 결론은:</p>
+<blockquote>
+<p><strong>강화학습은 동역학 지식 없이도 동역학을 따르는 시스템을 제어할 수 있다. 하지만 물리학 지식이 필요 없어진 것이 아니라, 그 지식을 방정식으로 명시하지 않고 경험 속에서 암묵적으로 획득한 것이다.</strong></p>
+</blockquote>
+<p>그리고 이건 꽤 깊은 얘기로 이어져.</p>
+<p>인간도 사실 처음부터 뉴턴 역학을 알고 자전거를 타는 게 아니잖아. 어린아이는</p>
+<p><code>몸을 기울임 → 넘어짐 → 수정 → 다시 시도</code></p>
+<p>를 반복하면서 자전거 동역학을 <strong>신경계에 암묵적으로 학습</strong>해.</p>
+<p>그 뒤에 인간 문명이 그 현상을 수학으로 추상화해서 <strong>동역학이라는 명시적 지식</strong>을 만든 거고.</p>
+<p>그래서 네가 가정한 세계에서는 어쩌면 **“제어가 이론보다 먼저 발전하는 문명”**도 충분히 상상할 수 있어. 비행은 잘하는데 왜 나는지는 아직 정확히 설명하지 못하는 식으로.</p>
+<h3 id="나-3">나<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#나-3" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>강화학습은 그냥 지식이 없는 생명채가 뭔가를 통제하는 방법을 배우는거랑 똑같네</p>
+<h3 id="chatgpt-3">ChatGPT<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#chatgpt-3" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>응. <strong>핵심 원리만 놓고 보면 굉장히 비슷해.</strong></p>
+<p>지식이 거의 없는 생명체도 처음에는 세상의 정확한 법칙을 모르잖아. 그런데 행동하고, 결과를 겪고, 좋은 결과는 반복하고 나쁜 결과는 피하면서 점점 환경을 통제하는 법을 배워.</p>
+<p>강화학습도 거의 같은 구조야.</p>
+<p><strong>행동 → 결과 관찰 → 좋았는지 평가 → 다음 행동 수정 → 반복</strong></p>
+<p>예를 들어 아기가 걷는 걸 생각하면, 아기는 무게중심 방정식이나 관절 동역학을 몰라. 그래도 넘어지고 자세를 수정하는 걸 반복하면서 결국 걷게 돼. 즉 <strong>물리학을 설명할 수는 없어도 물리학을 이용하는 정책은 학습한 것</strong>이지.</p>
+<p>그래서 강화학습을 아주 직관적으로 표현하면,</p>
+<blockquote>
+<p><strong>“세상의 법칙을 몰라도, 시행착오를 통해 세상과 상호작용하는 방법을 배우는 방식”</strong></p>
+</blockquote>
+<p>이라고 할 수 있어.</p>
+<p>다만 생명체와 완전히 같지는 않아. 생명체는 진화로 이미 상당한 선천적 구조를 갖고 태어나. 반사작용, 감각기관의 구조, 통증·쾌감 체계, 호기심 같은 것들이 이미 들어 있지. 강화학습에서도 이에 대응하는 것이 <strong>상태 공간, 행동 공간, 보상 함수, 신경망 구조, 탐험 방식</strong> 같은 사람이 미리 정해주는 요소들이고.</p>
+<p>그래서 오히려 이렇게 대응시켜 보면 꽤 재미있어.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th>생명체</th><th>강화학습</th></tr></thead><tbody><tr><td>감각</td><td>Observation / State</td></tr><tr><td>행동</td><td>Action</td></tr><tr><td>쾌감·통증</td><td>Reward</td></tr><tr><td>경험</td><td>Transition</td></tr><tr><td>습관/운동기술</td><td>Policy</td></tr><tr><td>시행착오</td><td>Exploration</td></tr><tr><td>학습</td><td>Policy update</td></tr></tbody></table></div>
+<p>그리고 여기서 한 단계 더 가면 중요한 생각이 나와.</p>
+<p><strong>“지식”과 “능력”은 별개의 것일 수 있다는 것.</strong></p>
+<p>새는 공기역학을 모르지만 날 수 있고, 인간은 로봇팔 동역학을 계산하지 않아도 컵을 집을 수 있어. 마찬가지로 강화학습 에이전트도 자기가 제어하는 시스템의 방정식을 전혀 설명하지 못하면서 <strong>엄청나게 뛰어난 제어 능력</strong>을 가질 수 있어.</p>
+<p>그래서 강화학습은 단순히 새로운 제어 알고리즘이라기보다, 어떤 면에서는 <strong>생명체가 환경 속에서 행동 능력을 획득하는 방식을 공학적으로 아주 단순화해서 구현한 것</strong>이라고 보는 게 꽤 좋은 직관이야.</p>
+<h3 id="나-4">나<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#나-4" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>근데 그럼 강화학습에서 과적합 문제는 왜 일어나는거야? 같은 보상함수를 사용하되 특정 상황에서 학습을 너무 오래시켜서 과적합이 일어났어 여기까지 오케이
+이족보행 로봇을 시뮬레이터에서 강화학습으로 제어한다고 했을때 왼쪽 경사 환경에서만 너무 오래 학습시켜서 과적합이 났다고 하자. 그럼 오른쪽 경사일경우에는 잘 못걷겠지? 근데 충분한 시간동안 오른쪽경사를 학습 시켜도 최종적으로는 오른쪽/왼쪽경사에 강인하게 보행하는 로직을 만들수 없다 이거야?</p>
+<h3 id="chatgpt-4">ChatGPT<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#chatgpt-4" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>그건 아니야. <strong>충분히 잘 설계해서 학습시키면 왼쪽/오른쪽 경사 모두에 강인한 하나의 보행 정책을 만들 수 있어.</strong></p>
+<p>네 예시에서 문제는 “강화학습은 한 환경에 과적합되면 다른 환경을 절대 같이 배울 수 없다”가 아니라, <strong>어떤 데이터 분포로 어떤 순서로 학습시키느냐</strong>에 더 가까워.</p>
+<p>왼쪽 경사에서만 오래 학습하면 정책은 사실상</p>
+<blockquote>
+<p>“세상은 항상 왼쪽으로 기울어져 있다”</p>
+</blockquote>
+<p>는 전제에 최적화될 수 있어. 그러면 평지나 오른쪽 경사에서는 당연히 성능이 떨어질 수 있지.</p>
+<p>그다음 오른쪽 경사에서 충분히 학습시키면 두 가지 가능성이 있어.</p>
+<p>첫째, 정책이 <strong>왼쪽 경사에 대한 능력을 유지하면서 오른쪽 경사도 배울 수 있다.</strong> 신경망 용량이 충분하고 학습이 적절하다면 가능해.</p>
+<p>둘째, 오른쪽 경사만 계속 학습시키면 기존 왼쪽 경사 능력을 잃을 수도 있어. 이건 단순한 과적합이라기보다 <strong>catastrophic forgetting<span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord hangul_fallback">파국적망각</span></span></span></span></strong> 문제에 더 가까워.</p>
+<p>즉,</p>
+<p><code>왼쪽만 100만 step → 왼쪽 잘함</code></p>
+<p>그다음</p>
+<p><code>오른쪽만 100만 step → 오른쪽 잘함, 왼쪽 다시 못함</code></p>
+<p>이렇게 될 수도 있다는 거야.</p>
+<p>하지만 학습 환경을 이렇게 만들면 얘기가 달라져.</p>
+<p><code>왼쪽 경사</code>
+<code>오른쪽 경사</code>
+<code>평지</code>
+<code>약한 경사</code>
+<code>강한 경사</code>
+<code>마찰계수 변화</code>
+<code>질량 변화</code>
+<code>외란</code></p>
+<p>을 매 episode마다 섞어서 보여주는 거야.</p>
+<p>그러면 정책이</p>
+<blockquote>
+<p>“왼쪽 경사에서는 이 행동”</p>
+<p>“오른쪽 경사에서는 저 행동”</p>
+</blockquote>
+<p>을 하나의 신경망 안에서 동시에 학습할 수 있어.</p>
+<p>이게 로봇 강화학습에서 <strong>domain randomization</strong>을 굉장히 많이 쓰는 이유 중 하나야.</p>
+<hr/>
+<p>특히 중요한 건 로봇이 <strong>현재 어느 상태인지 관측할 수 있어야 한다</strong>는 거야.</p>
+<p>예를 들어 observation에</p>
+<ul>
+<li>몸체 roll angle</li>
+<li>roll angular velocity</li>
+<li>관절 각도</li>
+<li>관절 속도</li>
+<li>IMU 정보</li>
+<li>발 접촉 상태</li>
+</ul>
+<p>같은 게 있다면 왼쪽 경사와 오른쪽 경사는 서로 다른 state로 들어오겠지.</p>
+<p>그러면 정책</p>
+<p>$<span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">a</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">π</span></span></span></span>s$
+$$</p>
+<p>에서</p>
+<p>왼쪽 경사 상태</p>
+<p>$$
+s_L
+$$</p>
+<p>가 들어오면</p>
+<p>$<span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">π</span></span></span></span>s_L$=a_L
+$$</p>
+<p>오른쪽 경사 상태</p>
+<p>$$
+s_R
+$$</p>
+<p>가 들어오면</p>
+<p>$<span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">π</span></span></span></span>s_R$=a_R
+$$</p>
+<p>처럼 <strong>같은 정책이 상황에 따라 다른 행동을 출력</strong>할 수 있어.</p>
+<p>이게 핵심이야.</p>
+<p>하나의 정책이라고 해서 하나의 행동만 기억하는 게 아니거든.</p>
+<hr/>
+<p>오히려 네가 생각한 걸 supervised learning과 비교해보면 이해가 쉬워.</p>
+<p>고양이 사진만 100만 장 보여주면</p>
+<blockquote>
+<p>고양이는 엄청 잘 분류함<br/>
+개는 잘 못함</p>
+</blockquote>
+<p>이게 과적합/분포 편향 문제와 비슷하지.</p>
+<p>그렇다고 개 사진을 추가하면</p>
+<blockquote>
+<p>고양이와 개를 동시에 구분하는 모델은 절대로 만들 수 없다</p>
+</blockquote>
+<p>는 건 아니잖아.</p>
+<p>그냥</p>
+<p><code>고양이 + 개</code></p>
+<p>데이터를 충분히 다양하게 같이 학습시키면 돼.</p>
+<p>강화학습에서도 마찬가지야.</p>
+<p><code>왼쪽 경사 + 오른쪽 경사</code></p>
+<p>를 충분히 다양하게 학습시키면 둘 다 처리하는 policy를 만들 수 있어.</p>
+<hr/>
+<p>그런데 여기서 아주 중요한 문제가 하나 생겨.</p>
+<h3 id="왜-단순히-오래-학습한다고-해결되지-않을까">왜 단순히 “오래 학습”한다고 해결되지 않을까?<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#왜-단순히-오래-학습한다고-해결되지-않을까" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>강화학습이 보는 것은 결국 <strong>훈련 환경에서 경험한 상태 분포</strong>이기 때문이야.</p>
+<p>예를 들어 경사를</p>
+<p>$$
+-10^\circ
+$$</p>
+<p>만 계속 보여줬다면 policy는 그 주변 상태에만 매우 능숙해질 수 있어.</p>
+<p>그런데 실제 로봇에는</p>
+<p>$$
+-7^\circ,\quad +3^\circ,\quad +12^\circ
+$$</p>
+<p>같은 경사가 계속 등장하지.</p>
+<p>그래서 학습할 때 아예</p>
+<p>$<span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">θ</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">∼</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">U</span></span></span></span>-15^\circ,+15^\circ$
+$$</p>
+<p>처럼 경사각을 랜덤하게 만들어버릴 수 있어.</p>
+<p>매 episode마다</p>
+<ul>
+<li>-12°</li>
+<li>+3°</li>
+<li>+14°</li>
+<li>-2°</li>
+<li>+8°</li>
+</ul>
+<p>등을 랜덤으로 만나는 거지.</p>
+<p>그러면 에이전트 입장에서</p>
+<blockquote>
+<p>“왼쪽 경사에 맞는 특정 동작을 외워야겠다”</p>
+</blockquote>
+<p>가 아니라</p>
+<blockquote>
+<p>“현재 몸이 어느 방향으로 기울어져 있는지 보고 거기에 맞게 균형을 잡아야겠다”</p>
+</blockquote>
+<p>라는 정책이 훨씬 높은 평균 보상을 받게 돼.</p>
+<p>그래서 <strong>일반화된 제어법</strong>이 생길 가능성이 커지는 거야.</p>
+<hr/>
+<p>그리고 여기서 네가 처음 얘기했던 <strong>생명체 비유</strong>가 다시 연결돼.</p>
+<p>사람이 걷는 법을 배울 때 항상 완벽하게 평평한 바닥에서만 걷는다고 해보자.</p>
+<p>그러다가 처음으로 경사진 곳에 가면 잘 넘어질 수 있겠지.</p>
+<p>하지만 어릴 때부터</p>
+<ul>
+<li>평지</li>
+<li>잔디</li>
+<li>오르막</li>
+<li>내리막</li>
+<li>울퉁불퉁한 곳</li>
+</ul>
+<p>을 계속 경험하면,</p>
+<p>우리는 각 지형별로 완전히 별개의 ‘걷기 프로그램’을 가지는 게 아니라</p>
+<blockquote>
+<p><strong>현재 몸이 어떻게 움직이고 있는지를 감각해서 계속 보정하는 능력</strong></p>
+</blockquote>
+<p>을 배우게 돼.</p>
+<p>강화학습 로봇도 비슷해.</p>
+<hr/>
+<p>따라서 네 질문에 정확히 답하면,</p>
+<blockquote>
+<p><strong>왼쪽 경사에 과적합된 뒤 오른쪽 경사를 충분히 학습시킨다고 해서 원리적으로 둘 다 잘할 수 없는 것은 전혀 아니다.</strong></p>
+</blockquote>
+<p>둘 다 충분히 잘할 수 있어.</p>
+<p>다만 <strong>오른쪽만 이어서 학습하면 왼쪽을 잊어버릴 수 있으므로</strong>, 보통은 왼쪽/오른쪽/평지 등 여러 조건을 <strong>동시에 또는 반복적으로 섞어서 학습</strong>한다.</p>
+<p>그리고 더 좋은 방법은</p>
+<blockquote>
+<p><strong>경사 자체를 하나하나 외우게 하는 게 아니라, 다양한 경사를 랜덤으로 생성해서 ‘경사에 대응하는 법’을 학습시키는 것</strong></p>
+</blockquote>
+<p>이야.</p>
+<p>그래서 강화학습에서 원하는 최종 결과는 보통</p>
+<p><strong>환경 A를 잘 외운 policy</strong></p>
+<p>가 아니라</p>
+<p><strong>환경이 바뀌어도 observation을 보고 적절하게 대응하는 policy</strong></p>
+<p>인 거지.</p>
+<p>여기까지 이해하면 왜 강화학습에서 <strong>domain randomization이 Sim-to-Real의 핵심 기술 중 하나인지</strong>도 거의 바로 연결돼.</p>
+<h3 id="나-5">나<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#나-5" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>그러니까 내 말은 아기가 세상을 살아가는법을 터득하듯이 몇년간 다양한 환경에 노출되면서 아예못움직이다 기어가고 일어서고 걷고 뛰다가 자전거도 타잖아. 한 모델을 아기 키우듯 몇년간 학습시키는 방법이 왜 없냐 이거지. 컴퓨터는 기억력이 좋잖아.</p>
+<h3 id="chatgpt-5">ChatGPT<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#chatgpt-5" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>있어. 사실 네가 말한 방향이 정확히 <strong>continual/lifelong reinforcement learning</strong>의 목표야. 다만 “아기처럼 몇 년 키우면 점점 모든 걸 잘하는 하나의 정책”이 아직 잘 안 되는 이유가 몇 가지 아주 근본적이야.</p>
+<h3 id="chatgpt-6">ChatGPT<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#chatgpt-6" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>맞아. 그리고 네 질문은 실제로 강화학습 연구에서 꽤 본질적인 질문이야.</p>
+<p><strong>“왜 학습 끝난 모델을 버리고 새로 학습하지? 그냥 하나의 에이전트를 태어나게 해서, 경험을 계속 축적시키면 안 되나?”</strong></p>
+<p>그걸 하려는 분야가 실제로 <strong>Continual Reinforcement Learning / Lifelong Reinforcement Learning</strong>이야. 목표 자체가 새로운 환경과 과제를 계속 배우면서 이전 능력을 유지하는 에이전트다. 아직 인간 수준으로 해결되지 않았을 뿐이야. citeturn683480search8turn683480search1</p>
+<p>그리고 네 말 중 하나를 아주 중요하게 수정해야 해.</p>
+<blockquote>
+<p><strong>컴퓨터는 기억력이 좋다.</strong></p>
+<p>맞다. 그런데 <strong>신경망의 파라미터는 컴퓨터의 저장장치처럼 동작하지 않는다.</strong></p>
+</blockquote>
+<p>이게 핵심이야.</p>
+<p>컴퓨터 RAM/SSD에</p>
+<p><code>왼쪽 경사 걷기 = 데이터 A</code><br/>
+<code>오른쪽 경사 걷기 = 데이터 B</code></p>
+<p>로 저장했다면 B를 저장한다고 A가 망가지지 않아.</p>
+<p>그런데 신경망은 대략</p>
+<p>$<span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">π</span></span></span></span>s;\theta$
+$$</p>
+<p>라는 <strong>하나의 거대한 함수</strong>이고, 모든 능력이 같은 $\theta$ 안에 뒤섞여 저장돼 있어.</p>
+<p>왼쪽 경사를 배우면서 파라미터가</p>
+<p>$$
+\theta_0 \rightarrow \theta_1
+$$</p>
+<p>로 변하고,</p>
+<p>오른쪽 경사를 배우면서</p>
+<p>$$
+\theta_1 \rightarrow \theta_2
+$$</p>
+<p>로 변하는데, 오른쪽 경사 성능을 개선하려고 움직인 파라미터가 <strong>왼쪽 경사를 처리하는 데 쓰이던 파라미터이기도 할 수 있어.</strong></p>
+<p>그래서 이런 일이 생긴다.</p>
+<p>$$
+\text{오른쪽 경사 성능} \uparrow
+$$</p>
+<p>하면서 동시에</p>
+<p>$$
+\text{왼쪽 경사 성능} \downarrow
+$$</p>
+<p>이게 catastrophic forgetting의 본질 중 하나야. Continual learning 연구에서도 현재까지 핵심 문제로 다뤄지고 있어. citeturn683480search0turn683480search11</p>
+<p>그런데 네가 바로 다음에 할 생각이 있어.</p>
+<blockquote>
+<p><strong>“그럼 과거 경험을 그냥 저장해놨다가 새로운 걸 배울 때 예전 것도 같이 복습시키면 되잖아?”</strong></p>
+</blockquote>
+<p>맞아.</p>
+<p>실제로 한다.</p>
+<p>이걸 <strong>experience replay / rehearsal</strong> 계열이라고 해.</p>
+<p>오늘 자전거를 배우더라도 학습할 때</p>
+<p><code>걷기 경험 + 뛰기 경험 + 계단 경험 + 자전거 경험</code></p>
+<p>을 섞어서 계속 학습시키는 거야.</p>
+<p>그러면 훨씬 덜 잊어버린다.</p>
+<p>오히려 이걸 생각하면 인간과 더 비슷해져.</p>
+<hr/>
+<h3 id="그런데-그러면-왜-아직-ai-아기가-없냐">그런데 그러면 왜 아직 ‘AI 아기’가 없냐<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#그런데-그러면-왜-아직-ai-아기가-없냐" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>여기서 문제가 한 단계씩 커져.</p>
+<p>아기가 경험한 게 고작</p>
+<p><code>왼쪽 경사</code>
+<code>오른쪽 경사</code></p>
+<p>두 개라면 별문제가 없어.</p>
+<p>10억 번 경험해도 저장하고 다시 학습시키면 돼.</p>
+<p>그런데 5년 동안 살아간다고 생각해봐.</p>
+<p><code>평지 걷기</code>
+→ <code>잔디 걷기</code>
+→ <code>모래</code>
+→ <code>계단</code>
+→ <code>뛰기</code>
+→ <code>점프</code>
+→ <code>공 차기</code>
+→ <code>물건 집기</code>
+→ <code>문 열기</code>
+→ <code>자전거</code>
+→ <code>사람 피하기</code>
+→ <code>공 던지기</code>
+→ …</p>
+<p>그리고 각각의 경험 안에서도 센서 입력은 매 순간 다르지.</p>
+<p>그러면 과거의 모든 경험을 그대로 replay하는 건 데이터가 엄청나게 커져.</p>
+<p>더 큰 문제는 <strong>학습해야 할 과제가 늘어날수록 서로 원하는 파라미터 변화가 충돌한다는 것</strong>이야.</p>
+<p>그래서 continual learning에서는 현재도 replay, 중요한 파라미터를 보호하는 regularization, 네트워크 구조를 확장하거나 모듈화하는 방법 등 여러 접근법을 연구하고 있어. citeturn683480search0</p>
+<hr/>
+<p>그런데 여기서 나는 네 아기 비유가 특히 중요한 지점을 찌른다고 봐.</p>
+<p>인간은 사실 <strong>옛 경험을 전부 그대로 기억하지 않아.</strong></p>
+<p>예를 들어 너는 자전거를 배운 모든 순간을 기억하지 못해.</p>
+<p>첫날 핸들을 3.2° 돌리고,
+왼쪽으로 4 cm 기울었고,
+오른발에 얼마만큼 힘을 줬는지</p>
+<p>기억 못 하잖아.</p>
+<p>그런데 <strong>자전거는 탈 줄 알아.</strong></p>
+<p>즉 인간은 경험 자체를 모두 저장하는 게 아니라 경험에서 <strong>일반적인 능력</strong>을 추출해낸다.</p>
+<p>수천 번의</p>
+<p><code>넘어짐 → 균형 수정</code></p>
+<p>경험이</p>
+<blockquote>
+<p><strong>균형 잡기</strong></p>
+</blockquote>
+<p>라는 재사용 가능한 능력이 되어버리는 거지.</p>
+<p>그리고 그 능력이 자전거뿐 아니라 스키, 스케이트 등 다른 행동에도 어느 정도 전이될 수 있고.</p>
+<p>궁극적으로 AI에게도 원하는 건 이거야.</p>
+<hr/>
+<p>네가 말한 AI 아기를 진짜 만든다면 이상적인 구조는 이런 느낌일 거야.</p>
+<p>처음:</p>
+<p><strong>아무것도 못함</strong></p>
+<p>↓</p>
+<p>수많은 관절 경험</p>
+<p><strong>몸을 움직이는 법</strong></p>
+<p>↓</p>
+<p><strong>균형이라는 일반적인 능력</strong></p>
+<p>↓</p>
+<p>기기</p>
+<p>↓</p>
+<p>서기</p>
+<p>↓</p>
+<p>걷기</p>
+<p>↓</p>
+<p>뛰기</p>
+<p>↓</p>
+<p>경사 / 계단 / 미끄러운 바닥</p>
+<p>↓</p>
+<p>새로운 물체와 상호작용</p>
+<p>↓</p>
+<p>자전거</p>
+<p>이때 자전거를 배울 때 <strong>걷기를 처음부터 다시 학습하는 게 아니다.</strong></p>
+<p>이미 가지고 있는</p>
+<p><code>시각 인식</code>
+<code>균형</code>
+<code>관절 제어</code>
+<code>속도 감각</code>
+<code>물체와 상호작용</code></p>
+<p>같은 능력을 조합해서 새로운 능력을 만드는 거지.</p>
+<p>이걸 AI 관점에서 보면 <strong>continual learning + hierarchical RL + transfer learning + world model + memory</strong> 같은 여러 문제가 한꺼번에 결합된 형태야.</p>
+<hr/>
+<p>그리고 또 하나 엄청 중요한 차이가 있어.</p>
+<h3 id="인간-아기는-단순히-reward-하나를-쫓는-rl-에이전트가-아니다">인간 아기는 단순히 <code>reward 하나</code>를 쫓는 RL 에이전트가 아니다<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#인간-아기는-단순히-reward-하나를-쫓는-rl-에이전트가-아니다" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>아기한테</p>
+<p>$$
+reward = 살아있으면 +1
+$$</p>
+<p>하나만 주고 5년 방치한다고 사람이 되는 건 아니잖아.</p>
+<p>아기에게는 이미 진화를 통해 엄청나게 많은 것이 들어가 있어.</p>
+<p>통증 회피, 호기심, 새로운 자극에 대한 관심, 사회적 반응, 운동 반사, 물체 추적, 주의집중 등.</p>
+<p>즉 진화가 이미 <strong>수억 년짜리 pre-training</strong>을 해놓고 개체를 출발시킨 셈이야.</p>
+<p>그래서 현대 embodied AI에서도 비슷하게 foundation model이나 prior를 RL에 넣어서 처음부터 완전한 무작위 탐색을 하지 않도록 하는 연구가 진행되고 있어. 실제로 foundation prior를 이용해 실제 로봇 RL의 sample efficiency를 크게 높이려는 연구도 나오고 있어. citeturn683480search3</p>
+<hr/>
+<p>그리고 네 처음 질문으로 돌아가면 중요한 결론이 하나 있어.</p>
+<p><strong>네가 제안한 건 원리적으로 가능하다.</strong></p>
+<p>가령 엄청나게 좋은 simulator가 있고 로봇 하나를 만든 다음,</p>
+<p>3년 동안 시뮬레이션 세계에서</p>
+<p><code>평지 → 경사 → 장애물 → 계단 → 달리기 → 물체 조작 → 자전거 → ...</code></p>
+<p>를 계속 경험시키면서 옛 경험 일부를 replay하고, 중요한 기술은 보존하고, 새로운 기술을 기존 기술 위에 쌓게 만들면,</p>
+<p><strong>하나의 거대한 에이전트가 점점 많은 운동 능력을 획득하는 방향으로 학습시키는 것 자체는 가능하다.</strong></p>
+<p>우리가 아직 해결하지 못한 건 <strong>그걸 인간처럼 효율적이고 안정적으로 평생 지속하는 학습 알고리즘</strong>이야.</p>
+<p>그래서 질문을</p>
+<blockquote>
+<p>“왜 그런 방법이 없어?”</p>
+</blockquote>
+<p>에서 조금 바꾸면,</p>
+<blockquote>
+<p><strong>“왜 AI는 인간처럼 이전에 배운 것을 거의 잊지 않으면서 새로운 능력을 계속 추가할 수 없는가?”</strong></p>
+</blockquote>
+<p>가 되고, 이게 바로 현재 continual/lifelong learning이 해결하려는 핵심 문제 중 하나야.</p>
+<p>그리고 재미있는 건 네가 처음 질문한 <strong>강화학습의 과적합 문제를 끝까지 밀고 가니까 결국 ‘평생 학습하는 인공 생명체를 어떻게 만들 것인가’라는 문제에 도착한 것</strong>이야. memcite</p>
+<h3 id="나-6">나<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#나-6" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>이게 생각처럼 그렇게 쉽지가 않은거야 아니면 생긴지 얼마 안된 분야라 연구가 덜된거야</p>
+<h3 id="chatgpt-7">ChatGPT<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#chatgpt-7" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>둘 다인데, <strong>비중으로 보면 “생각보다 훨씬 어려운 문제라서 아직 못 풀었다”가 더 커.</strong></p>
+<p>Continual learning 자체는 완전히 신생 분야는 아니야. catastrophic forgetting 문제는 오래전부터 알려져 있었고, continual/lifelong learning도 꽤 오랫동안 연구돼 왔어. 다만 <strong>Continual Reinforcement Learning을 ‘평생 학습하는 에이전트’ 관점에서 본격적으로 체계화하는 흐름은 비교적 최근에 더 강해진 편</strong>이야. 2025년에도 이 분야를 정리하는 대형 survey들이 새로 나오고 있고, 최근 논문들은 여전히 일반화·망각·평가 방법을 핵심 미해결 문제로 꼽고 있어. citeturn356959academia22turn356959academia23</p>
+<p>왜 그렇게 어렵냐면, 처음 생각하면 정말 단순해 보여.</p>
+<blockquote>
+<p>새것을 배우고<br/>
+옛것을 저장해두고<br/>
+가끔 옛것도 복습하면 되잖아?</p>
+</blockquote>
+<p>그런데 실제로는 <strong>‘기억할 것’과 ‘변할 것’을 동시에 만족시켜야 해.</strong> 이걸 stability–plasticity dilemma라고 불러.</p>
+<p>너무 안정적이면:</p>
+<p><code>옛날 지식 보존 ↑</code><br/>
+<code>새로운 것 학습 ↓</code></p>
+<p>반대로 너무 잘 변하도록 만들면:</p>
+<p><code>새로운 것 학습 ↑</code><br/>
+<code>옛날 지식 파괴 ↑</code></p>
+<p>가 돼.</p>
+<p>이 trade-off 자체가 continual learning의 핵심 문제 중 하나야. 최근 연구에서도 catastrophic forgetting과 이 stability–plasticity 문제가 여전히 중심적인 난제로 다뤄진다. citeturn356959search0turn356959search9</p>
+<p>그리고 <strong>강화학습에서는 이게 일반 신경망보다 더 어렵다.</strong></p>
+<p>예를 들어 이미지 분류에서는 과거 사진 1만 장을 저장했다가 새로운 사진과 같이 학습시키면 비교적 명확해.</p>
+<p>그런데 강화학습은</p>
+<p>$$
+s_t \rightarrow a_t \rightarrow s_{t+1}
+$$</p>
+<p>처럼 <strong>내 행동이 다음에 보게 될 데이터 자체를 바꿔버려.</strong></p>
+<p>걷는 로봇이 균형을 못 잡으면 앞으로의 데이터가</p>
+<p><code>넘어짐 → 넘어져 있는 상태 → 이상한 관절 상태</code></p>
+<p>위주로 들어오고,</p>
+<p>잘 걷기 시작하면</p>
+<p><code>정상 보행 → 경사 진입 → 회복</code></p>
+<p>같은 전혀 다른 데이터를 경험하게 돼.</p>
+<p>즉 학습하면서 <strong>훈련 데이터의 분포 자체가 계속 움직여.</strong></p>
+<p>그래서 continual RL은 단순 continual learning보다 조건이 더 까다롭고, 최근 survey들도 제한된 일반화 능력과 동적인 환경을 CRL이 해결해야 할 주요 문제로 본다. citeturn356959academia22</p>
+<hr/>
+<p>그리고 네가 말한 **“몇 년 동안 그냥 계속 돌리면?”**에도 문제가 있어.</p>
+<p>예를 들어 AI 아기에게</p>
+<p>첫해:
+<code>걷기</code></p>
+<p>둘째 해:
+<code>달리기</code></p>
+<p>셋째 해:
+<code>자전거</code></p>
+<p>넷째 해:
+<code>수영</code></p>
+<p>을 가르쳤다고 하자.</p>
+<p>우리가 원하는 건</p>
+<p>$$
+\text{걷기}+\text{달리기}+\text{자전거}+\text{수영}
+$$</p>
+<p>인데, 실제 신경망 업데이트는 그렇게 깔끔하게 지식을 추가하는 연산이 아니야.</p>
+<p>대충</p>
+<p>$$
+\theta \leftarrow \theta-\alpha\nabla L
+$$</p>
+<p>라는 식으로 <strong>전체 파라미터를 계속 움직이는 것</strong>이야.</p>
+<p>그래서 자전거를 잘 배우도록 파라미터를 조금 움직였는데 우연히 그 파라미터가 달리기에도 중요했다면 달리기가 망가질 수 있어.</p>
+<p>컴퓨터니까 기억은 무한히 잘할 것 같지만, 실제 문제는 <strong>저장 용량보다 ‘지식을 어떻게 구조화해서 저장하느냐’</strong> 쪽이야.</p>
+<p>이게 인간 뇌와 현재 신경망의 엄청난 차이 중 하나라고 볼 수 있어.</p>
+<hr/>
+<p>또 하나는 <strong>무엇을 복습할지도 굉장히 어려워.</strong></p>
+<p>5년 동안 초당 30번 센서 입력을 받았다고 해보자.</p>
+<p>대충 계산하면</p>
+<p>$$
+5\times365\times24\times3600\times30
+$$</p>
+<p>약 <strong>47억 개의 timestep</strong>이야.</p>
+<p>그걸 모두 저장했다가 매번 다시 학습시키는 건 엄청나게 비효율적이야.</p>
+<p>그래서 AI가 스스로</p>
+<blockquote>
+<p>이것은 중요한 경험이다.<br/>
+이것은 버려도 된다.<br/>
+이 경험과 저 경험은 사실 같은 원리를 가르쳐준다.</p>
+</blockquote>
+<p>를 판단해야 해.</p>
+<p>인간으로 치면 <strong>기억의 압축과 추상화</strong>가 필요한 거지.</p>
+<p>예를 들어 우리는</p>
+<p><code>2026년 2월 13일에 계단에서 오른발을 이렇게 올렸다</code></p>
+<p>를 기억하는 게 아니라,</p>
+<blockquote>
+<p><strong>계단은 이렇게 올라간다</strong></p>
+</blockquote>
+<p>라는 skill을 남겨.</p>
+<p>이런 식으로 <strong>수십억 번의 경험을 소수의 재사용 가능한 개념과 기술로 압축하는 것</strong>이 아직 AI에서 굉장히 어려워.</p>
+<hr/>
+<p>그리고 더 미친 문제가 있어.</p>
+<h3 id="세상이-계속-바뀐다">세상이 계속 바뀐다.<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#세상이-계속-바뀐다" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>처음에는 로봇 몸무게가 20kg였는데 나중에는 물건을 들어서 25kg이 될 수도 있고,</p>
+<p>모터가 노후화되거나,</p>
+<p>신발 마찰이 달라지거나,</p>
+<p>센서가 교체되거나,</p>
+<p>새로운 물체가 등장할 수도 있지.</p>
+<p>그러면 에이전트는</p>
+<blockquote>
+<p>이건 새로운 상황인가?<br/>
+옛날 지식이 틀린 건가?<br/>
+일부만 수정해야 하나?<br/>
+완전히 새로운 skill을 만들어야 하나?</p>
+</blockquote>
+<p>까지 스스로 판단해야 해.</p>
+<p>최근에는 심지어 <strong>기존 RL의 기본적인 문제 설정 자체가 ‘끝없이 배우는 에이전트’에 적절하지 않다</strong>는 비판까지 나오고 있어. 2025년 RLC 논문은 전통적인 RL이 “최적 정책을 찾으면 학습이 끝난다”는 관점에 기반해 있어서, 무기한 계속 학습해야 하는 continual RL과 개념적으로 충돌하는 부분이 있다고 지적했어. citeturn356959search6</p>
+<p>이게 상당히 중요한 얘기야.</p>
+<p>우리는 그동안</p>
+<blockquote>
+<p>게임 하나를 잘하게 만들자.</p>
+</blockquote>
+<p>라는 RL을 엄청 연구했지,</p>
+<blockquote>
+<p><strong>이 에이전트를 켜놓고 20년 동안 계속 살게 하자.</strong></p>
+</blockquote>
+<p>를 목표로 RL 이론 자체를 만든 게 아니거든.</p>
+<hr/>
+<p>그래서 나는 네 질문에 이렇게 답하는 게 가장 정확하다고 봐.</p>
+<p><strong>연구가 부족해서만 못 하는 게 아니다. 근본적으로 어려운 문제다.</strong></p>
+<p>그렇지만 동시에 <strong>지금까지 AI 연구가 그런 형태의 학습을 최우선 목표로 삼지 않았던 것도 사실</strong>이야.</p>
+<p>왜냐하면 산업적으로는 지금까지</p>
+<p><code>Go 잘하는 AI</code>
+<code>로봇팔 조작 AI</code>
+<code>자동차 운전 AI</code>
+<code>문장 생성 AI</code></p>
+<p>처럼 특정 task를 뛰어나게 하는 게 훨씬 평가하기 쉽고 쓸모도 바로 있었거든.</p>
+<p>반대로</p>
+<blockquote>
+<p>“이 로봇을 10년 키워보겠습니다.”</p>
+</blockquote>
+<p>는 실험 자체가 너무 비싸고 평가하기도 어려워.</p>
+<p>실제로 2025년 ICML에서도 <strong>continual RL을 어떻게 평가해야 하는지조차 기존 방식에 문제가 있다</strong>는 논문이 나왔을 정도야. citeturn356959search2</p>
+<p>그래서 현재 상황을 아주 거칠게 표현하면:</p>
+<p><strong>우리는 ‘시험 문제 하나를 엄청 잘 푸는 AI’를 만드는 기술은 굉장히 발전했는데,<br/>
+‘학교에 입학해서 수십 년 동안 계속 배우는 AI’를 만드는 기술은 아직 초기 단계다.</strong></p>
+<p>그리고 네가 계속 말한 **“아기처럼 하나의 모델을 계속 키우면 안 되나?”**라는 발상은 엉뚱한 발상이 아니라, 오히려 AGI/embodied AI 쪽에서 궁극적으로 가야 한다고 보는 방향 중 하나야.</p>
+<p>문제는 그것을 제대로 하려면 단순 RL 하나만 개선해서 되는 게 아니라,</p>
+<p><strong>memory + continual learning + RL + world model + skill abstraction + exploration + meta-learning</strong></p>
+<p>같은 것들이 한꺼번에 해결되어야 한다는 거야.</p>
+<p>그래서 어렵다. 정말로 <strong>문제 자체가 크다.</strong></p>
+<h3 id="나-7">나<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#나-7" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>아니 어렵다고? 그냥 생각하기에는 쉽게해버릴거같은데 그렇게 혁신적인 발상이 아닌거 같은데</p>
+<h3 id="chatgpt-8">ChatGPT<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#chatgpt-8" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>맞아. <strong>아이디어 자체는 전혀 혁신적이지 않아.</strong> 오히려 너무 자연스러워서 연구자들도 오래전부터 똑같이 생각했어.</p>
+<p>“하나의 에이전트를 계속 학습시키면서 과거 경험을 기억시키면 되잖아?”라는 발상 자체가 continual/lifelong learning이야. 문제는 <strong>아이디어가 어려운 게 아니라, 구현했을 때 예상보다 이상하게 무너진다는 것</strong>이야. 실제로 이 문제는 적어도 수십 년째 연구돼 왔고, 2019년 리뷰에서도 이미 오래된 핵심 난제로 정리돼 있었어. citeturn752986search0turn752986search2</p>
+<p>가장 직관적인 예를 하나 들어보자.</p>
+<p>로봇에게 처음에</p>
+<p>$$
+\text{걷기}
+$$</p>
+<p>를 완벽하게 학습시켰다고 하자. 그리고 그 신경망을 그대로 두고</p>
+<p>$$
+\text{달리기}
+$$</p>
+<p>를 학습시키면 돼 보이지?</p>
+<p>그런데 걷기와 달리기는 완전히 별개의 메모리 파일이 아니야. 같은 신경망의 같은 뉴런과 가중치를 상당 부분 공유해.</p>
+<p>예를 들어 어떤 가중치 $w_{137}$가</p>
+<ul>
+<li>걷을 때 균형 잡는 데 중요하고</li>
+<li>달릴 때도 착지 자세를 만드는 데 중요하다</li>
+</ul>
+<p>고 하자.</p>
+<p>달리기를 더 잘하려고 학습시키니까 optimizer가</p>
+<p>$$
+w_{137}=0.42 \rightarrow 0.71
+$$</p>
+<p>로 바꿨어.</p>
+<p>달리기는 좋아졌는데, <strong>걷기에서 필요했던 0.42라는 관계가 깨져버릴 수 있어.</strong></p>
+<p>그러면 “그 가중치 못 바꾸게 하면 되잖아?”라고 할 수 있지.</p>
+<p>그렇게 하면 이번에는 새로운 걸 못 배워.</p>
+<p>즉,</p>
+<p>$$
+\text{기존 파라미터 보호}
+$$</p>
+<p>를 강하게 하면</p>
+<p>$$
+\text{기억}↑,\qquad \text{새로운 학습}↓
+$$</p>
+<p>반대로 자유롭게 바꾸면</p>
+<p>$$
+\text{새로운 학습}↑,\qquad \text{기억}↓
+$$</p>
+<p>가 된다. 이게 유명한 <strong>stability–plasticity dilemma</strong>야. 지금도 continual learning의 핵심 문제로 다뤄진다. citeturn752986search1turn752986search9</p>
+<p>그런데 여기까지만 보면 나도 네 생각처럼 말할 수 있어.</p>
+<blockquote>
+<p>“아니 그럼 옛날 데이터를 계속 같이 학습시키면 되잖아.”</p>
+</blockquote>
+<p>맞아. 실제로 <strong>Replay</strong>를 쓴다.</p>
+<p>걷기를 배운 경험을 저장해놨다가 달리기를 배울 때</p>
+<p>$$
+걷기 30% + 달리기 70%
+$$</p>
+<p>같이 섞어서 학습시키는 거야.</p>
+<p>상당히 잘 작동해.</p>
+<p>그러면 다음 질문은 당연히</p>
+<blockquote>
+<p>“그럼 됐잖아?”</p>
+</blockquote>
+<p>가 되는데, <strong>작은 규모에서는 진짜로 거의 됐다고 볼 수도 있어.</strong></p>
+<p>문제는 우리가 원하는 수준을 크게 키웠을 때야.</p>
+<hr/>
+<p>5년짜리 AI 아기를 만든다고 생각해보자.</p>
+<p>처음에는</p>
+<p>걷기 → 달리기 → 계단 → 점프 → 자전거 → 수영 → 물건 잡기 → 공 던지기 → 문 열기 → 도구 사용…</p>
+<p>수천 가지를 배우게 될 거야.</p>
+<p>새로운 기술 하나를 배울 때마다 과거 경험을 전부 replay하면 결국 새로운 것 하나 배우려고 <strong>지난 5년 인생을 계속 다시 공부해야 하는 상황</strong>이 된다.</p>
+<p>즉 학습량이 점점 폭증해.</p>
+<p>그래서 “모든 경험 저장” 대신 중요한 경험만 저장하면?</p>
+<p>이번에는</p>
+<blockquote>
+<p><strong>무엇이 중요한 경험인가?</strong></p>
+</blockquote>
+<p>를 AI가 판단해야 해.</p>
+<p>그것도 해결했다고 하자.</p>
+<p>그러면 또 문제가 생긴다.</p>
+<p>예를 들어</p>
+<p><code>자전거 균형잡기</code></p>
+<p>와</p>
+<p><code>외발로 서기</code></p>
+<p>에는 공통되는 기술이 많아.</p>
+<p>인간은 이걸 어느 순간</p>
+<blockquote>
+<p><strong>균형 유지</strong></p>
+</blockquote>
+<p>라는 하나의 추상적인 능력으로 압축해버려.</p>
+<p>그런데 현재 신경망은 자동으로</p>
+<blockquote>
+<p>“아, 이 80만 개의 경험은 사실 같은 원리니까 하나의 reusable skill로 묶어놓자.”</p>
+</blockquote>
+<p>를 인간만큼 잘하지 못해.</p>
+<p>결국 <strong>기억 문제가 아니라 지식 구조화 문제가 돼버리는 거야.</strong></p>
+<hr/>
+<p>그리고 강화학습에서는 더 골치 아픈 일이 하나 있어.</p>
+<p>에이전트가 계속 변하니까 <strong>자기가 경험하는 세상도 같이 변해.</strong></p>
+<p>초보 로봇은:</p>
+<p>$$
+넘어짐 \rightarrow 이상한 자세 \rightarrow 또 넘어짐
+$$</p>
+<p>이라는 상태를 많이 경험한다.</p>
+<p>걷기를 배우고 나면:</p>
+<p>$$
+걷기 \rightarrow 장애물 \rightarrow 균형회복
+$$</p>
+<p>을 경험한다.</p>
+<p>달리기를 배우고 나면 또 전혀 다른 영역으로 간다.</p>
+<p>그러니까 일반적인 머신러닝처럼</p>
+<blockquote>
+<p>데이터셋은 고정되어 있고 모델만 발전한다</p>
+</blockquote>
+<p>가 아니라,</p>
+<blockquote>
+<p><strong>모델이 발전하면서 데이터셋 생성 과정 자체가 바뀐다.</strong></p>
+</blockquote>
+<p>이게 강화학습에서 continual learning을 더 어렵게 만드는 이유 중 하나야.</p>
+<hr/>
+<p>그래서 재미있는 결론은 네 직감이 <strong>절반은 완전히 맞아.</strong></p>
+<p>작은 규모로 보면:</p>
+<blockquote>
+<p>“이게 뭐가 어렵지? 경험 저장해놓고 계속 같이 훈련하면 되잖아.”</p>
+</blockquote>
+<p>실제로 된다.</p>
+<p>그래서 continual learning에는 replay, parameter protection, network expansion 같은 꽤 직관적인 방법들이 이미 있어. citeturn752986search2</p>
+<p>그런데 목표를</p>
+<blockquote>
+<p><strong>걷기와 달리기를 같이 잘하는 로봇</strong></p>
+</blockquote>
+<p>에서</p>
+<blockquote>
+<p><strong>20년 동안 세상을 살면서 수만 가지 능력을 축적하고, 옛 능력을 거의 잊지 않고, 옛 지식을 이용해서 새로운 것을 더 빨리 배우는 로봇</strong></p>
+</blockquote>
+<p>으로 올리는 순간 갑자기 문제가 엄청나게 어려워지는 거야.</p>
+<p>그리고 여기서 아주 중요한 포인트가 하나 있어.</p>
+<p><strong>인간 뇌가 이걸 어떻게 하는지도 사실 완전히 이해하지 못했어.</strong></p>
+<p>인간은 단순히 모든 경험을 저장하는 것도 아니고, 뉴런을 전부 고정하는 것도 아니야. 일부는 잊고, 일부는 장기 기억으로 굳히고, 잠잘 때 기억을 재활성화하고, 기술을 추상화하고, 기존 지식을 재사용하면서도 뇌의 내부 표현 자체는 계속 변한다. 최근 연구에서도 이런 생물학적 <code>representational drift</code>와 continual learning의 관계를 연구하고 있어. citeturn752986search8</p>
+<p>그래서 네가 처음 들었을 때</p>
+<blockquote>
+<p><strong>“이 정도면 그냥 구현하면 되는 거 아닌가?”</strong></p>
+</blockquote>
+<p>라고 느끼는 게 이상한 게 아니야.</p>
+<p>실제로 <strong>알고리즘을 대략 설계하는 건 쉽다.</strong></p>
+<p>어려운 건 그것을 <strong>10개 과제가 아니라 10,000개 과제로 확장하면서도 학습 속도와 기억력과 일반화를 모두 유지하는 것</strong>이야.</p>
+<p>이건 약간 **“파일을 저장하면 되는데 운영체제를 만드는 게 왜 어렵지?”**와 비슷해. 기본 발상은 단순한데, 규모를 키우면 문제들이 서로 얽히기 시작하는 거지.</p>
+<h3 id="나-8">나<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#나-8" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>아니 그렇게 복잡하게 생각하지 말고 그냥 사람처럼 하는게 어렵나 니가 말했듯 달리기를 연습할떄 특정 날짜에 오른다리를 얼마나 움직였다라고 생각하면서 연습하진 않잖아 그냥 하다보니까 경험적으로 잘해지는거잖아 이게 강화학습의 구조아니냐고</p>
+<h3 id="chatgpt-9">ChatGPT<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#chatgpt-9" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>맞아. 네가 말하는 직관 자체는 맞아. <strong>“행동해 보고 → 결과를 겪고 → 조금씩 더 잘하게 된다”는 구조는 강화학습과 굉장히 닮아 있어.</strong></p>
+<p>내가 앞에서 replay니 과거 경험 저장이니 너무 구현 쪽으로 복잡하게 설명했어. 네 질문의 핵심은 그게 아니지.</p>
+<p>사람이 달리기를 배울 때는</p>
+<blockquote>
+<p>“지난주 화요일 3시 12분에 오른쪽 무릎을 41° 굽혔더니 좋았으니 그 데이터를 다시 학습하자”</p>
+</blockquote>
+<p>이런 식으로 안 해.</p>
+<p>그냥 계속 달리다 보면 <strong>현재 몸 상태에서 어떻게 움직여야 하는지가 신경계에 서서히 배어들어</strong>. 과거 경험을 명시적으로 기억하지 않아도 능력이 남지.</p>
+<p>그리고 맞아. 바로 이것이 강화학습의 기본 철학과 굉장히 유사해.</p>
+<p>$$
+상태 \rightarrow 행동 \rightarrow 결과 \rightarrow 학습
+$$</p>
+<p>을 계속 반복하면서 policy가 개선되는 거니까.</p>
+<p>그렇다면 네 질문은 결국 이거야.</p>
+<blockquote>
+<p><strong>“그럼 인공 신경망도 그냥 계속 경험시키면서 weight를 업데이트하면 사람처럼 계속 잘해지면 되는 거 아닌가?”</strong></p>
+</blockquote>
+<p>여기서 답은 <strong>원리적으로는 그렇다. 그런데 우리가 쓰는 현재의 학습 방식이 인간 신경계의 학습 방식과 상당히 다르다</strong>야.</p>
+<p>가장 큰 차이는 사람이 새로운 것을 배운다고 해서 뇌 전체를 하나의 loss로 계산해서 한꺼번에 역전파하지 않는다는 거야.</p>
+<p>현재 딥러닝은 보통 어떤 경험을 하면</p>
+<p>$$
+Loss
+$$</p>
+<p>를 만들고,</p>
+<p>$$
+\nabla Loss
+$$</p>
+<p>를 계산해서 수많은 weight를 한꺼번에 수정해.</p>
+<p>즉 <strong>새로운 경험 하나가 기존에 형성돼 있던 내부 표현까지 건드릴 수 있어.</strong></p>
+<p>반면 인간에게서 자전거를 새로 배웠다고 해서 걷는 법이 갑자기 망가지진 않잖아.</p>
+<p>이건 인간이 과거 경험을 전부 기억해서 그런 게 아니라, <strong>뇌가 능력을 형성하고 수정하는 구조 자체가 현재 인공 신경망과 다르기 때문</strong>이라고 보는 게 더 정확해.</p>
+<p>그리고 인간은 생각보다 처음부터 아무것도 없는 RL 에이전트도 아니야.</p>
+<p>아기가 태어날 때 이미 엄청난 구조를 가지고 있어.</p>
+<p>시각계가 물체와 움직임을 처리하는 방식, 척수 반사, 균형 감각, 근육 제어 구조, 통증 회피, 호기심, 주의집중, 보상 체계 등은 이미 어느 정도 만들어져 있어.</p>
+<p>그러니까 인간 한 명의 학습을</p>
+<blockquote>
+<p><code>랜덤 초기화된 neural network + reward</code></p>
+</blockquote>
+<p>라고 보면 안 돼.</p>
+<p>오히려</p>
+<p>$$
+수억 년의 진화
+$$</p>
+<p>로 만들어진 엄청나게 정교한 학습 시스템 위에서</p>
+<p>$$
+개인의 평생 경험
+$$</p>
+<p>이 추가되는 거야.</p>
+<p>그리고 아기가 걷기를 배우는 걸 잘 보면 또 재미있는 차이가 있어.</p>
+<p>처음에는 목도 못 가누다가</p>
+<p>→ 몸 뒤집기<br/>
+→ 앉기<br/>
+→ 기기<br/>
+→ 잡고 서기<br/>
+→ 걷기<br/>
+→ 뛰기</p>
+<p>가 되잖아.</p>
+<p>이전 능력이 <strong>다음 능력의 기반</strong>이 돼.</p>
+<p>기면서 배운 몸의 움직임이 사라지고 걷기를 새로 배우는 게 아니라, 기존에 만들어진 신체 제어 능력을 재사용하면서 점점 복잡한 행동을 만들어.</p>
+<p>즉 인간은 단순히</p>
+<p>$$
+Policy_{걷기}
+\rightarrow
+Policy_{달리기}
+$$</p>
+<p>로 통째로 교체하는 것보다는,</p>
+<p><strong>기존에 생긴 여러 능력을 조합하고 수정하면서 새로운 능력을 추가하는 것</strong>에 가까워 보여.</p>
+<p>그래서 네 직관을 나는 이렇게 정리하고 싶어.</p>
+<blockquote>
+<p><strong>사람의 운동학습을 멀리서 보면 정말 강화학습처럼 보인다.</strong></p>
+<p>그런데 현재 강화학습이 사람처럼 평생 배우지 못하는 이유는 강화학습이라는 아이디어가 틀려서라기보다, <strong>우리가 아직 인간이 그렇게 자연스럽게 평생 학습할 수 있게 만드는 내부 학습 메커니즘을 제대로 구현하지 못했기 때문</strong>이다.</p>
+</blockquote>
+<p>그래서 “그냥 사람처럼 하면 되잖아?”가 개념적으로 틀린 말이 아니야.</p>
+<p><strong>문제는 아직 우리가 ‘사람처럼 학습한다’가 알고리즘 수준에서 정확히 무엇인지 모른다는 거야.</strong></p>
+<p>걷고 넘어지고 다시 걸으면서 능력이 형성되는 현상은 눈에 보이는데, 그 과정에서 뇌가 <strong>어떤 정보를 어디에 남기고, 어떤 연결을 얼마나 수정하고, 왜 옛 기술은 보존하면서 새 기술은 추가할 수 있는지</strong>를 그대로 컴퓨터 알고리즘으로 옮길 정도로 이해하고 있지는 않은 거지.</p>
+<p>그래서 어쩌면 네가 처음 느낀 게 핵심을 잘 찌른 거야.</p>
+<p><strong>강화학습의 철학 자체는 이미 생명체 학습과 꽤 닮아 있다. 부족한 건 그 철학이 아니라, 그걸 수행하는 현재의 학습 구조 쪽이다.</strong></p>
+<h3 id="나-9">나<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#나-9" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>아 아직 인간 신경망이 어떻게 저장되고 개선되는지 구조를 모르셔?</p>
+<h3 id="chatgpt-10">ChatGPT<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#chatgpt-10" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>응. <strong>“아예 모른다”는 건 아니고, 상당 부분은 아는데 전체 작동 원리를 아직 완전히 모른다</strong>가 정확해.</p>
+<p>우리가 이미 아는 건 꽤 많아. 학습하면 뉴런 사이의 시냅스 강도가 변하고, LTP/LTD 같은 장기적인 가소성이 생기고, 뉴런의 흥분성도 바뀌며, 일부 연결은 구조적으로 생기거나 사라질 수도 있어. 운동학습 역시 실제로 경험 의존적 신경가소성과 밀접하게 연결되어 있다는 증거가 있다. citeturn732227search2turn732227search8</p>
+<p>기억에 대해서도 단순히 “뇌 어딘가에 파일처럼 저장된다” 수준은 아니야. 특정 경험에 관여한 뉴런 집단인 <strong>engram</strong>이라는 개념이 있고, 실제로 그 뉴런들을 다시 활성화하면 기억 회상과 연결되는 실험적 증거도 상당히 축적됐어. 최근 연구를 보면 engram 자체도 고정된 게 아니라 시간이 지나면서 구성과 연결이 변한다는 걸 보여줘. citeturn732227search0turn732227search3</p>
+<p>또 재미있게도 우리가 앞에서 얘기했던 <strong>replay 비슷한 현상도 뇌에서 실제로 일어난다.</strong> 학습할 때 활성화됐던 뉴런 패턴이 휴식이나 수면 중 다시 활성화되고, 이것이 기억 공고화<span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal">co</span><span class="mord mathnormal">n</span><span class="mord mathnormal">so</span><span class="mord mathnormal" style="margin-right:0.01968em;">l</span><span class="mord mathnormal">i</span><span class="mord mathnormal">d</span><span class="mord mathnormal">a</span><span class="mord mathnormal">t</span><span class="mord mathnormal">i</span><span class="mord mathnormal">o</span><span class="mord mathnormal">n</span></span></span></span>에 관여한다고 본다. citeturn732227search0turn732227search2</p>
+<p>그리고 기억은 시간이 지나면서 뇌 안에서 재조직되기도 해. 예를 들어 어떤 기억은 초기에는 해마에 크게 의존하다가 장기간에 걸쳐 대뇌피질의 표현으로 재구성되는 <strong>systems consolidation</strong>이라는 현상이 알려져 있어. 다만 이 과정의 세부 모델에는 여전히 논쟁이 있다. citeturn732227search1turn732227search4</p>
+<p>그러니까 대략 여기까지는 안다고 볼 수 있어.</p>
+<p><strong>경험</strong>
+→ 특정 뉴런 집단 활성화<br/>
+→ 시냅스 강도와 세포 특성 변화<br/>
+→ 일부 연결의 구조적 변화<br/>
+→ 수면/휴식 중 재활성화<br/>
+→ 여러 뇌 영역 사이에서 재구성<br/>
+→ 이후 비슷한 상황에서 행동과 기억에 영향</p>
+<p>문제는 우리가 <strong>이걸 알고리즘 수준으로 완전히 이해하지 못했다는 거야.</strong></p>
+<p>예를 들어 네가 달리기를 6개월 연습했다고 하자.</p>
+<p>우리는 대략적으로는 운동피질, 소뇌, 기저핵 등 여러 회로가 관여하고, 시냅스 가소성이 일어나고, 운동 표현이 바뀐다는 것을 알아.</p>
+<p>그런데 아직 이런 질문에는 완전한 답이 없어.</p>
+<blockquote>
+<p>정확히 어떤 시냅스를 얼마나 바꾸는가?</p>
+</blockquote>
+<blockquote>
+<p>왜 이 변화가 걷기 능력을 망가뜨리지 않는가?</p>
+</blockquote>
+<blockquote>
+<p>걷기와 달리기의 공통 부분인 ‘균형 제어’는 어디까지 공유되는가?</p>
+</blockquote>
+<blockquote>
+<p>어떤 경험은 장기적인 기술이 되고 어떤 경험은 사라지는가?</p>
+</blockquote>
+<blockquote>
+<p>수십 년 동안 계속 새로운 것을 배우는데 왜 기존 기술 간섭이 비교적 적은가?</p>
+</blockquote>
+<blockquote>
+<p>서로 다른 기술을 필요할 때 어떻게 조합하는가?</p>
+</blockquote>
+<p>이걸 <strong>수학적으로 명확한 하나의 학습 알고리즘으로 쓸 정도로는 모르는 거야.</strong></p>
+<p>특히 중요한 건 뇌에서는 학습이 단순히</p>
+<p>$$
+w \leftarrow w-\alpha\nabla L
+$$</p>
+<p>같은 <strong>하나의 전역 backpropagation 규칙으로 이루어진다는 증거가 없다는 것</strong>이야.</p>
+<p>실제 뇌에서는 시냅스 수준의 국소적 변화, 신경조절물질, 뉴런의 흥분성 변화, 회로 수준의 억제/흥분 조절, 수면 중 replay, 구조적 변화 등 <strong>여러 시간 규모의 학습 메커니즘이 동시에 돌아간다.</strong></p>
+<p>게다가 기억 자체도 우리가 예전에 생각했던 것보다 훨씬 동적이야. 2024~2025년 리뷰들에서도 기억 engram이 고정된 뉴런 집합이라기보다 <strong>시간이 지나면서 바뀌면서도 기억 기능은 유지되는 유연한 표현</strong>일 가능성을 강조하고 있어. citeturn732227search1turn732227search3</p>
+<p>그래서 앞에서 네가 했던 질문이 정확히 여기로 연결돼.</p>
+<blockquote>
+<p><strong>“그럼 그냥 사람처럼 하나의 신경망을 평생 업데이트하면 되는 거 아니야?”</strong></p>
+</blockquote>
+<p>우리는 <strong>사람이 그렇게 하고 있다는 건 관찰하고 있어.</strong></p>
+<p>그런데 아직</p>
+<blockquote>
+<p><strong>“사람 뇌가 정확히 어떤 학습 알고리즘을 사용하기 때문에 그게 가능한가?”</strong></p>
+</blockquote>
+<p>를 완전히 역설계하지 못한 상태야.</p>
+<p>비유하면 <strong>엔진이 돌아가는 걸 보고 피스톤, 연료 분사, 점화장치까지는 상당히 알아냈는데, 설계도 전체를 손에 넣은 건 아닌 상태</strong>에 가까워.</p>
+<p>그래서 AI에서 catastrophic forgetting이 발생했을 때 연구자들이 생물학을 많이 참고하는 이유도 바로 이거야. <strong>인간 뇌에는 분명 굉장히 뛰어난 continual learning 해법이 돌아가고 있는데, 우리는 아직 그 해법을 완전히 알고리즘으로 추출하지 못했다</strong>는 거지. 최근 continual learning 자체도 여전히 catastrophic forgetting을 핵심 문제로 다루고 있어. citeturn732227search7</p>
+<p>그리고 여기서 진짜 재밌는 질문은 **“뇌가 backprop 없이 어떻게 credit assignment를 하느냐”**야. 이걸 들어가면 왜 인간의 학습과 현재 딥러닝이 근본적으로 다른지 훨씬 선명해져.</p>
+<h3 id="나-10">나<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#나-10" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>아니 기술이 이렇게 발전했는데 아직도 몰라?</p>
+<h3 id="chatgpt-11">ChatGPT<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#chatgpt-11" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>응. 놀랍지만 <strong>아직도 모르는 게 많아.</strong> 다만 “뇌에 대해 거의 모른다”는 뜻은 아니고, <strong>부품과 현상은 많이 아는데 전체 학습 알고리즘을 역설계하지 못했다</strong>는 뜻에 가까워.</p>
+<p>예를 들어 지금은 학습할 때 시냅스 강도가 변하고<span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">L</span><span class="mord mathnormal" style="margin-right:0.13889em;">TP</span><span class="mord">/</span><span class="mord mathnormal">L</span><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="mord mathnormal" style="margin-right:0.02778em;">D</span></span></span></span>, 특정 기억과 관련된 뉴런 집단인 engram이 형성되며, 기억을 회상할 때 이 집단이 다시 활성화된다는 것까지 상당한 실험 증거가 있어. 그런데 <strong>기억의 정확한 물리적 실체가 세포 수준인지, 특정 시냅스들의 패턴인지, 여러 층위가 결합된 것인지조차 세부적으로는 아직 논쟁이 남아 있어.</strong> 2024년 리뷰도 engram의 정확한 생물학적 기반이 여전히 완전히 밝혀지지 않았다고 정리해. citeturn597484search0turn597484search1</p>
+<p>더 놀라운 건 기술이 부족해서 뉴런을 못 본다는 문제가 아니라는 거야. 지금은 특정 뉴런을 표시하고, 실시간으로 활동을 촬영하고, optogenetics로 특정 뉴런 집단을 켜고 끄면서 기억 행동을 바꾸는 것까지 가능해. 그런데도 기억은 여러 뇌 영역, 흥분성·억제성 뉴런, 시냅스, 분자 변화가 시간에 따라 함께 움직이는 시스템이라서, 부분을 보는 것과 <strong>전체 계산 원리를 이해하는 것</strong> 사이에 큰 간극이 있어. citeturn597484search1turn597484search3</p>
+<p>비유하면 현대 신경과학은 엔진을 뜯어서 “이 피스톤이 움직이고, 이 밸브가 열리고, 여기서 연료가 분사된다”는 것은 상당히 많이 알아냈는데,</p>
+<blockquote>
+<p>“이 엔진 전체를 그대로 재현할 수 있는 완전한 설계도와 제어 알고리즘을 써봐.”</p>
+</blockquote>
+<p>라고 하면 아직 못 하는 상태에 가까워.</p>
+<p>그리고 최근에는 더 복잡해지고 있어. 예전에는 “기억은 뉴런과 시냅스에 저장된다”가 중심이었는데, 2026년 Nature Reviews Neuroscience에서는 <strong>astrocyte 같은 비뉴런 세포도 기억의 형성과 회상에 직접적인 역할을 할 가능성</strong>을 다루고 있어. 즉 우리가 생각했던 것보다 저장 메커니즘 자체가 더 넓은 시스템일 수 있다는 거야. citeturn597484search8</p>
+<p>그래서 네가 앞에서 말한</p>
+<blockquote>
+<p>“아기가 그냥 경험하면서 점점 걷고 뛰는데, 그걸 그대로 AI에 구현하면 되는 거 아니냐”</p>
+</blockquote>
+<p>가 바로 어려운 이유야.</p>
+<p>우리는 <strong>아기가 그렇게 한다는 것은 알고 있는데, 뇌가 그 경험을 어떤 규칙으로 업데이트해서 ‘걷는 능력’으로 굳히면서 다른 능력은 안 망가뜨리는지를 완전히 모른다.</strong></p>
+<p>그리고 이건 꽤 충격적인 사실이야. 지금 AI가 수조 개의 연산을 하고 로켓을 재사용해서 착륙시키는 시대인데도, <strong>사람 한 명이 자전거 타는 법을 뇌 안에 정확히 어떤 형태로 저장하는지는 완전히 설명하지 못한다.</strong></p>
+<p>기술 발전이 느려서라기보다, <strong>뇌가 우리가 만든 어떤 공학 시스템보다도 관측과 역설계가 어려운 시스템 중 하나라서 그래.</strong></p>
+<h3 id="나-11">나<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#나-11" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>아니 그정도라고? 로켓에 비하면 신체는 쉬운분야 아니였어?</p>
+<h3 id="chatgpt-12">ChatGPT<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#chatgpt-12" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>겉으로 보면 그렇게 느끼기 쉬워. <strong>로켓은 엄청 복잡해 보이고, 사람 몸은 그냥 근육·뼈·신경이니까 더 단순해 보이잖아.</strong> 그런데 실제로는 “공학적으로 설계된 복잡함”과 “생물학적 복잡함”이 성격이 완전히 달라.</p>
+<p>로켓은 복잡하지만, 인간이 만든 시스템이야. 그래서 기본적으로 우리는 <strong>부품이 왜 거기 있는지, 어떤 법칙으로 움직이는지, 어떤 입력이 어떤 출력을 만드는지</strong>를 알고 있어. 추진, 공력, 구조, 제어, 열 같은 분야가 어렵긴 해도 결국 대부분이 명시적인 물리 법칙과 설계 문서 위에 있어.</p>
+<p>반면 사람 몸은 누가 설계도를 남겨놓은 시스템이 아니야. 진화로 만들어졌고, 같은 기능이 여러 계층에 걸쳐 중복되거나 우회로를 갖고 있어. 특히 뇌는 더 심해서, 한 기능이 특정 부품 하나에 깔끔하게 대응하지 않아.</p>
+<p>예를 들어 로켓의 자세제어를 보면 대충 이런 식으로 생각할 수 있어.</p>
+<p>$$
+센서 \rightarrow 상태추정 \rightarrow 제어기 \rightarrow 액추에이터
+$$</p>
+<p>구조가 비교적 명확해.</p>
+<p>그런데 사람의 균형 제어는</p>
+<p>시각, 전정기관, 근육방추, 피부 감각, 척수 반사, 소뇌, 운동피질, 기저핵 등이 동시에 얽혀서 돌아가. 그리고 각각이 서로 다른 시간척도로 적응하고 학습해.</p>
+<p>즉 단순히</p>
+<blockquote>
+<p>“뇌가 근육에 명령을 보낸다”</p>
+</blockquote>
+<p>가 아니야.</p>
+<p>척수 수준에서 이미 반사가 있고, 소뇌는 오차를 보정하고, 대뇌는 계획을 세우고, 기저핵은 행동 선택에 관여하고, 근육 자체에도 비선형적인 역학이 있어.</p>
+<p>그리고 생체는 부품 자체도 변해.</p>
+<p>로켓의 서보모터는 오늘 10시간 제어한다고 내부 연결 구조가 학습해서 바뀌진 않잖아. 그런데 사람은 운동을 연습하면 <strong>신경 연결도 바뀌고, 근육 특성도 바뀌고, 감각에 대한 민감도도 바뀌고, 운동 전략도 바뀐다.</strong></p>
+<p>즉 우리가 분석하려는 시스템이 가만히 있지 않아.</p>
+<p>더 중요한 건 <strong>뇌를 직접 측정하기가 굉장히 어렵다는 것</strong>이야.</p>
+<p>로켓이라면 원하는 위치에 센서를 달 수 있어. 전압, 압력, 온도, 힘, 진동을 고속으로 측정할 수 있고 필요하면 뜯어볼 수도 있지.</p>
+<p>사람 뇌는 살아 있는 상태에서 뉴런 860억 개와 그 연결을 전부 실시간으로 측정할 수 없어. 측정하려는 행위 자체가 뇌를 손상시킬 수도 있고.</p>
+<p>그래서 로켓은</p>
+<blockquote>
+<p>내부 상태를 거의 다 알고 → 수학 모델을 만들고 → 실험해서 검증</p>
+</blockquote>
+<p>하는 게 가능한데,</p>
+<p>뇌는</p>
+<blockquote>
+<p>내부의 극히 일부를 관찰 → 행동 결과를 보고 추론 → 다시 실험</p>
+</blockquote>
+<p>하는 식이야.</p>
+<p>그래서 역설적으로 <strong>“날아가는 로켓의 동역학”보다 “사람이 컵 하나 잡는 동안 뇌에서 정확히 어떤 계산이 일어나는가”가 더 어려운 문제일 수 있어.</strong></p>
+<p>다만 신체 전체가 다 그렇게 미지의 영역이라는 건 아니야.</p>
+<p>뼈의 역학, 근육의 힘, 관절 운동학, 심혈관계, 호흡계 등은 상당히 잘 이해돼 있고 공학 모델도 많이 있어. 예를 들어 인간 보행도 inverse dynamics를 이용해서 관절 토크를 계산하는 수준은 충분히 가능해.</p>
+<p><strong>어려운 건 “그 몸을 뇌가 어떻게 그렇게 자연스럽게 학습하고 제어하느냐”야.</strong></p>
+<p>그래서 구분하면 이래.</p>
+<p><strong>사람 몸의 물리적 동역학</strong>
+→ 꽤 많이 알고 있음.</p>
+<p><strong>신경계가 몸을 제어하는 방법</strong>
+→ 상당히 알고 있지만 불완전함.</p>
+<p><strong>뇌가 평생 경험을 통해 제어 능력을 학습·저장·재사용하는 전체 알고리즘</strong>
+→ 아직 크게 미해결.</p>
+<p>그래서 앞에서 우리가 강화학습 얘기하다가 막힌 지점도 사실 <strong>신체가 복잡해서가 아니라 ‘학습하는 제어기인 뇌’가 압도적으로 복잡해서</strong>인 거야.</p>
+<p>그리고 한 가지 재밌는 관점이 있어. 로켓은 인간이 설계했으니까 우리가 설명할 수 있고, <strong>인간은 진화가 설계했으니까 우리가 지금 역공학하고 있는 셈</strong>이야.</p>
+<h3 id="나-12">나<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#나-12" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>아니 근데 그럼 사람보다 로봇이 훨씬 간단하고 잘 파악하고있는데 그정도 제어하는게 그렇게 힘들단 말이야? 물론 규칙기반으로 하면 어려운거 알겠어 파라미터 조금 바뀌면 수식이 바뀌고 서로 영향을 미치고 이런거 다 통제해야하니까. 근데 강화학습은 그런 세부사항까지는 잘 몰라도 어떻게 보상함수를 잘 줬더니 웒는대로 움직이더라 이런느낌 아닌가?/ 내가 너무 모르고 하는소린가?
+내가 느끼기엔 그랬어 이렇게 보상을 주면 더욱 내가 원하는 대로 운동할거 같은데? <span>→</span> 되네? <span>→</span> 어떻구조로 되는거지? <span>→</span> 모름 난 그냥 보상함수만 줬으니까</p>
+<h3 id="chatgpt-13">ChatGPT<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#chatgpt-13" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>아니, 너무 모르고 하는 소리 아니야. 오히려 <strong>강화학습을 처음 볼 때 가장 중요한 직관을 정확히 잡은 편</strong>이야.</p>
+<p>네가 말한 감각이 거의 맞아.</p>
+<p>“이 로봇이 이런 식으로 움직였으면 좋겠다” → 그 행동에 높은 보상을 줌 → 엄청 많이 시행착오시킴 → 어느 순간 진짜 원하는 식으로 움직임 → “근데 내부적으로 왜 저렇게 움직이는지는 정확히 모르겠는데?”</p>
+<p>이게 실제 강화학습에서 꽤 자주 일어나는 일이야.</p>
+<p>규칙 기반이면 사람이 직접
+<code>이 각도면 토크 2.1</code>
+<code>속도가 이 정도면 gain을 이렇게</code>
+<code>경사가 이러면 보정량을 이렇게</code>
+같이 관계를 설계해야 하잖아.</p>
+<p>강화학습은 그런 중간 관계를 사람이 전부 명시하지 않아도 돼. 그냥</p>
+<p>$$
+\text{state} \rightarrow \text{policy} \rightarrow \text{action}
+$$</p>
+<p>을 학습시키고,</p>
+<p>$$
+\text{reward}
+$$</p>
+<p>로 “이 방향이 맞아 / 틀려”를 알려주는 거지.</p>
+<p>그래서 네 표현대로 정말로</p>
+<blockquote>
+<p>“보상함수만 잘 줬더니 내가 원하는 대로 움직이네?”</p>
+</blockquote>
+<p>가 가능해.</p>
+<p>그리고 특히 <strong>로봇이 사람보다 단순하다는 점도 네 말이 맞아.</strong></p>
+<p>예를 들어 12자유도 이족보행 로봇이면 우리는 관절 수, 모터 토크, 질량, 링크 길이, 센서, 제어 주기까지 다 알고 있어. 인간처럼 600개 이상의 근육과 복잡한 신경계를 상대하는 게 아니지.</p>
+<p>그래서 실제로 “이 로봇을 걷게 만들어라” 정도의 문제라면 현대 RL은 상당히 잘해. 사람이 손으로 이상적인 보행 수식을 하나하나 설계하지 않아도, 시뮬레이션에서 보상을 잘 구성하면 걷고 뛰고 외란을 버티는 정책까지 나올 수 있어.</p>
+<p>네가 느낀</p>
+<blockquote>
+<p><strong>“이 정도면 생각보다 쉽게 되는데?”</strong></p>
+</blockquote>
+<p>라는 느낌이 틀린 게 아니야.</p>
+<p>내가 앞에서 어렵다고 한 부분은 <strong>‘로봇 하나를 걷게 하는 것’이 아니야.</strong></p>
+<p>“하나의 로봇에게 하나의 환경에서 원하는 운동을 RL로 학습시킨다”와</p>
+<p>“하나의 로봇을 10년 동안 살게 하면서 걷기, 뛰기, 자전거, 물건 운반, 계단, 새로운 몸 상태 등을 계속 배우게 하고 옛 능력도 하나도 안 잊게 한다”</p>
+<p>사이의 난이도 차이가 엄청 큰 거야.</p>
+<p>전자는 이미 상당히 잘한다.</p>
+<p>후자가 continual/lifelong RL의 어려운 부분이고.</p>
+<p>그리고 네가 말한 마지막 부분도 굉장히 중요해.</p>
+<blockquote>
+<p>“어떤 구조로 저 행동이 나온 거지?”</p>
+<p>“모름. 난 reward만 줬는데.”</p>
+</blockquote>
+<p>맞아.</p>
+<p>정확히는 우리는 네트워크 구조와 weight는 다 볼 수 있어. 그런데</p>
+<blockquote>
+<p>왜 이 weight들의 조합이 지금 경사에서 왼발을 14° 이렇게 움직이는 전략으로 이어졌는가?</p>
+</blockquote>
+<p>를 사람이 이해할 수 있는 제어 법칙으로 설명하기 어려운 거야.</p>
+<p>예를 들어 고전 제어라면</p>
+<p>$$
+u=-Kx
+$$</p>
+<p>라고 해놓고</p>
+<p>“자세 오차가 커졌으니까 이 gain 때문에 반대 방향 토크가 증가한 겁니다.”</p>
+<p>라고 설명할 수 있지.</p>
+<p>RL policy가 거대한 neural network라면</p>
+<p>$<span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">a</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.5806em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">π</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:-0.0359em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.02778em;">θ</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>s$
+$$</p>
+<p>이고, 수백만 개 parameter가 얽혀서 나온 결과라</p>
+<p>“왜 정확히 저 행동을 했냐?”</p>
+<p>라고 물으면 <strong>수학적으로 계산은 가능하지만 인간이 이해할 수 있는 간단한 제어 논리로 설명하기는 어려운 경우가 많아.</strong></p>
+<p>그래서 RL은 약간 이런 느낌이 맞아.</p>
+<blockquote>
+<p><strong>우리가 제어법을 발견한 게 아니라, 제어법을 찾아내는 과정을 만든다.</strong></p>
+</blockquote>
+<p>그리고 결과물인 policy가 어떤 제어 전략을 발견했는지 나중에 관찰하는 거지.</p>
+<p>다만 reward만 대충 던지면 항상 되는 건 아니야. 여기서 RL 엔지니어링이 필요해.</p>
+<p>예를 들어 이족보행 로봇에게</p>
+<p>$$
+R = \text{앞으로 간 거리}
+$$</p>
+<p>만 주면 우리가 생각한 “예쁘게 걷기”를 배운다는 보장이 없어.</p>
+<p>넘어져서 꿈틀거리며 앞으로 기어가도 보상을 받는다면 <strong>기어가는 법을 배울 수도 있어.</strong></p>
+<p>그래서</p>
+<p>$$
+R=
+R_{\text{forward}}
+-R_{\text{fall}}
+-R_{\text{energy}}
+-R_{\text{joint limit}}
++R_{\text{upright}}
+$$</p>
+<p>같이 보상을 설계하면서 우리가 원하는 행동 공간으로 유도하는 거야.</p>
+<p>그리고 여기에서도 다시 네 표현이 맞아.</p>
+<p>“이 항을 조금 더 세게 주면 몸을 좀 더 똑바로 세우지 않을까?”</p>
+<p>→ 해봄.</p>
+<p>→ 진짜 그렇게 됨.</p>
+<p>→ “오, 되네.”</p>
+<p>이런 식의 실험이 실제로 많아.</p>
+<p>그래서 강화학습은 고전 제어와 상당히 다른 맛이 있어.</p>
+<p>고전 제어는 <strong>왜 되는지 이해하고 만들어서 움직이는 느낌</strong>이 강하고,</p>
+<p>강화학습은 <strong>원하는 결과의 방향을 정의하고, 실제 제어 전략 자체는 최적화가 발견하도록 하는 느낌</strong>이 강해.</p>
+<p>그래서 지금 네가 느끼는 감각은 꽤 정확해.</p>
+<p><strong>“로봇 동역학을 완전히 이해하지 않아도 reward를 잘 설계하고 충분히 경험시키면 복잡한 운동제어가 튀어나올 수 있다.”</strong></p>
+<p>이게 강화학습이 그렇게 매력적인 이유 중 하나야.</p>
+<p>다만 그다음 단계인 **“그럼 이걸 왜 그냥 평생 계속 학습시키면 안 되지?”**에서 지금 연구의 어려운 부분이 등장하는 거고.</p>
+<h3 id="나-13">나<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#나-13" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>또 내가 느낀 강화학습의 특징은 규칙기반제어처럼 특정 항<span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8778em;vertical-align:-0.1944em;"></span><span class="mord hangul_fallback">규칙기반에서는게인</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord hangul_fallback">강화학습에서는보상</span></span></span></span>을 조절해보고 대상이 그 변화에 대해서 어떻게 변화하는지를 확인해고 싶을때 규칙기반을 바꿔서 한두번만 돌려보면 바로 변화를 확인하고 디버깅할수 있는데 강화학습은 조금 바꿔보고 학습<span>→</span> 많은 시간이걸림 <span>→</span> 이거 아닌거같은데 그냥 안바꿀래 <span>→</span> 시간낭비 이런느낌으로 이어져서 너무 소모적이고 힘들었거든 내가 잘못배운건가?</p>
+<h3 id="chatgpt-14">ChatGPT<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#chatgpt-14" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>아니, 그 느낌이 꽤 정확해. 오히려 <strong>강화학습 개발할 때 제일 답답한 부분 중 하나</strong>를 정확히 짚은 거야.</p>
+<p>규칙기반 제어에서 게인을 바꾸는 건 보통 <strong>완성된 제어기의 동작을 직접 바꾸는 것</strong>이야. 예를 들어 $K_p$를 20% 키우면 바로 다음 주행에서 “응답이 더 세졌네”를 볼 수 있지.</p>
+<p>반면 강화학습에서 reward weight를 바꾸는 건 <strong>제어기를 직접 바꾸는 게 아니라, 앞으로 어떤 제어기를 학습할지 목적함수를 바꾸는 것</strong>이야.</p>
+<p>즉 둘은 겉보기엔 비슷해도 성격이 달라.</p>
+<p>$$
+\text{규칙기반: } K \ 변경 \rightarrow 바로\ 행동\ 변경
+$$</p>
+<p>반면</p>
+<p>$$
+\text{RL: } R \ 변경 \rightarrow 학습과정\ 변경 \rightarrow policy\ 변화 \rightarrow 행동\ 변화
+$$</p>
+<p>그래서 네가 겪은</p>
+<blockquote>
+<p>보상 조금 수정<br/>
+→ 다시 학습<br/>
+→ 한참 기다림<br/>
+→ 결과 확인<br/>
+→ “아 이 방향 아닌데”<br/>
+→ 다시 수정<br/>
+→ 다시 학습</p>
+</blockquote>
+<p>이 루프가 진짜 생겨.</p>
+<p>그리고 더 짜증나는 건 <strong>reward를 10% 바꿨다고 결과 행동이 10% 바뀌는 것도 아니라는 것</strong>이야.</p>
+<p>예를 들어</p>
+<p>$$
+R =
+1.0R_{\text{velocity}}
++0.1R_{\text{upright}}
+-0.01R_{\text{energy}}
+$$</p>
+<p>에서 energy penalty를</p>
+<p>$$
+0.01 \rightarrow 0.02
+$$</p>
+<p>로 두 배로 올렸다고 하자.</p>
+<p>규칙기반 감각으로는 “에너지를 조금 덜 쓰는 보행이 나오겠네”라고 예상하기 쉬운데, 실제로는 갑자기</p>
+<ul>
+<li>보폭을 확 줄이거나</li>
+<li>걷는 속도가 크게 떨어지거나</li>
+<li>이상한 gait를 발견하거나</li>
+<li>학습 자체가 불안정해지거나</li>
+</ul>
+<p>할 수도 있어.</p>
+<p>왜냐하면 reward 항들이 <strong>최종적으로 하나의 최적화 문제 안에서 서로 경쟁하기 때문</strong>이야.</p>
+<p>그래서 reward tuning은 PID gain tuning보다 훨씬 간접적이야.</p>
+<hr/>
+<p>그런데 여기서 중요한 건 **“그러면 RL은 원래 무식하게 며칠씩 돌려보면서 reward tuning하는 게 정상인가?”**인데, 초보 단계에서는 실제로 그렇게 많이 하긴 해.</p>
+<p>하지만 잘하는 사람들은 그 비용을 줄이려고 꽤 체계적으로 해.</p>
+<p>예를 들어 네가 reward 항 하나의 영향을 보고 싶다고 하자.</p>
+<p>처음부터 매번 5000만 step씩 full training 하지 않고,</p>
+<p><strong>짧은 training으로 후보를 먼저 거른다.</strong></p>
+<p>예를 들어:</p>
+<ul>
+<li>reward A: 100만 step</li>
+<li>reward B: 100만 step</li>
+<li>reward C: 100만 step</li>
+</ul>
+<p>만 돌려서 학습 곡선과 행동을 비교해.</p>
+<p>여기서 B가 명백히 이상하면 풀트레이닝까지 안 가는 거야.</p>
+<p>그리고 <strong>한 번의 학습 결과만 보고 판단하면 안 되는 것도 중요해.</strong></p>
+<p>RL은 random seed에 따라 결과가 많이 달라질 수 있어서,</p>
+<p>“reward를 바꿨더니 좋아졌다”</p>
+<p>가 사실 reward 때문이 아니라</p>
+<p>“이번 seed가 운이 좋았다”</p>
+<p>일 수도 있어.</p>
+<p>그래서 보통 몇 개 seed를 동시에 비교하는 게 좋아.</p>
+<hr/>
+<p>그리고 reward를 튜닝할 때 아주 유용한 게 <strong>각 reward component를 따로 로그로 보는 것</strong>이야.</p>
+<p>총 reward만 보면</p>
+<p>$$
+R=247
+$$</p>
+<p>이라고 나와도 아무 의미가 없잖아.</p>
+<p>대신</p>
+<p>$$
+R_{\text{velocity}} = 320
+$$</p>
+<p>$$
+R_{\text{upright}} = 85
+$$</p>
+<p>$$
+R_{\text{energy}} = -130
+$$</p>
+<p>$$
+R_{\text{slip}} = -28
+$$</p>
+<p>처럼 보면,</p>
+<blockquote>
+<p>“아, energy penalty를 강화했더니 energy는 줄었는데 velocity reward가 훨씬 크게 떨어졌네.”</p>
+</blockquote>
+<p>를 학습 중간에도 알 수 있어.</p>
+<p>그러면 끝까지 안 돌리고 바로 끊을 수 있지.</p>
+<p>이게 네가 규칙기반에서 로그 보면서</p>
+<blockquote>
+<p>“조향은 좋아졌는데 obstacle distance가 오히려 나빠졌네.”</p>
+</blockquote>
+<p>하고 판단하는 것과 비슷한 역할을 해.</p>
+<hr/>
+<p>그리고 상당히 중요한 차이가 하나 있어.</p>
+<p><strong>reward weight를 바꾸고 기존 checkpoint에서 이어서 학습하는 것</strong>도 가능해.</p>
+<p>예를 들어 이미 걷는 policy가 있는데 upright reward를 조금 강화하고 싶다면 처음부터 랜덤 policy로 다시 시작할 필요는 없어.</p>
+<p>기존</p>
+<p>$$
+\pi_{\theta}
+$$</p>
+<p>에서 reward를 바꾸고 fine-tuning할 수 있어.</p>
+<p>그러면 훨씬 빨라.</p>
+<p>다만 reward를 너무 크게 바꾸면 기존 policy가 새로운 objective에 맞지 않아서 이상하게 학습되기도 하고, 비교 실험의 공정성도 떨어질 수 있어서 항상 가능한 만능 방법은 아니야.</p>
+<hr/>
+<p>그리고 네 경험에서 아마 가장 큰 문제 중 하나가 이거였을 가능성이 커.</p>
+<p><strong>reward를 ‘controller gain’처럼 생각하면 RL 튜닝이 굉장히 고통스러워져.</strong></p>
+<p>reward는 gain이라기보다 <strong>평가기준</strong>에 더 가까워.</p>
+<p>예를 들어,</p>
+<blockquote>
+<p>“왼쪽으로 너무 많이 쏠리니까 lateral reward를 0.7에서 0.8로 올려보자.”</p>
+</blockquote>
+<p>라고 계속 미세조정하는 것보다,</p>
+<p>먼저</p>
+<blockquote>
+<p>“왜 현재 policy가 왼쪽으로 쏠리는 행동을 높은 return이라고 판단하고 있지?”</p>
+</blockquote>
+<p>를 보는 게 더 중요해.</p>
+<p>그 원인이</p>
+<ul>
+<li>reward scale 문제인지</li>
+<li>observation 부족인지</li>
+<li>action range 문제인지</li>
+<li>simulator dynamics 문제인지</li>
+<li>exploration 문제인지</li>
+<li>termination 조건 문제인지</li>
+</ul>
+<p>확인해야 해.</p>
+<p>reward만 계속 만지다 보면 사실 observation 설계 문제인데 reward coefficient를 0.13, 0.15, 0.17 식으로 계속 만지는 일이 생겨.</p>
+<p>그러면 진짜 네가 말한</p>
+<blockquote>
+<p><strong>학습 → 기다림 → 실패 → 수정 → 다시 학습</strong></p>
+</blockquote>
+<p>지옥에 들어가.</p>
+<hr/>
+<p>그래서 나는 규칙기반과 RL 개발 경험의 차이를 이렇게 표현하는 게 제일 정확하다고 봐.</p>
+<p><strong>규칙기반 제어는 디버깅이 빠르고 국소적이다.</strong></p>
+<blockquote>
+<p>이 게인을 바꿨다 → 여기 행동이 바뀌었다.</p>
+</blockquote>
+<p>반면 강화학습은</p>
+<p><strong>디버깅이 느리고 전역적이다.</strong></p>
+<blockquote>
+<p>이 reward를 바꿨다 → 학습 궤적 전체가 달라졌다 → 최종적으로 전혀 다른 전략이 나왔다.</p>
+</blockquote>
+<p>그래서 RL이 잘 됐을 때는 사람이 설계하기 어려운 굉장히 복잡한 제어를 알아서 찾아주는데,</p>
+<p><strong>개발 과정 자체는 규칙기반보다 훨씬 답답할 수 있어.</strong></p>
+<p>특히 실제 로봇을 다루는 사람이라면 이게 더 크게 느껴져. 규칙기반은 10초 돌려보고 바로 수정할 수 있는데 RL은 그 피드백 루프가 몇 시간, 며칠 단위로 늘어날 수 있으니까.</p>
+<p>그래서 네가 “내가 잘못 배웠나?”라고 물으면 답은 <strong>아니야. 오히려 실제 RL 개발의 단점을 제대로 체감한 거야.</strong></p>
+<p>그리고 이게 바로 RL에서 <strong>sample efficiency와 experiment efficiency</strong>가 그렇게 중요한 이유야. “최종적으로 좋은 policy를 찾을 수 있느냐”뿐만 아니라 <strong>사람이 그 policy를 개발하는 데 실험 몇 번을 해야 하느냐</strong>도 엄청 중요한 문제거든.</p>
+<h3 id="나-14">나<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#나-14" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>강화학습 이론이 근데 기존에 인류가 쌓아올린 역학 아카이브보다 크지 않을거 아니야</p>
+<h3 id="chatgpt-15">ChatGPT<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#chatgpt-15" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>맞아. <strong>학문적 축적량 자체로 보면 강화학습 이론이 고전역학·동역학·제어이론 전체보다 훨씬 작다고 보는 게 자연스러워.</strong></p>
+<p>그리고 이게 오히려 강화학습의 재미있는 점이야.</p>
+<p>인류가 비행기 하나를 제대로 제어하려고 쌓아온 지식은 엄청 많아. 뉴턴역학, 강체동역학, 유체역학, 공기역학, 안정성 이론, 상태공간, 선형제어, 비선형제어, 최적제어, 시스템 식별 같은 것들이 수백 년 동안 쌓였지.</p>
+<p>반면 강화학습 쪽의 핵심 아이디어는 놀라울 정도로 압축해서 말할 수 있어.</p>
+<p>$$
+s_t \rightarrow a_t \rightarrow r_t,s_{t+1}
+$$</p>
+<p>그리고</p>
+<p>$$
+\max_\pi E\left<span class="katex-error" title="ParseError: KaTeX parse error: Expected 'EOF', got '\right' at position 20: …_t \gamma^t r_t\̲r̲i̲g̲h̲t̲" style="color:#cc0000;">\sum_t \gamma^t r_t\right</span>
+$$</p>
+<p>즉,</p>
+<blockquote>
+<p><strong>현재 상태에서 행동하고, 결과와 보상을 받아서 장기적인 보상이 커지는 행동 정책을 찾는다.</strong></p>
+</blockquote>
+<p>여기에 가치함수, Bellman equation, policy gradient, actor-critic, exploration 같은 이론들이 붙는 거고.</p>
+<p>그래서 네가 느끼는 이상함이 바로 이거지.</p>
+<blockquote>
+<p>“인류는 로봇 하나 움직이려고 역학과 제어이론을 엄청 쌓았는데, 강화학습은 상대적으로 단순한 원리 몇 개 가지고 시뮬레이터에 집어넣었더니 걷네?”</p>
+</blockquote>
+<p><strong>맞아. 실제로 그게 RL의 강력함이야.</strong></p>
+<p>다만 여기서 중요한 건 강화학습이 그 수백 년짜리 역학 지식을 <strong>없애버린 게 아니라 다른 곳으로 밀어낸 것</strong>이라는 점이야.</p>
+<p>예를 들어 시뮬레이터에서 로봇을 학습시키면 에이전트는 동역학을 모르지만,</p>
+<p><strong>시뮬레이터는 동역학을 알고 있어.</strong></p>
+<p>로봇이 발을 이렇게 내디뎠을 때</p>
+<p>$$
+F=ma
+$$</p>
+<p>에 따라 몸이 어떻게 움직이고,</p>
+<p>접촉력이 얼마이고,</p>
+<p>마찰 때문에 미끄러지는지</p>
+<p>시뮬레이터가 계산해줘.</p>
+<p>그러니까 구조적으로 보면</p>
+<p><strong>고전 방식</strong></p>
+<p>$$
+\text{인간이 동역학 이해}
+\rightarrow
+\text{인간이 제어법 설계}
+\rightarrow
+\text{로봇}
+$$</p>
+<p>이라면 강화학습은</p>
+<p>$$
+\text{물리 시뮬레이터}
+\rightarrow
+\text{수억 번 경험}
+\rightarrow
+\text{RL이 제어법 탐색}
+\rightarrow
+\text{로봇}
+$$</p>
+<p>이야.</p>
+<p>인간이 직접 역학을 이용해 제어식을 만든 대신, <strong>컴퓨터가 역학이 구현된 세계에서 무식할 정도로 많은 실험을 하게 만든 것</strong>에 가까워.</p>
+<p>이게 굉장히 중요한 교환관계야.</p>
+<p><strong>지식과 계산량을 맞바꾼 것</strong>이라고 볼 수 있어.</p>
+<p>고전 제어에서는 사람이</p>
+<blockquote>
+<p>“이 시스템은 이런 특성을 가지니까 이런 제어기가 필요하다.”</p>
+</blockquote>
+<p>라고 추론한다면,</p>
+<p>RL에서는</p>
+<blockquote>
+<p>“잘 모르겠고 1억 번 해봐.”</p>
+</blockquote>
+<p>가 어느 정도 가능한 거지.</p>
+<p>그래서 강화학습 이론 자체가 역학보다 방대할 필요도 없어. 강화학습은 <strong>세상의 모든 물리 법칙을 설명하는 학문이 아니라, 주어진 환경에서 좋은 행동을 찾아내는 일반적인 학습 원리</strong>니까.</p>
+<p>그리고 네가 계속 느끼고 있던</p>
+<blockquote>
+<p>“아니 이런 비교적 간단한 구조로 로봇이 저렇게 복잡하게 움직인다고?”</p>
+</blockquote>
+<p>라는 감각이 사실 RL이 처음 주목받았을 때 사람들이 느낀 충격 중 하나야.</p>
+<p>다만 대가는 명확해.</p>
+<p>고전 제어는 인간이 가진 <strong>수백 년의 지식</strong>을 써서 시행착오를 엄청 줄이는 반면,</p>
+<p>강화학습은 그 지식을 덜 사용하는 대신 <strong>엄청난 데이터와 시행착오와 계산량</strong>을 요구하는 경우가 많아.</p>
+<p>그래서 아주 거칠게 표현하면:</p>
+<blockquote>
+<p><strong>고전 제어 = 인류가 축적한 지식을 압축해서 제어기에 넣는다.</strong></p>
+<p><strong>강화학습 = 비교적 일반적인 학습 원리를 주고, 계산과 경험으로 제어법을 다시 찾아내게 한다.</strong></p>
+</blockquote>
+<p>이 관점으로 보면 네가 아까 말한 “reward 조금 바꿨다가 몇 시간 학습시키고 망하면 시간 날리는 느낌”도 딱 연결돼.</p>
+<p><strong>RL은 이론이 부족해서 오래 걸리는 게 아니라, 애초에 인간의 사전지식을 계산과 경험으로 대체하는 성격이 강하기 때문에 비싼 거야.</strong></p>
+<h3 id="나-15">나<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#나-15" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>그럼 강화학습 이론이라는거는 새로운 학문에 대학 지식이라기 보다는 이미 쌓아올려진 아카이브 위에서 강점을 갖고 작동하는 강화학습이라는 툴에 대한 최적화에 대한 이론이야? 툴을 효과적으로 효율적으로 사용하는 방법 <span>→</span> 강화학습 이론?</p>
+<h3 id="chatgpt-16">ChatGPT<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#chatgpt-16" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>거의 맞는데, <strong>“강화학습 이론 = 강화학습 툴을 잘 쓰는 법”이라고만 보면 너무 좁아.</strong></p>
+<p>강화학습 이론 자체도 분명히 하나의 독립적인 학문 영역이야. 다만 네가 느낀 것처럼 <strong>기존에 쌓인 수학·확률·최적화·제어이론 위에서 만들어진 분야</strong>에 가깝지.</p>
+<p>강화학습의 이론적 핵심은 대충 이런 질문들이야.</p>
+<ul>
+<li>어떤 상황을 <code>state</code>, 어떤 선택을 <code>action</code>으로 볼 것인가</li>
+<li>현재 보상보다 장기 보상을 어떻게 평가할 것인가</li>
+<li>최적 정책이 존재하는가</li>
+<li>그 정책을 어떻게 찾을 것인가</li>
+<li>얼마나 탐험해야 하는가</li>
+<li>학습이 수렴하는가</li>
+<li>데이터가 얼마나 필요한가</li>
+<li>환경이 바뀌어도 일반화되는가</li>
+</ul>
+<p>이런 걸 수학적으로 다루는 게 <strong>강화학습 이론</strong>이야.</p>
+<p>예를 들어 Bellman equation,</p>
+<h1 id="vpis">$<span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.22222em;">V</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.6644em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03588em;">π</span></span></span></span></span></span></span></span></span></span></span>s$<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#vpis" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h1>
+<p>\mathbb E<span class="katex-error" title="ParseError: KaTeX parse error: Can't use function '$' in math mode at position 15: r+\gamma V^\pi$̲s'$$$
+\" style="color:#cc0000;">r+\gamma V^\pi$s'$$$
+\</span></p>
+<p>같은 건 단순한 “사용 팁”이 아니라 sequential decision making 자체에 대한 수학적 구조야.</p>
+<p>Q-learning이 왜 특정 조건에서 최적 $Q^*$에 수렴하는지, policy gradient가 무엇의 gradient를 계산하는지, exploration과 exploitation 사이에 어떤 trade-off가 있는지 같은 것도 이론이고.</p>
+<p>반면 네가 경험했던</p>
+<blockquote>
+<p>reward를 어떻게 설계할까<br/>
+learning rate는 얼마가 좋을까<br/>
+PPO clip을 얼마로 할까<br/>
+observation을 뭘 넣을까<br/>
+몇 episode 돌릴까<br/>
+domain randomization 범위를 어떻게 잡을까</p>
+</blockquote>
+<p>이런 건 네 표현대로 <strong>“강화학습이라는 도구를 효과적으로 사용하는 방법”</strong>, 즉 RL engineering에 더 가까워.</p>
+<p>그래서 3층으로 보면 이해하기 좋아.</p>
+<p><strong>1층 — 기반 학문</strong></p>
+<p>확률론, 통계, 선형대수, 최적화, 동적계획법, 제어이론 등.</p>
+<p>↓</p>
+<p><strong>2층 — 강화학습 이론</strong></p>
+<p>MDP, value function, Bellman equation, policy optimization, temporal difference learning, exploration, convergence, sample complexity 등.</p>
+<p>↓</p>
+<p><strong>3층 — 강화학습 실전/엔지니어링</strong></p>
+<p>PPO를 쓸지 SAC를 쓸지, reward를 어떻게 줄지, simulator를 어떻게 구성할지, observation/action을 어떻게 잡을지, 학습 속도를 어떻게 높일지.</p>
+<p>네가 말한</p>
+<blockquote>
+<p><strong>“툴을 효과적이고 효율적으로 사용하는 방법”</strong></p>
+</blockquote>
+<p>은 주로 <strong>3층</strong>을 말하는 거고, 대학에서 “강화학습”을 배우면 보통 2층을 상당히 깊게 배우면서 3층까지 내려오는 거야.</p>
+<p>그리고 재미있는 건 로봇 분야에선 이 3층이 엄청 중요하다는 거야.</p>
+<p>순수 RL 이론을 아주 잘 안다고 해서 보행 로봇이 바로 잘 걷는 건 아니거든.</p>
+<p>오히려 실제로는</p>
+<p>$$
+\text{RL 이론}
++
+\text{로봇/동역학 지식}
++
+\text{시뮬레이터}
++
+\text{reward/observation 설계 경험}
+$$</p>
+<p>이 합쳐져야 잘 돼.</p>
+<p>그래서 네가 처음 말한 **“인류가 쌓아놓은 아카이브 위에서 RL이라는 툴을 쓴다”**는 표현도 실전 로봇공학에서는 상당히 정확해.</p>
+<p>현대 로봇 RL은 보통 기존 지식을 버리지 않아.</p>
+<p>로봇 구조는 사람이 설계하고, 센서도 사람이 고르고, 시뮬레이터에는 역학을 넣고, action 범위도 사람이 제한하고, 안전 제약도 넣은 다음,</p>
+<blockquote>
+<p><strong>그 안에서 인간이 직접 설계하기 어려운 제어 정책을 RL에게 찾아달라고 하는 것</strong></p>
+</blockquote>
+<p>에 가까워.</p>
+<p>그래서 나는 강화학습을 **“기존 학문을 대체하는 새로운 역학”**이라기보다는,</p>
+<blockquote>
+<p><strong>기존 지식으로 환경과 문제를 잘 만들어 놓고, 그 안에서 복잡한 의사결정/제어 법칙을 경험으로 찾아내는 일반적인 최적화·학습 프레임워크</strong></p>
+</blockquote>
+<p>라고 보는 게 가장 정확하다고 생각해.</p>
+<p>그리고 네가 실제로 RL을 다시 공부한다면 <strong>이론 전체를 처음부터 깊게 파는 것보다 <code>MDP → Bellman → Value/Q → Policy Gradient → Actor-Critic → PPO/SAC → reward/observation 설계</code> 순으로 배우는 게 네가 느꼈던 실전 문제와 가장 바로 연결될 거야.</strong></p>
+<h3 id="나-16">나<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#나-16" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>네 예상에 예시로 든 휴머노이드가 아니라 그냥 무인이동플랫폼 <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8778em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">U</span><span class="mord mathnormal">G</span><span class="mord mathnormal" style="margin-right:0.22222em;">V</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">U</span><span class="mord mathnormal" style="margin-right:0.05764em;">S</span><span class="mord mathnormal" style="margin-right:0.22222em;">V</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">A</span><span class="mord mathnormal" style="margin-right:0.10903em;">U</span><span class="mord mathnormal" style="margin-right:0.22222em;">V</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">U</span><span class="mord mathnormal">A</span><span class="mord mathnormal" style="margin-right:0.22222em;">V</span></span></span></span> 을 제어할때 어떤식으로 변화할거 같아? 기초물리부터 시작해서 특정 플랫폼에 적용되는 고급 동역학을 몰라도 보상함수를 감각적으로 잘 설계하면 강화학습을 통해서 플랫폼 제어가 가능한것 처럼 느껴지는데
+물론 지금은 규칙기반 제어가 산업의 대부분을 지배하고 있고 더 잘 작동한다는건 알아 근데 동시에 지금이 과도기 진입구간이라고 생각해 <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7667em;vertical-align:-0.0833em;"></span><span class="mord hangul_fallback">규칙기반</span><span class="mord">−</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">></span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal">A</span><span class="mord mathnormal" style="margin-right:0.07847em;">I</span><span class="mord hangul_fallback">제어</span></span></span></span> 그리고 내가 느끼는 AI분야 발전속도는 지금까지 인간이 기술발전을 시킨 속도보다 빠르게 느껴져 그래서 진로를 결정할때 제어분야로 갈거긴 한데 고전 규칙기반 제어를 공부하는게 맞는지 아니면 괜히 어렵고 오래 걸리는 이론부터 쌓는동안 이미 강화학습이 주가 되어버려 경쟁을 잃는건 아닐지</p>
+<h3 id="chatgpt-17">ChatGPT<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#chatgpt-17" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>네가 고민하는 지점은 꽤 현실적이야. 그래서 “고전제어를 버리고 RL로 갈까?”보다 <strong>앞으로 무인이동체 제어에서 무엇이 코어가 되고 무엇이 도구화될지</strong> 기준으로 보는 게 더 정확해.</p>
+<h3 id="chatgpt-18">ChatGPT<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#chatgpt-18" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>최근 2025–2026 연구 흐름을 보면 네 “과도기” 감각도 근거가 있어. 다만 전환은 <strong>PID/MPC가 사라지고 RL이 통째로 대체</strong>되는 형태보다, 먼저 <em>학습 기반 요소가 기존 제어기 안팎으로 침투하는 형태</em>가 훨씬 강해 보여. AUV·USV 쪽 최신 리뷰들도 learning/data-driven 제어 비중이 커지고 있다고 정리하고 있어.</p>
+<h3 id="chatgpt-19">ChatGPT<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#chatgpt-19" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>네가 느낀 방향에 <strong>상당 부분 동의해.</strong> 다만 진로 관점에서는 결론이 “고전제어 대신 강화학습”이 아니라, <strong>고전제어를 기반 언어로 가져가면서 AI 제어 쪽에 빨리 올라타는 게 가장 유리하다</strong>고 봐.</p>
+<h3 id="먼저-네-직감은-맞다">먼저, 네 직감은 맞다<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#먼저-네-직감은-맞다" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>UGV·USV·AUV·UAV처럼 휴머노이드보다 상태와 액추에이터가 비교적 명확한 플랫폼이라면,</p>
+<blockquote>
+<p>“나는 이 시스템의 모든 고급 동역학을 정확하게 모르는데, observation/action/reward를 적절히 구성하고 시뮬레이션에서 충분히 학습시켰더니 상당히 잘 제어된다.”</p>
+</blockquote>
+<p>는 게 충분히 가능해.</p>
+<p>특히 AUV는 복잡하고 결합된 유체 동역학 때문에 정확한 모델링이 어려운데, 2025년 AUV RL 리뷰도 바로 이 점 때문에 <strong>모델에 크게 의존하지 않는 RL 제어가 활발한 연구 대상</strong>이라고 설명한다. USV에서도 learning/data-driven 방식의 비중이 증가하는 추세다. citeturn454966search11turn464949search0</p>
+<p>예를 들어 AUV에게</p>
+<p>$$
+obs =</p>
+<span class="katex-error" title="ParseError: KaTeX parse error: Can't use function '$' in math mode at position 23: …a,\text{target}$̲$
+\$$
+
+를 주고,…" style="color:#cc0000;">v,\omega,\text{target}$$
+\$$
+
+를 주고,
+
+\$$
+action=$$T_1,T_2,T_3,T_4,\dots$$
+\$$
+
+를 출력하게 한 다음
+
+\$$
+R =
+-w_1 e_{position}^2
+-w_2 e_{heading}^2
+-w_3E
+-w_4 collision
+\$$
+
+정도의 목적을 잘 설계해도 정책이 상당히 복잡한 제어 관계를 스스로 발견할 수 있어.
+
+네가 유체력 계수 하나하나를 계산해서
+
+\$$
+M\dot v+C$v$v+D$v$v+g$\eta$=\tau
+\$$
+
+의 모든 항을 정확하게 알아야만 RL을 쓸 수 있는 건 아니야.
+
+그게 **RL의 엄청난 장점**이 맞아.
+
+---
+
+## 그런데 내가 미래를 예상한다면 '제어 전체가 RL'보다는 이렇게 변할 것 같아
+
+| 계층 | 현재 | 앞으로 내가 예상하는 방향 |
+|---|---|---|
+| 모터/추력기 제어 | PID 등 | 고전제어 강하게 유지 |
+| 자세 안정화 | PID/LQR/MPC | 고전 + learning |
+| 속도/궤적 추종 | PID/MPC | MPC + learning/RL 증가 |
+| 외란 대응 | Robust/Adaptive | learning 비중 크게 증가 |
+| 모델 보정 | System ID | online learning/NN 증가 |
+| 경로 계획 | A*/RRT 등 | RL/learning 크게 증가 |
+| 장애물 회피 | 규칙/최적화 | RL/AI 크게 증가 |
+| 행동 결정 | FSM/규칙 | AI/RL 크게 증가 |
+| 임무 계획 | 규칙 기반 | foundation model/AI 증가 |
+
+즉 **AI가 위에서 아래로 내려올 가능성이 높다고 봐.**
+
+왜냐하면 1 kHz에서 돌아가는 자세 안정화 같은 문제는 이미 PID/LQR/MPC가 엄청 잘하고, 계산량도 작고, 행동도 예측 가능하고, 안정성도 분석할 수 있어.
+
+굳이 그걸 신경망으로 바꿔서
+
+> “왜 갑자기 87% throttle을 냈죠?”
+
+> “policy가 그렇게 출력했습니다.”
+
+라고 만들 유인이 현재로서는 크지 않아.
+
+반면 장애물 회피처럼
+
+> 저 배가 오른쪽으로 움직이고 있고  
+> 나는 COLREG도 지켜야 하고  
+> 파도도 있고  
+> 목적지까지 빨리 가야 하고  
+> 주변에 선박이 세 척 있는데  
+> 어떻게 행동할까?
+
+같은 문제는 규칙으로 만들기 급격히 어려워져.
+
+**바로 이런 영역에서 RL의 장점이 폭발해.**
+
+실제로 2025년 USV 충돌회피 리뷰도 DRL을 이런 동적·불확실한 순차 의사결정 문제에 적용하는 연구가 빠르게 증가하고 있다고 정리한다. citeturn464949search2
+
+---
+
+## 그리고 현재 가장 눈여겨봐야 할 건 'Hybrid'야
+
+예를 들어 AUV에서
+
+\$$
+RL \rightarrow \text{desired trajectory}
+\$$
+
+를 만들고
+
+\$$
+MPC \rightarrow \text{thruster command}
+\$$
+
+를 계산할 수도 있고,
+
+반대로
+
+\$$
+MPC + NN\; disturbance\ estimator
+\$$
+
+처럼 **모르는 동역학 부분만 AI가 학습**하게 할 수도 있어.
+
+실제로 2025~2026년에도 AUV/ROV에서 learning-enhanced NMPC나 data-driven MPC 같은 연구가 계속 나오고 있어. citeturn454966search8turn454966search9turn454966search14
+
+더 재미있는 구조도 있어.
+
+\$$
+u_{RL}
+\$$
+
+을 RL이 내는데 위험한 명령이면
+
+\$$
+Safety\ Filter
+\$$
+
+가 개입해서
+
+\$$
+u_{safe}
+\$$
+
+로 바꾸는 거야.
+
+Crazyflie UAV 실험에서도 RL과 safety filter를 결합해서 안전성과 sample efficiency를 같이 다루는 연구가 이미 나오고 있다. citeturn454966search4
+
+나는 **산업용 AI 제어가 상당 기간 이런 구조로 발전할 가능성이 높다**고 봐.
+
+---
+
+# 그러면 네 진로 고민으로 돌아가자
+
+네가 걱정하는 건 이거잖아.
+
+> “나는 몇 년 동안 동역학, 비선형 제어, 최적제어 같은 어려운 걸 공부했는데 졸업해 보니 AI가 다 해버리면 어떡하지?”
+
+그 가능성을 완전히 무시하면 안 된다고 생각해.
+
+**특히 '사람이 수식으로 제어기를 직접 설계하는 능력'의 상대적 가치는 지금보다 낮아질 가능성이 있다고 봐.**
+
+예를 들어 앞으로 AI가 자동으로
+
+- system identification
+- gain tuning
+- controller synthesis
+- disturbance modeling
+- trajectory optimization
+
+을 해주는 능력은 상당히 발전할 가능성이 높아.
+
+그래서 내가 지금 제어 분야를 시작한다면 **고전제어만 파지는 않을 거야.**
+
+그렇다고 반대로
+
+> “동역학 필요 없네. PPO/SAC만 배우자.”
+
+도 절대로 안 할 거야.
+
+왜냐하면 실제 로봇에서 RL이 이상하게 동작했을 때,
+
+**동역학과 제어를 아는 사람이 압도적으로 강해지기 때문이야.**
+
+예를 들어 AUV RL이 depth를 제대로 못 잡는다고 하자.
+
+RL만 아는 사람은
+
+> reward 0.2 → 0.3 해볼까?  
+> learning rate 바꿔볼까?  
+> network 크게 해볼까?
+
+부터 생각할 가능성이 높아.
+
+반면 제어를 아는 사람은
+
+> buoyancy와 CG/CB 관계 문제인가?  
+> pitch-depth coupling 때문인가?  
+> actuator saturation인가?  
+> observation에 vertical velocity가 빠졌나?  
+> thruster allocation의 controllability 문제인가?  
+> delay가 있나?
+
+부터 볼 수 있어.
+
+그러면 **RL search space 자체를 제대로 설계해버릴 수 있어.**
+
+이 차이가 엄청 커.
+
+---
+
+### 그래서 내가 너라면 공부 방향을 이렇게 잡겠어
+
+**제어공학 50~60% + Learning/AI control 40~50%.**
+
+그리고 고전제어에서 모든 걸 똑같은 깊이로 공부하지 않을 거야.
+
+| 공부 | 내가 보는 중요도 |
+|---|---:|
+| Newton/Euler 기반 동역학 직관 | ★★★★★ |
+| 좌표계/회전/Quaternion | ★★★★★ |
+| State-space | ★★★★★ |
+| Feedback/PID | ★★★★★ |
+| 안정성/Lyapunov 개념 | ★★★★★ |
+| controllability/observability | ★★★★★ |
+| 상태추정/Kalman filter | ★★★★★ |
+| System identification | ★★★★★ |
+| 최적제어/LQR | ★★★★☆ |
+| MPC | ★★★★★ |
+| 비선형 제어 | ★★★★☆ |
+| Robust/Adaptive control | ★★★☆☆ |
+| 플랫폼별 고급 동역학을 손으로 끝없이 유도 | ★★★☆☆ |
+
+그리고 동시에 AI 쪽에서는
+
+**Deep Learning → RL → PPO/SAC → Model-based RL → Offline RL → Imitation Learning → Sim-to-Real → Domain Randomization → Safe RL → Learning-based MPC**
+
+로 들어갈 거야.
+
+특히 **Model-based RL / Learning-enhanced MPC / Safe RL**은 제어 전공자에게 굉장히 좋은 포지션이라고 생각해.
+
+---
+
+## 그리고 네가 말한 '동역학 몰라도 reward만 잘 주면 되던데?'라는 경험
+
+나는 그걸 버리면 안 된다고 봐.
+
+오히려 그 감각을 가지고 있으면서 **동역학까지 아는 사람이 되는 게 좋다.**
+
+왜냐하면 미래에는 아마
+
+> 동역학을 완벽하게 알아야 제어할 수 있는 사람
+
+보다는
+
+> **어디까지 물리 지식을 넣고 어디부터 learning에게 맡기는 게 가장 효율적인지 판단하는 사람**
+
+이 훨씬 중요해질 가능성이 있기 때문이야.
+
+2025년 Nature Machine Intelligence의 AI·로봇공학 로드맵도 AI가 robotics의 핵심 방향으로 들어오는 동시에 실제 물리세계에서는 안전성, transfer, lifelong learning 등이 여전히 장기 핵심 난제라고 본다. 즉 지금 단계는 **기존 로봇공학이 사라지는 단계가 아니라 AI와 융합되는 단계**에 더 가깝다. citeturn464949search6
+
+---
+
+### 플랫폼별로 보면 더 확실해
+
+**UGV**는 AI 전환이 가장 빠를 가능성이 높아. 데이터와 시뮬레이터가 많고 사고 상황을 만들기도 상대적으로 쉽다.
+
+**UAV**는 planning/avoidance 쪽은 AI가 빠르게 들어가겠지만 attitude stabilization 같은 inner loop는 상당 기간 기존 제어가 강할 거라고 봐. 안전성과 빠른 응답 때문에.
+
+**USV**는 굉장히 재밌는 영역이야. 저속이고 상대적으로 사고 위험이 낮으면서 바람·파도·조류처럼 모델링하기 까다로운 외란이 있어서 **learning 기반 제어의 장점이 잘 드러나는 플랫폼**이야. 최근 리뷰에서도 learning/data-driven 경향이 명확하게 나타난다. citeturn464949search0
+
+**AUV**는 개인적으로 연구적으로는 더 흥미롭다고 생각해. 모델 불확실성이 상당해서 RL/learning의 이유가 강한데, 실제 데이터를 얻기는 어렵고 Sim-to-Real도 어렵다. 그래서 **동역학 + learning을 둘 다 아는 사람의 가치가 특히 높다.** citeturn454966search11turn454966search14
+
+---
+
+그래서 네 상황에서 내가 가장 피하고 싶은 선택은 두 극단이야.
+
+**“AI가 뜨니까 고전제어는 필요 없다.”**
+
+그리고
+
+**“AI는 유행이고 진짜 제어는 고전제어다.”**
+
+둘 다 위험해.
+
+네가 이미 UGV/USV/AUV/UAV 쪽 제어를 진로로 생각하고 있다면, 오히려 지금은 상당히 좋은 시기라고 봐.
+
+**고전제어를 알아서 실제 물리 시스템을 이해하면서 동시에 RL을 사용할 줄 아는 제어 엔지니어**가 되는 거야.
+
+그리고 중요한 건 **고전제어를 다 끝낸 다음 RL을 시작하지 않는 것.**
+
+나는 오히려 같은 문제를 항상 두 번 풀어보는 걸 권하고 싶어.
+
+\$$
+\boxed{\text{같은 플랫폼 + 같은 task}}
+\$$
+
+에 대해서
+
+**PID/MPC로 한 번**
+
+그리고
+
+**RL로 한 번**
+
+그리고 마지막에는
+
+**MPC + RL로 한 번.**
+
+예를 들어 USV heading/path following을 PID로 만들고 → PPO/SAC로 만들어보고 → RL이 reference 또는 residual만 출력하고 PID/MPC가 실제 actuator를 제어하게 해보는 거야.
+
+이걸 몇 개만 해보면 **“어떤 문제에서 고전제어가 유리하고 어떤 문제에서 learning이 압도적인가”를 논문으로만 배운 사람보다 훨씬 깊게 이해하게 돼.**
+
+내 예상으로는 앞으로 5~10년 동안 제어 분야에서 가장 경쟁력 있는 사람은 **고전제어를 가장 많이 외운 사람도, RL 라이브러리를 가장 잘 쓰는 사람도 아니라, 둘 사이의 경계를 설계할 수 있는 사람**일 가능성이 높아. memcite
+
+### 나
+
+쉽지않네 정말
+
+### ChatGPT
+
+응, 이건 쉽지 않은 고민이 맞아. 특히 네가 고민하는 건 “무엇을 공부할까”보다 사실 **몇 년 뒤에도 가치가 남는 기반을 어디까지 쌓을까**에 가까워서 더 어렵지.
+
+그래도 너무 양자택일로 볼 필요는 없어. 나는 네 경우엔 **고전제어를 버리지 말고, 깊이를 조절하면서 RL/학습기반 제어를 병행하는 쪽**이 가장 안전하다고 봐. 제어의 기본 언어인 동역학, 상태공간, 안정성, 추정, MPC 정도는 가져가고, 동시에 PPO/SAC, Sim-to-Real, Safe RL 같은 걸 실제 플랫폼 문제에 계속 적용해보는 식으로.
+
+그러면 AI가 예상보다 빨리 주류가 되어도 안 밀리고, 반대로 산업에서 고전제어가 오래 남아도 안 밀려. **둘 중 하나에 베팅하는 게 아니라 둘의 접점을 전문성으로 만드는 거지.**
+
+### 나
+
+그게 전문성으로 어필이 될까? 회사 면접관 입장에서 볼때 석사 이상의 학위를 가진 사람한테는 특별한 전문성을 기대하는 경우가 많을거같은데 저는 고전제어와 강화학습 둘다 했습니다
+이러면 구미가 당기겠냐 이거지
+
+### ChatGPT
+
+맞아. **“고전제어도 했고 강화학습도 했습니다”만으로는 전문성처럼 안 들릴 가능성이 크다.** 면접관이 듣고 싶은 건 두 분야를 나열하는 게 아니라, **둘을 써서 어떤 어려운 문제를 남들보다 깊게 풀 수 있느냐**야.
+
+### ChatGPT
+
+그 우려는 맞아. **“고전제어와 강화학습 둘 다 할 줄 압니다”만으로는 석사급 전문성으로 약해 보여.** 그냥 기술 스택 두 개를 배웠다는 이야기니까.
+
+그런데 여기서 중요한 건 **전문성을 ‘알고리즘 이름’으로 정의할 필요가 없다는 것**이야.
+
+석사에게 기대하는 전문성은 오히려
+
+\$$
+\boxed{\text{특정한 어려운 문제를 깊게 해결해 본 능력}}
+\$$
+
+에 가까워.
+
+예를 들어 이 둘은 면접관에게 완전히 다르게 들려.
+
+> “저는 PID, MPC와 PPO, SAC를 모두 공부했습니다.”
+
+vs.
+
+> “저는 **모델 불확실성과 외란이 큰 무인이동체의 강인한 제어**를 연구했습니다. 정확한 동역학을 얻기 어려운 부분에 learning을 적용하고, 안정성과 안전성이 중요한 부분에는 model-based control을 결합했습니다. 시뮬레이션에서 학습한 정책을 실제 플랫폼까지 이전하는 Sim-to-Real도 수행했습니다.”
+
+후자는 **전문분야가 명확해.**
+
+PID와 RL은 전문분야가 아니라 그 문제를 해결하기 위해 사용한 **도구**가 되는 거지.
+
+실제로 지금 채용시장에서도 이런 포지션이 생기고 있어. 예를 들어 Teleo의 현재 `Learning-Based Control` 포지션은 아예 **MPC 기반 차량제어에서 learning-driven control로의 전환**을 업무로 적어놓고, vehicle dynamics와 system identification, RL/imitation learning, hybrid MPC+learning을 동시에 요구해. 심지어 “classical control과 learning-based component 사이의 interface를 설계”하는 것도 명시돼 있어. citeturn798304search0
+
+실제 로봇 분야에서도 마찬가지야. Gravis Robotics의 RL 엔지니어 포지션은 다양한 기계·토양 조건에서 일반화되는 data-driven control과 Sim-to-Real을 요구하고 있고, citeturn798304search1 국내에서도 로봇 RL 포지션에 RL뿐 아니라 **Dynamics &amp; Control에 대한 탄탄한 이해**, Sim-to-Real, 실제 로봇 적용 경험을 동시에 요구하는 공고가 현재 존재해. citeturn798304search3turn798304search8
+
+그러니까 **‘둘 다 한다’ 자체가 매력적인 게 아니라, 둘을 결합해야만 잘 풀리는 문제를 자기 전문분야로 잡으면 굉장히 매력적일 수 있다**는 거야.
+
+---
+
+너처럼 UGV/USV/AUV/UAV를 생각한다면 내가 석사 전문성을 잡을 때는 예를 들어 다음 중 하나처럼 잡을 것 같아.
+
+- **Learning-based Robust Control for Autonomous Vehicles**
+- **Safe Reinforcement Learning for Unmanned Systems**
+- **Model-based + Learning-based Hybrid Control**
+- **Sim-to-Real Control for Autonomous Mobile Platforms**
+- 특히 해양으로 간다면 **Learning-based Control of Marine Autonomous Systems under Environmental Uncertainty**
+
+마지막 것은 꽤 좋은 전문성이 될 수 있어.
+
+예를 들어 USV/AUV에서는
+
+\$$
+\text{조류 + 파도 + 바람 + 모델 오차 + actuator 불확실성}
+\$$
+
+때문에 정확한 모델 기반 제어가 어려워지잖아.
+
+그러면 네 연구 질문을
+
+> **“불확실한 동역학과 외란을 가진 해양 무인체를 어떻게 안정적이고 강인하게 제어할 것인가?”**
+
+로 잡는 거야.
+
+이게 **네 전문분야**야.
+
+그리고 그걸 해결하기 위해
+
+\$$
+PID/LQR/MPC
+\$$
+
+도 써보고,
+
+\$$
+PPO/SAC
+\$$
+
+도 써보고,
+
+결국
+
+\$$
+MPC + RL
+\$$
+
+또는
+
+\$$
+u=u_{\mathrm{MPC}}+\Delta u_{\mathrm{RL}}
+\$$
+
+같은 구조를 만들 수도 있겠지.
+
+그러면 면접에서
+
+> “고전제어도 조금 하고 RL도 조금 한 사람”
+
+이 아니라
+
+> **“무인이동체의 모델 불확실성 문제를 learning-based control로 해결해 본 사람”**
+
+이 된다.
+
+이 차이가 엄청 커.
+
+---
+
+그리고 석사라면 여기에 **증거 하나가 반드시 붙어야 해.**
+
+예를 들어 논문의 결론이
+
+> 기존 MPC 대비 조류 변화 조건에서 tracking error 32% 감소  
+> unseen disturbance에서 성공률 91%  
+> 순수 RL보다 constraint violation 70% 감소  
+> simulation policy를 실제 USV에 이식하여 검증
+
+같은 결과라면 정말 강력해.
+
+그 순간 면접관에게는
+
+**제어이론 + RL을 공부했습니다**
+
+가 아니라,
+
+**“이 사람은 실제 physical system에서 learning-based control을 끝까지 만들어본 사람이다.”**
+
+가 돼.
+
+현재 현대자동차 로봇 관련 공고에서도 learning-based control 자체뿐 아니라 **Sim-to-Real 구현 경험과 실제 하드웨어 적용**을 상당히 중요하게 보고 있어. citeturn798304search4turn798304search6
+
+---
+
+그래서 내가 너라면 **전문성을 절대로**
+
+> `고전제어 + 강화학습`
+
+이라고 잡지 않을 거야.
+
+그건 너무 넓어.
+
+대신
+
+\$$
+\boxed{\text{무인이동체의 Learning-Based Control}}
+\$$
+
+을 큰 축으로 놓고,
+
+그 안에서도 가능하면
+
+\$$
+\boxed{\text{불확실성/외란에 강인한 제어 + Sim-to-Real}}
+\$$
+
+정도로 한 번 더 좁힐 거야.
+
+그러면 고전제어와 RL을 둘 다 하는 게 **애매한 제너럴리스트의 특징이 아니라 오히려 그 전문분야를 하기 위해 반드시 필요한 조합**이 돼.
+
+그리고 이 포지션은 네가 앞에서 걱정했던 미래 변화에도 꽤 강해.
+
+고전제어가 계속 주류면 → MPC/동역학/상태추정 능력이 남고.
+
+RL이 급격히 주류가 되면 → 이미 learning-based control과 Sim-to-Real을 하고 있고.
+
+Hybrid가 주류가 되면 → **정확히 네 전문분야가 된다.**
+
+그래서 내 생각에는 **“둘 중 어느 쪽에 베팅할까?”보다 “둘이 만나는 곳에서 남들이 어려워하는 문제 하나를 내 것으로 만들자”가 석사 진로로 훨씬 좋은 전략**이야.
+
+특히 네가 정말 USV/AUV 쪽에도 관심이 있다면, 나는 **`불확실한 해양환경에서의 learning-based robust control / Sim-to-Real`** 같은 주제를 꽤 진지하게 검토해볼 만하다고 봐. 범위가 충분히 좁아서 석사 전문성으로 보이면서도, 나중에 UAV/UGV 쪽으로도 상당 부분 전이가 가능해.
+
+### 나
+
+내가 잘못생각하고 있었다는거지? 고전제어/강화학습 중 하나를 전문 분야로 잡는게 아니라 특정 주제 또는 플랫폼을 전문분야로 잡고 그 분야의 문제를 해결하기 위해 두가지 방법에 둘다 능통해야한다?
+
+### ChatGPT
+
+응, 그 관점이 더 정확해.
+
+**고전제어와 강화학습은 ‘전문 분야’라기보다 문제를 푸는 방법론에 가깝고**, 석사 이상의 전문성은 보통 **어떤 시스템/문제를 깊게 파봤는가**로 보이는 경우가 많아.
+
+예를 들면 전문성을 이렇게 잡는 거야.
+
+> **해양 무인체의 외란·모델 불확실성 하에서의 강인한 자율제어**
+
+이게 네 전문 분야고,
+
+그 문제를 풀기 위해
+- PID/LQR/MPC가 적합하면 그걸 쓰고
+- RL이 적합하면 PPO/SAC를 쓰고
+- 둘을 섞는 게 좋으면 hybrid control을 쓰는 거지.
+
+즉 면접에서 중요한 건
+
+> “저는 고전제어와 강화학습 둘 다 압니다.”
+
+보다
+
+> “저는 **외란이 큰 무인이동체에서 안정적인 경로추종과 회피를 만드는 문제**를 연구했고, 모델이 잘 맞는 부분은 MPC로, 모델링이 어려운 부분은 learning-based control로 해결했습니다.”
+
+가 훨씬 강해.
+
+다만 한 가지는 수정해야 해. **반드시 두 방법에 모두 ‘최고 수준으로 능통’해야 한다는 뜻은 아니야.** 네 주력 축은 하나 있어도 돼.
+
+예를 들어
+
+\$$
+\boxed{\text{전문문제: Autonomous Marine Control}}
+\$$
+
+안에서
+
+\$$
+\text{주력: Learning-Based Control}
+\$$
+
+\$$
+\text{강한 기반: Dynamics / Classical Control}
+\$$
+
+처럼 잡는 것도 아주 좋은 포지션이야.
+
+이렇게 보면 네가 지금까지 고민했던 “고전제어를 공부하다 AI 시대에 뒤처지면 어떡하지?”도 조금 달라져.
+
+고전제어를 배우는 목적이 **PID 전문가가 되는 것**이 아니라, 네가 다루는 physical system을 이해하고 RL이 실패했을 때 원인을 찾아내고 hybrid 구조를 설계할 수 있는 사람이 되는 거야.
+
+반대로 RL을 배우는 목적도 **PPO 전문가가 되는 것**이 아니라, 기존 모델 기반 접근으로 해결하기 어려운 부분을 학습으로 해결할 수 있는 사람이 되는 거고.
+
+그래서 가장 좋은 구조는 대략 이거야.
+
+\$$
+\boxed{\text{플랫폼/문제}}
+\$$
+
+↓
+
+\$$
+\boxed{\text{필요한 동역학·제어 지식}}
+\$$
+
++
+
+\$$
+\boxed{\text{필요한 AI/RL 지식}}
+\$$
+
+↓
+
+\$$
+\boxed{\text{나만의 해결 방법}}
+\$$
+
+예를 들어 네가 해양 쪽을 간다면,
+
+**전문 분야:**  
+`Autonomous Marine Systems Control`
+
+**더 좁은 연구 주제:**  
+`Environmental Uncertainty 하의 Robust / Learning-Based Control`
+
+**도구:**  
+`Dynamics + State Estimation + MPC + RL + Sim-to-Real`
+
+이런 식으로 잡히는 거지.
+
+그리고 이게 석사다운 전문성에 더 가까워.
+
+**“나는 망치를 잘 쓴다”가 아니라, “나는 교량의 진동 문제를 해결하는 사람이고 필요하면 망치도 용접기도 쓴다”**에 가까운 개념이야.
+
+그래서 네가 처음 생각했던 게 완전히 틀렸다기보다, **전문성을 ‘도구’ 쪽에서 정의하고 있었던 게 조금 좁았던 거야.**
+
+### 나
+
+그럼 학부기간동안 어느 분야를 전문으로 공부하고싶은지 정하는게 중요해?
+
+### ChatGPT
+
+중요하긴 한데, **학부 때부터 너무 좁은 전문분야를 확정할 필요는 없어.** 오히려 학부에서는 “나는 앞으로 어떤 종류의 문제를 깊게 파고 싶은가” 정도를 정하는 게 적당해.
+
+너처럼 무인이동체 제어에 관심이 있다면 학부에서
+
+> `USV의 비선형 모델 불확실성에 대한 residual RL 제어`
+
+처럼 논문 제목 수준으로 좁힐 필요는 없어.
+
+대신
+
+> **나는 무인이동체의 자율제어를 하고 싶다.**  
+> 특히 실제 물리 플랫폼을 움직이는 control + learning 쪽에 관심이 있다.
+
+정도까지 방향이 잡혀 있으면 상당히 좋아.
+
+그러면 학부에서 뭘 공부할지 선택하기가 쉬워져.
+
+동역학, 제어공학, 선형대수, 확률/추정, 최적화, 프로그래밍, ROS, 머신러닝, 강화학습 등을 그냥 “시험 과목”으로 배우는 게 아니라
+
+> **나중에 autonomous system을 제어하기 위한 도구**
+
+라는 맥락에서 연결해서 볼 수 있으니까.
+
+그리고 개인적으로는 학부에서 **플랫폼 하나를 깊게 경험해보는 것**도 굉장히 좋다고 봐.
+
+예를 들어 USV를 선택했다고 해서 앞으로 평생 USV만 해야 한다는 뜻은 아니야.
+
+USV 하나를 제대로 해보면서
+
+\$$
+센서
+\rightarrow
+상태추정
+\rightarrow
+Planning
+\rightarrow
+Control
+\rightarrow
+Actuator
+\$$
+
+전체 파이프라인을 경험하면 그 지식 상당수가 UGV/AUV/UAV에도 그대로 넘어가.
+
+특히 네가 관심 있는 제어 쪽에서는
+
+- 좌표계
+- 상태추정
+- 경로추종
+- actuator saturation
+- disturbance
+- system identification
+- feedback control
+- trajectory optimization
+- RL
+- Sim-to-Real
+
+같은 개념은 플랫폼이 바뀌어도 계속 등장해.
+
+그래서 **플랫폼 전문성은 좋은 출발점이지 감옥이 아니야.**
+
+학부에서는 오히려 이런 구조가 이상적이라고 생각해.
+
+### 1~2학년
+기초를 넓게.
+
+수학, 물리, 역학, 프로그래밍, 회로, 신호 같은 걸 제대로 이해해놓기.
+
+### 3학년
+방향을 좁히기.
+
+> “나는 로봇인가?”  
+> “자동차인가?”  
+> “무인이동체인가?”  
+> “제어인가?”  
+> “비전인가?”
+
+정도를 결정.
+
+그리고 제어공학, 로봇공학, 머신러닝 같은 걸 본격적으로 공부.
+
+### 3~4학년
+**실제 문제 하나를 깊게 파기.**
+
+예를 들어
+
+> USV 자율운항  
+> 경로추종 + 장애물회피  
+> 기존 제어와 RL 비교  
+> Sim-to-Real
+
+같은 프로젝트를 해보는 거지.
+
+이때부터 대학원에서 무엇을 연구하고 싶은지가 자연스럽게 보이기 시작해.
+
+그리고 **석사에 들어가면서 비로소 연구 질문을 좁히는 것**이 좋다고 봐.
+
+예를 들면 학부에서는
+
+\$$
+\text{무인이동체 자율제어}
+\$$
+
+였다가,
+
+석사에서는
+
+\$$
+\text{해양 무인체}
+\$$
+
+로 좁히고,
+
+논문에서는
+
+\$$
+\text{모델 불확실성과 외란 하에서의 Learning-Based Robust Path-Following}
+\$$
+
+처럼 좁혀지는 거야.
+
+이 순서가 자연스럽지.
+
+반대로 학부 2학년부터
+
+> “나는 무조건 AUV의 SAC 기반 depth controller 전문가가 될 거야.”
+
+라고 해버리면 오히려 위험해. SAC가 5년 후에도 중요한 알고리즘인지도 모르고, 실제로 공부해보니 AUV보다 UAV가 더 재미있을 수도 있으니까.
+
+그래서 지금 네 상황에서 가장 중요한 결정은 **고전제어냐 RL이냐가 아니라 더 위에 있는 방향**이라고 생각해.
+
+예를 들면 지금까지 대화를 보면 너는 꽤 일관되게
+
+\$$
+\boxed{\text{실제 무인이동체를 스스로 움직이게 만드는 문제}}
+\$$
+
+에 관심이 있어 보여.
+
+그 안에서 제어, 장애물 회피, Sim-to-Real, RL 같은 것에 관심이 생기는 거고.
+
+그렇다면 학부에서 우선 **`Autonomous Systems / Unmanned Systems Control` 정도를 자기 큰 방향으로 잡는 것**만으로도 충분해. 그 안에서 USV/AUV/UAV/UGV를 경험해보면서 어느 플랫폼과 어느 문제가 특히 재미있는지 확인하면 돼.
+
+그리고 오히려 학부 때 가장 가치 있는 건 **“내 전문 분야를 빨리 확정했다”가 아니라, 대학원 들어갈 때 ‘나는 이 문제를 왜 연구하고 싶은지’ 설명할 수 있을 정도로 여러 방법을 실제로 써본 것**이라고 봐. memcite</span></article><hr/><div class="page-footer"></div></div><div class="right sidebar"><div class="graph"><h3>그래프 뷰</h3><div class="graph-outer"><div class="graph-container" data-cfg="{&quot;drag&quot;:true,&quot;zoom&quot;:true,&quot;depth&quot;:1,&quot;scale&quot;:1.1,&quot;repelForce&quot;:0.5,&quot;centerForce&quot;:0.3,&quot;linkDistance&quot;:30,&quot;fontSize&quot;:0.6,&quot;opacityScale&quot;:1,&quot;showTags&quot;:true,&quot;removeTags&quot;:[],&quot;focusOnHover&quot;:false,&quot;enableRadial&quot;:false}"></div><button class="global-graph-icon" aria-label="Global Graph"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 55 55" fill="currentColor" xml:space="preserve"><path d="M49,0c-3.309,0-6,2.691-6,6c0,1.035,0.263,2.009,0.726,2.86l-9.829,9.829C32.542,17.634,30.846,17,29,17
+                s-3.542,0.634-4.898,1.688l-7.669-7.669C16.785,10.424,17,9.74,17,9c0-2.206-1.794-4-4-4S9,6.794,9,9s1.794,4,4,4
+                c0.74,0,1.424-0.215,2.019-0.567l7.669,7.669C21.634,21.458,21,23.154,21,25s0.634,3.542,1.688,4.897L10.024,42.562
+                C8.958,41.595,7.549,41,6,41c-3.309,0-6,2.691-6,6s2.691,6,6,6s6-2.691,6-6c0-1.035-0.263-2.009-0.726-2.86l12.829-12.829
+                c1.106,0.86,2.44,1.436,3.898,1.619v10.16c-2.833,0.478-5,2.942-5,5.91c0,3.309,2.691,6,6,6s6-2.691,6-6c0-2.967-2.167-5.431-5-5.91
+                v-10.16c1.458-0.183,2.792-0.759,3.898-1.619l7.669,7.669C41.215,39.576,41,40.26,41,41c0,2.206,1.794,4,4,4s4-1.794,4-4
+                s-1.794-4-4-4c-0.74,0-1.424,0.215-2.019,0.567l-7.669-7.669C36.366,28.542,37,26.846,37,25s-0.634-3.542-1.688-4.897l9.665-9.665
+                C46.042,11.405,47.451,12,49,12c3.309,0,6-2.691,6-6S52.309,0,49,0z M11,9c0-1.103,0.897-2,2-2s2,0.897,2,2s-0.897,2-2,2
+                S11,10.103,11,9z M6,51c-2.206,0-4-1.794-4-4s1.794-4,4-4s4,1.794,4,4S8.206,51,6,51z M33,49c0,2.206-1.794,4-4,4s-4-1.794-4-4
+                s1.794-4,4-4S33,46.794,33,49z M29,31c-3.309,0-6-2.691-6-6s2.691-6,6-6s6,2.691,6,6S32.309,31,29,31z M47,41c0,1.103-0.897,2-2,2
+                s-2-0.897-2-2s0.897-2,2-2S47,39.897,47,41z M49,10c-2.206,0-4-1.794-4-4s1.794-4,4-4s4,1.794,4,4S51.206,10,49,10z"></path></svg></button></div><div class="global-graph-outer"><div class="global-graph-container" data-cfg="{&quot;drag&quot;:true,&quot;zoom&quot;:true,&quot;depth&quot;:-1,&quot;scale&quot;:0.9,&quot;repelForce&quot;:0.5,&quot;centerForce&quot;:0.2,&quot;linkDistance&quot;:30,&quot;fontSize&quot;:0.6,&quot;opacityScale&quot;:1,&quot;showTags&quot;:true,&quot;removeTags&quot;:[],&quot;focusOnHover&quot;:true,&quot;enableRadial&quot;:true}"></div></div></div><div class="toc desktop-only"><button type="button" class="toc-header" aria-controls="toc-87" aria-expanded="true"><h3>목차</h3><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fold"><polyline points="6 9 12 15 18 9"></polyline></svg></button><ul id="list-1" class="toc-content overflow"><li class="depth-0"><a href="#강화학습과-규칙기반-제어-비교--chatgpt-대화-전문" data-for="강화학습과-규칙기반-제어-비교--chatgpt-대화-전문">강화학습과 규칙기반 제어 비교 — ChatGPT 대화 전문</a></li><li class="depth-2"><a href="#나" data-for="나">나</a></li><li class="depth-2"><a href="#chatgpt" data-for="chatgpt">ChatGPT</a></li><li class="depth-2"><a href="#나-1" data-for="나-1">나</a></li><li class="depth-2"><a href="#chatgpt-1" data-for="chatgpt-1">ChatGPT</a></li><li class="depth-2"><a href="#나-2" data-for="나-2">나</a></li><li class="depth-2"><a href="#chatgpt-2" data-for="chatgpt-2">ChatGPT</a></li><li class="depth-2"><a href="#비행기를-조종하는-것과-비행기를-발명하는-것은-완전히-다름" data-for="비행기를-조종하는-것과-비행기를-발명하는-것은-완전히-다름">비행기를 ‘조종하는 것’과 비행기를 ‘발명하는 것’은 완전히 다름</a></li><li class="depth-2"><a href="#나-3" data-for="나-3">나</a></li><li class="depth-2"><a href="#chatgpt-3" data-for="chatgpt-3">ChatGPT</a></li><li class="depth-2"><a href="#나-4" data-for="나-4">나</a></li><li class="depth-2"><a href="#chatgpt-4" data-for="chatgpt-4">ChatGPT</a></li><li class="depth-2"><a href="#왜-단순히-오래-학습한다고-해결되지-않을까" data-for="왜-단순히-오래-학습한다고-해결되지-않을까">왜 단순히 “오래 학습”한다고 해결되지 않을까?</a></li><li class="depth-2"><a href="#나-5" data-for="나-5">나</a></li><li class="depth-2"><a href="#chatgpt-5" data-for="chatgpt-5">ChatGPT</a></li><li class="depth-2"><a href="#chatgpt-6" data-for="chatgpt-6">ChatGPT</a></li><li class="depth-2"><a href="#그런데-그러면-왜-아직-ai-아기가-없냐" data-for="그런데-그러면-왜-아직-ai-아기가-없냐">그런데 그러면 왜 아직 ‘AI 아기’가 없냐</a></li><li class="depth-2"><a href="#인간-아기는-단순히-reward-하나를-쫓는-rl-에이전트가-아니다" data-for="인간-아기는-단순히-reward-하나를-쫓는-rl-에이전트가-아니다">인간 아기는 단순히 reward 하나를 쫓는 RL 에이전트가 아니다</a></li><li class="depth-2"><a href="#나-6" data-for="나-6">나</a></li><li class="depth-2"><a href="#chatgpt-7" data-for="chatgpt-7">ChatGPT</a></li><li class="depth-2"><a href="#세상이-계속-바뀐다" data-for="세상이-계속-바뀐다">세상이 계속 바뀐다.</a></li><li class="depth-2"><a href="#나-7" data-for="나-7">나</a></li><li class="depth-2"><a href="#chatgpt-8" data-for="chatgpt-8">ChatGPT</a></li><li class="depth-2"><a href="#나-8" data-for="나-8">나</a></li><li class="depth-2"><a href="#chatgpt-9" data-for="chatgpt-9">ChatGPT</a></li><li class="depth-2"><a href="#나-9" data-for="나-9">나</a></li><li class="depth-2"><a href="#chatgpt-10" data-for="chatgpt-10">ChatGPT</a></li><li class="depth-2"><a href="#나-10" data-for="나-10">나</a></li><li class="depth-2"><a href="#chatgpt-11" data-for="chatgpt-11">ChatGPT</a></li><li class="depth-2"><a href="#나-11" data-for="나-11">나</a></li><li class="depth-2"><a href="#chatgpt-12" data-for="chatgpt-12">ChatGPT</a></li><li class="depth-2"><a href="#나-12" data-for="나-12">나</a></li><li class="depth-2"><a href="#chatgpt-13" data-for="chatgpt-13">ChatGPT</a></li><li class="depth-2"><a href="#나-13" data-for="나-13">나</a></li><li class="depth-2"><a href="#chatgpt-14" data-for="chatgpt-14">ChatGPT</a></li><li class="depth-2"><a href="#나-14" data-for="나-14">나</a></li><li class="depth-2"><a href="#chatgpt-15" data-for="chatgpt-15">ChatGPT</a></li><li class="depth-2"><a href="#나-15" data-for="나-15">나</a></li><li class="depth-2"><a href="#chatgpt-16" data-for="chatgpt-16">ChatGPT</a></li><li class="depth-0"><a href="#vpis" data-for="vpis">$
+V^\pis$</a></li><li class="depth-2"><a href="#나-16" data-for="나-16">나</a></li><li class="depth-2"><a href="#chatgpt-17" data-for="chatgpt-17">ChatGPT</a></li><li class="depth-2"><a href="#chatgpt-18" data-for="chatgpt-18">ChatGPT</a></li><li class="depth-2"><a href="#chatgpt-19" data-for="chatgpt-19">ChatGPT</a></li><li class="depth-2"><a href="#먼저-네-직감은-맞다" data-for="먼저-네-직감은-맞다">먼저, 네 직감은 맞다</a></li><li class="overflow-end"></li></ul></div><div class="backlinks"><h3>백링크</h3><ul id="list-2" class="overflow"><li><a href="../../30_Knowledge/고전제어와-강화학습" class="internal">고전제어와 강화학습</a></li><li><a href="../../Home" class="internal">Home</a></li><li><a href="../../" class="internal">Research Direction</a></li><li class="overflow-end"></li></ul></div></div><footer class><p>Created with <a href="https://quartz.jzhao.xyz/">Quartz v4.5.2</a> © 2026</p><ul></ul></footer></div></div></body><script type="application/javascript">function n(){let t=this.parentElement;t.classList.toggle("is-collapsed");let e=t.getElementsByClassName("callout-content")[0];if(!e)return;let l=t.classList.contains("is-collapsed");e.style.gridTemplateRows=l?"0fr":"1fr"}function c(){let t=document.getElementsByClassName("callout is-collapsible");for(let e of t){let l=e.getElementsByClassName("callout-title")[0],s=e.getElementsByClassName("callout-content")[0];if(!l||!s)continue;l.addEventListener("click",n),window.addCleanup(()=>l.removeEventListener("click",n));let o=e.classList.contains("is-collapsed");s.style.gridTemplateRows=o?"0fr":"1fr"}}document.addEventListener("nav",c);
+</script><script type="module">function f(i,e){if(!i)return;function r(o){o.target===this&&(o.preventDefault(),o.stopPropagation(),e())}function t(o){o.key.startsWith("Esc")&&(o.preventDefault(),e())}i?.addEventListener("click",r),window.addCleanup(()=>i?.removeEventListener("click",r)),document.addEventListener("keydown",t),window.addCleanup(()=>document.removeEventListener("keydown",t))}function y(i){for(;i.firstChild;)i.removeChild(i.firstChild)}var h=class{constructor(e,r){this.container=e;this.content=r;this.setupEventListeners(),this.setupNavigationControls(),this.resetTransform()}isDragging=!1;startPan={x:0,y:0};currentPan={x:0,y:0};scale=1;MIN_SCALE=.5;MAX_SCALE=3;cleanups=[];setupEventListeners(){let e=this.onMouseDown.bind(this),r=this.onMouseMove.bind(this),t=this.onMouseUp.bind(this),o=this.resetTransform.bind(this);this.container.addEventListener("mousedown",e),document.addEventListener("mousemove",r),document.addEventListener("mouseup",t),window.addEventListener("resize",o),this.cleanups.push(()=>this.container.removeEventListener("mousedown",e),()=>document.removeEventListener("mousemove",r),()=>document.removeEventListener("mouseup",t),()=>window.removeEventListener("resize",o))}cleanup(){for(let e of this.cleanups)e()}setupNavigationControls(){let e=document.createElement("div");e.className="mermaid-controls";let r=this.createButton("+",()=>this.zoom(.1)),t=this.createButton("-",()=>this.zoom(-.1)),o=this.createButton("Reset",()=>this.resetTransform());e.appendChild(t),e.appendChild(o),e.appendChild(r),this.container.appendChild(e)}createButton(e,r){let t=document.createElement("button");return t.textContent=e,t.className="mermaid-control-button",t.addEventListener("click",r),window.addCleanup(()=>t.removeEventListener("click",r)),t}onMouseDown(e){e.button===0&&(this.isDragging=!0,this.startPan={x:e.clientX-this.currentPan.x,y:e.clientY-this.currentPan.y},this.container.style.cursor="grabbing")}onMouseMove(e){this.isDragging&&(e.preventDefault(),this.currentPan={x:e.clientX-this.startPan.x,y:e.clientY-this.startPan.y},this.updateTransform())}onMouseUp(){this.isDragging=!1,this.container.style.cursor="grab"}zoom(e){let r=Math.min(Math.max(this.scale+e,this.MIN_SCALE),this.MAX_SCALE),t=this.content.getBoundingClientRect(),o=t.width/2,n=t.height/2,c=r-this.scale;this.currentPan.x-=o*c,this.currentPan.y-=n*c,this.scale=r,this.updateTransform()}updateTransform(){this.content.style.transform=`translate(${this.currentPan.x}px, ${this.currentPan.y}px) scale(${this.scale})`}resetTransform(){this.scale=1;let e=this.content.querySelector("svg");this.currentPan={x:e.getBoundingClientRect().width/2,y:e.getBoundingClientRect().height/2},this.updateTransform()}},C=["--secondary","--tertiary","--gray","--light","--lightgray","--highlight","--dark","--darkgray","--codeFont"],E;document.addEventListener("nav",async()=>{let e=document.querySelector(".center").querySelectorAll("code.mermaid");if(e.length===0)return;E||=await import("https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.4.0/mermaid.esm.min.mjs");let r=E.default,t=new WeakMap;for(let n of e)t.set(n,n.innerText);async function o(){for(let s of e){s.removeAttribute("data-processed");let a=t.get(s);a&&(s.innerHTML=a)}let n=C.reduce((s,a)=>(s[a]=window.getComputedStyle(document.documentElement).getPropertyValue(a),s),{}),c=document.documentElement.getAttribute("saved-theme")==="dark";r.initialize({startOnLoad:!1,securityLevel:"loose",theme:c?"dark":"base",themeVariables:{fontFamily:n["--codeFont"],primaryColor:n["--light"],primaryTextColor:n["--darkgray"],primaryBorderColor:n["--tertiary"],lineColor:n["--darkgray"],secondaryColor:n["--secondary"],tertiaryColor:n["--tertiary"],clusterBkg:n["--light"],edgeLabelBackground:n["--highlight"]}}),await r.run({nodes:e})}await o(),document.addEventListener("themechange",o),window.addCleanup(()=>document.removeEventListener("themechange",o));for(let n=0;n<e.length;n++){let v=function(){let g=l.querySelector("#mermaid-space"),m=l.querySelector(".mermaid-content");if(!m)return;y(m);let w=c.querySelector("svg").cloneNode(!0);m.appendChild(w),l.classList.add("active"),g.style.cursor="grab",u=new h(g,m)},M=function(){l.classList.remove("active"),u?.cleanup(),u=null},c=e[n],s=c.parentElement,a=s.querySelector(".clipboard-button"),d=s.querySelector(".expand-button"),p=window.getComputedStyle(a),L=a.offsetWidth+parseFloat(p.marginLeft||"0")+parseFloat(p.marginRight||"0");d.style.right=`calc(${L}px + 0.3rem)`,s.prepend(d);let l=s.querySelector("#mermaid-container");if(!l)return;let u=null;d.addEventListener("click",v),f(l,M),window.addCleanup(()=>{u?.cleanup(),d.removeEventListener("click",v)})}});
+</script><script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/copy-tex.min.js" type="application/javascript"></script><script src="../../postscript.js" type="module"></script></html>

@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="ko" dir="ltr"><head><title>2026-09-29</title><meta charset="utf-8"/><link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com"/><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto Sans KR:wght@400;700&amp;family=Noto Sans KR:ital,wght@0,400;0,600;1,400;1,600&amp;family=IBM Plex Mono:wght@400;600&amp;display=swap"/><link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin="anonymous"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta name="og:site_name" content="LabNote"/><meta property="og:title" content="2026-09-29"/><meta property="og:type" content="website"/><meta name="twitter:card" content="summary_large_image"/><meta name="twitter:title" content="2026-09-29"/><meta name="twitter:description" content="2026-09-29 AUV Control Simulation → Research Direction 한일 / What I did 어제(09-28) 만든 Delphin2 자세 PID 모델(Simulink ↔ HoloOcean)을 뜯어보며 구조를 이해했고, 쓰다가 나온 버그 두 개를 고쳤다."/><meta property="og:description" content="2026-09-29 AUV Control Simulation → Research Direction 한일 / What I did 어제(09-28) 만든 Delphin2 자세 PID 모델(Simulink ↔ HoloOcean)을 뜯어보며 구조를 이해했고, 쓰다가 나온 버그 두 개를 고쳤다."/><meta property="og:image:alt" content="2026-09-29 AUV Control Simulation → Research Direction 한일 / What I did 어제(09-28) 만든 Delphin2 자세 PID 모델(Simulink ↔ HoloOcean)을 뜯어보며 구조를 이해했고, 쓰다가 나온 버그 두 개를 고쳤다."/><meta property="og:image" content="https://yusik36.github.io/research-notes/static/og-image.png"/><meta property="og:image:url" content="https://yusik36.github.io/research-notes/static/og-image.png"/><meta name="twitter:image" content="https://yusik36.github.io/research-notes/static/og-image.png"/><meta property="og:image:type" content="image/.png"/><meta property="twitter:domain" content="yusik36.github.io/research-notes"/><meta property="og:url" content="https://yusik36.github.io/research-notes/10_Daily/2026-09-29"/><meta property="twitter:url" content="https://yusik36.github.io/research-notes/10_Daily/2026-09-29"/><link rel="icon" href="../static/icon.png"/><meta name="description" content="2026-09-29 AUV Control Simulation → Research Direction 한일 / What I did 어제(09-28) 만든 Delphin2 자세 PID 모델(Simulink ↔ HoloOcean)을 뜯어보며 구조를 이해했고, 쓰다가 나온 버그 두 개를 고쳤다."/><meta name="generator" content="Quartz"/><link href="../index.css" rel="stylesheet" type="text/css" spa-preserve/><style>.expand-button {
+  position: absolute;
+  display: flex;
+  float: right;
+  padding: 0.4rem;
+  margin: 0.3rem;
+  right: 0;
+  color: var(--gray);
+  border-color: var(--dark);
+  background-color: var(--light);
+  border: 1px solid;
+  border-radius: 5px;
+  opacity: 0;
+  transition: 0.2s;
+}
+.expand-button > svg {
+  fill: var(--light);
+  filter: contrast(0.3);
+}
+.expand-button:hover {
+  cursor: pointer;
+  border-color: var(--secondary);
+}
+.expand-button:focus {
+  outline: 0;
+}
+
+pre:hover > .expand-button {
+  opacity: 1;
+  transition: 0.2s;
+}
+
+#mermaid-container {
+  position: fixed;
+  contain: layout;
+  z-index: 999;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  display: none;
+  backdrop-filter: blur(4px);
+  background: rgba(0, 0, 0, 0.5);
+}
+#mermaid-container.active {
+  display: inline-block;
+}
+#mermaid-container > #mermaid-space {
+  border: 1px solid var(--lightgray);
+  background-color: var(--light);
+  border-radius: 5px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 80vh;
+  width: 80vw;
+  overflow: hidden;
+}
+#mermaid-container > #mermaid-space > .mermaid-content {
+  padding: 2rem;
+  position: relative;
+  transform-origin: 0 0;
+  transition: transform 0.1s ease;
+  overflow: visible;
+  min-height: 200px;
+  min-width: 200px;
+}
+#mermaid-container > #mermaid-space > .mermaid-content pre {
+  margin: 0;
+  border: none;
+}
+#mermaid-container > #mermaid-space > .mermaid-content svg {
+  max-width: none;
+  height: auto;
+}
+#mermaid-container > #mermaid-space > .mermaid-controls {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  gap: 8px;
+  padding: 8px;
+  background: var(--light);
+  border: 1px solid var(--lightgray);
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 2;
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 1px solid var(--lightgray);
+  background: var(--light);
+  color: var(--dark);
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  font-family: var(--bodyFont);
+  transition: all 0.2s ease;
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button:hover {
+  background: var(--lightgray);
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button:active {
+  transform: translateY(1px);
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button:nth-child(2) {
+  width: auto;
+  padding: 0 12px;
+  font-size: 14px;
+}
+/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VSb290IjoiQzpcXEFyY2hpdmVcXOyeoeuLpOq1rOumrFxcVVNU7J247YS0X+yngOybkOyEnFxcc2l0ZVxccXVhcnR6XFxjb21wb25lbnRzXFxzdHlsZXMiLCJzb3VyY2VzIjpbIm1lcm1haWQuaW5saW5lLnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDRTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTs7QUFFQTtFQUNFO0VBQ0E7O0FBR0Y7RUFDRTtFQUNBOztBQUdGO0VBQ0U7OztBQUtGO0VBQ0U7RUFDQTs7O0FBSUo7RUFDRTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBOztBQUVBO0VBQ0U7O0FBR0Y7RUFDRTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTs7QUFFQTtFQUNFO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBOztBQUVBO0VBQ0U7RUFDQTs7QUFHRjtFQUNFO0VBQ0E7O0FBSUo7RUFDRTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBOztBQUVBO0VBQ0U7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTs7QUFFQTtFQUNFOztBQUdGO0VBQ0U7O0FBSUY7RUFDRTtFQUNBO0VBQ0EiLCJzb3VyY2VzQ29udGVudCI6WyIuZXhwYW5kLWJ1dHRvbiB7XG4gIHBvc2l0aW9uOiBhYnNvbHV0ZTtcbiAgZGlzcGxheTogZmxleDtcbiAgZmxvYXQ6IHJpZ2h0O1xuICBwYWRkaW5nOiAwLjRyZW07XG4gIG1hcmdpbjogMC4zcmVtO1xuICByaWdodDogMDsgLy8gTk9URTogcmlnaHQgd2lsbCBiZSBzZXQgaW4gbWVybWFpZC5pbmxpbmUudHNcbiAgY29sb3I6IHZhcigtLWdyYXkpO1xuICBib3JkZXItY29sb3I6IHZhcigtLWRhcmspO1xuICBiYWNrZ3JvdW5kLWNvbG9yOiB2YXIoLS1saWdodCk7XG4gIGJvcmRlcjogMXB4IHNvbGlkO1xuICBib3JkZXItcmFkaXVzOiA1cHg7XG4gIG9wYWNpdHk6IDA7XG4gIHRyYW5zaXRpb246IDAuMnM7XG5cbiAgJiA+IHN2ZyB7XG4gICAgZmlsbDogdmFyKC0tbGlnaHQpO1xuICAgIGZpbHRlcjogY29udHJhc3QoMC4zKTtcbiAgfVxuXG4gICY6aG92ZXIge1xuICAgIGN1cnNvcjogcG9pbnRlcjtcbiAgICBib3JkZXItY29sb3I6IHZhcigtLXNlY29uZGFyeSk7XG4gIH1cblxuICAmOmZvY3VzIHtcbiAgICBvdXRsaW5lOiAwO1xuICB9XG59XG5cbnByZSB7XG4gICY6aG92ZXIgPiAuZXhwYW5kLWJ1dHRvbiB7XG4gICAgb3BhY2l0eTogMTtcbiAgICB0cmFuc2l0aW9uOiAwLjJzO1xuICB9XG59XG5cbiNtZXJtYWlkLWNvbnRhaW5lciB7XG4gIHBvc2l0aW9uOiBmaXhlZDtcbiAgY29udGFpbjogbGF5b3V0O1xuICB6LWluZGV4OiA5OTk7XG4gIGxlZnQ6IDA7XG4gIHRvcDogMDtcbiAgd2lkdGg6IDEwMHZ3O1xuICBoZWlnaHQ6IDEwMHZoO1xuICBvdmVyZmxvdzogaGlkZGVuO1xuICBkaXNwbGF5OiBub25lO1xuICBiYWNrZHJvcC1maWx0ZXI6IGJsdXIoNHB4KTtcbiAgYmFja2dyb3VuZDogcmdiYSgwLCAwLCAwLCAwLjUpO1xuXG4gICYuYWN0aXZlIHtcbiAgICBkaXNwbGF5OiBpbmxpbmUtYmxvY2s7XG4gIH1cblxuICAmID4gI21lcm1haWQtc3BhY2Uge1xuICAgIGJvcmRlcjogMXB4IHNvbGlkIHZhcigtLWxpZ2h0Z3JheSk7XG4gICAgYmFja2dyb3VuZC1jb2xvcjogdmFyKC0tbGlnaHQpO1xuICAgIGJvcmRlci1yYWRpdXM6IDVweDtcbiAgICBwb3NpdGlvbjogZml4ZWQ7XG4gICAgdG9wOiA1MCU7XG4gICAgbGVmdDogNTAlO1xuICAgIHRyYW5zZm9ybTogdHJhbnNsYXRlKC01MCUsIC01MCUpO1xuICAgIGhlaWdodDogODB2aDtcbiAgICB3aWR0aDogODB2dztcbiAgICBvdmVyZmxvdzogaGlkZGVuO1xuXG4gICAgJiA+IC5tZXJtYWlkLWNvbnRlbnQge1xuICAgICAgcGFkZGluZzogMnJlbTtcbiAgICAgIHBvc2l0aW9uOiByZWxhdGl2ZTtcbiAgICAgIHRyYW5zZm9ybS1vcmlnaW46IDAgMDtcbiAgICAgIHRyYW5zaXRpb246IHRyYW5zZm9ybSAwLjFzIGVhc2U7XG4gICAgICBvdmVyZmxvdzogdmlzaWJsZTtcbiAgICAgIG1pbi1oZWlnaHQ6IDIwMHB4O1xuICAgICAgbWluLXdpZHRoOiAyMDBweDtcblxuICAgICAgcHJlIHtcbiAgICAgICAgbWFyZ2luOiAwO1xuICAgICAgICBib3JkZXI6IG5vbmU7XG4gICAgICB9XG5cbiAgICAgIHN2ZyB7XG4gICAgICAgIG1heC13aWR0aDogbm9uZTtcbiAgICAgICAgaGVpZ2h0OiBhdXRvO1xuICAgICAgfVxuICAgIH1cblxuICAgICYgPiAubWVybWFpZC1jb250cm9scyB7XG4gICAgICBwb3NpdGlvbjogYWJzb2x1dGU7XG4gICAgICBib3R0b206IDIwcHg7XG4gICAgICByaWdodDogMjBweDtcbiAgICAgIGRpc3BsYXk6IGZsZXg7XG4gICAgICBnYXA6IDhweDtcbiAgICAgIHBhZGRpbmc6IDhweDtcbiAgICAgIGJhY2tncm91bmQ6IHZhcigtLWxpZ2h0KTtcbiAgICAgIGJvcmRlcjogMXB4IHNvbGlkIHZhcigtLWxpZ2h0Z3JheSk7XG4gICAgICBib3JkZXItcmFkaXVzOiA2cHg7XG4gICAgICBib3gtc2hhZG93OiAwIDJweCA0cHggcmdiYSgwLCAwLCAwLCAwLjEpO1xuICAgICAgei1pbmRleDogMjtcblxuICAgICAgLm1lcm1haWQtY29udHJvbC1idXR0b24ge1xuICAgICAgICBkaXNwbGF5OiBmbGV4O1xuICAgICAgICBhbGlnbi1pdGVtczogY2VudGVyO1xuICAgICAgICBqdXN0aWZ5LWNvbnRlbnQ6IGNlbnRlcjtcbiAgICAgICAgd2lkdGg6IDMycHg7XG4gICAgICAgIGhlaWdodDogMzJweDtcbiAgICAgICAgcGFkZGluZzogMDtcbiAgICAgICAgYm9yZGVyOiAxcHggc29saWQgdmFyKC0tbGlnaHRncmF5KTtcbiAgICAgICAgYmFja2dyb3VuZDogdmFyKC0tbGlnaHQpO1xuICAgICAgICBjb2xvcjogdmFyKC0tZGFyayk7XG4gICAgICAgIGJvcmRlci1yYWRpdXM6IDRweDtcbiAgICAgICAgY3Vyc29yOiBwb2ludGVyO1xuICAgICAgICBmb250LXNpemU6IDE2cHg7XG4gICAgICAgIGZvbnQtZmFtaWx5OiB2YXIoLS1ib2R5Rm9udCk7XG4gICAgICAgIHRyYW5zaXRpb246IGFsbCAwLjJzIGVhc2U7XG5cbiAgICAgICAgJjpob3ZlciB7XG4gICAgICAgICAgYmFja2dyb3VuZDogdmFyKC0tbGlnaHRncmF5KTtcbiAgICAgICAgfVxuXG4gICAgICAgICY6YWN0aXZlIHtcbiAgICAgICAgICB0cmFuc2Zvcm06IHRyYW5zbGF0ZVkoMXB4KTtcbiAgICAgICAgfVxuXG4gICAgICAgIC8vIFN0eWxlIHRoZSByZXNldCBidXR0b24gZGlmZmVyZW50bHlcbiAgICAgICAgJjpudGgtY2hpbGQoMikge1xuICAgICAgICAgIHdpZHRoOiBhdXRvO1xuICAgICAgICAgIHBhZGRpbmc6IDAgMTJweDtcbiAgICAgICAgICBmb250LXNpemU6IDE0cHg7XG4gICAgICAgIH1cbiAgICAgIH1cbiAgICB9XG4gIH1cbn1cbiJdfQ== */</style><link href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" rel="stylesheet" type="text/css" spa-preserve/><script src="../prescript.js" type="application/javascript" spa-preserve></script><script type="application/javascript" spa-preserve>const fetchData = fetch("../static/contentIndex.json").then(data => data.json())</script></head><body data-slug="10_Daily/2026-09-29"><div id="quartz-root" class="page"><div id="quartz-body"><div class="left sidebar"><h2 class="page-title"><a href="..">LabNote</a></h2><div class="spacer mobile-only"></div><div class="flex-component" style="flex-direction: row; flex-wrap: nowrap; gap: 1rem;"><div style="flex-grow: 1; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><div class="search"><button class="search-button"><svg role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19.9 19.7"><title>Search</title><g class="search-path" fill="none"><path stroke-linecap="square" d="M18.5 18.3l-5.4-5.4"></path><circle cx="8" cy="8" r="7"></circle></g></svg><p>검색</p></button><div class="search-container"><div class="search-space"><input autocomplete="off" class="search-bar" name="search" type="text" aria-label="검색어를 입력하세요" placeholder="검색어를 입력하세요"/><div class="search-layout" data-preview="true"></div></div></div></div></div><div style="flex-grow: 0; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><button class="darkmode"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="dayIcon" x="0px" y="0px" viewBox="0 0 35 35" style="enable-background:new 0 0 35 35" xml:space="preserve" aria-label="다크 모드"><title>다크 모드</title><path d="M6,17.5C6,16.672,5.328,16,4.5,16h-3C0.672,16,0,16.672,0,17.5    S0.672,19,1.5,19h3C5.328,19,6,18.328,6,17.5z M7.5,26c-0.414,0-0.789,0.168-1.061,0.439l-2,2C4.168,28.711,4,29.086,4,29.5    C4,30.328,4.671,31,5.5,31c0.414,0,0.789-0.168,1.06-0.44l2-2C8.832,28.289,9,27.914,9,27.5C9,26.672,8.329,26,7.5,26z M17.5,6    C18.329,6,19,5.328,19,4.5v-3C19,0.672,18.329,0,17.5,0S16,0.672,16,1.5v3C16,5.328,16.671,6,17.5,6z M27.5,9    c0.414,0,0.789-0.168,1.06-0.439l2-2C30.832,6.289,31,5.914,31,5.5C31,4.672,30.329,4,29.5,4c-0.414,0-0.789,0.168-1.061,0.44    l-2,2C26.168,6.711,26,7.086,26,7.5C26,8.328,26.671,9,27.5,9z M6.439,8.561C6.711,8.832,7.086,9,7.5,9C8.328,9,9,8.328,9,7.5    c0-0.414-0.168-0.789-0.439-1.061l-2-2C6.289,4.168,5.914,4,5.5,4C4.672,4,4,4.672,4,5.5c0,0.414,0.168,0.789,0.439,1.06    L6.439,8.561z M33.5,16h-3c-0.828,0-1.5,0.672-1.5,1.5s0.672,1.5,1.5,1.5h3c0.828,0,1.5-0.672,1.5-1.5S34.328,16,33.5,16z     M28.561,26.439C28.289,26.168,27.914,26,27.5,26c-0.828,0-1.5,0.672-1.5,1.5c0,0.414,0.168,0.789,0.439,1.06l2,2    C28.711,30.832,29.086,31,29.5,31c0.828,0,1.5-0.672,1.5-1.5c0-0.414-0.168-0.789-0.439-1.061L28.561,26.439z M17.5,29    c-0.829,0-1.5,0.672-1.5,1.5v3c0,0.828,0.671,1.5,1.5,1.5s1.5-0.672,1.5-1.5v-3C19,29.672,18.329,29,17.5,29z M17.5,7    C11.71,7,7,11.71,7,17.5S11.71,28,17.5,28S28,23.29,28,17.5S23.29,7,17.5,7z M17.5,25c-4.136,0-7.5-3.364-7.5-7.5    c0-4.136,3.364-7.5,7.5-7.5c4.136,0,7.5,3.364,7.5,7.5C25,21.636,21.636,25,17.5,25z"></path></svg><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="nightIcon" x="0px" y="0px" viewBox="0 0 100 100" style="enable-background:new 0 0 100 100" xml:space="preserve" aria-label="라이트 모드"><title>라이트 모드</title><path d="M96.76,66.458c-0.853-0.852-2.15-1.064-3.23-0.534c-6.063,2.991-12.858,4.571-19.655,4.571  C62.022,70.495,50.88,65.88,42.5,57.5C29.043,44.043,25.658,23.536,34.076,6.47c0.532-1.08,0.318-2.379-0.534-3.23  c-0.851-0.852-2.15-1.064-3.23-0.534c-4.918,2.427-9.375,5.619-13.246,9.491c-9.447,9.447-14.65,22.008-14.65,35.369  c0,13.36,5.203,25.921,14.65,35.368s22.008,14.65,35.368,14.65c13.361,0,25.921-5.203,35.369-14.65  c3.872-3.871,7.064-8.328,9.491-13.246C97.826,68.608,97.611,67.309,96.76,66.458z"></path></svg></button></div><div style="flex-grow: 0; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><button class="readermode"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="readerIcon" fill="currentColor" stroke="currentColor" stroke-width="0.2" stroke-linecap="round" stroke-linejoin="round" width="64px" height="64px" viewBox="0 0 24 24" aria-label="리더 모드"><title>리더 모드</title><g transform="translate(-1.8, -1.8) scale(1.15, 1.2)"><path d="M8.9891247,2.5 C10.1384702,2.5 11.2209868,2.96705384 12.0049645,3.76669482 C12.7883914,2.96705384 13.8709081,2.5 15.0202536,2.5 L18.7549359,2.5 C19.1691495,2.5 19.5049359,2.83578644 19.5049359,3.25 L19.5046891,4.004 L21.2546891,4.00457396 C21.6343849,4.00457396 21.9481801,4.28672784 21.9978425,4.6528034 L22.0046891,4.75457396 L22.0046891,20.25 C22.0046891,20.6296958 21.7225353,20.943491 21.3564597,20.9931534 L21.2546891,21 L2.75468914,21 C2.37499337,21 2.06119817,20.7178461 2.01153575,20.3517706 L2.00468914,20.25 L2.00468914,4.75457396 C2.00468914,4.37487819 2.28684302,4.061083 2.65291858,4.01142057 L2.75468914,4.00457396 L4.50368914,4.004 L4.50444233,3.25 C4.50444233,2.87030423 4.78659621,2.55650904 5.15267177,2.50684662 L5.25444233,2.5 L8.9891247,2.5 Z M4.50368914,5.504 L3.50468914,5.504 L3.50468914,19.5 L10.9478955,19.4998273 C10.4513189,18.9207296 9.73864328,18.5588115 8.96709342,18.5065584 L8.77307039,18.5 L5.25444233,18.5 C4.87474657,18.5 4.56095137,18.2178461 4.51128895,17.8517706 L4.50444233,17.75 L4.50368914,5.504 Z M19.5049359,17.75 C19.5049359,18.1642136 19.1691495,18.5 18.7549359,18.5 L15.2363079,18.5 C14.3910149,18.5 13.5994408,18.8724714 13.0614828,19.4998273 L20.5046891,19.5 L20.5046891,5.504 L19.5046891,5.504 L19.5049359,17.75 Z M18.0059359,3.999 L15.0202536,4 L14.8259077,4.00692283 C13.9889509,4.06666544 13.2254227,4.50975805 12.7549359,5.212 L12.7549359,17.777 L12.7782651,17.7601316 C13.4923805,17.2719483 14.3447024,17 15.2363079,17 L18.0059359,16.999 L18.0056891,4.798 L18.0033792,4.75457396 L18.0056891,4.71 L18.0059359,3.999 Z M8.9891247,4 L6.00368914,3.999 L6.00599909,4.75457396 L6.00599909,4.75457396 L6.00368914,4.783 L6.00368914,16.999 L8.77307039,17 C9.57551536,17 10.3461406,17.2202781 11.0128313,17.6202194 L11.2536891,17.776 L11.2536891,5.211 C10.8200889,4.56369974 10.1361548,4.13636104 9.37521067,4.02745763 L9.18347055,4.00692283 L8.9891247,4 Z"></path></g></svg></button></div></div><div class="explorer" data-behavior="link" data-collapsed="collapsed" data-savestate="true" data-data-fns="{&quot;order&quot;:[&quot;filter&quot;,&quot;map&quot;,&quot;sort&quot;],&quot;sortFn&quot;:&quot;(a,b)=>!a.isFolder&amp;&amp;!b.isFolder||a.isFolder&amp;&amp;b.isFolder?a.displayName.localeCompare(b.displayName,void 0,{numeric:!0,sensitivity:\&quot;base\&quot;}):!a.isFolder&amp;&amp;b.isFolder?1:-1&quot;,&quot;filterFn&quot;:&quot;node=>node.slugSegment!==\&quot;tags\&quot;&quot;,&quot;mapFn&quot;:&quot;node=>node&quot;}"><button type="button" class="explorer-toggle mobile-explorer hide-until-loaded" data-mobile="true" aria-controls="explorer-55"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide-menu"><line x1="4" x2="20" y1="12" y2="12"></line><line x1="4" x2="20" y1="6" y2="6"></line><line x1="4" x2="20" y1="18" y2="18"></line></svg></button><button type="button" class="title-button explorer-toggle desktop-explorer" data-mobile="false" aria-expanded="true"><h2>탐색기</h2><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="5 8 14 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fold"><polyline points="6 9 12 15 18 9"></polyline></svg></button><div id="explorer-55" class="explorer-content" aria-expanded="false" role="group"><ul class="explorer-ul overflow" id="list-0"><li class="overflow-end"></li></ul></div><template id="template-file"><li><a href="#"></a></li></template><template id="template-folder"><li><div class="folder-container"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="5 8 14 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="folder-icon"><polyline points="6 9 12 15 18 9"></polyline></svg><div><button class="folder-button"><span class="folder-title"></span></button></div></div><div class="folder-outer"><ul class="content"></ul></div></li></template></div></div><div class="center"><div class="page-header"><div class="popover-hint"><nav class="breadcrumb-container" aria-label="breadcrumbs"><div class="breadcrumb-element"><a href="../">Home</a><p> ❯ </p></div><div class="breadcrumb-element"><a href="../10_Daily/">10_Daily</a><p> ❯ </p></div><div class="breadcrumb-element"><a href>2026 09 29</a></div></nav><h1 class="article-title">2026-09-29</h1><p show-comma="true" class="content-meta"><time datetime="2026-09-28T15:00:00.000Z">2026년 9월 29일</time><span>18 min read</span></p><ul class="tags"><li><a href="../tags/simulation" class="internal tag-link">simulation</a></li><li><a href="../tags/simulink" class="internal tag-link">simulink</a></li><li><a href="../tags/matlab" class="internal tag-link">matlab</a></li><li><a href="../tags/ros2" class="internal tag-link">ros2</a></li><li><a href="../tags/python" class="internal tag-link">python</a></li><li><a href="../tags/communication" class="internal tag-link">communication</a></li><li><a href="../tags/control-theory" class="internal tag-link">control-theory</a></li><li><a href="../tags/debugging" class="internal tag-link">debugging</a></li></ul></div></div><article class="popover-hint"><h1 id="2026-09-29">2026-09-29<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#2026-09-29" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h1>
+<blockquote>
+<p><a href="../20_Projects/AUV-Control-Sim/AUV-Control-Simulation" class="internal alias" data-slug="20_Projects/AUV-Control-Sim/AUV-Control-Simulation">AUV Control Simulation</a> → <a href="../Research-Direction" class="internal alias" data-slug="Research-Direction">Research Direction</a></p>
+</blockquote>
+<h2 id="한일--what-i-did">한일 / What I did<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#한일--what-i-did" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p><strong>어제(09-28) 만든 Delphin2 자세 PID 모델(Simulink ↔ HoloOcean)을 뜯어보며 구조를 이해했고, 쓰다가 나온 버그 두 개를 고쳤다.</strong>
+① θ 목표 Knob 연결 끊김, ② <strong>Stop 후 다시 Run 하면 60 s timeout</strong> → 노드에 <strong>리셋 기능</strong>을 넣어 HoloOcean 창을 켜 둔 채 Stop/Run 반복 가능.
+정리된 관점: <strong>지금까지 한 건 “통신·plant 무대”의 검증이고, 제어기는 강의 들으면서 직접 설계해 붙인다.</strong> 들어 있는 PID 는 Claude가 넣은 자리표시용.</p>
+<p>덤으로 <strong>claude-mem(세션 기억 플러그인)이 09-04 이후 아무것도 기록 못 하던 것</strong>을 찾아 고쳤다 — 한글 사용자명 때문.</p>
+<h2 id="plans">Plans<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#plans" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<ol start="0">
+<li>어제 만든 Delphin 모델 위치·실행법 확인 (실행은 하지 않고 방법만)</li>
+<li>모델 구조 이해 — local vs holo, Knob, ROS 2 통신 방식, 제어기 출처</li>
+<li>끊긴 세션을 잇는 플러그인(claude-mem)이 왜 안 되는지 확인 → 수정</li>
+<li>θ Knob 끊김 수정</li>
+<li>내가 고친 holo Scope 검수 + 재실행 교착 문제 수정(리셋 기능)</li>
+<li>백업 정리</li>
+</ol>
+<h2 id="결과--results">결과 / Results<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#결과--results" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<h3 id="0-09-28-에-만든-것-파일로-재구성--그날-대화-기록은-claude-mem-고장으로-남지-않음">0. 09-28 에 만든 것 (파일로 재구성 — 그날 대화 기록은 claude-mem 고장으로 남지 않음)<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#0-09-28-에-만든-것-파일로-재구성--그날-대화-기록은-claude-mem-고장으로-남지-않음" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th>파일 (<code>C:\Archive\제어공학특론\holoocean_env\</code>)</th><th>내용</th></tr></thead><tbody><tr><td><code>delphin2.py</code></td><td>배포본 <code>실습자료\Delphin_model\Delphin2.m</code> 이식 (무작위 200점 MATLAB 대비 3e-14)</td></tr><tr><td><code>holo_ros2_node.py --vehicle delphin2</code></td><td><code>/delphin2/state</code> 발행, <code>/delphin2/cmd = [k, X Y Z K M N]</code> 구독. 외형은 TorpedoAUV 를 빌려 씀</td></tr><tr><td><code>simulink/build_delphin_attitude.m</code></td><td>아래 두 모델 생성 스크립트</td></tr><tr><td><code>simulink/Delphin_attitude_holo.slx</code></td><td>plant = <strong>HoloOcean</strong> (ROS 2)</td></tr><tr><td><code>simulink/Delphin_attitude_local.slx</code></td><td>plant = <strong>Simulink 안의 Delphin2 식</strong> (배포본 Full 모델 코드 복사), 노드 없이 연습용</td></tr><tr><td><code>simulink/run_delphin_holo.m</code></td><td>노드 띄우고 holo 모델 열기</td></tr></tbody></table></div>
+<p>검증(README): 60 s, 목표 φ10/θ0/ψ30 → holo vs local ψ 최대차 0.14°, 3001 스텝 누락 0.</p>
+<h3 id="1-실행-흐름">1. 실행 흐름<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#1-실행-흐름" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<pre><code>run_delphin_holo.m  (MATLAB)
+ └─ start_holo_node(50, x0, render, [], 'delphin2')
+     ├─ x0(trim_u_10.mat) → out\x0_holo_node.csv  (--init-file)
+     ├─ cmd.exe → pixi run → python holo_ros2_node.py --vehicle delphin2 --hz 50 ...   (백그라운드, 로그 out\holo_ros2_node.log)
+     ├─ /delphin2/state 첫 메시지 최대 180 s 대기
+     └─ nodeCleanup 반환 → clear 하면 taskkill /T 로 노드+Unreal 종료
+→ Delphin_attitude_holo.slx 열림 → Run → Knob 조절 → Stop → clear nodeCleanup
+</code></pre>
+<h3 id="2-모델-구조--local-과-holo-는-plant-만-다르다">2. 모델 구조 — local 과 holo 는 plant 만 다르다<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#2-모델-구조--local-과-holo-는-plant-만-다르다" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<pre><code>[Constant ×12 + Knob] ref_deg / Kp / Ki / Kd ─Mux─▶ [attitude_pid] ──tau(6)──▶ [plant] ──x(12)──┐
+ tau_ff(=tau_trim), tau_max(30), Ts_c ────────────▶        ▲                                     │
+                                                           └─────────────────────────────────────┘
+</code></pre>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th></th><th>local</th><th>holo</th></tr></thead><tbody><tr><td>제어기</td><td>Simulink</td><td>Simulink</td></tr><tr><td>plant</td><td>Simulink (Delphin2 MATLAB Function + Integrator, ode4)</td><td><strong>HoloOcean</strong> (<code>HoloOceanPlant</code> → ROS 2 → Python <code>delphin2.py</code> → Unreal 적분·렌더링)</td></tr><tr><td>3D 화면</td><td>없음</td><td>있음</td></tr><tr><td>용도</td><td>게인 빠르게 맞추기</td><td>맞춘 게인을 3D 로 확인</td></tr></tbody></table></div>
+<ul>
+<li>상태 <code>x = [u v w p q r x y z φ θ ψ]</code> (Fossen NED), 입력 <code>tau = [X Y Z K M N]</code> (N, N·m) — <strong>구동기 모델 없이 일반화 힘을 직접</strong></li>
+<li>제어기 <code>attitude_pid</code>: <code>tau = tau_trim + [0 0 0 PID_φ PID_θ PID_ψ]</code>
+<ul>
+<li>D 항은 오차 미분이 아니라 <strong>body 각속도 p q r</strong> → 목표 계단에서 derivative kick 없음 (자세각이 작을 때 φ̇ ≈ p 근사)</li>
+<li>ψ 오차는 <code>atan2</code> 로 ±180° 감음, K·M·N ±30 N·m 포화 + <strong>conditional-integration anti-windup</strong></li>
+<li><strong>X·Y·Z 는 트림값 고정</strong> → 수심·속도는 제어하지 않음 (그래서 Scope 4단에 z, u 를 띄워 흘러가는 걸 봤음)</li>
+</ul>
+</li>
+<li>설정: FixedStepDiscrete <code>Ts = 0.02</code> (= 노드 50 Hz), <strong>StopTime inf, Simulation Pacing 1x</strong> (실시간)</li>
+<li><code>PreLoadFcn</code>: <code>Ts</code>, <code>x0</code>(trim_u_10.mat, u = 1 m/s), <code>tau_trim = [7.03621 0 −0.541485 0 −0.543561 0]</code>, <code>th_trim_deg ≈ −5.22°</code></li>
+</ul>
+<p><strong>Knob</strong> = 모델에 붙은 대시보드 다이얼. Constant 의 <code>Value</code> 에 바인딩돼 있어 <strong>시뮬레이션 도는 중에</strong> 돌리면 바로 반영된다 (멈추고 더블클릭해서 숫자 고칠 필요 없음). 축×(목표, Kp, Ki, Kd) = 12개.</p>
+<p><strong>Selector 블록</strong> (<code>att</code> <code>[10 11 12]</code>, <code>KMN</code> <code>[4 5 6]</code>, <code>depth_u</code> <code>[9 1]</code>) 은 벡터에서 번호로 골라 Scope 로 보내는 것. Indices 만 바꾸면 다른 상태를 볼 수 있다.</p>
+<p><strong>Scope 왼쪽 이름</strong> = 창별 Y축 라벨. 스크립트에서 <code>sc.ActiveDisplay = i; sc.YLabel = ...</code> 로 넣었고, GUI 에선 Configuration Properties → Display → Active display 선택 → Y-label. 범례 이름은 별개로 <strong>신호선 이름</strong>에서 온다.
+<strong>축 자동 스케일</strong>: <code>sc.AxesScaling = 'Auto'</code> (또는 창에서 Axes scaling → Auto). Auto 는 범위를 넓히기만 할 수 있어서 가끔 Scale 버튼으로 다시 맞춤.</p>
+<h3 id="3-ros-2-블록-vs-holooceanplant--왜-delphin-모델엔-ros-2-블록이-없나">3. ROS 2 블록 vs <code>HoloOceanPlant</code> — 왜 Delphin 모델엔 ROS 2 블록이 없나<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#3-ros-2-블록-vs-holooceanplant--왜-delphin-모델엔-ros-2-블록이-없나" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th></th><th><code>remus100_holo_loop.slx</code> (09-27)</th><th><code>Remus100_Model_holo.slx</code> (09-27) · <code>Delphin_attitude_holo.slx</code> (09-28)</th></tr></thead><tbody><tr><td>통신</td><td>Simulink <strong>ROS 2 블록</strong> (Subscribe · Publish · Blank Message)</td><td><strong>MATLAB System 블록</strong> <code>HoloOceanPlant.m</code> 안에서 <code>ros2node / ros2publisher / ros2subscriber / send</code></td></tr><tr><td>기다리기</td><td>못 함 → <code>Gate</code>(IsNew &amp;&amp; k 변화)로 새 메시지일 때만 Enabled Subsystem 실행</td><td>cmd_k 발행 후 state_{k+1} 올 때까지 <strong>blocking</strong></td></tr><tr><td>Simulink 시계</td><td>실제 시뮬레이션 시간과 다름 (시간은 메시지의 <code>t</code> 사용)</td><td>= 시뮬레이션 시간 (1 스텝 = 1 tick)</td></tr><tr><td>단점</td><td>시간 처리 번거로움</td><td>Interpreted execution 전용, 코드 생성 불가</td></tr></tbody></table></div>
+<ul>
+<li>R2025b ROS 2 <strong>Subscribe 블록엔 blocking 모드가 없다</strong> — 새 메시지가 없으면 IsNew = 0 만 주고 넘어간다</li>
+<li><strong>blocking 방식은 Delphin 때문도, 실시간 조작 때문도 아니다.</strong> 09-27 강의 모델 사본을 만들 때 “강의 모델은 Simulink 시계로 입력(Signal Builder)을 만든다 → 1 스텝 = 1 tick 이어야 함” 이라서 도입. 09-28 Delphin 은 그걸 재사용(토픽 이름 파라미터화)하고, 그 위에 Knob·Pacing 1x 를 얹은 것</li>
+<li><code>x_{k+1} = f(x_k, u_k)</code> 인 이산 plant 라 direct feedthrough 없음 → 폐루프에 대수 루프 없음</li>
+</ul>
+<h3 id="4-제어기는-어디서-왔나--배포본엔-제어기가-없다">4. 제어기는 어디서 왔나 — 배포본엔 제어기가 없다<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#4-제어기는-어디서-왔나--배포본엔-제어기가-없다" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p><code>실습자료\Delphin_model</code> 의 <code>.slx</code> 를 zip 으로 풀어 블록 목록을 확인:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th>파일</th><th>내용</th></tr></thead><tbody><tr><td><code>Delphin_Model2.slx</code></td><td>운동방정식 + Integrator + Signal Builder — <strong>개루프</strong> (식 빈칸 채우기 실습 템플릿)</td></tr><tr><td><code>Delphin_Model2_Full.slx</code></td><td>+ 추진기·러더·스턴플레인·항력 모델, 입력은 상수(<code>rps</code>, <code>delta_s</code>)·Signal Builder — <strong>개루프</strong></td></tr><tr><td><code>Delphin2.m</code>, <code>trim_u_10.mat</code>, <code>test_Delphin.m</code></td><td>운동방정식, 트림 <code>x0</code> · <code>tau_trim</code></td></tr></tbody></table></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th>모델 요소</th><th>출처</th></tr></thead><tbody><tr><td>local plant 식</td><td>배포본 Full 모델 MATLAB Function <strong>그대로 복사</strong></td></tr><tr><td><code>x0</code>, <code>tau_trim</code></td><td>배포본 트림 파일 / <code>test_Delphin.m</code> 값</td></tr><tr><td>PID 구조 (D=각속도, anti-windup, 포화)</td><td><strong>Claude 설계</strong></td></tr><tr><td>기본 게인 Kp 20/60/40, Kd 15/60/60, Ki 0</td><td><strong>Claude 가 정한 값, 설계 근거 없음</strong></td></tr></tbody></table></div>
+<p>→ <strong>결론: 이 모델은 통신 환경 검증용이고, 제어 성능은 검증된 적 없다.</strong> 강의 따라 제어기를 직접 설계해서 <code>attitude_pid</code> 자리에 붙인다 (입력 x 12 / 출력 tau 6 만 맞추면 PID 든 LQR 이든).</p>
+<h3 id="5-병진surgeswayheave은-왜-입력이-없나">5. 병진(surge·sway·heave)은 왜 입력이 없나<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#5-병진surgeswayheave은-왜-입력이-없나" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>일부러 뺀 것 — 물리적 제약이 아니라 <strong>실습 범위를 자세로 좁힌 것</strong>. plant 는 tau 6개를 다 받는다. 코드상 <code>tau = [tau_ff(1:3); m]</code> 로 X Y Z 를 트림값에 고정.</p>
+<ul>
+<li><code>tau_ff</code> 만 바꾸면 <strong>일정한 힘을 미는 개루프</strong>가 될 뿐 → 병진 제어를 넣으려면 <code>attitude_pid</code> 코드를 <code>tau_ff(1:3) + 병진 PID</code> 로 고쳐야 한다</li>
+<li>보통은 u(전진속도, X), 수심 z(Z 또는 θ cascade)를 제어하고 sway 는 ψ 로 맞춤. 실제 Delphin2 는 이 힘을 추진기·터널 추진기·핀으로 나눠야 함 → 4강 Part 2 (thrust allocation)</li>
+</ul>
+<h3 id="6-내가-고친-holo-scope--검수-결과">6. 내가 고친 holo Scope — 검수 결과<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#6-내가-고친-holo-scope--검수-결과" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>Scope 를 Goto/From 로 다시 짰다 (φ·θ·ψ 각각 목표 vs 실제, K·M·N).</p>
+<ul>
+<li>✅ Goto/From 9쌍 태그 일치, 끊긴 포트·선 없음, 목표(deg)와 실제(<code>rad2deg</code>) 단위 일치</li>
+<li>⚠️ Layout 이 <strong>1×1</strong> → 입력 4개(선 9개)가 한 축에 겹치고 Y 범위 ±10 고정이라 ψ(30°)·KMN(±30) 이 잘림 → 4×1 + Auto 스케일 권장</li>
+<li>⚠️ Y 라벨·범례·신호선 이름 없음</li>
+<li>ℹ️ <code>e_deg</code> 는 Terminator, <code>depth_u</code>(z, u) 표시는 빠짐</li>
+<li>ℹ️ local 모델엔 아직 같은 수정 없음. <strong>이제 <code>build_delphin_attitude.m</code> 을 다시 돌리면 GUI 수정이 날아간다</strong></li>
+</ul>
+<h3 id="7-리셋-기능--노드를-켜-둔-채-stoprun-반복">7. 리셋 기능 — 노드를 켜 둔 채 Stop/Run 반복<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#7-리셋-기능--노드를-켜-둔-채-stoprun-반복" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<pre><code>HoloOceanPlant.setupImpl  (Run 할 때마다)
+   ├─ cmd [k = -1, 0...] 발행 (리셋 요청), state_0 올 때까지 1 s 마다 재발행
+   └─ state_0 받으면 정상 스텝 시작
+holo_ros2_node.py
+   ├─ on_cmd: k = -1 이면 reset_req 설정 + 그 이전 cmd 폐기
+   └─ 대기 루프: 리셋 요청이면 기체를 x0 로 set_physics_state → tick → k = 0 부터 state 재발행
+</code></pre>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th>검증 (렌더링 없이, 노드 1회 기동)</th><th>결과</th></tr></thead><tbody><tr><td>plant 를 150 → 40 → 150 → 7 → 150 스텝으로 5회 재시작</td><td>150 스텝 실행끼리 최대차 <strong>5e-20</strong> (run 5 는 0)</td></tr><tr><td>저장된 holo 모델 사본 <code>sim</code> 2회 연속</td><td>101 스텝씩, 최대차 <strong>2e-18</strong></td></tr><tr><td>노드 로그</td><td><code>reset at k = 150 -> k = 0</code> 등 매번 확인</td></tr></tbody></table></div>
+<p>직접 Stop → Run 반복해 봤고 잘 작동함. README 에도 기록.</p>
+<h3 id="8-지금까지-구현한-범위--참값만-쓰고-있다-">8. 지금까지 구현한 범위 — 참값만 쓰고 있다 ⭐<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#8-지금까지-구현한-범위--참값만-쓰고-있다-" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p><strong>결론: 지금 우리가 만든 건 “Simulink ↔ 시뮬레이터 연동” 과 그 검증까지.</strong> IMU 를 포함해 센서 노드는 하나도 없고, 제어기는 <code>DynamicsSensor</code> 가 주는 <strong>참값 상태</strong>를 받는다.
+놓치기 쉬운 7가지 — ① 센서 없음(잡음·지연 0) ② lockstep 이라 시뮬레이터가 제어기를 기다려 줌(실제는 비동기, <code>HoloOceanPlant</code> blocking 은 시뮬 전용) ③ 메시지가 <code>Float64MultiArray</code>(표준 아님) ④ 구동기 없음 ⑤ 환경 비어 있음 ⑥ 검증은 “HoloOcean = MSS 식” 까지, 실기체 대비는 미검증 ⑦ 제어기는 자리표시.
+다음 단계 순서: 제어기 설계 → IMU·DVL·수심계 표준 메시지 → EKF → 비동기 실행 → 추진기·할당.
+→ 전체 표와 설명은 <a href="../20_Projects/AUV-Control-Sim/AUV-Control-Simulation#현재-구현-범위--무엇이-참값이고-무엇이-빠졌나-2026-09-29-정리" class="internal alias" data-slug="20_Projects/AUV-Control-Sim/AUV-Control-Simulation">현재 구현 범위 — 무엇이 참값이고 무엇이 빠졌나 (2026-09-29 정리)</a>
+→ <strong>“놓치고 있는 부분” 보강</strong> (제어 이론과 별개인 환경 구성 관점): <a href="../30_Knowledge/시뮬레이션-환경-현실성" class="internal alias" data-slug="30_Knowledge/시뮬레이션-환경-현실성">시뮬레이션 환경 현실성</a> — 특히 ① 수중엔 x·y 를 직접 재는 센서가 거의 없음 ② 노드 tick 50 Hz 라 센서도 최대 50 Hz ③ 좌표 규약이 이미 3개(NED·NWU·ENU) ④ 잡음 0 으로 먼저 연결해 결과가 같은지 보는 순서</p>
+<h3 id="9-기타">9. 기타<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#9-기타" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ul>
+<li><strong>시점</strong>: <code>v</code> 관찰자 모드(마우스+WASD, E/Space 위, Q/Ctrl 아래, Shift 가속), <code>c</code> 카메라 전환, <code>h</code> HUD, <code>~</code> 콘솔(<code>stat fps</code>). 단축키는 tick 중일 때만 먹는다</li>
+<li><strong>AUV 옆에 고정된 시점</strong>: HoloOcean 2.3.0 에는 viewport 를 코드로 옮기는 함수가 없음. 우회 = 기체 옆에 <code>RGBCamera</code> 센서를 오프셋으로 달고 <code>c</code> 로 그 시점 → 미검증 (롤·피치 때 카메라도 같이 기울고, 렌더링 부하)</li>
+</ul>
+<h2 id="막힌-것--blockers">막힌 것 / Blockers<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#막힌-것--blockers" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<h3 id="claude-mem-이-09-04-이후-아무것도-기록-안-함--한글-사용자명-2차">claude-mem 이 09-04 이후 아무것도 기록 안 함 — 한글 사용자명 (2차)<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#claude-mem-이-09-04-이후-아무것도-기록-안-함--한글-사용자명-2차" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>증상: 워커 <code>localhost:37777/health</code> 는 <code>ok</code> 인데 DB 의 세션·질문·관찰이 전부 <strong>09-04</strong> 에서 멈춤, 대기열도 0. 그래서 “어제 대화”를 기억하지 못했음.
+hook 을 가짜 입력으로 직접 돌려보니 <code>Failed to start Bun: spawn C:\Users\������\.bun\bin\bun.exe ENOENT</code>.
+원인: <code>bun-runner.js</code> 가 Windows <code>where bun</code> 출력(<strong>CP949</strong>)을 <strong>UTF-8</strong> 로 읽어 경로가 깨짐 → <strong>모든 hook 이 조용히 실패</strong>. 09-04 에 고친 <code>CLAUDE_CODE_PATH</code> 문제와는 별개.
+해결: <code>~\.bun\bin\bun.exe</code> 를 ASCII 경로 <code>C:\Users\Public\bun\bin\bun.exe</code> 로 <strong>하드링크</strong> + 사용자 PATH 맨 앞에 추가 (백업 <code>~\.claude\path-user-backup-20260929.txt</code>). 플러그인 코드는 안 건드려서 자동 업데이트에도 유지. 워커 13.26 → 13.28 재시작. 테스트 hook → <code>INIT_COMPLETE</code> 확인 후 테스트 기록 삭제. 전역 CLAUDE.md 에 기록.
+주의: Claude Code 를 완전히 재시작해야 PATH 반영. bun 업그레이드 시 하드링크 재생성. 09-27~28 대화는 복구 불가.</p>
+<h3 id="θ-목표-knob-만-연결이-끊김-localholo-둘-다">θ 목표 Knob 만 연결이 끊김 (local·holo 둘 다)<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#θ-목표-knob-만-연결이-끊김-localholo-둘-다" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>12개 Knob 중 <code>ref_deg_theta</code> 의 Constant 만 Value 가 <strong>숫자가 아니라 변수 <code>th_trim_deg</code></strong> 였다 → Dashboard Knob 은 변수 이름인 파라미터와 연결이 끊긴다. 저장된 바인딩 정보 자체(<code>bdmxdata/BindingPersistence_*.mxarray</code>)는 12개 다 멀쩡했음.
+해결: 두 모델의 Value 를 <code>-5.22</code> 로 바꾸고 바인딩 재설정 (MATLAB <code>-batch</code>), 생성 스크립트도 트림 파일에서 숫자로 계산해 넣게 수정, README 에 주의 추가.</p>
+<h3 id="stop-후-다시-run-하면-60-s-뒤-holooceanplanttimeout">Stop 후 다시 Run 하면 60 s 뒤 <code>HoloOceanPlant:timeout</code><a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#stop-후-다시-run-하면-60-s-뒤-holooceanplanttimeout" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>노드는 켜진 동안 k 를 계속 이어가고, Simulink 는 Run 마다 k = 0 부터 센다. 1회차를 k = 1500 에서 멈추면 노드는 “cmd_1500 대기”, 2회차 plant 는 “state_0 대기” → <strong>서로 기다리는 교착</strong>. 노드가 state_0 을 1 s 마다 재발행하는 건 맨 처음 k = 0 일 때뿐이었음. → 설계 때 “여러 번 Run” 을 고려 안 한 결함. 리셋 기능으로 해결(결과 7).</p>
+<h3 id="리셋-첫-설계의-race-condition">리셋 첫 설계의 race condition<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#리셋-첫-설계의-race-condition" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>처음엔 노드가 리셋을 처리할 때 <code>cmd = None</code> 으로 비웠다. 그런데 첫 실행에선 노드가 1 s 마다 <strong>리셋 전 state_0</strong> 을 재발행하므로, plant 가 그걸 받고 cmd_0 을 보낸 뒤 노드가 리셋을 처리하면 <strong>cmd_0 이 지워져 다시 교착</strong>. 수정: 리셋 요청을 <strong>콜백에서</strong> 받는 순간 이전 cmd 만 지우고(콜백 순서 = 발행 순서라 리셋 뒤 cmd 는 보존), 대기 루프를 “확인 → 대기” 순서로 바꿔 이미 도착한 cmd 를 놓치지 않게 함. 테스트 전에 코드 검토로 잡음.</p>
+<h3 id="matlab-mcp-가-세션에-붙지-않음">MATLAB MCP 가 세션에 붙지 않음<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#matlab-mcp-가-세션에-붙지-않음" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p><code>failed to attach to MATLAB session</code> → 열린 MATLAB 에서 <code>shareMATLABSession</code> 을 실행해야 붙는다. 그 전엔 <code>.slx</code> 를 zip 으로 풀어 XML 을 읽거나 <code>matlab -batch</code> 로 우회. 테스트 스크립트에서 <code>HoloOceanPlant('SampleTime', ...)</code> 가 실패 → 이름-값 생성자가 없는 System object 라 속성을 따로 대입.</p>
+<h2 id="할일--next">할일 / Next<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#할일--next" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" disabled/> 강의 들으면서 제어기를 직접 설계해 <code>attitude_pid</code> 에 붙이기 — local 에서 게인 → holo 로 확인. <code>Ts = 0.02</code> 기준</li>
+<li class="task-list-item"><input type="checkbox" disabled/> 그다음: 노드에 IMU·DVL·수심계 센서 토픽(표준 메시지 + 잡음) → EKF → lockstep 끄고 비동기 실행 (참값 탈출)</li>
+<li class="task-list-item"><input type="checkbox" disabled/> 병진 제어가 필요해지면 <code>attitude_pid</code> 코드에 u·z PID 추가 (tau_ff 만 바꾸는 걸론 안 됨), 4강 Part 2 에서 thrust allocation</li>
+<li class="task-list-item"><input type="checkbox" disabled/> holo Scope: Layout 4×1(또는 2×2) + <code>AxesScaling = 'Auto'</code> + 범례·신호선 이름. 저장. local 에도 같은 구성</li>
+<li class="task-list-item"><input type="checkbox" disabled/> GUI 로 고친 뒤로는 <code>build_delphin_attitude.m</code> 재실행 금지 (또는 스크립트에 수정 반영)</li>
+<li class="task-list-item"><input type="checkbox" disabled/> AUV 옆 고정 시점 — 노드에 <code>--side-camera</code> 옵션(RGBCamera 오프셋) 시도, 실시간 유지 확인</li>
+<li class="task-list-item"><input type="checkbox" disabled/> <code>Remus100_Model_holo.slx</code> 에서도 리셋 동작 확인 (같은 plant 를 쓰지만 미검증)</li>
+<li class="task-list-item"><input type="checkbox" disabled/> claude-mem: Claude Code 재시작 후 <code>curl.exe -s http://localhost:37777/api/stats</code> 의 <code>sessions</code> 가 늘어나는지 확인</li>
+<li class="task-list-item"><input type="checkbox" disabled/> <code>실습자료\Delphin_model\Delphin_Model2.slx</code> 수정 시각이 09-29 14:19 — 빈칸 채우기 실습을 한 건지 확인 (원본 유지 필요하면)</li>
+<li class="task-list-item"><input type="checkbox" disabled/> <code>holoocean_env\out\holo_ros2_node.py.bak-20260928</code> 필요 없으면 삭제</li>
+</ul></article><hr/><div class="page-footer"></div></div><div class="right sidebar"><div class="graph"><h3>그래프 뷰</h3><div class="graph-outer"><div class="graph-container" data-cfg="{&quot;drag&quot;:true,&quot;zoom&quot;:true,&quot;depth&quot;:1,&quot;scale&quot;:1.1,&quot;repelForce&quot;:0.5,&quot;centerForce&quot;:0.3,&quot;linkDistance&quot;:30,&quot;fontSize&quot;:0.6,&quot;opacityScale&quot;:1,&quot;showTags&quot;:true,&quot;removeTags&quot;:[],&quot;focusOnHover&quot;:false,&quot;enableRadial&quot;:false}"></div><button class="global-graph-icon" aria-label="Global Graph"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 55 55" fill="currentColor" xml:space="preserve"><path d="M49,0c-3.309,0-6,2.691-6,6c0,1.035,0.263,2.009,0.726,2.86l-9.829,9.829C32.542,17.634,30.846,17,29,17
+                s-3.542,0.634-4.898,1.688l-7.669-7.669C16.785,10.424,17,9.74,17,9c0-2.206-1.794-4-4-4S9,6.794,9,9s1.794,4,4,4
+                c0.74,0,1.424-0.215,2.019-0.567l7.669,7.669C21.634,21.458,21,23.154,21,25s0.634,3.542,1.688,4.897L10.024,42.562
+                C8.958,41.595,7.549,41,6,41c-3.309,0-6,2.691-6,6s2.691,6,6,6s6-2.691,6-6c0-1.035-0.263-2.009-0.726-2.86l12.829-12.829
+                c1.106,0.86,2.44,1.436,3.898,1.619v10.16c-2.833,0.478-5,2.942-5,5.91c0,3.309,2.691,6,6,6s6-2.691,6-6c0-2.967-2.167-5.431-5-5.91
+                v-10.16c1.458-0.183,2.792-0.759,3.898-1.619l7.669,7.669C41.215,39.576,41,40.26,41,41c0,2.206,1.794,4,4,4s4-1.794,4-4
+                s-1.794-4-4-4c-0.74,0-1.424,0.215-2.019,0.567l-7.669-7.669C36.366,28.542,37,26.846,37,25s-0.634-3.542-1.688-4.897l9.665-9.665
+                C46.042,11.405,47.451,12,49,12c3.309,0,6-2.691,6-6S52.309,0,49,0z M11,9c0-1.103,0.897-2,2-2s2,0.897,2,2s-0.897,2-2,2
+                S11,10.103,11,9z M6,51c-2.206,0-4-1.794-4-4s1.794-4,4-4s4,1.794,4,4S8.206,51,6,51z M33,49c0,2.206-1.794,4-4,4s-4-1.794-4-4
+                s1.794-4,4-4S33,46.794,33,49z M29,31c-3.309,0-6-2.691-6-6s2.691-6,6-6s6,2.691,6,6S32.309,31,29,31z M47,41c0,1.103-0.897,2-2,2
+                s-2-0.897-2-2s0.897-2,2-2S47,39.897,47,41z M49,10c-2.206,0-4-1.794-4-4s1.794-4,4-4s4,1.794,4,4S51.206,10,49,10z"></path></svg></button></div><div class="global-graph-outer"><div class="global-graph-container" data-cfg="{&quot;drag&quot;:true,&quot;zoom&quot;:true,&quot;depth&quot;:-1,&quot;scale&quot;:0.9,&quot;repelForce&quot;:0.5,&quot;centerForce&quot;:0.2,&quot;linkDistance&quot;:30,&quot;fontSize&quot;:0.6,&quot;opacityScale&quot;:1,&quot;showTags&quot;:true,&quot;removeTags&quot;:[],&quot;focusOnHover&quot;:true,&quot;enableRadial&quot;:true}"></div></div></div><div class="toc desktop-only"><button type="button" class="toc-header" aria-controls="toc-12" aria-expanded="true"><h3>목차</h3><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fold"><polyline points="6 9 12 15 18 9"></polyline></svg></button><ul id="list-1" class="toc-content overflow"><li class="depth-0"><a href="#2026-09-29" data-for="2026-09-29">2026-09-29</a></li><li class="depth-1"><a href="#한일--what-i-did" data-for="한일--what-i-did">한일 / What I did</a></li><li class="depth-1"><a href="#plans" data-for="plans">Plans</a></li><li class="depth-1"><a href="#결과--results" data-for="결과--results">결과 / Results</a></li><li class="depth-2"><a href="#0-09-28-에-만든-것-파일로-재구성--그날-대화-기록은-claude-mem-고장으로-남지-않음" data-for="0-09-28-에-만든-것-파일로-재구성--그날-대화-기록은-claude-mem-고장으로-남지-않음">0. 09-28 에 만든 것 (파일로 재구성 — 그날 대화 기록은 claude-mem 고장으로 남지 않음)</a></li><li class="depth-2"><a href="#1-실행-흐름" data-for="1-실행-흐름">1. 실행 흐름</a></li><li class="depth-2"><a href="#2-모델-구조--local-과-holo-는-plant-만-다르다" data-for="2-모델-구조--local-과-holo-는-plant-만-다르다">2. 모델 구조 — local 과 holo 는 plant 만 다르다</a></li><li class="depth-2"><a href="#3-ros-2-블록-vs-holooceanplant--왜-delphin-모델엔-ros-2-블록이-없나" data-for="3-ros-2-블록-vs-holooceanplant--왜-delphin-모델엔-ros-2-블록이-없나">3. ROS 2 블록 vs HoloOceanPlant — 왜 Delphin 모델엔 ROS 2 블록이 없나</a></li><li class="depth-2"><a href="#4-제어기는-어디서-왔나--배포본엔-제어기가-없다" data-for="4-제어기는-어디서-왔나--배포본엔-제어기가-없다">4. 제어기는 어디서 왔나 — 배포본엔 제어기가 없다</a></li><li class="depth-2"><a href="#5-병진surgeswayheave은-왜-입력이-없나" data-for="5-병진surgeswayheave은-왜-입력이-없나">5. 병진(surge·sway·heave)은 왜 입력이 없나</a></li><li class="depth-2"><a href="#6-내가-고친-holo-scope--검수-결과" data-for="6-내가-고친-holo-scope--검수-결과">6. 내가 고친 holo Scope — 검수 결과</a></li><li class="depth-2"><a href="#7-리셋-기능--노드를-켜-둔-채-stoprun-반복" data-for="7-리셋-기능--노드를-켜-둔-채-stoprun-반복">7. 리셋 기능 — 노드를 켜 둔 채 Stop/Run 반복</a></li><li class="depth-2"><a href="#8-지금까지-구현한-범위--참값만-쓰고-있다-" data-for="8-지금까지-구현한-범위--참값만-쓰고-있다-">8. 지금까지 구현한 범위 — 참값만 쓰고 있다 ⭐</a></li><li class="depth-2"><a href="#9-기타" data-for="9-기타">9. 기타</a></li><li class="depth-1"><a href="#막힌-것--blockers" data-for="막힌-것--blockers">막힌 것 / Blockers</a></li><li class="depth-2"><a href="#claude-mem-이-09-04-이후-아무것도-기록-안-함--한글-사용자명-2차" data-for="claude-mem-이-09-04-이후-아무것도-기록-안-함--한글-사용자명-2차">claude-mem 이 09-04 이후 아무것도 기록 안 함 — 한글 사용자명 (2차)</a></li><li class="depth-2"><a href="#θ-목표-knob-만-연결이-끊김-localholo-둘-다" data-for="θ-목표-knob-만-연결이-끊김-localholo-둘-다">θ 목표 Knob 만 연결이 끊김 (local·holo 둘 다)</a></li><li class="depth-2"><a href="#stop-후-다시-run-하면-60-s-뒤-holooceanplanttimeout" data-for="stop-후-다시-run-하면-60-s-뒤-holooceanplanttimeout">Stop 후 다시 Run 하면 60 s 뒤 HoloOceanPlant:timeout</a></li><li class="depth-2"><a href="#리셋-첫-설계의-race-condition" data-for="리셋-첫-설계의-race-condition">리셋 첫 설계의 race condition</a></li><li class="depth-2"><a href="#matlab-mcp-가-세션에-붙지-않음" data-for="matlab-mcp-가-세션에-붙지-않음">MATLAB MCP 가 세션에 붙지 않음</a></li><li class="depth-1"><a href="#할일--next" data-for="할일--next">할일 / Next</a></li><li class="overflow-end"></li></ul></div></div><footer class><p>Created with <a href="https://quartz.jzhao.xyz/">Quartz v4.5.2</a> © 2026</p><ul></ul></footer></div></div></body><script type="application/javascript">function n(){let t=this.parentElement;t.classList.toggle("is-collapsed");let e=t.getElementsByClassName("callout-content")[0];if(!e)return;let l=t.classList.contains("is-collapsed");e.style.gridTemplateRows=l?"0fr":"1fr"}function c(){let t=document.getElementsByClassName("callout is-collapsible");for(let e of t){let l=e.getElementsByClassName("callout-title")[0],s=e.getElementsByClassName("callout-content")[0];if(!l||!s)continue;l.addEventListener("click",n),window.addCleanup(()=>l.removeEventListener("click",n));let o=e.classList.contains("is-collapsed");s.style.gridTemplateRows=o?"0fr":"1fr"}}document.addEventListener("nav",c);
+</script><script type="module">function f(i,e){if(!i)return;function r(o){o.target===this&&(o.preventDefault(),o.stopPropagation(),e())}function t(o){o.key.startsWith("Esc")&&(o.preventDefault(),e())}i?.addEventListener("click",r),window.addCleanup(()=>i?.removeEventListener("click",r)),document.addEventListener("keydown",t),window.addCleanup(()=>document.removeEventListener("keydown",t))}function y(i){for(;i.firstChild;)i.removeChild(i.firstChild)}var h=class{constructor(e,r){this.container=e;this.content=r;this.setupEventListeners(),this.setupNavigationControls(),this.resetTransform()}isDragging=!1;startPan={x:0,y:0};currentPan={x:0,y:0};scale=1;MIN_SCALE=.5;MAX_SCALE=3;cleanups=[];setupEventListeners(){let e=this.onMouseDown.bind(this),r=this.onMouseMove.bind(this),t=this.onMouseUp.bind(this),o=this.resetTransform.bind(this);this.container.addEventListener("mousedown",e),document.addEventListener("mousemove",r),document.addEventListener("mouseup",t),window.addEventListener("resize",o),this.cleanups.push(()=>this.container.removeEventListener("mousedown",e),()=>document.removeEventListener("mousemove",r),()=>document.removeEventListener("mouseup",t),()=>window.removeEventListener("resize",o))}cleanup(){for(let e of this.cleanups)e()}setupNavigationControls(){let e=document.createElement("div");e.className="mermaid-controls";let r=this.createButton("+",()=>this.zoom(.1)),t=this.createButton("-",()=>this.zoom(-.1)),o=this.createButton("Reset",()=>this.resetTransform());e.appendChild(t),e.appendChild(o),e.appendChild(r),this.container.appendChild(e)}createButton(e,r){let t=document.createElement("button");return t.textContent=e,t.className="mermaid-control-button",t.addEventListener("click",r),window.addCleanup(()=>t.removeEventListener("click",r)),t}onMouseDown(e){e.button===0&&(this.isDragging=!0,this.startPan={x:e.clientX-this.currentPan.x,y:e.clientY-this.currentPan.y},this.container.style.cursor="grabbing")}onMouseMove(e){this.isDragging&&(e.preventDefault(),this.currentPan={x:e.clientX-this.startPan.x,y:e.clientY-this.startPan.y},this.updateTransform())}onMouseUp(){this.isDragging=!1,this.container.style.cursor="grab"}zoom(e){let r=Math.min(Math.max(this.scale+e,this.MIN_SCALE),this.MAX_SCALE),t=this.content.getBoundingClientRect(),o=t.width/2,n=t.height/2,c=r-this.scale;this.currentPan.x-=o*c,this.currentPan.y-=n*c,this.scale=r,this.updateTransform()}updateTransform(){this.content.style.transform=`translate(${this.currentPan.x}px, ${this.currentPan.y}px) scale(${this.scale})`}resetTransform(){this.scale=1;let e=this.content.querySelector("svg");this.currentPan={x:e.getBoundingClientRect().width/2,y:e.getBoundingClientRect().height/2},this.updateTransform()}},C=["--secondary","--tertiary","--gray","--light","--lightgray","--highlight","--dark","--darkgray","--codeFont"],E;document.addEventListener("nav",async()=>{let e=document.querySelector(".center").querySelectorAll("code.mermaid");if(e.length===0)return;E||=await import("https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.4.0/mermaid.esm.min.mjs");let r=E.default,t=new WeakMap;for(let n of e)t.set(n,n.innerText);async function o(){for(let s of e){s.removeAttribute("data-processed");let a=t.get(s);a&&(s.innerHTML=a)}let n=C.reduce((s,a)=>(s[a]=window.getComputedStyle(document.documentElement).getPropertyValue(a),s),{}),c=document.documentElement.getAttribute("saved-theme")==="dark";r.initialize({startOnLoad:!1,securityLevel:"loose",theme:c?"dark":"base",themeVariables:{fontFamily:n["--codeFont"],primaryColor:n["--light"],primaryTextColor:n["--darkgray"],primaryBorderColor:n["--tertiary"],lineColor:n["--darkgray"],secondaryColor:n["--secondary"],tertiaryColor:n["--tertiary"],clusterBkg:n["--light"],edgeLabelBackground:n["--highlight"]}}),await r.run({nodes:e})}await o(),document.addEventListener("themechange",o),window.addCleanup(()=>document.removeEventListener("themechange",o));for(let n=0;n<e.length;n++){let v=function(){let g=l.querySelector("#mermaid-space"),m=l.querySelector(".mermaid-content");if(!m)return;y(m);let w=c.querySelector("svg").cloneNode(!0);m.appendChild(w),l.classList.add("active"),g.style.cursor="grab",u=new h(g,m)},M=function(){l.classList.remove("active"),u?.cleanup(),u=null},c=e[n],s=c.parentElement,a=s.querySelector(".clipboard-button"),d=s.querySelector(".expand-button"),p=window.getComputedStyle(a),L=a.offsetWidth+parseFloat(p.marginLeft||"0")+parseFloat(p.marginRight||"0");d.style.right=`calc(${L}px + 0.3rem)`,s.prepend(d);let l=s.querySelector("#mermaid-container");if(!l)return;let u=null;d.addEventListener("click",v),f(l,M),window.addCleanup(()=>{u?.cleanup(),d.removeEventListener("click",v)})}});
+</script><script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/copy-tex.min.js" type="application/javascript"></script><script src="../postscript.js" type="module"></script></html>

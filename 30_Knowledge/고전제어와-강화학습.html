@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="ko" dir="ltr"><head><title>고전제어와 강화학습</title><meta charset="utf-8"/><link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com"/><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto Sans KR:wght@400;700&amp;family=Noto Sans KR:ital,wght@0,400;0,600;1,400;1,600&amp;family=IBM Plex Mono:wght@400;600&amp;display=swap"/><link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin="anonymous"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta name="og:site_name" content="LabNote"/><meta property="og:title" content="고전제어와 강화학습"/><meta property="og:type" content="website"/><meta name="twitter:card" content="summary_large_image"/><meta name="twitter:title" content="고전제어와 강화학습"/><meta name="twitter:description" content="고전제어와 강화학습 한 줄로 규칙기반은 사람이 “어떻게 할지” 를 설계하고, 강화학습은 사람이 “무엇이 좋은지” 를 설계한다. 그리고 둘 다 전문분야가 아니라 방법론이다. 전문분야는 문제 쪽에 있다. 왜 필요한가 Research Direction 이 여기서 나왔다."/><meta property="og:description" content="고전제어와 강화학습 한 줄로 규칙기반은 사람이 “어떻게 할지” 를 설계하고, 강화학습은 사람이 “무엇이 좋은지” 를 설계한다. 그리고 둘 다 전문분야가 아니라 방법론이다. 전문분야는 문제 쪽에 있다. 왜 필요한가 Research Direction 이 여기서 나왔다."/><meta property="og:image:alt" content="고전제어와 강화학습 한 줄로 규칙기반은 사람이 “어떻게 할지” 를 설계하고, 강화학습은 사람이 “무엇이 좋은지” 를 설계한다. 그리고 둘 다 전문분야가 아니라 방법론이다. 전문분야는 문제 쪽에 있다. 왜 필요한가 Research Direction 이 여기서 나왔다."/><meta property="og:image" content="https://yusik36.github.io/research-notes/static/og-image.png"/><meta property="og:image:url" content="https://yusik36.github.io/research-notes/static/og-image.png"/><meta name="twitter:image" content="https://yusik36.github.io/research-notes/static/og-image.png"/><meta property="og:image:type" content="image/.png"/><meta property="twitter:domain" content="yusik36.github.io/research-notes"/><meta property="og:url" content="https://yusik36.github.io/research-notes/30_Knowledge/고전제어와-강화학습"/><meta property="twitter:url" content="https://yusik36.github.io/research-notes/30_Knowledge/고전제어와-강화학습"/><link rel="icon" href="../static/icon.png"/><meta name="description" content="고전제어와 강화학습 한 줄로 규칙기반은 사람이 “어떻게 할지” 를 설계하고, 강화학습은 사람이 “무엇이 좋은지” 를 설계한다. 그리고 둘 다 전문분야가 아니라 방법론이다. 전문분야는 문제 쪽에 있다. 왜 필요한가 Research Direction 이 여기서 나왔다."/><meta name="generator" content="Quartz"/><link href="../index.css" rel="stylesheet" type="text/css" spa-preserve/><style>.expand-button {
+  position: absolute;
+  display: flex;
+  float: right;
+  padding: 0.4rem;
+  margin: 0.3rem;
+  right: 0;
+  color: var(--gray);
+  border-color: var(--dark);
+  background-color: var(--light);
+  border: 1px solid;
+  border-radius: 5px;
+  opacity: 0;
+  transition: 0.2s;
+}
+.expand-button > svg {
+  fill: var(--light);
+  filter: contrast(0.3);
+}
+.expand-button:hover {
+  cursor: pointer;
+  border-color: var(--secondary);
+}
+.expand-button:focus {
+  outline: 0;
+}
+
+pre:hover > .expand-button {
+  opacity: 1;
+  transition: 0.2s;
+}
+
+#mermaid-container {
+  position: fixed;
+  contain: layout;
+  z-index: 999;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  display: none;
+  backdrop-filter: blur(4px);
+  background: rgba(0, 0, 0, 0.5);
+}
+#mermaid-container.active {
+  display: inline-block;
+}
+#mermaid-container > #mermaid-space {
+  border: 1px solid var(--lightgray);
+  background-color: var(--light);
+  border-radius: 5px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 80vh;
+  width: 80vw;
+  overflow: hidden;
+}
+#mermaid-container > #mermaid-space > .mermaid-content {
+  padding: 2rem;
+  position: relative;
+  transform-origin: 0 0;
+  transition: transform 0.1s ease;
+  overflow: visible;
+  min-height: 200px;
+  min-width: 200px;
+}
+#mermaid-container > #mermaid-space > .mermaid-content pre {
+  margin: 0;
+  border: none;
+}
+#mermaid-container > #mermaid-space > .mermaid-content svg {
+  max-width: none;
+  height: auto;
+}
+#mermaid-container > #mermaid-space > .mermaid-controls {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  gap: 8px;
+  padding: 8px;
+  background: var(--light);
+  border: 1px solid var(--lightgray);
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 2;
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 1px solid var(--lightgray);
+  background: var(--light);
+  color: var(--dark);
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  font-family: var(--bodyFont);
+  transition: all 0.2s ease;
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button:hover {
+  background: var(--lightgray);
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button:active {
+  transform: translateY(1px);
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button:nth-child(2) {
+  width: auto;
+  padding: 0 12px;
+  font-size: 14px;
+}
+/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VSb290IjoiQzpcXEFyY2hpdmVcXOyeoeuLpOq1rOumrFxcVVNU7J247YS0X+yngOybkOyEnFxcc2l0ZVxccXVhcnR6XFxjb21wb25lbnRzXFxzdHlsZXMiLCJzb3VyY2VzIjpbIm1lcm1haWQuaW5saW5lLnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDRTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTs7QUFFQTtFQUNFO0VBQ0E7O0FBR0Y7RUFDRTtFQUNBOztBQUdGO0VBQ0U7OztBQUtGO0VBQ0U7RUFDQTs7O0FBSUo7RUFDRTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBOztBQUVBO0VBQ0U7O0FBR0Y7RUFDRTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTs7QUFFQTtFQUNFO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBOztBQUVBO0VBQ0U7RUFDQTs7QUFHRjtFQUNFO0VBQ0E7O0FBSUo7RUFDRTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBOztBQUVBO0VBQ0U7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTs7QUFFQTtFQUNFOztBQUdGO0VBQ0U7O0FBSUY7RUFDRTtFQUNBO0VBQ0EiLCJzb3VyY2VzQ29udGVudCI6WyIuZXhwYW5kLWJ1dHRvbiB7XG4gIHBvc2l0aW9uOiBhYnNvbHV0ZTtcbiAgZGlzcGxheTogZmxleDtcbiAgZmxvYXQ6IHJpZ2h0O1xuICBwYWRkaW5nOiAwLjRyZW07XG4gIG1hcmdpbjogMC4zcmVtO1xuICByaWdodDogMDsgLy8gTk9URTogcmlnaHQgd2lsbCBiZSBzZXQgaW4gbWVybWFpZC5pbmxpbmUudHNcbiAgY29sb3I6IHZhcigtLWdyYXkpO1xuICBib3JkZXItY29sb3I6IHZhcigtLWRhcmspO1xuICBiYWNrZ3JvdW5kLWNvbG9yOiB2YXIoLS1saWdodCk7XG4gIGJvcmRlcjogMXB4IHNvbGlkO1xuICBib3JkZXItcmFkaXVzOiA1cHg7XG4gIG9wYWNpdHk6IDA7XG4gIHRyYW5zaXRpb246IDAuMnM7XG5cbiAgJiA+IHN2ZyB7XG4gICAgZmlsbDogdmFyKC0tbGlnaHQpO1xuICAgIGZpbHRlcjogY29udHJhc3QoMC4zKTtcbiAgfVxuXG4gICY6aG92ZXIge1xuICAgIGN1cnNvcjogcG9pbnRlcjtcbiAgICBib3JkZXItY29sb3I6IHZhcigtLXNlY29uZGFyeSk7XG4gIH1cblxuICAmOmZvY3VzIHtcbiAgICBvdXRsaW5lOiAwO1xuICB9XG59XG5cbnByZSB7XG4gICY6aG92ZXIgPiAuZXhwYW5kLWJ1dHRvbiB7XG4gICAgb3BhY2l0eTogMTtcbiAgICB0cmFuc2l0aW9uOiAwLjJzO1xuICB9XG59XG5cbiNtZXJtYWlkLWNvbnRhaW5lciB7XG4gIHBvc2l0aW9uOiBmaXhlZDtcbiAgY29udGFpbjogbGF5b3V0O1xuICB6LWluZGV4OiA5OTk7XG4gIGxlZnQ6IDA7XG4gIHRvcDogMDtcbiAgd2lkdGg6IDEwMHZ3O1xuICBoZWlnaHQ6IDEwMHZoO1xuICBvdmVyZmxvdzogaGlkZGVuO1xuICBkaXNwbGF5OiBub25lO1xuICBiYWNrZHJvcC1maWx0ZXI6IGJsdXIoNHB4KTtcbiAgYmFja2dyb3VuZDogcmdiYSgwLCAwLCAwLCAwLjUpO1xuXG4gICYuYWN0aXZlIHtcbiAgICBkaXNwbGF5OiBpbmxpbmUtYmxvY2s7XG4gIH1cblxuICAmID4gI21lcm1haWQtc3BhY2Uge1xuICAgIGJvcmRlcjogMXB4IHNvbGlkIHZhcigtLWxpZ2h0Z3JheSk7XG4gICAgYmFja2dyb3VuZC1jb2xvcjogdmFyKC0tbGlnaHQpO1xuICAgIGJvcmRlci1yYWRpdXM6IDVweDtcbiAgICBwb3NpdGlvbjogZml4ZWQ7XG4gICAgdG9wOiA1MCU7XG4gICAgbGVmdDogNTAlO1xuICAgIHRyYW5zZm9ybTogdHJhbnNsYXRlKC01MCUsIC01MCUpO1xuICAgIGhlaWdodDogODB2aDtcbiAgICB3aWR0aDogODB2dztcbiAgICBvdmVyZmxvdzogaGlkZGVuO1xuXG4gICAgJiA+IC5tZXJtYWlkLWNvbnRlbnQge1xuICAgICAgcGFkZGluZzogMnJlbTtcbiAgICAgIHBvc2l0aW9uOiByZWxhdGl2ZTtcbiAgICAgIHRyYW5zZm9ybS1vcmlnaW46IDAgMDtcbiAgICAgIHRyYW5zaXRpb246IHRyYW5zZm9ybSAwLjFzIGVhc2U7XG4gICAgICBvdmVyZmxvdzogdmlzaWJsZTtcbiAgICAgIG1pbi1oZWlnaHQ6IDIwMHB4O1xuICAgICAgbWluLXdpZHRoOiAyMDBweDtcblxuICAgICAgcHJlIHtcbiAgICAgICAgbWFyZ2luOiAwO1xuICAgICAgICBib3JkZXI6IG5vbmU7XG4gICAgICB9XG5cbiAgICAgIHN2ZyB7XG4gICAgICAgIG1heC13aWR0aDogbm9uZTtcbiAgICAgICAgaGVpZ2h0OiBhdXRvO1xuICAgICAgfVxuICAgIH1cblxuICAgICYgPiAubWVybWFpZC1jb250cm9scyB7XG4gICAgICBwb3NpdGlvbjogYWJzb2x1dGU7XG4gICAgICBib3R0b206IDIwcHg7XG4gICAgICByaWdodDogMjBweDtcbiAgICAgIGRpc3BsYXk6IGZsZXg7XG4gICAgICBnYXA6IDhweDtcbiAgICAgIHBhZGRpbmc6IDhweDtcbiAgICAgIGJhY2tncm91bmQ6IHZhcigtLWxpZ2h0KTtcbiAgICAgIGJvcmRlcjogMXB4IHNvbGlkIHZhcigtLWxpZ2h0Z3JheSk7XG4gICAgICBib3JkZXItcmFkaXVzOiA2cHg7XG4gICAgICBib3gtc2hhZG93OiAwIDJweCA0cHggcmdiYSgwLCAwLCAwLCAwLjEpO1xuICAgICAgei1pbmRleDogMjtcblxuICAgICAgLm1lcm1haWQtY29udHJvbC1idXR0b24ge1xuICAgICAgICBkaXNwbGF5OiBmbGV4O1xuICAgICAgICBhbGlnbi1pdGVtczogY2VudGVyO1xuICAgICAgICBqdXN0aWZ5LWNvbnRlbnQ6IGNlbnRlcjtcbiAgICAgICAgd2lkdGg6IDMycHg7XG4gICAgICAgIGhlaWdodDogMzJweDtcbiAgICAgICAgcGFkZGluZzogMDtcbiAgICAgICAgYm9yZGVyOiAxcHggc29saWQgdmFyKC0tbGlnaHRncmF5KTtcbiAgICAgICAgYmFja2dyb3VuZDogdmFyKC0tbGlnaHQpO1xuICAgICAgICBjb2xvcjogdmFyKC0tZGFyayk7XG4gICAgICAgIGJvcmRlci1yYWRpdXM6IDRweDtcbiAgICAgICAgY3Vyc29yOiBwb2ludGVyO1xuICAgICAgICBmb250LXNpemU6IDE2cHg7XG4gICAgICAgIGZvbnQtZmFtaWx5OiB2YXIoLS1ib2R5Rm9udCk7XG4gICAgICAgIHRyYW5zaXRpb246IGFsbCAwLjJzIGVhc2U7XG5cbiAgICAgICAgJjpob3ZlciB7XG4gICAgICAgICAgYmFja2dyb3VuZDogdmFyKC0tbGlnaHRncmF5KTtcbiAgICAgICAgfVxuXG4gICAgICAgICY6YWN0aXZlIHtcbiAgICAgICAgICB0cmFuc2Zvcm06IHRyYW5zbGF0ZVkoMXB4KTtcbiAgICAgICAgfVxuXG4gICAgICAgIC8vIFN0eWxlIHRoZSByZXNldCBidXR0b24gZGlmZmVyZW50bHlcbiAgICAgICAgJjpudGgtY2hpbGQoMikge1xuICAgICAgICAgIHdpZHRoOiBhdXRvO1xuICAgICAgICAgIHBhZGRpbmc6IDAgMTJweDtcbiAgICAgICAgICBmb250LXNpemU6IDE0cHg7XG4gICAgICAgIH1cbiAgICAgIH1cbiAgICB9XG4gIH1cbn1cbiJdfQ== */</style><link href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" rel="stylesheet" type="text/css" spa-preserve/><script src="../prescript.js" type="application/javascript" spa-preserve></script><script type="application/javascript" spa-preserve>const fetchData = fetch("../static/contentIndex.json").then(data => data.json())</script></head><body data-slug="30_Knowledge/고전제어와-강화학습"><div id="quartz-root" class="page"><div id="quartz-body"><div class="left sidebar"><h2 class="page-title"><a href="..">LabNote</a></h2><div class="spacer mobile-only"></div><div class="flex-component" style="flex-direction: row; flex-wrap: nowrap; gap: 1rem;"><div style="flex-grow: 1; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><div class="search"><button class="search-button"><svg role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19.9 19.7"><title>Search</title><g class="search-path" fill="none"><path stroke-linecap="square" d="M18.5 18.3l-5.4-5.4"></path><circle cx="8" cy="8" r="7"></circle></g></svg><p>검색</p></button><div class="search-container"><div class="search-space"><input autocomplete="off" class="search-bar" name="search" type="text" aria-label="검색어를 입력하세요" placeholder="검색어를 입력하세요"/><div class="search-layout" data-preview="true"></div></div></div></div></div><div style="flex-grow: 0; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><button class="darkmode"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="dayIcon" x="0px" y="0px" viewBox="0 0 35 35" style="enable-background:new 0 0 35 35" xml:space="preserve" aria-label="다크 모드"><title>다크 모드</title><path d="M6,17.5C6,16.672,5.328,16,4.5,16h-3C0.672,16,0,16.672,0,17.5    S0.672,19,1.5,19h3C5.328,19,6,18.328,6,17.5z M7.5,26c-0.414,0-0.789,0.168-1.061,0.439l-2,2C4.168,28.711,4,29.086,4,29.5    C4,30.328,4.671,31,5.5,31c0.414,0,0.789-0.168,1.06-0.44l2-2C8.832,28.289,9,27.914,9,27.5C9,26.672,8.329,26,7.5,26z M17.5,6    C18.329,6,19,5.328,19,4.5v-3C19,0.672,18.329,0,17.5,0S16,0.672,16,1.5v3C16,5.328,16.671,6,17.5,6z M27.5,9    c0.414,0,0.789-0.168,1.06-0.439l2-2C30.832,6.289,31,5.914,31,5.5C31,4.672,30.329,4,29.5,4c-0.414,0-0.789,0.168-1.061,0.44    l-2,2C26.168,6.711,26,7.086,26,7.5C26,8.328,26.671,9,27.5,9z M6.439,8.561C6.711,8.832,7.086,9,7.5,9C8.328,9,9,8.328,9,7.5    c0-0.414-0.168-0.789-0.439-1.061l-2-2C6.289,4.168,5.914,4,5.5,4C4.672,4,4,4.672,4,5.5c0,0.414,0.168,0.789,0.439,1.06    L6.439,8.561z M33.5,16h-3c-0.828,0-1.5,0.672-1.5,1.5s0.672,1.5,1.5,1.5h3c0.828,0,1.5-0.672,1.5-1.5S34.328,16,33.5,16z     M28.561,26.439C28.289,26.168,27.914,26,27.5,26c-0.828,0-1.5,0.672-1.5,1.5c0,0.414,0.168,0.789,0.439,1.06l2,2    C28.711,30.832,29.086,31,29.5,31c0.828,0,1.5-0.672,1.5-1.5c0-0.414-0.168-0.789-0.439-1.061L28.561,26.439z M17.5,29    c-0.829,0-1.5,0.672-1.5,1.5v3c0,0.828,0.671,1.5,1.5,1.5s1.5-0.672,1.5-1.5v-3C19,29.672,18.329,29,17.5,29z M17.5,7    C11.71,7,7,11.71,7,17.5S11.71,28,17.5,28S28,23.29,28,17.5S23.29,7,17.5,7z M17.5,25c-4.136,0-7.5-3.364-7.5-7.5    c0-4.136,3.364-7.5,7.5-7.5c4.136,0,7.5,3.364,7.5,7.5C25,21.636,21.636,25,17.5,25z"></path></svg><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="nightIcon" x="0px" y="0px" viewBox="0 0 100 100" style="enable-background:new 0 0 100 100" xml:space="preserve" aria-label="라이트 모드"><title>라이트 모드</title><path d="M96.76,66.458c-0.853-0.852-2.15-1.064-3.23-0.534c-6.063,2.991-12.858,4.571-19.655,4.571  C62.022,70.495,50.88,65.88,42.5,57.5C29.043,44.043,25.658,23.536,34.076,6.47c0.532-1.08,0.318-2.379-0.534-3.23  c-0.851-0.852-2.15-1.064-3.23-0.534c-4.918,2.427-9.375,5.619-13.246,9.491c-9.447,9.447-14.65,22.008-14.65,35.369  c0,13.36,5.203,25.921,14.65,35.368s22.008,14.65,35.368,14.65c13.361,0,25.921-5.203,35.369-14.65  c3.872-3.871,7.064-8.328,9.491-13.246C97.826,68.608,97.611,67.309,96.76,66.458z"></path></svg></button></div><div style="flex-grow: 0; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><button class="readermode"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="readerIcon" fill="currentColor" stroke="currentColor" stroke-width="0.2" stroke-linecap="round" stroke-linejoin="round" width="64px" height="64px" viewBox="0 0 24 24" aria-label="리더 모드"><title>리더 모드</title><g transform="translate(-1.8, -1.8) scale(1.15, 1.2)"><path d="M8.9891247,2.5 C10.1384702,2.5 11.2209868,2.96705384 12.0049645,3.76669482 C12.7883914,2.96705384 13.8709081,2.5 15.0202536,2.5 L18.7549359,2.5 C19.1691495,2.5 19.5049359,2.83578644 19.5049359,3.25 L19.5046891,4.004 L21.2546891,4.00457396 C21.6343849,4.00457396 21.9481801,4.28672784 21.9978425,4.6528034 L22.0046891,4.75457396 L22.0046891,20.25 C22.0046891,20.6296958 21.7225353,20.943491 21.3564597,20.9931534 L21.2546891,21 L2.75468914,21 C2.37499337,21 2.06119817,20.7178461 2.01153575,20.3517706 L2.00468914,20.25 L2.00468914,4.75457396 C2.00468914,4.37487819 2.28684302,4.061083 2.65291858,4.01142057 L2.75468914,4.00457396 L4.50368914,4.004 L4.50444233,3.25 C4.50444233,2.87030423 4.78659621,2.55650904 5.15267177,2.50684662 L5.25444233,2.5 L8.9891247,2.5 Z M4.50368914,5.504 L3.50468914,5.504 L3.50468914,19.5 L10.9478955,19.4998273 C10.4513189,18.9207296 9.73864328,18.5588115 8.96709342,18.5065584 L8.77307039,18.5 L5.25444233,18.5 C4.87474657,18.5 4.56095137,18.2178461 4.51128895,17.8517706 L4.50444233,17.75 L4.50368914,5.504 Z M19.5049359,17.75 C19.5049359,18.1642136 19.1691495,18.5 18.7549359,18.5 L15.2363079,18.5 C14.3910149,18.5 13.5994408,18.8724714 13.0614828,19.4998273 L20.5046891,19.5 L20.5046891,5.504 L19.5046891,5.504 L19.5049359,17.75 Z M18.0059359,3.999 L15.0202536,4 L14.8259077,4.00692283 C13.9889509,4.06666544 13.2254227,4.50975805 12.7549359,5.212 L12.7549359,17.777 L12.7782651,17.7601316 C13.4923805,17.2719483 14.3447024,17 15.2363079,17 L18.0059359,16.999 L18.0056891,4.798 L18.0033792,4.75457396 L18.0056891,4.71 L18.0059359,3.999 Z M8.9891247,4 L6.00368914,3.999 L6.00599909,4.75457396 L6.00599909,4.75457396 L6.00368914,4.783 L6.00368914,16.999 L8.77307039,17 C9.57551536,17 10.3461406,17.2202781 11.0128313,17.6202194 L11.2536891,17.776 L11.2536891,5.211 C10.8200889,4.56369974 10.1361548,4.13636104 9.37521067,4.02745763 L9.18347055,4.00692283 L8.9891247,4 Z"></path></g></svg></button></div></div><div class="explorer" data-behavior="link" data-collapsed="collapsed" data-savestate="true" data-data-fns="{&quot;order&quot;:[&quot;filter&quot;,&quot;map&quot;,&quot;sort&quot;],&quot;sortFn&quot;:&quot;(a,b)=>!a.isFolder&amp;&amp;!b.isFolder||a.isFolder&amp;&amp;b.isFolder?a.displayName.localeCompare(b.displayName,void 0,{numeric:!0,sensitivity:\&quot;base\&quot;}):!a.isFolder&amp;&amp;b.isFolder?1:-1&quot;,&quot;filterFn&quot;:&quot;node=>node.slugSegment!==\&quot;tags\&quot;&quot;,&quot;mapFn&quot;:&quot;node=>node&quot;}"><button type="button" class="explorer-toggle mobile-explorer hide-until-loaded" data-mobile="true" aria-controls="explorer-141"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide-menu"><line x1="4" x2="20" y1="12" y2="12"></line><line x1="4" x2="20" y1="6" y2="6"></line><line x1="4" x2="20" y1="18" y2="18"></line></svg></button><button type="button" class="title-button explorer-toggle desktop-explorer" data-mobile="false" aria-expanded="true"><h2>탐색기</h2><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="5 8 14 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fold"><polyline points="6 9 12 15 18 9"></polyline></svg></button><div id="explorer-141" class="explorer-content" aria-expanded="false" role="group"><ul class="explorer-ul overflow" id="list-0"><li class="overflow-end"></li></ul></div><template id="template-file"><li><a href="#"></a></li></template><template id="template-folder"><li><div class="folder-container"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="5 8 14 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="folder-icon"><polyline points="6 9 12 15 18 9"></polyline></svg><div><button class="folder-button"><span class="folder-title"></span></button></div></div><div class="folder-outer"><ul class="content"></ul></div></li></template></div></div><div class="center"><div class="page-header"><div class="popover-hint"><nav class="breadcrumb-container" aria-label="breadcrumbs"><div class="breadcrumb-element"><a href="../">Home</a><p> ❯ </p></div><div class="breadcrumb-element"><a href="../30_Knowledge/">30_Knowledge</a><p> ❯ </p></div><div class="breadcrumb-element"><a href>고전제어와 강화학습</a></div></nav><h1 class="article-title">고전제어와 강화학습</h1><p show-comma="true" class="content-meta"><time datetime="2026-09-02T15:00:00.000Z">2026년 9월 03일</time><span>17 min read</span></p><ul class="tags"><li><a href="../tags/control-theory" class="internal tag-link">control-theory</a></li><li><a href="../tags/reinforcement-learning" class="internal tag-link">reinforcement-learning</a></li></ul></div></div><article class="popover-hint"><h1 id="고전제어와-강화학습">고전제어와 강화학습<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#고전제어와-강화학습" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h1>
+<h2 id="한-줄로">한 줄로<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#한-줄로" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>규칙기반은 사람이 <strong>“어떻게 할지”</strong> 를 설계하고, 강화학습은 사람이 <strong>“무엇이 좋은지”</strong> 를 설계한다.
+그리고 <strong>둘 다 전문분야가 아니라 방법론이다.</strong> 전문분야는 문제 쪽에 있다.</p>
+<h2 id="왜-필요한가">왜 필요한가<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#왜-필요한가" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p><a href="../Research-Direction" class="internal alias" data-slug="Research-Direction">Research Direction</a> 이 여기서 나왔다. 출발은 “강화학습은 기존 규칙기반 제어랑 아예 다르잖아”라는 질문 하나였고, 가운데에 “고전제어 이론 쌓는 동안 RL이 주가 돼서 경쟁력을 잃는 건 아닐까”라는 걱정이 걸려 있었다. 도착한 자리는 <strong>“전문성은 방법론이 아니라 어떤 시스템·문제를 깊게 파봤는가로 정해진다”</strong> 였다.</p>
+<p>→ 대화 전문: <a href="../90_Archive/Direction/2026-09-03-강화학습과-규칙기반-제어-비교" class="internal alias" data-slug="90_Archive/Direction/2026-09-03-강화학습과-규칙기반-제어-비교">2026-09-03 강화학습과 규칙기반 제어 비교</a></p>
+<hr/>
+<h2 id="결론-여섯-개">결론 여섯 개<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#결론-여섯-개" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<h3 id="1-설계하는-대상이-다르다">1. 설계하는 대상이 다르다<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#1-설계하는-대상이-다르다" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ul>
+<li>규칙기반: <code>센서 입력 → 사람이 만든 규칙 → 제어 출력</code></li>
+<li>RL: <code>상태 → 학습된 정책 → 행동 → 결과 → 보상 → 정책 개선</code></li>
+</ul>
+<p>RL도 “사람이 만든 규칙이 없는 방식”은 아니다. state, action, reward, 알고리즘, 네트워크 구조, 안전 제한은 여전히 사람이 설계한다. 달라지는 건 <strong>제어 법칙 자체를 사람이 직접 기술하느냐, 경험을 통해 정책으로 학습시키느냐</strong>다.</p>
+<p>그래서 RL에는 reward hacking이 있다. 에이전트는 설계자의 <em>의도</em>가 아니라 설계자가 <em>정의한 보상</em>을 최대화한다.</p>
+<h3 id="2-rl은-물리-지식을-없앤-게-아니라-위치를-옮겼다">2. RL은 물리 지식을 없앤 게 아니라 위치를 옮겼다<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#2-rl은-물리-지식을-없앤-게-아니라-위치를-옮겼다" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>에이전트는 동역학을 모르지만 <strong>시뮬레이터는 안다.</strong></p>
+<ul>
+<li>고전: <code>인간이 동역학 이해 → 인간이 제어법 설계 → 로봇</code></li>
+<li>RL: <code>물리 시뮬레이터 → 수억 번 경험 → RL이 제어법 탐색 → 로봇</code></li>
+</ul>
+<p><strong>지식과 계산량을 맞바꾼 것.</strong> 그래서 RL 이론의 축적량이 역학·제어이론 전체보다 작은 건 당연하고, 그게 약점도 아니다. 대신 대가가 명확하다 — 사전지식을 덜 쓰는 만큼 데이터·시행착오·계산량이 비싸다.</p>
+<p>RL 이론은 3층으로 보면 정리된다.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th>층</th><th>내용</th></tr></thead><tbody><tr><td>1층 기반 학문</td><td>확률·통계·선형대수·최적화·동적계획법·제어이론</td></tr><tr><td>2층 RL 이론</td><td>MDP, value function, Bellman equation, policy optimization, TD learning, exploration, convergence, sample complexity</td></tr><tr><td>3층 RL 엔지니어링</td><td>PPO냐 SAC냐, reward 설계, simulator 구성, observation/action 설계, 학습 속도</td></tr></tbody></table></div>
+<p>로봇에서는 3층이 특히 중요하다. RL 이론을 잘 안다고 보행 로봇이 바로 걷지는 않는다.</p>
+<h3 id="3-rl-개발이-답답했던-건-잘못-배워서가-아니다">3. RL 개발이 답답했던 건 잘못 배워서가 아니다<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#3-rl-개발이-답답했던-건-잘못-배워서가-아니다" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>게인을 바꾸는 건 <strong>완성된 제어기의 동작을 바꾸는 것</strong>이고, 보상을 바꾸는 건 <strong>앞으로 어떤 제어기를 학습할지 목적함수를 바꾸는 것</strong>이다. 성격이 다르다.</p>
+<ul>
+<li>규칙기반 — 디버깅이 빠르고 국소적: <code>K 변경 → 바로 행동 변경</code></li>
+<li>RL — 디버깅이 느리고 전역적: <code>R 변경 → 학습과정 변경 → policy 변화 → 행동 변화</code></li>
+</ul>
+<p>reward를 10% 바꿨다고 행동이 10% 바뀌지 않는다. 항들이 하나의 최적화 문제 안에서 서로 경쟁하기 때문이다. energy penalty를 두 배로 올리면 보폭이 확 줄거나, 이상한 gait가 나오거나, 학습 자체가 불안정해질 수 있다.</p>
+<p><strong>reward는 gain이 아니라 평가기준이다.</strong> 그래서 실무에서는</p>
+<ul>
+<li>이상하면 계수부터 만지지 말고 <strong>observation 설계 / action range / termination 조건 / exploration / simulator dynamics</strong> 를 먼저 의심한다</li>
+<li>총 reward 말고 <strong>component별로 로그를 본다.</strong> 규칙기반에서 “조향은 좋아졌는데 obstacle distance가 나빠졌네” 하고 보는 것과 같은 역할</li>
+<li>풀트레이닝 전에 짧은 학습으로 후보를 거르고, seed를 몇 개 비교한다</li>
+<li>reward를 바꿔 기존 checkpoint에서 fine-tuning하는 것도 가능하다</li>
+</ul>
+<p>→ <a href="../30_Knowledge/Reward-Shaping" class="internal alias" data-slug="30_Knowledge/Reward-Shaping">Reward Shaping</a></p>
+<h3 id="4-과적합망각은-원리적-한계가-아니다">4. 과적합·망각은 “원리적 한계”가 아니다<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#4-과적합망각은-원리적-한계가-아니다" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>왼쪽 경사만 오래 학습시키면 정책은 “세상은 항상 왼쪽으로 기울어져 있다”에 최적화된다. 그다음 오른쪽만 학습하면 왼쪽을 잊는데, 이건 과적합이라기보다 <strong>catastrophic forgetting</strong>이다.</p>
+<p>해법은 섞어서 보여주는 것 — 경사·마찰·질량·외란을 매 episode 랜덤화하면 정책이 “왼쪽용 동작”을 외우는 대신 <strong>“현재 몸이 어느 방향으로 기울었는지 보고 보정하는 법”</strong> 을 배운다. 이것이 <a href="../00_Inbox/Domain-Randomization" class="internal alias" data-slug="00_Inbox/Domain-Randomization">Domain Randomization</a> 이 <a href="../30_Knowledge/Sim-to-Real" class="internal" data-slug="30_Knowledge/Sim-to-Real">Sim-to-Real</a> 의 핵심 기술인 이유다.</p>
+<p>단, 조건이 있다. <strong>로봇이 자기 상태를 관측할 수 있어야 한다.</strong> roll angle, angular velocity, 관절 각도·속도, IMU, 발 접촉 상태가 observation에 있어야 왼쪽 경사와 오른쪽 경사가 서로 다른 state로 들어온다.</p>
+<h3 id="5-전환은-대체가-아니라-침투다--ai는-위에서-아래로-내려온다">5. 전환은 ‘대체’가 아니라 ‘침투’다 — AI는 위에서 아래로 내려온다<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#5-전환은-대체가-아니라-침투다--ai는-위에서-아래로-내려온다" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th>계층</th><th>지금</th><th>앞으로</th></tr></thead><tbody><tr><td>임무 계획</td><td>규칙 기반</td><td>foundation model / AI 증가</td></tr><tr><td>행동 결정</td><td>FSM / 규칙</td><td>AI·RL 크게 증가</td></tr><tr><td>장애물 회피</td><td>규칙 / 최적화</td><td>RL 크게 증가</td></tr><tr><td>경로 계획</td><td>A-star, RRT</td><td>RL 크게 증가</td></tr><tr><td>모델 보정</td><td>System ID</td><td>online learning 증가</td></tr><tr><td>외란 대응</td><td>Robust / Adaptive</td><td>learning 비중 크게 증가</td></tr><tr><td>속도·궤적 추종</td><td>PID / MPC</td><td>MPC + learning</td></tr><tr><td>자세 안정화</td><td>PID / LQR / MPC</td><td>고전 + learning</td></tr><tr><td>모터·추력기 제어</td><td>PID</td><td>고전제어 강하게 유지</td></tr></tbody></table></div>
+<p>1 kHz로 도는 자세 안정화를 신경망으로 바꿀 유인은 아직 작다. 이미 잘 되고, 계산량이 작고, 안정성을 분석할 수 있으니까. 반면 “저 배가 오른쪽으로 오고 COLREG도 지켜야 하고 파도도 있고 주변에 세 척이 있는데 어떻게 행동할까” 같은 문제는 규칙으로 쓰기가 급격히 어려워진다. <strong>RL의 장점이 폭발하는 자리가 거기다.</strong></p>
+<p>지금 눈여겨볼 구조는 hybrid다. <code>RL이 desired trajectory → MPC가 thruster command</code>, <code>MPC + NN disturbance estimator</code>, <code>RL 명령을 safety filter가 걸러 안전한 명령으로</code>.</p>
+<p>플랫폼별로는 — UGV가 AI 전환이 가장 빠르고, UAV는 planning은 빠르되 inner loop는 오래 고전제어가 남고, USV는 저속·저위험에 모델링 까다로운 외란이 있어 learning의 장점이 잘 드러나고, AUV는 모델 불확실성이 커서 연구적으로 가장 흥미롭지만 실데이터와 Sim-to-Real이 어렵다.</p>
+<h3 id="6-그래서-가치-있는-위치는-경계-설계자">6. 그래서 가치 있는 위치는 ‘경계 설계자’<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#6-그래서-가치-있는-위치는-경계-설계자" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<blockquote>
+<p>앞으로 5~10년 제어 분야에서 가장 경쟁력 있는 사람은 고전제어를 가장 많이 외운 사람도, RL 라이브러리를 가장 잘 쓰는 사람도 아니라 <strong>둘 사이의 경계를 설계할 수 있는 사람</strong>일 가능성이 높다.</p>
+</blockquote>
+<p>AUV가 depth를 못 잡을 때,</p>
+<ul>
+<li>RL만 아는 사람: <code>reward 0.2 → 0.3 해볼까? learning rate? network 크기?</code></li>
+<li>제어를 아는 사람: <code>buoyancy와 CG/CB 관계? pitch-depth coupling? actuator saturation? observation에 vertical velocity가 빠졌나? thruster allocation의 controllability? delay?</code></li>
+</ul>
+<p>후자는 <strong>RL의 search space 자체를 설계해버린다.</strong> 이 차이가 크다.</p>
+<p>피해야 할 두 극단: <em>“AI가 뜨니까 고전제어는 필요 없다”</em> 와 <em>“AI는 유행이고 진짜 제어는 고전제어다”</em>.</p>
+<hr/>
+<h2 id="경계를-설계하는-방법은-세-갈래-2026-10-19-추가">경계를 설계하는 방법은 세 갈래 (2026-10-19 추가)<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#경계를-설계하는-방법은-세-갈래-2026-10-19-추가" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<blockquote>
+<p>모드마다 RL이 유리한 곳과 모델기반이 유리한 곳이 있으니, 섞어서 쓰는 구조도 가능하다. 단, <strong>상위 선택기까지 RL일 필요는 없다.</strong></p>
+</blockquote>
+<p>출발점이 된 질문은 이것이다. 모델기반 제어처럼 상위·하위 제어기를 두되, 하위에 임무별로 학습된 모델 여러 개를 넣고 상위가 상황 보고 고르게 할 수 있나?</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th>갈래</th><th>구조</th><th>핵심 연구 문제</th><th>키워드</th></tr></thead><tbody><tr><td>선택 (Switching)</td><td>상위가 하위 제어기 중 하나를 고름. 상위는 RL이어도 되고 FSM·Behavior Tree여도 됨</td><td>언제 전환하나, 전환해도 안정한가(dwell time, Lyapunov). 개별 제어기가 안정해도 전환 시스템 전체는 보장 안 됨</td><td>HRL, Options (Sutton 1999), Option-Critic (Bacon 2017), Supervisory Control</td></tr><tr><td>보완 (Residual)</td><td><code>τ = τ_model-based + τ_RL</code>. 기본 성능은 모델기반, RL은 모델에 안 잡힌 외란만 보정</td><td>RL 보정분의 추력 제한·안정성. RL을 더했다고 안정성이 생기진 않음</td><td>Residual RL (Johannink 2019)</td></tr><tr><td>계층 분담</td><td>RL이 목표 속도·방향을 내고 MPC가 동역학·제약 지키며 추력 계산</td><td>RL 결정 능력 + MPC 제약 처리를 같이 쓰기</td><td>RL + MPPI (AUV 장애물 회피, 2025)</td></tr></tbody></table></div>
+<blockquote class="callout tip" data-callout="tip">
+<div class="callout-title">
+                  <div class="callout-icon"></div>
+                  <div class="callout-title-inner"><p>&quot;어떤 제어기를 쓸까(Controller Selection)&quot;와 &quot;어떻게 합칠까(Controller Integration)&quot;는 다른 질문이다. 제어 이론에 무게를 두면 Integration부터 보는 게 RL 역할을 정의하기 쉽다. </p></div>
+                  
+                </div>
+</blockquote>
+<ul>
+<li>임무 중심 HRL(경로추종·회피·정점유지·도킹 중 고르기)은 mission planning 쪽, 같은 임무를 환경별(약한·강한·불규칙 해류)로 나눈 HRL은 adaptive / robust / learning-based control 쪽에 가깝다.</li>
+<li>“회피는 RL, 정점유지는 MPC가 잘한다”는 가정만으로는 근거가 안 된다. <strong>같은 AUV, 같은 환경에서 둘 다 돌려 비교한 결과</strong>가 있어야 모드 배정이 정당화된다. 로드맵 <code>compare</code> → <code>hybrid</code> 순서와 같다.</li>
+<li>단순한 임무면 FSM으로 충분하다. 상위 RL을 쓰려면 규칙기반 전환보다 어디서 나은지를 보여야 한다.</li>
+<li>대화에서 제안한 순서: ① 해류 속 정점유지 하나로 MPC vs RL 비교 → ② Switching 또는 Residual RL 설계 → ③ 경로추종·회피·자세 전환까지 다중 임무로 확장.</li>
+</ul>
+<p>→ 대화 전문 <a href="../90_Archive/Direction/2026-10-19-계층적-강화학습과-하이브리드-제어" class="internal alias" data-slug="90_Archive/Direction/2026-10-19-계층적-강화학습과-하이브리드-제어">2026-10-19 계층적 강화학습과 하이브리드 제어</a> · 정점유지 자세 아이디어와 이어짐 <a href="../30_Knowledge/정위치-유지-자세-선택" class="internal alias" data-slug="30_Knowledge/정위치-유지-자세-선택">정위치 유지 자세 선택</a></p>
+<hr/>
+<h2 id="전문성을-어디에-두는가--이-대화의-결론">전문성을 어디에 두는가 — 이 대화의 결론<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#전문성을-어디에-두는가--이-대화의-결론" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<blockquote>
+<p>“PID, MPC와 PPO, SAC를 모두 공부했습니다.” → 기술 스택 두 개를 배웠다는 이야기</p>
+<p>“<strong>모델 불확실성과 외란이 큰 무인이동체의 강인한 제어</strong>를 연구했습니다. 정확한 동역학을 얻기 어려운 부분에 learning을 적용하고, 안정성이 중요한 부분에는 model-based control을 결합했습니다. 시뮬레이션 정책을 실제 플랫폼까지 이전하는 Sim-to-Real도 수행했습니다.” → 전문분야</p>
+</blockquote>
+<p>PID와 RL은 전문분야가 아니라 그 문제를 풀기 위해 쓴 <strong>도구</strong>다.</p>
+<blockquote>
+<p>망치를 잘 쓰는 사람이 아니라, <strong>교량의 진동 문제를 해결하는 사람이고 필요하면 망치도 용접기도 쓰는 사람.</strong></p>
+</blockquote>
+<p>주력 축은 하나 있어도 된다. <code>전문 문제: 무인이동체 자율제어</code> 안에서 <code>주력: Learning-Based Control</code> + <code>강한 기반: Dynamics / Classical Control</code> 같은 구조.</p>
+<p>→ 이 결론이 로드맵이 된 곳: <a href="../Research-Direction" class="internal alias" data-slug="Research-Direction">Research Direction</a></p>
+<hr/>
+<h2 id="내가-실제로-써본-곳">내가 실제로 써본 곳<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#내가-실제로-써본-곳" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<ul>
+<li><a href="../20_Projects/Capstone-Otter-USV/Capstone-Otter-USV" class="internal alias" data-slug="20_Projects/Capstone-Otter-USV/Capstone-Otter-USV">Capstone Otter USV</a> · <a href="../20_Projects/ROS2-USV-TermProject/ROS2-USV-Term-Project" class="internal alias" data-slug="20_Projects/ROS2-USV-TermProject/ROS2-USV-Term-Project">ROS2 USV Term Project</a> — 규칙기반 경로추종·충돌회피</li>
+<li><a href="../20_Projects/AMET2026-Physicar/AMET2026-Physicar" class="internal alias" data-slug="20_Projects/AMET2026-Physicar/AMET2026-Physicar">AMET2026 Physicar</a> — 카메라 corridor planner, 상태 기반 회피</li>
+<li><a href="../20_Projects/DSC-Autonomous-Driving/DSC-Autonomous-Driving" class="internal alias" data-slug="20_Projects/DSC-Autonomous-Driving/DSC-Autonomous-Driving">DSC Autonomous Driving</a> — RL 보상함수 설계. 여기서 3번 결론을 몸으로 겪었다</li>
+</ul>
+<h2 id="헷갈렸던-점">헷갈렸던 점<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#헷갈렸던-점" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<ul>
+<li><strong>“보상만 잘 주면 되던데?”</strong> 라는 감각 — 틀린 게 아니다. 로봇 하나를 한 환경에서 걷게 하는 건 현대 RL이 이미 상당히 잘한다. 어려운 건 그다음, <em>하나의 정책을 계속 살려두면서 새 능력을 계속 얹는 것</em>(continual / lifelong RL)이다.</li>
+<li><strong>“컴퓨터는 기억력이 좋은데 왜 아기 키우듯 몇 년 학습시키지 않지?”</strong> — 아이디어가 혁신적이지 않아서가 아니라 실제로 어려워서 못 푼 쪽에 가깝다. <a href="../Catastrophic-Forgetting" class="internal alias" data-slug="Catastrophic-Forgetting">Catastrophic Forgetting</a>, stability-plasticity 문제.</li>
+</ul>
+<h2 id="참고">참고<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#참고" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<ul>
+<li><a href="../90_Archive/Direction/2026-09-03-강화학습과-규칙기반-제어-비교" class="internal alias" data-slug="90_Archive/Direction/2026-09-03-강화학습과-규칙기반-제어-비교">2026-09-03 강화학습과 규칙기반 제어 비교</a> — 대화 전문 (46개 메시지)</li>
+<li><a href="../90_Archive/Direction/2026-10-19-계층적-강화학습과-하이브리드-제어" class="internal alias" data-slug="90_Archive/Direction/2026-10-19-계층적-강화학습과-하이브리드-제어">2026-10-19 계층적 강화학습과 하이브리드 제어</a> — 경계 설계 세 갈래의 대화 전문</li>
+<li>대화에서 GPT가 인용한 논문(원문 미확인): Sutton·Precup·Singh 1999 <em>Between MDPs and Semi-MDPs</em> · Bacon 2017 <em>The Option-Critic Architecture</em> · Johannink 2019 <em>Residual RL for Robot Control</em> · <em>RL-Based MPPI Control for Obstacle Avoidance of AUVs</em> (2025)</li>
+<li><a href="../Research-Direction" class="internal alias" data-slug="Research-Direction">Research Direction</a> — 여기서 나온 로드맵</li>
+</ul></article><hr/><div class="page-footer"></div></div><div class="right sidebar"><div class="graph"><h3>그래프 뷰</h3><div class="graph-outer"><div class="graph-container" data-cfg="{&quot;drag&quot;:true,&quot;zoom&quot;:true,&quot;depth&quot;:1,&quot;scale&quot;:1.1,&quot;repelForce&quot;:0.5,&quot;centerForce&quot;:0.3,&quot;linkDistance&quot;:30,&quot;fontSize&quot;:0.6,&quot;opacityScale&quot;:1,&quot;showTags&quot;:true,&quot;removeTags&quot;:[],&quot;focusOnHover&quot;:false,&quot;enableRadial&quot;:false}"></div><button class="global-graph-icon" aria-label="Global Graph"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 55 55" fill="currentColor" xml:space="preserve"><path d="M49,0c-3.309,0-6,2.691-6,6c0,1.035,0.263,2.009,0.726,2.86l-9.829,9.829C32.542,17.634,30.846,17,29,17
+                s-3.542,0.634-4.898,1.688l-7.669-7.669C16.785,10.424,17,9.74,17,9c0-2.206-1.794-4-4-4S9,6.794,9,9s1.794,4,4,4
+                c0.74,0,1.424-0.215,2.019-0.567l7.669,7.669C21.634,21.458,21,23.154,21,25s0.634,3.542,1.688,4.897L10.024,42.562
+                C8.958,41.595,7.549,41,6,41c-3.309,0-6,2.691-6,6s2.691,6,6,6s6-2.691,6-6c0-1.035-0.263-2.009-0.726-2.86l12.829-12.829
+                c1.106,0.86,2.44,1.436,3.898,1.619v10.16c-2.833,0.478-5,2.942-5,5.91c0,3.309,2.691,6,6,6s6-2.691,6-6c0-2.967-2.167-5.431-5-5.91
+                v-10.16c1.458-0.183,2.792-0.759,3.898-1.619l7.669,7.669C41.215,39.576,41,40.26,41,41c0,2.206,1.794,4,4,4s4-1.794,4-4
+                s-1.794-4-4-4c-0.74,0-1.424,0.215-2.019,0.567l-7.669-7.669C36.366,28.542,37,26.846,37,25s-0.634-3.542-1.688-4.897l9.665-9.665
+                C46.042,11.405,47.451,12,49,12c3.309,0,6-2.691,6-6S52.309,0,49,0z M11,9c0-1.103,0.897-2,2-2s2,0.897,2,2s-0.897,2-2,2
+                S11,10.103,11,9z M6,51c-2.206,0-4-1.794-4-4s1.794-4,4-4s4,1.794,4,4S8.206,51,6,51z M33,49c0,2.206-1.794,4-4,4s-4-1.794-4-4
+                s1.794-4,4-4S33,46.794,33,49z M29,31c-3.309,0-6-2.691-6-6s2.691-6,6-6s6,2.691,6,6S32.309,31,29,31z M47,41c0,1.103-0.897,2-2,2
+                s-2-0.897-2-2s0.897-2,2-2S47,39.897,47,41z M49,10c-2.206,0-4-1.794-4-4s1.794-4,4-4s4,1.794,4,4S51.206,10,49,10z"></path></svg></button></div><div class="global-graph-outer"><div class="global-graph-container" data-cfg="{&quot;drag&quot;:true,&quot;zoom&quot;:true,&quot;depth&quot;:-1,&quot;scale&quot;:0.9,&quot;repelForce&quot;:0.5,&quot;centerForce&quot;:0.2,&quot;linkDistance&quot;:30,&quot;fontSize&quot;:0.6,&quot;opacityScale&quot;:1,&quot;showTags&quot;:true,&quot;removeTags&quot;:[],&quot;focusOnHover&quot;:true,&quot;enableRadial&quot;:true}"></div></div></div><div class="toc desktop-only"><button type="button" class="toc-header" aria-controls="toc-83" aria-expanded="true"><h3>목차</h3><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fold"><polyline points="6 9 12 15 18 9"></polyline></svg></button><ul id="list-1" class="toc-content overflow"><li class="depth-0"><a href="#고전제어와-강화학습" data-for="고전제어와-강화학습">고전제어와 강화학습</a></li><li class="depth-1"><a href="#한-줄로" data-for="한-줄로">한 줄로</a></li><li class="depth-1"><a href="#왜-필요한가" data-for="왜-필요한가">왜 필요한가</a></li><li class="depth-1"><a href="#결론-여섯-개" data-for="결론-여섯-개">결론 여섯 개</a></li><li class="depth-2"><a href="#1-설계하는-대상이-다르다" data-for="1-설계하는-대상이-다르다">1. 설계하는 대상이 다르다</a></li><li class="depth-2"><a href="#2-rl은-물리-지식을-없앤-게-아니라-위치를-옮겼다" data-for="2-rl은-물리-지식을-없앤-게-아니라-위치를-옮겼다">2. RL은 물리 지식을 없앤 게 아니라 위치를 옮겼다</a></li><li class="depth-2"><a href="#3-rl-개발이-답답했던-건-잘못-배워서가-아니다" data-for="3-rl-개발이-답답했던-건-잘못-배워서가-아니다">3. RL 개발이 답답했던 건 잘못 배워서가 아니다</a></li><li class="depth-2"><a href="#4-과적합망각은-원리적-한계가-아니다" data-for="4-과적합망각은-원리적-한계가-아니다">4. 과적합·망각은 “원리적 한계”가 아니다</a></li><li class="depth-2"><a href="#5-전환은-대체가-아니라-침투다--ai는-위에서-아래로-내려온다" data-for="5-전환은-대체가-아니라-침투다--ai는-위에서-아래로-내려온다">5. 전환은 ‘대체’가 아니라 ‘침투’다 — AI는 위에서 아래로 내려온다</a></li><li class="depth-2"><a href="#6-그래서-가치-있는-위치는-경계-설계자" data-for="6-그래서-가치-있는-위치는-경계-설계자">6. 그래서 가치 있는 위치는 ‘경계 설계자’</a></li><li class="depth-1"><a href="#경계를-설계하는-방법은-세-갈래-2026-10-19-추가" data-for="경계를-설계하는-방법은-세-갈래-2026-10-19-추가">경계를 설계하는 방법은 세 갈래 (2026-10-19 추가)</a></li><li class="depth-1"><a href="#전문성을-어디에-두는가--이-대화의-결론" data-for="전문성을-어디에-두는가--이-대화의-결론">전문성을 어디에 두는가 — 이 대화의 결론</a></li><li class="depth-1"><a href="#내가-실제로-써본-곳" data-for="내가-실제로-써본-곳">내가 실제로 써본 곳</a></li><li class="depth-1"><a href="#헷갈렸던-점" data-for="헷갈렸던-점">헷갈렸던 점</a></li><li class="depth-1"><a href="#참고" data-for="참고">참고</a></li><li class="overflow-end"></li></ul></div><div class="backlinks"><h3>백링크</h3><ul id="list-2" class="overflow"><li><a href="../10_Daily/2026-10-19" class="internal">2026-10-19</a></li><li><a href="../10_Daily/2026-11-05" class="internal">2026-11-05</a></li><li><a href="../20_Projects/AUV-Control-Sim/AUV-Control-Simulation" class="internal">AUV Control Simulation</a></li><li><a href="../30_Knowledge/Extremum-Seeking-Control" class="internal">Extremum Seeking Control</a></li><li><a href="../30_Knowledge/Hydrodynamic-and-Restoring-Forces" class="internal">Hydrodynamic and Restoring Forces</a></li><li><a href="../30_Knowledge/Multi-armed-Bandit" class="internal">Multi-armed Bandit</a></li><li><a href="../30_Knowledge/Reward-Shaping" class="internal">Reward Shaping</a></li><li><a href="../30_Knowledge/Sim-to-Real" class="internal">Sim-to-Real</a></li><li><a href="../30_Knowledge/강화학습" class="internal">강화학습</a></li><li><a href="../30_Knowledge/시뮬레이션-환경-현실성" class="internal">시뮬레이션 환경 현실성</a></li><li><a href="../90_Archive/Direction/2026-10-19-계층적-강화학습과-하이브리드-제어" class="internal">2026-10-19 계층적 강화학습과 하이브리드 제어</a></li><li><a href="../Home" class="internal">Home</a></li><li><a href="../" class="internal">Research Direction</a></li><li class="overflow-end"></li></ul></div></div><footer class><p>Created with <a href="https://quartz.jzhao.xyz/">Quartz v4.5.2</a> © 2026</p><ul></ul></footer></div></div></body><script type="application/javascript">function n(){let t=this.parentElement;t.classList.toggle("is-collapsed");let e=t.getElementsByClassName("callout-content")[0];if(!e)return;let l=t.classList.contains("is-collapsed");e.style.gridTemplateRows=l?"0fr":"1fr"}function c(){let t=document.getElementsByClassName("callout is-collapsible");for(let e of t){let l=e.getElementsByClassName("callout-title")[0],s=e.getElementsByClassName("callout-content")[0];if(!l||!s)continue;l.addEventListener("click",n),window.addCleanup(()=>l.removeEventListener("click",n));let o=e.classList.contains("is-collapsed");s.style.gridTemplateRows=o?"0fr":"1fr"}}document.addEventListener("nav",c);
+</script><script type="module">function f(i,e){if(!i)return;function r(o){o.target===this&&(o.preventDefault(),o.stopPropagation(),e())}function t(o){o.key.startsWith("Esc")&&(o.preventDefault(),e())}i?.addEventListener("click",r),window.addCleanup(()=>i?.removeEventListener("click",r)),document.addEventListener("keydown",t),window.addCleanup(()=>document.removeEventListener("keydown",t))}function y(i){for(;i.firstChild;)i.removeChild(i.firstChild)}var h=class{constructor(e,r){this.container=e;this.content=r;this.setupEventListeners(),this.setupNavigationControls(),this.resetTransform()}isDragging=!1;startPan={x:0,y:0};currentPan={x:0,y:0};scale=1;MIN_SCALE=.5;MAX_SCALE=3;cleanups=[];setupEventListeners(){let e=this.onMouseDown.bind(this),r=this.onMouseMove.bind(this),t=this.onMouseUp.bind(this),o=this.resetTransform.bind(this);this.container.addEventListener("mousedown",e),document.addEventListener("mousemove",r),document.addEventListener("mouseup",t),window.addEventListener("resize",o),this.cleanups.push(()=>this.container.removeEventListener("mousedown",e),()=>document.removeEventListener("mousemove",r),()=>document.removeEventListener("mouseup",t),()=>window.removeEventListener("resize",o))}cleanup(){for(let e of this.cleanups)e()}setupNavigationControls(){let e=document.createElement("div");e.className="mermaid-controls";let r=this.createButton("+",()=>this.zoom(.1)),t=this.createButton("-",()=>this.zoom(-.1)),o=this.createButton("Reset",()=>this.resetTransform());e.appendChild(t),e.appendChild(o),e.appendChild(r),this.container.appendChild(e)}createButton(e,r){let t=document.createElement("button");return t.textContent=e,t.className="mermaid-control-button",t.addEventListener("click",r),window.addCleanup(()=>t.removeEventListener("click",r)),t}onMouseDown(e){e.button===0&&(this.isDragging=!0,this.startPan={x:e.clientX-this.currentPan.x,y:e.clientY-this.currentPan.y},this.container.style.cursor="grabbing")}onMouseMove(e){this.isDragging&&(e.preventDefault(),this.currentPan={x:e.clientX-this.startPan.x,y:e.clientY-this.startPan.y},this.updateTransform())}onMouseUp(){this.isDragging=!1,this.container.style.cursor="grab"}zoom(e){let r=Math.min(Math.max(this.scale+e,this.MIN_SCALE),this.MAX_SCALE),t=this.content.getBoundingClientRect(),o=t.width/2,n=t.height/2,c=r-this.scale;this.currentPan.x-=o*c,this.currentPan.y-=n*c,this.scale=r,this.updateTransform()}updateTransform(){this.content.style.transform=`translate(${this.currentPan.x}px, ${this.currentPan.y}px) scale(${this.scale})`}resetTransform(){this.scale=1;let e=this.content.querySelector("svg");this.currentPan={x:e.getBoundingClientRect().width/2,y:e.getBoundingClientRect().height/2},this.updateTransform()}},C=["--secondary","--tertiary","--gray","--light","--lightgray","--highlight","--dark","--darkgray","--codeFont"],E;document.addEventListener("nav",async()=>{let e=document.querySelector(".center").querySelectorAll("code.mermaid");if(e.length===0)return;E||=await import("https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.4.0/mermaid.esm.min.mjs");let r=E.default,t=new WeakMap;for(let n of e)t.set(n,n.innerText);async function o(){for(let s of e){s.removeAttribute("data-processed");let a=t.get(s);a&&(s.innerHTML=a)}let n=C.reduce((s,a)=>(s[a]=window.getComputedStyle(document.documentElement).getPropertyValue(a),s),{}),c=document.documentElement.getAttribute("saved-theme")==="dark";r.initialize({startOnLoad:!1,securityLevel:"loose",theme:c?"dark":"base",themeVariables:{fontFamily:n["--codeFont"],primaryColor:n["--light"],primaryTextColor:n["--darkgray"],primaryBorderColor:n["--tertiary"],lineColor:n["--darkgray"],secondaryColor:n["--secondary"],tertiaryColor:n["--tertiary"],clusterBkg:n["--light"],edgeLabelBackground:n["--highlight"]}}),await r.run({nodes:e})}await o(),document.addEventListener("themechange",o),window.addCleanup(()=>document.removeEventListener("themechange",o));for(let n=0;n<e.length;n++){let v=function(){let g=l.querySelector("#mermaid-space"),m=l.querySelector(".mermaid-content");if(!m)return;y(m);let w=c.querySelector("svg").cloneNode(!0);m.appendChild(w),l.classList.add("active"),g.style.cursor="grab",u=new h(g,m)},M=function(){l.classList.remove("active"),u?.cleanup(),u=null},c=e[n],s=c.parentElement,a=s.querySelector(".clipboard-button"),d=s.querySelector(".expand-button"),p=window.getComputedStyle(a),L=a.offsetWidth+parseFloat(p.marginLeft||"0")+parseFloat(p.marginRight||"0");d.style.right=`calc(${L}px + 0.3rem)`,s.prepend(d);let l=s.querySelector("#mermaid-container");if(!l)return;let u=null;d.addEventListener("click",v),f(l,M),window.addCleanup(()=>{u?.cleanup(),d.removeEventListener("click",v)})}});
+</script><script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/copy-tex.min.js" type="application/javascript"></script><script src="../postscript.js" type="module"></script></html>

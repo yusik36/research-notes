@@ -1,0 +1,1505 @@
+<!DOCTYPE html>
+<html lang="ko" dir="ltr"><head><title>AMET2026 Physicar</title><meta charset="utf-8"/><link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com"/><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto Sans KR:wght@400;700&amp;family=Noto Sans KR:ital,wght@0,400;0,600;1,400;1,600&amp;family=IBM Plex Mono:wght@400;600&amp;display=swap"/><link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin="anonymous"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta name="og:site_name" content="LabNote"/><meta property="og:title" content="AMET2026 Physicar"/><meta property="og:type" content="website"/><meta name="twitter:card" content="summary_large_image"/><meta name="twitter:title" content="AMET2026 Physicar"/><meta name="twitter:description" content="2026 AMET 자율주행 해커톤 — Physicar 이 프로젝트가 채우는 로드맵 칸: pipeline evidence → Research Direction Source 작업 폴더 C:\2026AMET자율운행자동차대회 · 코드 physicar_ws (= GitHub yusik36/ANSL_AMET2026, private) Claude 세션 29개 (2026-08-13 ~ 08-31) · 사진 39 · 영상 26 원본 문서: physicar_ws/README.md, physicar_ws/YS_HANDOVER.md 2026-09-01 ..."/><meta property="og:description" content="2026 AMET 자율주행 해커톤 — Physicar 이 프로젝트가 채우는 로드맵 칸: pipeline evidence → Research Direction Source 작업 폴더 C:\2026AMET자율운행자동차대회 · 코드 physicar_ws (= GitHub yusik36/ANSL_AMET2026, private) Claude 세션 29개 (2026-08-13 ~ 08-31) · 사진 39 · 영상 26 원본 문서: physicar_ws/README.md, physicar_ws/YS_HANDOVER.md 2026-09-01 ..."/><meta property="og:image:alt" content="2026 AMET 자율주행 해커톤 — Physicar 이 프로젝트가 채우는 로드맵 칸: pipeline evidence → Research Direction Source 작업 폴더 C:\2026AMET자율운행자동차대회 · 코드 physicar_ws (= GitHub yusik36/ANSL_AMET2026, private) Claude 세션 29개 (2026-08-13 ~ 08-31) · 사진 39 · 영상 26 원본 문서: physicar_ws/README.md, physicar_ws/YS_HANDOVER.md 2026-09-01 ..."/><meta property="og:image" content="https://yusik36.github.io/research-notes/static/og-image.png"/><meta property="og:image:url" content="https://yusik36.github.io/research-notes/static/og-image.png"/><meta name="twitter:image" content="https://yusik36.github.io/research-notes/static/og-image.png"/><meta property="og:image:type" content="image/.png"/><meta property="twitter:domain" content="yusik36.github.io/research-notes"/><meta property="og:url" content="https://yusik36.github.io/research-notes/20_Projects/AMET2026-Physicar/AMET2026-Physicar"/><meta property="twitter:url" content="https://yusik36.github.io/research-notes/20_Projects/AMET2026-Physicar/AMET2026-Physicar"/><link rel="icon" href="../../static/icon.png"/><meta name="description" content="2026 AMET 자율주행 해커톤 — Physicar 이 프로젝트가 채우는 로드맵 칸: pipeline evidence → Research Direction Source 작업 폴더 C:\2026AMET자율운행자동차대회 · 코드 physicar_ws (= GitHub yusik36/ANSL_AMET2026, private) Claude 세션 29개 (2026-08-13 ~ 08-31) · 사진 39 · 영상 26 원본 문서: physicar_ws/README.md, physicar_ws/YS_HANDOVER.md 2026-09-01 ..."/><meta name="generator" content="Quartz"/><link href="../../index.css" rel="stylesheet" type="text/css" spa-preserve/><style>.expand-button {
+  position: absolute;
+  display: flex;
+  float: right;
+  padding: 0.4rem;
+  margin: 0.3rem;
+  right: 0;
+  color: var(--gray);
+  border-color: var(--dark);
+  background-color: var(--light);
+  border: 1px solid;
+  border-radius: 5px;
+  opacity: 0;
+  transition: 0.2s;
+}
+.expand-button > svg {
+  fill: var(--light);
+  filter: contrast(0.3);
+}
+.expand-button:hover {
+  cursor: pointer;
+  border-color: var(--secondary);
+}
+.expand-button:focus {
+  outline: 0;
+}
+
+pre:hover > .expand-button {
+  opacity: 1;
+  transition: 0.2s;
+}
+
+#mermaid-container {
+  position: fixed;
+  contain: layout;
+  z-index: 999;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  display: none;
+  backdrop-filter: blur(4px);
+  background: rgba(0, 0, 0, 0.5);
+}
+#mermaid-container.active {
+  display: inline-block;
+}
+#mermaid-container > #mermaid-space {
+  border: 1px solid var(--lightgray);
+  background-color: var(--light);
+  border-radius: 5px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 80vh;
+  width: 80vw;
+  overflow: hidden;
+}
+#mermaid-container > #mermaid-space > .mermaid-content {
+  padding: 2rem;
+  position: relative;
+  transform-origin: 0 0;
+  transition: transform 0.1s ease;
+  overflow: visible;
+  min-height: 200px;
+  min-width: 200px;
+}
+#mermaid-container > #mermaid-space > .mermaid-content pre {
+  margin: 0;
+  border: none;
+}
+#mermaid-container > #mermaid-space > .mermaid-content svg {
+  max-width: none;
+  height: auto;
+}
+#mermaid-container > #mermaid-space > .mermaid-controls {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  gap: 8px;
+  padding: 8px;
+  background: var(--light);
+  border: 1px solid var(--lightgray);
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 2;
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 1px solid var(--lightgray);
+  background: var(--light);
+  color: var(--dark);
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  font-family: var(--bodyFont);
+  transition: all 0.2s ease;
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button:hover {
+  background: var(--lightgray);
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button:active {
+  transform: translateY(1px);
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button:nth-child(2) {
+  width: auto;
+  padding: 0 12px;
+  font-size: 14px;
+}
+/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VSb290IjoiQzpcXEFyY2hpdmVcXOyeoeuLpOq1rOumrFxcVVNU7J247YS0X+yngOybkOyEnFxcc2l0ZVxccXVhcnR6XFxjb21wb25lbnRzXFxzdHlsZXMiLCJzb3VyY2VzIjpbIm1lcm1haWQuaW5saW5lLnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDRTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTs7QUFFQTtFQUNFO0VBQ0E7O0FBR0Y7RUFDRTtFQUNBOztBQUdGO0VBQ0U7OztBQUtGO0VBQ0U7RUFDQTs7O0FBSUo7RUFDRTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBOztBQUVBO0VBQ0U7O0FBR0Y7RUFDRTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTs7QUFFQTtFQUNFO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBOztBQUVBO0VBQ0U7RUFDQTs7QUFHRjtFQUNFO0VBQ0E7O0FBSUo7RUFDRTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBOztBQUVBO0VBQ0U7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTs7QUFFQTtFQUNFOztBQUdGO0VBQ0U7O0FBSUY7RUFDRTtFQUNBO0VBQ0EiLCJzb3VyY2VzQ29udGVudCI6WyIuZXhwYW5kLWJ1dHRvbiB7XG4gIHBvc2l0aW9uOiBhYnNvbHV0ZTtcbiAgZGlzcGxheTogZmxleDtcbiAgZmxvYXQ6IHJpZ2h0O1xuICBwYWRkaW5nOiAwLjRyZW07XG4gIG1hcmdpbjogMC4zcmVtO1xuICByaWdodDogMDsgLy8gTk9URTogcmlnaHQgd2lsbCBiZSBzZXQgaW4gbWVybWFpZC5pbmxpbmUudHNcbiAgY29sb3I6IHZhcigtLWdyYXkpO1xuICBib3JkZXItY29sb3I6IHZhcigtLWRhcmspO1xuICBiYWNrZ3JvdW5kLWNvbG9yOiB2YXIoLS1saWdodCk7XG4gIGJvcmRlcjogMXB4IHNvbGlkO1xuICBib3JkZXItcmFkaXVzOiA1cHg7XG4gIG9wYWNpdHk6IDA7XG4gIHRyYW5zaXRpb246IDAuMnM7XG5cbiAgJiA+IHN2ZyB7XG4gICAgZmlsbDogdmFyKC0tbGlnaHQpO1xuICAgIGZpbHRlcjogY29udHJhc3QoMC4zKTtcbiAgfVxuXG4gICY6aG92ZXIge1xuICAgIGN1cnNvcjogcG9pbnRlcjtcbiAgICBib3JkZXItY29sb3I6IHZhcigtLXNlY29uZGFyeSk7XG4gIH1cblxuICAmOmZvY3VzIHtcbiAgICBvdXRsaW5lOiAwO1xuICB9XG59XG5cbnByZSB7XG4gICY6aG92ZXIgPiAuZXhwYW5kLWJ1dHRvbiB7XG4gICAgb3BhY2l0eTogMTtcbiAgICB0cmFuc2l0aW9uOiAwLjJzO1xuICB9XG59XG5cbiNtZXJtYWlkLWNvbnRhaW5lciB7XG4gIHBvc2l0aW9uOiBmaXhlZDtcbiAgY29udGFpbjogbGF5b3V0O1xuICB6LWluZGV4OiA5OTk7XG4gIGxlZnQ6IDA7XG4gIHRvcDogMDtcbiAgd2lkdGg6IDEwMHZ3O1xuICBoZWlnaHQ6IDEwMHZoO1xuICBvdmVyZmxvdzogaGlkZGVuO1xuICBkaXNwbGF5OiBub25lO1xuICBiYWNrZHJvcC1maWx0ZXI6IGJsdXIoNHB4KTtcbiAgYmFja2dyb3VuZDogcmdiYSgwLCAwLCAwLCAwLjUpO1xuXG4gICYuYWN0aXZlIHtcbiAgICBkaXNwbGF5OiBpbmxpbmUtYmxvY2s7XG4gIH1cblxuICAmID4gI21lcm1haWQtc3BhY2Uge1xuICAgIGJvcmRlcjogMXB4IHNvbGlkIHZhcigtLWxpZ2h0Z3JheSk7XG4gICAgYmFja2dyb3VuZC1jb2xvcjogdmFyKC0tbGlnaHQpO1xuICAgIGJvcmRlci1yYWRpdXM6IDVweDtcbiAgICBwb3NpdGlvbjogZml4ZWQ7XG4gICAgdG9wOiA1MCU7XG4gICAgbGVmdDogNTAlO1xuICAgIHRyYW5zZm9ybTogdHJhbnNsYXRlKC01MCUsIC01MCUpO1xuICAgIGhlaWdodDogODB2aDtcbiAgICB3aWR0aDogODB2dztcbiAgICBvdmVyZmxvdzogaGlkZGVuO1xuXG4gICAgJiA+IC5tZXJtYWlkLWNvbnRlbnQge1xuICAgICAgcGFkZGluZzogMnJlbTtcbiAgICAgIHBvc2l0aW9uOiByZWxhdGl2ZTtcbiAgICAgIHRyYW5zZm9ybS1vcmlnaW46IDAgMDtcbiAgICAgIHRyYW5zaXRpb246IHRyYW5zZm9ybSAwLjFzIGVhc2U7XG4gICAgICBvdmVyZmxvdzogdmlzaWJsZTtcbiAgICAgIG1pbi1oZWlnaHQ6IDIwMHB4O1xuICAgICAgbWluLXdpZHRoOiAyMDBweDtcblxuICAgICAgcHJlIHtcbiAgICAgICAgbWFyZ2luOiAwO1xuICAgICAgICBib3JkZXI6IG5vbmU7XG4gICAgICB9XG5cbiAgICAgIHN2ZyB7XG4gICAgICAgIG1heC13aWR0aDogbm9uZTtcbiAgICAgICAgaGVpZ2h0OiBhdXRvO1xuICAgICAgfVxuICAgIH1cblxuICAgICYgPiAubWVybWFpZC1jb250cm9scyB7XG4gICAgICBwb3NpdGlvbjogYWJzb2x1dGU7XG4gICAgICBib3R0b206IDIwcHg7XG4gICAgICByaWdodDogMjBweDtcbiAgICAgIGRpc3BsYXk6IGZsZXg7XG4gICAgICBnYXA6IDhweDtcbiAgICAgIHBhZGRpbmc6IDhweDtcbiAgICAgIGJhY2tncm91bmQ6IHZhcigtLWxpZ2h0KTtcbiAgICAgIGJvcmRlcjogMXB4IHNvbGlkIHZhcigtLWxpZ2h0Z3JheSk7XG4gICAgICBib3JkZXItcmFkaXVzOiA2cHg7XG4gICAgICBib3gtc2hhZG93OiAwIDJweCA0cHggcmdiYSgwLCAwLCAwLCAwLjEpO1xuICAgICAgei1pbmRleDogMjtcblxuICAgICAgLm1lcm1haWQtY29udHJvbC1idXR0b24ge1xuICAgICAgICBkaXNwbGF5OiBmbGV4O1xuICAgICAgICBhbGlnbi1pdGVtczogY2VudGVyO1xuICAgICAgICBqdXN0aWZ5LWNvbnRlbnQ6IGNlbnRlcjtcbiAgICAgICAgd2lkdGg6IDMycHg7XG4gICAgICAgIGhlaWdodDogMzJweDtcbiAgICAgICAgcGFkZGluZzogMDtcbiAgICAgICAgYm9yZGVyOiAxcHggc29saWQgdmFyKC0tbGlnaHRncmF5KTtcbiAgICAgICAgYmFja2dyb3VuZDogdmFyKC0tbGlnaHQpO1xuICAgICAgICBjb2xvcjogdmFyKC0tZGFyayk7XG4gICAgICAgIGJvcmRlci1yYWRpdXM6IDRweDtcbiAgICAgICAgY3Vyc29yOiBwb2ludGVyO1xuICAgICAgICBmb250LXNpemU6IDE2cHg7XG4gICAgICAgIGZvbnQtZmFtaWx5OiB2YXIoLS1ib2R5Rm9udCk7XG4gICAgICAgIHRyYW5zaXRpb246IGFsbCAwLjJzIGVhc2U7XG5cbiAgICAgICAgJjpob3ZlciB7XG4gICAgICAgICAgYmFja2dyb3VuZDogdmFyKC0tbGlnaHRncmF5KTtcbiAgICAgICAgfVxuXG4gICAgICAgICY6YWN0aXZlIHtcbiAgICAgICAgICB0cmFuc2Zvcm06IHRyYW5zbGF0ZVkoMXB4KTtcbiAgICAgICAgfVxuXG4gICAgICAgIC8vIFN0eWxlIHRoZSByZXNldCBidXR0b24gZGlmZmVyZW50bHlcbiAgICAgICAgJjpudGgtY2hpbGQoMikge1xuICAgICAgICAgIHdpZHRoOiBhdXRvO1xuICAgICAgICAgIHBhZGRpbmc6IDAgMTJweDtcbiAgICAgICAgICBmb250LXNpemU6IDE0cHg7XG4gICAgICAgIH1cbiAgICAgIH1cbiAgICB9XG4gIH1cbn1cbiJdfQ== */</style><link href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" rel="stylesheet" type="text/css" spa-preserve/><script src="../../prescript.js" type="application/javascript" spa-preserve></script><script type="application/javascript" spa-preserve>const fetchData = fetch("../../static/contentIndex.json").then(data => data.json())</script></head><body data-slug="20_Projects/AMET2026-Physicar/AMET2026-Physicar"><div id="quartz-root" class="page"><div id="quartz-body"><div class="left sidebar"><h2 class="page-title"><a href="../..">LabNote</a></h2><div class="spacer mobile-only"></div><div class="flex-component" style="flex-direction: row; flex-wrap: nowrap; gap: 1rem;"><div style="flex-grow: 1; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><div class="search"><button class="search-button"><svg role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19.9 19.7"><title>Search</title><g class="search-path" fill="none"><path stroke-linecap="square" d="M18.5 18.3l-5.4-5.4"></path><circle cx="8" cy="8" r="7"></circle></g></svg><p>검색</p></button><div class="search-container"><div class="search-space"><input autocomplete="off" class="search-bar" name="search" type="text" aria-label="검색어를 입력하세요" placeholder="검색어를 입력하세요"/><div class="search-layout" data-preview="true"></div></div></div></div></div><div style="flex-grow: 0; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><button class="darkmode"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="dayIcon" x="0px" y="0px" viewBox="0 0 35 35" style="enable-background:new 0 0 35 35" xml:space="preserve" aria-label="다크 모드"><title>다크 모드</title><path d="M6,17.5C6,16.672,5.328,16,4.5,16h-3C0.672,16,0,16.672,0,17.5    S0.672,19,1.5,19h3C5.328,19,6,18.328,6,17.5z M7.5,26c-0.414,0-0.789,0.168-1.061,0.439l-2,2C4.168,28.711,4,29.086,4,29.5    C4,30.328,4.671,31,5.5,31c0.414,0,0.789-0.168,1.06-0.44l2-2C8.832,28.289,9,27.914,9,27.5C9,26.672,8.329,26,7.5,26z M17.5,6    C18.329,6,19,5.328,19,4.5v-3C19,0.672,18.329,0,17.5,0S16,0.672,16,1.5v3C16,5.328,16.671,6,17.5,6z M27.5,9    c0.414,0,0.789-0.168,1.06-0.439l2-2C30.832,6.289,31,5.914,31,5.5C31,4.672,30.329,4,29.5,4c-0.414,0-0.789,0.168-1.061,0.44    l-2,2C26.168,6.711,26,7.086,26,7.5C26,8.328,26.671,9,27.5,9z M6.439,8.561C6.711,8.832,7.086,9,7.5,9C8.328,9,9,8.328,9,7.5    c0-0.414-0.168-0.789-0.439-1.061l-2-2C6.289,4.168,5.914,4,5.5,4C4.672,4,4,4.672,4,5.5c0,0.414,0.168,0.789,0.439,1.06    L6.439,8.561z M33.5,16h-3c-0.828,0-1.5,0.672-1.5,1.5s0.672,1.5,1.5,1.5h3c0.828,0,1.5-0.672,1.5-1.5S34.328,16,33.5,16z     M28.561,26.439C28.289,26.168,27.914,26,27.5,26c-0.828,0-1.5,0.672-1.5,1.5c0,0.414,0.168,0.789,0.439,1.06l2,2    C28.711,30.832,29.086,31,29.5,31c0.828,0,1.5-0.672,1.5-1.5c0-0.414-0.168-0.789-0.439-1.061L28.561,26.439z M17.5,29    c-0.829,0-1.5,0.672-1.5,1.5v3c0,0.828,0.671,1.5,1.5,1.5s1.5-0.672,1.5-1.5v-3C19,29.672,18.329,29,17.5,29z M17.5,7    C11.71,7,7,11.71,7,17.5S11.71,28,17.5,28S28,23.29,28,17.5S23.29,7,17.5,7z M17.5,25c-4.136,0-7.5-3.364-7.5-7.5    c0-4.136,3.364-7.5,7.5-7.5c4.136,0,7.5,3.364,7.5,7.5C25,21.636,21.636,25,17.5,25z"></path></svg><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="nightIcon" x="0px" y="0px" viewBox="0 0 100 100" style="enable-background:new 0 0 100 100" xml:space="preserve" aria-label="라이트 모드"><title>라이트 모드</title><path d="M96.76,66.458c-0.853-0.852-2.15-1.064-3.23-0.534c-6.063,2.991-12.858,4.571-19.655,4.571  C62.022,70.495,50.88,65.88,42.5,57.5C29.043,44.043,25.658,23.536,34.076,6.47c0.532-1.08,0.318-2.379-0.534-3.23  c-0.851-0.852-2.15-1.064-3.23-0.534c-4.918,2.427-9.375,5.619-13.246,9.491c-9.447,9.447-14.65,22.008-14.65,35.369  c0,13.36,5.203,25.921,14.65,35.368s22.008,14.65,35.368,14.65c13.361,0,25.921-5.203,35.369-14.65  c3.872-3.871,7.064-8.328,9.491-13.246C97.826,68.608,97.611,67.309,96.76,66.458z"></path></svg></button></div><div style="flex-grow: 0; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><button class="readermode"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="readerIcon" fill="currentColor" stroke="currentColor" stroke-width="0.2" stroke-linecap="round" stroke-linejoin="round" width="64px" height="64px" viewBox="0 0 24 24" aria-label="리더 모드"><title>리더 모드</title><g transform="translate(-1.8, -1.8) scale(1.15, 1.2)"><path d="M8.9891247,2.5 C10.1384702,2.5 11.2209868,2.96705384 12.0049645,3.76669482 C12.7883914,2.96705384 13.8709081,2.5 15.0202536,2.5 L18.7549359,2.5 C19.1691495,2.5 19.5049359,2.83578644 19.5049359,3.25 L19.5046891,4.004 L21.2546891,4.00457396 C21.6343849,4.00457396 21.9481801,4.28672784 21.9978425,4.6528034 L22.0046891,4.75457396 L22.0046891,20.25 C22.0046891,20.6296958 21.7225353,20.943491 21.3564597,20.9931534 L21.2546891,21 L2.75468914,21 C2.37499337,21 2.06119817,20.7178461 2.01153575,20.3517706 L2.00468914,20.25 L2.00468914,4.75457396 C2.00468914,4.37487819 2.28684302,4.061083 2.65291858,4.01142057 L2.75468914,4.00457396 L4.50368914,4.004 L4.50444233,3.25 C4.50444233,2.87030423 4.78659621,2.55650904 5.15267177,2.50684662 L5.25444233,2.5 L8.9891247,2.5 Z M4.50368914,5.504 L3.50468914,5.504 L3.50468914,19.5 L10.9478955,19.4998273 C10.4513189,18.9207296 9.73864328,18.5588115 8.96709342,18.5065584 L8.77307039,18.5 L5.25444233,18.5 C4.87474657,18.5 4.56095137,18.2178461 4.51128895,17.8517706 L4.50444233,17.75 L4.50368914,5.504 Z M19.5049359,17.75 C19.5049359,18.1642136 19.1691495,18.5 18.7549359,18.5 L15.2363079,18.5 C14.3910149,18.5 13.5994408,18.8724714 13.0614828,19.4998273 L20.5046891,19.5 L20.5046891,5.504 L19.5046891,5.504 L19.5049359,17.75 Z M18.0059359,3.999 L15.0202536,4 L14.8259077,4.00692283 C13.9889509,4.06666544 13.2254227,4.50975805 12.7549359,5.212 L12.7549359,17.777 L12.7782651,17.7601316 C13.4923805,17.2719483 14.3447024,17 15.2363079,17 L18.0059359,16.999 L18.0056891,4.798 L18.0033792,4.75457396 L18.0056891,4.71 L18.0059359,3.999 Z M8.9891247,4 L6.00368914,3.999 L6.00599909,4.75457396 L6.00599909,4.75457396 L6.00368914,4.783 L6.00368914,16.999 L8.77307039,17 C9.57551536,17 10.3461406,17.2202781 11.0128313,17.6202194 L11.2536891,17.776 L11.2536891,5.211 C10.8200889,4.56369974 10.1361548,4.13636104 9.37521067,4.02745763 L9.18347055,4.00692283 L8.9891247,4 Z"></path></g></svg></button></div></div><div class="explorer" data-behavior="link" data-collapsed="collapsed" data-savestate="true" data-data-fns="{&quot;order&quot;:[&quot;filter&quot;,&quot;map&quot;,&quot;sort&quot;],&quot;sortFn&quot;:&quot;(a,b)=>!a.isFolder&amp;&amp;!b.isFolder||a.isFolder&amp;&amp;b.isFolder?a.displayName.localeCompare(b.displayName,void 0,{numeric:!0,sensitivity:\&quot;base\&quot;}):!a.isFolder&amp;&amp;b.isFolder?1:-1&quot;,&quot;filterFn&quot;:&quot;node=>node.slugSegment!==\&quot;tags\&quot;&quot;,&quot;mapFn&quot;:&quot;node=>node&quot;}"><button type="button" class="explorer-toggle mobile-explorer hide-until-loaded" data-mobile="true" aria-controls="explorer-76"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide-menu"><line x1="4" x2="20" y1="12" y2="12"></line><line x1="4" x2="20" y1="6" y2="6"></line><line x1="4" x2="20" y1="18" y2="18"></line></svg></button><button type="button" class="title-button explorer-toggle desktop-explorer" data-mobile="false" aria-expanded="true"><h2>탐색기</h2><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="5 8 14 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fold"><polyline points="6 9 12 15 18 9"></polyline></svg></button><div id="explorer-76" class="explorer-content" aria-expanded="false" role="group"><ul class="explorer-ul overflow" id="list-0"><li class="overflow-end"></li></ul></div><template id="template-file"><li><a href="#"></a></li></template><template id="template-folder"><li><div class="folder-container"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="5 8 14 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="folder-icon"><polyline points="6 9 12 15 18 9"></polyline></svg><div><button class="folder-button"><span class="folder-title"></span></button></div></div><div class="folder-outer"><ul class="content"></ul></div></li></template></div></div><div class="center"><div class="page-header"><div class="popover-hint"><nav class="breadcrumb-container" aria-label="breadcrumbs"><div class="breadcrumb-element"><a href="../../">Home</a><p> ❯ </p></div><div class="breadcrumb-element"><a href="../../20_Projects/">20_Projects</a><p> ❯ </p></div><div class="breadcrumb-element"><a href="../../20_Projects/AMET2026-Physicar/">AMET2026 Physicar</a><p> ❯ </p></div><div class="breadcrumb-element"><a href>AMET2026 Physicar</a></div></nav><h1 class="article-title">AMET2026 Physicar</h1><p show-comma="true" class="content-meta"><time datetime="2026-08-26T15:00:00.000Z">2026년 8월 27일</time><span>63 min read</span></p><ul class="tags"><li><a href="../../tags/ros2" class="internal tag-link">ros2</a></li><li><a href="../../tags/python" class="internal tag-link">python</a></li><li><a href="../../tags/ugv" class="internal tag-link">ugv</a></li><li><a href="../../tags/guidance" class="internal tag-link">guidance</a></li><li><a href="../../tags/hardware" class="internal tag-link">hardware</a></li><li><a href="../../tags/simulation" class="internal tag-link">simulation</a></li><li><a href="../../tags/debugging" class="internal tag-link">debugging</a></li></ul></div></div><article class="popover-hint"><h1 id="2026-amet-자율주행-해커톤--physicar">2026 AMET 자율주행 해커톤 — Physicar<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#2026-amet-자율주행-해커톤--physicar" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h1>
+<blockquote>
+<p>이 프로젝트가 채우는 로드맵 칸: <code>pipeline</code> <code>evidence</code> → <a href="../../Research-Direction" class="internal alias" data-slug="Research-Direction">Research Direction</a></p>
+</blockquote>
+<blockquote class="callout info" data-callout="info">
+<div class="callout-title">
+                  <div class="callout-icon"></div>
+                  <div class="callout-title-inner"><p>Source </p></div>
+                  
+                </div>
+<div class="callout-content">
+<p>작업 폴더 <code>C:\2026AMET자율운행자동차대회</code> · 코드 <code>physicar_ws</code> (= GitHub <code>yusik36/ANSL_AMET2026</code>, <strong>private</strong>)
+Claude 세션 29개 (2026-08-13 ~ 08-31) · 사진 39 · 영상 26
+원본 문서: <code>physicar_ws/README.md</code>, <code>physicar_ws/YS_HANDOVER.md</code>
+2026-09-01 보강: 대회장 노트북 작업본 <code>노트북 작업본/</code> (planner 스냅샷 3벌, rosbag 2개, 진단 스크린샷 2장)
+영상은 전부 <strong>배속 GIF</strong>로 바꿔 넣었다 (360 px · 10 fps). 원본 <code>.mp4</code>는 <code>_attachments/</code>에 그대로 있고, vault <code>.gitignore</code>가 <code>*.mp4</code>를 제외하므로 저장소에는 GIF만 올라간다.</p>
+</div>
+</blockquote>
+<p>13일 만에 플랫폼 구성부터 대회 출전까지 끝낸 프로젝트. 준비 기간의 절반은 하드웨어와
+싸웠고, 나머지 절반에 주행 로직의 <strong>설계 전환</strong>이 한 번 있었다. 그 전환이 이 프로젝트에서
+제일 말할 거리가 많은 지점이다.</p>
+<p><strong>결과: 예선 통과 → 본선 완주(패널티 있음) → 미수상.</strong>
+단, 대회 출전에는 팀원이 개발한 E2E 로직을 적용했다. 이 노트가 다루는 통로 기반
+스택은 준비 과정의 기록이다 (§5).</p>
+<hr/>
+<h1 id="1-대회-개요">1. 대회 개요<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#1-대회-개요" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h1>
+<h2 id="기본-정보">기본 정보<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#기본-정보" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th></th><th></th></tr></thead><tbody><tr><td>대회</td><td>2026 자율주행 해커톤 경진대회 (AMET 2026)</td></tr><tr><td>주최</td><td>KAAMI (한국자동차공학한림원), AME 2026 산업전 동시 개최</td></tr><tr><td>일시·장소</td><td>2026-08-25(화) ~ 27(목), 코엑스(COEX)</td></tr><tr><td>참가</td><td>대학생 팀 4~6명</td></tr><tr><td>차량</td><td>주최측 대여 <strong>Physicar</strong> 1대 (자체 제작 차량 참가 불가 — 실격)</td></tr><tr><td>시상</td><td>총 500만원 (대상 300 / 최우수 100 / 우수 50×2)</td></tr></tbody></table></div>
+<h2 id="일정">일정<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#일정" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<pre><code>8/18(화)  사전 시뮬레이션 프로그램 배포 + 코스 규격·예선 장애물 위치 공개
+8/25(화)  12:00 차량 배포  ─┐
+8/26(수)  무박 2일 사전교육·자유개발  │ 실차 개발 가능 시간 ≈ 29시간
+          17:00 차량 반납  ─┘
+8/27(목)  09~10 준비 / 10~12 예선 / 13~15 본선 / 15~ 시상식
+</code></pre>
+<h2 id="실차-스펙-physicar">실차 스펙 (Physicar)<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#실차-스펙-physicar" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>Raspberry Pi 5 (8GB) · Ubuntu 24.04 LTS · ROS2 Jazzy
+RPLidar C1 · 9축 IMU(ICM-20948) · 100° 야간카메라(OV5647, CSI)
+휠베이스 0.18 m · 트랙폭 0.16 m · 휠반지름 0.0375 m</p>
+<h2 id="규정에서-설계를-강제한-조항">규정에서 설계를 강제한 조항<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#규정에서-설계를-강제한-조항" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>이 네 가지가 아키텍처를 사실상 결정했다.</p>
+<ol>
+<li><strong>SW/HW 임의 변경 시 즉시 실격.</strong> 대신 <code>/opt/physicar/userdata/myapp.sh</code> 슬롯이
+열려 있다 → 팀 코드는 <strong>공식 스택 위에 얹는 별도 워크스페이스</strong>여야 한다.
+센서 드라이버를 우리가 띄우면 충돌한다.</li>
+<li><strong>Stateless 주행 요건.</strong> 이탈·충돌 시 운영진이 차를 트랙 중앙에 재배치하므로,
+트랙 어느 지점에서 시작해도 동작해야 한다 → <strong>주행 중 트랙 상의 자기 위치를
+기억하는 설계를 쓸 수 없다.</strong></li>
+<li><strong>차량 접속은 대회 제공 노트북으로만</strong> (본인 노트북 사용 시 실격).</li>
+<li><strong>도전 기회 1회, 1바퀴 제한 3분.</strong> 순위는 랩타임(짧은 순).</li>
+</ol>
+<h2 id="채점">채점<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#채점" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th>항목</th><th>패널티</th></tr></thead><tbody><tr><td>장애물(라바콘) 충돌</td><td>+5초</td></tr><tr><td>트랙 이탈 (4바퀴 모두 이탈 시)</td><td>+5초</td></tr><tr><td>신호등 적색 출발</td><td>+10초</td></tr></tbody></table></div>
+<p>트랙 12 m × 7 m, 라바콘 6개. <strong>예선 트랙은 8/18 공개분으로 고정, 본선에서는 장애물
+위치만 바뀐다.</strong> ← 이 한 줄이 “전역 최적 경로를 미리 계산해 둔다”는 접근을 살려둘
+근거가 됐다가, 나중에 위치추정 문제로 폐기된다 (3장).</p>
+<p><img src="../../_attachments/AMET2026-Physicar/2026-08-20-track-overall.png" width="auto" height="auto" alt/></p>
+<p><em>8/18 공개된 대회 트랙 (시뮬레이터 전경). 실측 길이 30.505 m, 폭 0.700 m</em></p>
+<h2 id="신호등">신호등<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#신호등" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>일반 도로 신호등이 아니라 <strong>출발선 오른쪽 전방 바닥에 놓이는 박스형 모듈</strong>이다.
+카메라 화면을 시계로 치면 4시 방향. <strong>적색(위) / 녹색(아래) 2구뿐이고 황색은 없다.</strong>
+(초기에 3구로 잘못 알고 신호등 영상까지 만들었다가 8/18에 정정)</p>
+<hr/>
+<h1 id="2-개발-구조">2. 개발 구조<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#2-개발-구조" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h1>
+<h2 id="2-1-한눈에">2-1. 한눈에<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#2-1-한눈에" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p><strong>카메라 이미지에서 “차가 지나갈 수 있는 통로”를 직접 찾고, 그 통로 한가운데를 향해 몬다.</strong>
+차선을 따라가는 것도, 장애물을 피하는 것도 아니다 — 장애물은 그냥 통로가 좁아진
+지점이라 <strong>회피 모드로 들어가고 나오는 코드 자체가 없다.</strong></p>
+<pre><button class="expand-button" aria-label="Expand mermaid diagram" data-view-component="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path fill-rule="evenodd" d="M3.72 3.72a.75.75 0 011.06 1.06L2.56 7h10.88l-2.22-2.22a.75.75 0 011.06-1.06l3.5 3.5a.75.75 0 010 1.06l-3.5 3.5a.75.75 0 11-1.06-1.06l2.22-2.22H2.56l2.22 2.22a.75.75 0 11-1.06 1.06l-3.5-3.5a.75.75 0 010-1.06l3.5-3.5z"></path></svg></button><code class="mermaid" data-clipboard="&quot;flowchart TD\r\n    CAM[\&quot;/camera/image_raw&lt;br/>OV5647, 480x360\&quot;]\r\n\r\n    subgraph PLANNER[\&quot;physicar_planner — corridor.py (ROS 비의존 순수 함수)\&quot;]\r\n        direction TB\r\n        MASK[\&quot;blocked_mask (HSV)&lt;br/>'도로가 아닌 것'이 아니라&lt;br/>'도로인 것'을 정의\&quot;]\r\n        SCAN[\&quot;scan_corridor&lt;br/>거리별 좌우 실측 폭 → corridor\&quot;]\r\n        BAND[\&quot;reachable_band (앞→뒤) ∩&lt;br/>survivable_band (뒤→앞)\&quot;]\r\n        TGT[\&quot;pick_target\&quot;]\r\n        PP[\&quot;pure_pursuit&lt;br/>steer = atan2(2·L·sinα, Ld)\&quot;]\r\n        SPD[\&quot;speed_for&lt;br/>corridor_curvature 기반\&quot;]\r\n        MASK --> SCAN --> BAND --> TGT\r\n        TGT --> PP\r\n        TGT --> SPD\r\n    end\r\n\r\n    subgraph WIRE[\&quot;planner_node.py — 배선 레이어\&quot;]\r\n        RAMP[\&quot;ramp + 20Hz 고정 발행&lt;br/>+ 0.4s staleness 체크\&quot;]\r\n    end\r\n\r\n    subgraph VISION[\&quot;physicar_vision\&quot;]\r\n        TL[\&quot;traffic_light_node&lt;br/>RED/GREEN blob, 2프레임 디바운스\&quot;]\r\n    end\r\n\r\n    subgraph JUDGE[\&quot;judgment_node — 최종 중재, 20Hz\&quot;]\r\n        F1[\&quot;1. plan 신선한가?&lt;br/>stale → 무조건 정지\&quot;]\r\n        F2[\&quot;2. RED? → speed만 0&lt;br/>(조향은 안 건드림)\&quot;]\r\n        F3[\&quot;3. plan/valid 순간 소실&lt;br/>→ 0.5s 이전 조향 유지 후 정지\&quot;]\r\n        F1 --> F2 --> F3\r\n    end\r\n\r\n    OUT[\&quot;/speed (m/s), /steering (rad)&lt;br/>클램프: 0~3.0 m/s, ±20°\&quot;]\r\n    DRV[\&quot;physicar_driver_node (실차 공식, 이미 서비스로 실행 중)&lt;br/>ESC + 조향서보\&quot;]\r\n\r\n    CAM --> MASK\r\n    CAM --> TL\r\n    PP --> RAMP\r\n    SPD --> RAMP\r\n    RAMP -->|plan/steering, plan/speed, plan/valid| F1\r\n    TL -->|traffic/light_state, traffic/valid| F2\r\n    F3 --> OUT --> DRV&quot;">flowchart TD
+    CAM[&quot;/camera/image_raw&lt;br/>OV5647, 480x360&quot;]
+
+    subgraph PLANNER[&quot;physicar_planner — corridor.py (ROS 비의존 순수 함수)&quot;]
+        direction TB
+        MASK[&quot;blocked_mask (HSV)&lt;br/>'도로가 아닌 것'이 아니라&lt;br/>'도로인 것'을 정의&quot;]
+        SCAN[&quot;scan_corridor&lt;br/>거리별 좌우 실측 폭 → corridor&quot;]
+        BAND[&quot;reachable_band (앞→뒤) ∩&lt;br/>survivable_band (뒤→앞)&quot;]
+        TGT[&quot;pick_target&quot;]
+        PP[&quot;pure_pursuit&lt;br/>steer = atan2(2·L·sinα, Ld)&quot;]
+        SPD[&quot;speed_for&lt;br/>corridor_curvature 기반&quot;]
+        MASK --> SCAN --> BAND --> TGT
+        TGT --> PP
+        TGT --> SPD
+    end
+
+    subgraph WIRE[&quot;planner_node.py — 배선 레이어&quot;]
+        RAMP[&quot;ramp + 20Hz 고정 발행&lt;br/>+ 0.4s staleness 체크&quot;]
+    end
+
+    subgraph VISION[&quot;physicar_vision&quot;]
+        TL[&quot;traffic_light_node&lt;br/>RED/GREEN blob, 2프레임 디바운스&quot;]
+    end
+
+    subgraph JUDGE[&quot;judgment_node — 최종 중재, 20Hz&quot;]
+        F1[&quot;1. plan 신선한가?&lt;br/>stale → 무조건 정지&quot;]
+        F2[&quot;2. RED? → speed만 0&lt;br/>(조향은 안 건드림)&quot;]
+        F3[&quot;3. plan/valid 순간 소실&lt;br/>→ 0.5s 이전 조향 유지 후 정지&quot;]
+        F1 --> F2 --> F3
+    end
+
+    OUT[&quot;/speed (m/s), /steering (rad)&lt;br/>클램프: 0~3.0 m/s, ±20°&quot;]
+    DRV[&quot;physicar_driver_node (실차 공식, 이미 서비스로 실행 중)&lt;br/>ESC + 조향서보&quot;]
+
+    CAM --> MASK
+    CAM --> TL
+    PP --> RAMP
+    SPD --> RAMP
+    RAMP -->|plan/steering, plan/speed, plan/valid| F1
+    TL -->|traffic/light_state, traffic/valid| F2
+    F3 --> OUT --> DRV
+</code><div id="mermaid-container" role="dialog"><div id="mermaid-space"><div class="mermaid-content"></div></div></div></pre>
+<h2 id="2-2-핵심-설계-판단--왜-통로corridor인가">2-2. 핵심 설계 판단 — 왜 통로(corridor)인가<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#2-2-핵심-설계-판단--왜-통로corridor인가" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>처음 만든 구조는 교과서적인 분리 구조였다.</p>
+<pre><button class="expand-button" aria-label="Expand mermaid diagram" data-view-component="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path fill-rule="evenodd" d="M3.72 3.72a.75.75 0 011.06 1.06L2.56 7h10.88l-2.22-2.22a.75.75 0 011.06-1.06l3.5 3.5a.75.75 0 010 1.06l-3.5 3.5a.75.75 0 11-1.06-1.06l2.22-2.22H2.56l2.22 2.22a.75.75 0 11-1.06 1.06l-3.5-3.5a.75.75 0 010-1.06l3.5-3.5z"></path></svg></button><code class="mermaid" data-clipboard="&quot;flowchart LR\r\n    LIDAR[\&quot;/scan\&quot;] --> AVOID[\&quot;avoid_node&lt;br/>±30° 콘 최소거리 리액티브\&quot;]\r\n    CAM2[\&quot;/image_raw\&quot;] --> LANE[\&quot;lane_follow_node&lt;br/>HSV+contour\&quot;]\r\n    CAM2 --> TL2[\&quot;traffic_light_node\&quot;]\r\n    AVOID -->|obstacle/*| J2[\&quot;judgment_node&lt;br/>(구버전: 회피/차선 핸드오버 중재)\&quot;]\r\n    LANE -->|lane/*| J2\r\n    TL2 -->|traffic/*| J2\r\n    J2 --> DRV2[\&quot;physicar_driver_node&lt;br/>(연습 섀시, Arduino ESC+서보)\&quot;]&quot;">flowchart LR
+    LIDAR[&quot;/scan&quot;] --> AVOID[&quot;avoid_node&lt;br/>±30° 콘 최소거리 리액티브&quot;]
+    CAM2[&quot;/image_raw&quot;] --> LANE[&quot;lane_follow_node&lt;br/>HSV+contour&quot;]
+    CAM2 --> TL2[&quot;traffic_light_node&quot;]
+    AVOID -->|obstacle/*| J2[&quot;judgment_node&lt;br/>(구버전: 회피/차선 핸드오버 중재)&quot;]
+    LANE -->|lane/*| J2
+    TL2 -->|traffic/*| J2
+    J2 --> DRV2[&quot;physicar_driver_node&lt;br/>(연습 섀시, Arduino ESC+서보)&quot;]
+</code><div id="mermaid-container" role="dialog"><div id="mermaid-space"><div class="mermaid-content"></div></div></div></pre>
+<p>이걸 버렸다. 이유:</p>
+<blockquote>
+<p>제어권이 <strong>코너 한복판에서</strong> 넘어간다. 회피 노드가 차를 어디에 놔두고 나갈지
+모르는데, 차선 노드는 거기서부터 다시 차선을 찾아야 한다. <strong>넘겨주는 순간과
+돌려받는 순간이 각각 버그 자리</strong>이고, 둘 다 가장 위험한 타이밍이다.</p>
+</blockquote>
+<p>통로 기반에서는 인계 지점이 없으니 인계 버그도 없다.</p>
+<blockquote class="callout note" data-callout="note">
+<div class="callout-title">
+                  <div class="callout-icon"></div>
+                  <div class="callout-title-inner"><p>개념 — 이건 무슨 방법인가 </p></div>
+                  
+                </div>
+<div class="callout-content">
+<p>정식 명칭을 붙이면 <strong>occupancy 기반 local planning</strong>에 가깝다. F1TENTH 계열에서
+쓰는 <em>Follow-the-Gap</em>의 이미지 평면 버전이라고 봐도 된다. 라이다 스캔에서 빈
+구간(gap)을 찾아 그 중앙으로 모는 대신, <strong>카메라 이진 마스크의 행마다 빈 구간을
+찾는다.</strong> 차선(lane)이라는 중간 개념을 거치지 않는 게 핵심.</p>
+</div>
+</blockquote>
+<p>상세 설계는 <a href="../../30_Knowledge/Corridor-Planner-(physicar_planner)" class="internal alias" data-slug="30_Knowledge/Corridor-Planner-(physicar_planner)">Corridor Planner (physicar_planner)</a>.</p>
+<h2 id="2-3-이미지-한-장이-바퀴까지-가는-길">2-3. 이미지 한 장이 바퀴까지 가는 길<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#2-3-이미지-한-장이-바퀴까지-가는-길" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>각 단계에 8/20 랩미팅용으로 캡처한 디버그 화면을 붙였다.</p>
+<h3 id="-원본-프레임">① 원본 프레임<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#-원본-프레임" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p><img src="../../_attachments/AMET2026-Physicar/2026-08-20-raw-camera-corner.png" width="auto" height="auto" alt/></p>
+<p><img src="../../_attachments/AMET2026-Physicar/2026-08-20-raw-camera-straight.png" width="auto" height="auto" alt/></p>
+<h3 id="-주행가능-마스크--blocked_mask">② 주행가능 마스크 — <code>blocked_mask()</code><a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#-주행가능-마스크--blocked_mask" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>HSV로 **“도로가 무엇인가”**를 정의하고, 나머지를 전부 blocked로 둔다.</p>
+<blockquote class="callout warning" data-callout="warning">
+<div class="callout-title">
+                  <div class="callout-icon"></div>
+                  <div class="callout-title-inner"><p>여기서 규칙의 방향을 한 번 뒤집었다 </p></div>
+                  
+                </div>
+<div class="callout-content">
+<p>첫 버전은 <strong>“초록색인 것을 막는다”</strong>(잔디를 blocked로)였다. 그러자 초록이 아닌 건
+전부 도로가 됐다 — <strong>경계벽이 H 141로 읽혀서 주행가능으로 분류됐고, 차가 벽을
+트랙으로 알고 3 m/s로 들이받았다.</strong>
+도로 쪽을 명명하도록 바꾸면, 모르는 표면은 자동으로 장애물이 된다.
+<strong>틀릴 때 안전한 방향으로 틀리는 쪽</strong>이 규칙의 옳은 방향이다.</p>
+</div>
+</blockquote>
+<p><img src="../../_attachments/AMET2026-Physicar/2026-08-20-road-mask.png" width="auto" height="auto" alt/></p>
+<p><em>흰색 = 주행가능, 검정 = blocked. 라바콘도 벽도 잔디도 전부 검정 하나로 뭉개진다</em></p>
+<h3 id="-행별-자유구간--scan_corridor">③ 행별 자유구간 — <code>scan_corridor()</code><a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#-행별-자유구간--scan_corridor" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>이미지의 여러 행(row)을 훑으면서 각 행에서 연속된 흰색 구간을 찾는다.</p>
+<p><img src="../../_attachments/AMET2026-Physicar/2026-08-20-free-intervals.png" width="auto" height="auto" alt/></p>
+<p><img src="../../_attachments/AMET2026-Physicar/2026-08-20-free-intervals-2.png" width="auto" height="auto" alt/></p>
+<blockquote class="callout note" data-callout="note">
+<div class="callout-title">
+                  <div class="callout-icon"></div>
+                  <div class="callout-title-inner"><p>개념 — IPM (Inverse Perspective Mapping) </p></div>
+                  
+                </div>
+<div class="callout-content">
+<p>이미지의 <strong>행 번호 → 차 앞 거리</strong>, <strong>열 번호 → 횡방향 위치(m)</strong> 로 바꾸는 변환.
+<code>distance_to_row()</code> / <code>column_to_lateral()</code> 이 그 역할이다. 카메라 내부 파라미터와
+장착 높이·각도(URDF 체인에서 가져옴)를 알면, 지면이 평평하다는 가정 하에 픽셀을
+미터로 환산할 수 있다. <strong>이게 되니까 “통로 폭 0.7 m” 같은 물리량으로 판단할 수 있다.</strong></p>
+</div>
+</blockquote>
+<p>여기에 <strong>최대 통로폭 제한(<code>MAX_PLAUSIBLE_SPAN</code>)</strong> 이 붙는다.
+0.7 m 트랙에서 1.9~2.1 m짜리 구간이 나오면 그건 넓은 통로가 아니라 <strong>마스크에 구멍이
+나서 스캔이 화면 끝까지 달아난 것</strong>이다. 걸러내지 않으면 직선에서 곡선을 봤다고
+보고할 만큼 곡률 피팅을 끌어당긴다.</p>
+<h3 id="-도로-외곽선--중심-사슬">④ 도로 외곽선 / 중심 사슬<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#-도로-외곽선--중심-사슬" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p><img src="../../_attachments/AMET2026-Physicar/2026-08-20-road-envelope.png" width="auto" height="auto" alt/></p>
+<p><img src="../../_attachments/AMET2026-Physicar/2026-08-20-road-chain.png" width="auto" height="auto" alt/></p>
+<p><em>행별 자유구간의 중심을 이어 붙인 사슬(chain). 라바콘을 지나며 자연스럽게 휘어 있다</em></p>
+<h3 id="-도달-가능-대역--reachable_band--survivable_band">⑤ 도달 가능 대역 — <code>reachable_band()</code> ∩ <code>survivable_band()</code><a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#-도달-가능-대역--reachable_band--survivable_band" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>통로가 보인다고 다 갈 수 있는 건 아니다. <strong>차의 최소회전반경으로 갈 수 있는 곳만</strong>
+남긴다. <code>MAX_LATERAL_SLOPE</code>(전진 1 m당 바꿀 수 있는 횡방향 위치)가 그 필터다.
+앞→뒤 방향(도달 가능)과 뒤→앞 방향(빠져나갈 수 있음)을 각각 훑어 <strong>교집합</strong>을 쓴다.</p>
+<h3 id="-목표점--조향--pick_target--pure_pursuit">⑥ 목표점 + 조향 — <code>pick_target()</code> → <code>pure_pursuit()</code><a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#-목표점--조향--pick_target--pure_pursuit" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p><img src="../../_attachments/AMET2026-Physicar/2026-08-20-center-point.png" width="auto" height="auto" alt/></p>
+<blockquote class="callout note" data-callout="note">
+<div class="callout-title">
+                  <div class="callout-icon"></div>
+                  <div class="callout-title-inner"><p>개념 — Pure Pursuit </p></div>
+                  
+                </div>
+<div class="callout-content">
+<p>차 앞 일정 거리(<strong>lookahead</strong>)에 목표점을 찍고, 현재 위치에서 그 점을 지나는
+원호를 그린 뒤 그 원호의 곡률에 맞는 조향각을 낸다.
+<code>δ = atan2(2·L·sin α, L_d)</code> — L은 휠베이스, α는 목표점 방향각, L_d는 lookahead.
+<strong>lookahead는 속도의 함수</strong>(<code>lookahead_for()</code>)로 둔다. 느릴 때 짧게, 빠를 때 길게.
+이걸 고정하면 저속에서 흔들리거나 고속에서 코너를 못 돈다.</p>
+</div>
+</blockquote>
+<h3 id="-속도--corridor_curvature--speed_for--ramp">⑦ 속도 — <code>corridor_curvature()</code> → <code>speed_for()</code> → <code>ramp()</code><a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#-속도--corridor_curvature--speed_for--ramp" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>통로의 곡률에서 회전반경 R을 얻고, <strong>횡가속도 한계</strong>에서 속도를 정한다.</p>
+<pre><code>v = sqrt(a_lat · R)          # a_lat = aggression 파라미터 (기본 4.0 m/s²)
+</code></pre>
+<blockquote class="callout warning" data-callout="warning">
+<div class="callout-title">
+                  <div class="callout-icon"></div>
+                  <div class="callout-title-inner"><p>발진 버그 — 이 프로젝트에서 제일 비싼 버그 </p></div>
+                  
+                </div>
+<div class="callout-content">
+<p>플래너는 원래 <strong>통로가 허용하는 속도를 허용되는 즉시</strong> 퍼블리시했다. 출발선에서는
+그게 <strong>200 ms 안에 0 → 3 m/s</strong>를 요구하면서 동시에 조향 10°를 걸라는 뜻이었고,
+차는 <strong>1.1 m 만에 옆으로 트랙을 벗어났다.</strong>
+트랙을 잘못 읽은 게 아니다. <strong>통로를 정확히 읽고, 어떤 차도 한 스텝에 낼 수 없는
+양을 요구했다.</strong>
+→ 명령 자체를 램프로 바꿨다 (<code>max_accel</code> 2.0 / <code>max_decel</code> 5.0 m/s²).
+<strong>감속을 가속보다 세게 허용한 건 의도다</strong> — 너무 빨리 서면 시간을 잃지만,
+너무 늦게 서면 그 주행을 잃는다.</p>
+</div>
+</blockquote>
+<h2 id="2-4-judgment_node--최종-중재">2-4. judgment_node — 최종 중재<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#2-4-judgment_node--최종-중재" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>플래너가 낸 값을 그대로 바퀴에 보내지 않는다. 이 노드가 마지막 관문이다.</p>
+<ul>
+<li><strong>신선도</strong>: <code>plan/*</code>이 0.4 s 이상 낡으면 무조건 정지</li>
+<li><strong>신호등 게이트</strong>: 적색이면 <strong>speed만 0</strong> — 조향은 건드리지 않는다</li>
+<li><strong>순간 소실 대응</strong>: <code>plan/valid</code>가 순간 꺼지면 0.5 s 동안 이전 조향을 유지한 뒤 정지
+(평균내서 뭉개지 않는다)</li>
+<li><strong>Stateless 유지</strong>: 기억하는 건 마지막 조향값과 타임스탬프뿐이고 <strong>둘 다 자동 만료</strong>
+→ 규정 2번 충족</li>
+</ul>
+<p>카메라가 죽어도 <code>planner_node</code>는 침묵이 아니라 <strong>0으로 수렴하는 스트림</strong>을 계속 낸다.
+하위 노드가 “변화 없음”과 “센서 다운”을 구분할 수 있어야 하기 때문.</p>
+<h2 id="2-5-인터페이스-계약">2-5. 인터페이스 계약<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#2-5-인터페이스-계약" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th>방향</th><th>토픽</th><th>타입</th><th>비고</th></tr></thead><tbody><tr><td>입력</td><td><code>/camera/image_raw</code></td><td>Image</td><td>~15 Hz</td></tr><tr><td>입력</td><td><code>/scan</code></td><td>LaserScan</td><td>~10 Hz — <strong>현재 파이프라인 미사용</strong></td></tr><tr><td>입력</td><td><code>/imu</code></td><td>Imu</td><td>50 Hz, <strong>6축만</strong> — 미사용</td></tr><tr><td>출력</td><td><code>/speed</code></td><td>Float64</td><td>m/s</td></tr><tr><td>출력</td><td><code>/steering</code></td><td>Float64</td><td>rad, <strong>양수 = 좌회전</strong></td></tr></tbody></table></div>
+<p>현재 아키텍처는 <strong>카메라 하나로만 주행 판단</strong>한다.</p>
+<blockquote class="callout note" data-callout="note">
+<div class="callout-title">
+                  <div class="callout-icon"></div>
+                  <div class="callout-title-inner"><p>개념 — 왜 <code>/cmd_vel</code>이 아닌가</p></div>
+                  
+                </div>
+<div class="callout-content">
+<p>Physicar는 <strong>애커만(Ackermann) 조향</strong> 차량이다. 차동구동 로봇처럼 (선속도 v,
+각속도 ω)를 주는 게 아니라 <strong>속도와 조향각을 따로</strong> 준다. 실차 드라이버가 <code>/cmd_vel</code>도
+받긴 하지만 내부에서 <code>steering = atan(ω·L/v)</code>로 변환할 뿐이라, 직접 내는 쪽이 명시적이다.</p>
+</div>
+</blockquote>
+<blockquote class="callout warning" data-callout="warning">
+<div class="callout-title">
+                  <div class="callout-icon"></div>
+                  <div class="callout-title-inner"><p>IMU orientation 필드를 쓰지 말 것 </p></div>
+                  
+                </div>
+<div class="callout-content">
+<p>센서 칩은 9축(ICM-20948)이지만 <code>/imu</code> 토픽은 <strong>6축(자이로+가속도)만</strong> 준다.
+공식 <code>physicar_driver_node.cpp</code>가 <code>orientation_covariance[0] = -1.0</code>으로 명시 —
+ROS 표준 관례로 “orientation 없음/신뢰 불가”라는 뜻이다.
+연습용 IMU 드라이버는 편의상 쿼터니언을 채워 보내므로 <strong>연습 환경에서만 되는 코드를
+짜게 되는 함정</strong>이 여기 있다. (2026-08-13 담당자 확인, 08-16 공식 소스 재확인)</p>
+</div>
+</blockquote>
+<h2 id="2-6-안전-클램프는-우리가-구현하지-않는다">2-6. 안전 클램프는 우리가 구현하지 않는다<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#2-6-안전-클램프는-우리가-구현하지-않는다" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>공식 드라이버 SDK에 이미 하드코딩돼 있다 (2026-08-16 소스 확인).</p>
+<ul>
+<li>최대속도 <strong>3.0 m/s</strong>, 최대조향 <strong>±20°</strong> (기계한계 24°)</li>
+<li>ESC 데드존 <code>min_speed</code> <strong>0.3 m/s</strong> — 이보다 작은 명령은 사실상 무반응</li>
+<li>명령 유효시간 <strong>1초</strong> — 갱신 없으면 speed 자동 0
+→ 판단 노드는 1 Hz보다 빠르게 계속 퍼블리시해야 한다 (현재 20 Hz)</li>
+</ul>
+<h2 id="2-7-하드웨어-없이-개발하기">2-7. 하드웨어 없이 개발하기<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#2-7-하드웨어-없이-개발하기" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p><code>corridor.py</code>에 <strong>rclpy가 한 줄도 없다.</strong> 의도된 것이고, 그래서 시뮬레이터도 차량도
+없이 로직만 단위 검증할 수 있다.</p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="bash" data-theme="github-light github-dark"><code data-language="bash" data-theme="github-light github-dark" style="display:grid;"><span data-line><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0;">python3</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF;"> tools/YS_corridor_test.py</span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;">      # 30개 체크, 시뮬레이터/차량 불필요</span></span></code></pre></figure>
+<h2 id="2-8-계측-도구-toolsys_py">2-8. 계측 도구 (<code>tools/YS_*.py</code>)<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#2-8-계측-도구-toolsys_py" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>팀 공유 환경에서 우리 파일을 구분하려고 전부 <code>YS_</code> 접두사를 붙였다.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th>도구</th><th>답하는 질문</th></tr></thead><tbody><tr><td><code>YS_calibrate.py</code></td><td>도로가 주변과 <strong>어느 채널</strong>에서 갈리나, 경계값은 얼마인가</td></tr><tr><td><code>YS_trace.py</code></td><td>명령한 속도와 실제 속도가 같은가 — 판단이 틀렸나 명령이 안 갔나</td></tr><tr><td><code>YS_run.sh</code></td><td>한 바퀴 벤치마크 — 리셋·구동·채점·정리를 한 명령으로</td></tr><tr><td><code>YS_bench.py</code></td><td>랩타임/코스이탈 자동 채점 (시뮬레이터 HTTP API, 읽기 전용)</td></tr><tr><td><code>YS_perception_probe.py</code></td><td>IPM 거리 추정이 실제와 맞는가</td></tr><tr><td><code>YS_steer_check.py</code></td><td>조향 부호와 라이다 장착각이 실제로 어느 쪽인가</td></tr><tr><td><code>YS_track_dump.py</code></td><td>로드된 트랙 기하를 오프라인으로 저장</td></tr><tr><td><code>YS_raceline.py</code></td><td>최소곡률 레이싱라인 (평가용 — 주행엔 못 씀, 3장)</td></tr><tr><td><code>YS_corridor_test.py</code></td><td>플래너 로직 30개 검증 — <strong>시뮬레이터 없이</strong></td></tr></tbody></table></div>
+<hr/>
+<h1 id="3-포기한-것--전역-최적-레이싱라인">3. 포기한 것 — 전역 최적 레이싱라인<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#3-포기한-것--전역-최적-레이싱라인" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h1>
+<p><strong>포기한 게 아니라 못 쓴다는 걸 증명하고 접었다.</strong> 이 판단 과정이 프로젝트에서 가장
+공학적인 부분이라 따로 뺀다.</p>
+<h2 id="왜-매력적이었나">왜 매력적이었나<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#왜-매력적이었나" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>본선에서 <strong>장애물 위치만</strong> 바뀌고 트랙은 고정이다. 그러면 오프라인에서 최소곡률
+레이싱라인을 계산해두고 그걸 추종하는 게 당연히 빠르다. DSC 프로젝트에서 이미 써먹은
+방식이기도 하다 (<a href="../../20_Projects/DSC-Autonomous-Driving/DSC-Autonomous-Driving" class="internal alias" data-slug="20_Projects/DSC-Autonomous-Driving/DSC-Autonomous-Driving">DSC Autonomous Driving</a>).</p>
+<h2 id="왜-못-쓰나">왜 못 쓰나<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#왜-못-쓰나" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>레이싱라인을 추종하려면 <strong>차가 트랙 위 자기 위치를 알아야 한다.</strong> 그런데:</p>
+<ul>
+<li>휠 엔코더가 <strong>없다</strong></li>
+<li>위치는 레이저 스캔 매칭으로만 나온다</li>
+<li>대회장 펜스는 <strong>20 cm</strong>인데 라이다 평면은 <strong>17 cm</strong></li>
+<li><strong>연습장에는 펜스가 아예 없다</strong> (대회 측 답변)</li>
+</ul>
+<p>→ 스캔 매칭이 붙잡을 기하학적 특징이 없다. <strong>전역 위치추정 불가.</strong>
+→ <code>YS_raceline.py</code>의 결과는 <strong>주행에 직접 못 쓰고 시뮬레이터 평가 기준으로만 쓴다.</strong></p>
+<p><strong>“지금 보이는 것만으로 운전한다”는 통로 기반 설계가 여기서 나왔다.</strong></p>
+<h2 id="그래도-계산은-해봤다--트랙-실측-2026-08-19">그래도 계산은 해봤다 — 트랙 실측 (2026-08-19)<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#그래도-계산은-해봤다--트랙-실측-2026-08-19" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p><code>YS_track_dump.py</code>로 시뮬레이터 <code>/sim/api/world</code>에서 뽑은 값:</p>
+<pre><code>길이       30.505 m   (388점, 간격 0.0786 m)
+경계상자   x 1.38..10.90,  y 1.21..5.82
+출발점     (1.400, 3.395),  방위 -90.0°
+도로 폭    최소 0.700 m  ← 트랙의 절반 이상이 정확히 이 값
+</code></pre>
+<p>곡률 분석 결과가 결정적이었다:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th>스무딩 스텐실</th><th>최소반경</th><th>필요 조향</th><th>가능?</th></tr></thead><tbody><tr><td>0.18 m</td><td>0.068 m</td><td>69.23°</td><td>✕</td></tr><tr><td>0.50 m</td><td>0.205 m</td><td>41.34°</td><td>✕</td></tr><tr><td>0.75 m</td><td>0.431 m</td><td>22.66°</td><td>✕</td></tr></tbody></table></div>
+<p>차 한계는 조향 20° → 최소반경 0.495 m. <strong>어떤 스케일로 매끄럽게 해도 중심선은 못 돈다.</strong></p>
+<blockquote>
+<p><strong>코너 커팅은 최적화가 아니라 완주의 전제조건이다.</strong>
+그리고 차폭 0.16 m 기준 중심선에서 편측 여유는 <strong>0.270 m</strong> — 이게 커팅 예산 전부다.
+(최적화 레이싱라인은 최소반경 0.581 m / 조향 17.2°로 통과)</p>
+</blockquote>
+<hr/>
+<h1 id="4-개발-흐름">4. 개발 흐름<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#4-개발-흐름" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h1>
+<h2 id="813-수--플랫폼을-처음부터-만든다">8/13 (수) — 플랫폼을 처음부터 만든다<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#813-수--플랫폼을-처음부터-만든다" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>팀에 차가 없었다. <strong>랩실 부품으로 연습용 플랫폼을 조립</strong>하는 것부터 시작.</p>
+<ul>
+<li>대회 OT 자료 + 웹 분석 → 실차 스펙과 규정 정리</li>
+<li>RPi4B에 Ubuntu 24.04 + ROS2 Jazzy (실차 SW 스펙에 맞춤), SSH 접속 구성</li>
+<li><strong>RPLidar A3 사망</strong> — 전원을 줘도 모터가 안 돈다. 케이블 교체해도 동일 → <strong>A1으로 교체</strong></li>
+<li>카메라 ELP-USB500W02M-BL36 (170° 어안), HandsFree USB IMU 연결</li>
+<li>대회 담당자에게 <strong>인터페이스 확답</strong> 확보: <code>/speed</code>+<code>/steering</code>, IMU는 6축</li>
+<li><code>physicar_driver</code> 커밋 — <code>/speed</code>+<code>/steering</code> → Arduino ESC/서보</li>
+</ul>
+<blockquote class="callout note" data-callout="note">
+<div class="callout-title">
+                  <div class="callout-icon"></div>
+                  <div class="callout-title-inner"><p>이날 확립한 원칙 </p></div>
+                  
+                </div>
+<div class="callout-content">
+<p><strong>“완전히 같은 차를 만드는 게 아니라, 프레임워크(인지-판단-제어 파이프라인)를 먼저
+완성한다.”</strong> 부품이 다 대체품이므로 하드웨어를 흉내내는 대신 <strong>토픽·노드 이름을
+실차와 똑같이 맞춰</strong> 두면 로직은 그대로 이관된다.</p>
+</div>
+</blockquote>
+<p><img src="../../_attachments/AMET2026-Physicar/2026-08-20-practice-platform.jpeg" width="auto" height="auto" alt/></p>
+<p><em>연습 플랫폼 — 1/12 RC 섀시 + RPi4 + RPLidar A1 + USB 카메라 + Arduino. 보조배터리는 테이프로</em></p>
+<p><img src="../../_attachments/AMET2026-Physicar/2026-08-20-practice-platform-2.jpeg" width="auto" height="auto" alt/></p>
+<p><img src="../../_attachments/AMET2026-Physicar/2026-08-20-practice-track.jpeg" width="auto" height="auto" alt/></p>
+<p>강의실에 깐 연습 트랙*</p>
+<h2 id="814-목--하루를-전원-문제에-썼다">8/14 (목) — 하루를 전원 문제에 썼다<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#814-목--하루를-전원-문제에-썼다" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<ul>
+<li>모터 배터리(NiMH 7.2 V) <strong>GX12-2 커넥터가 랩실에 없어</strong> 충전 불가 → 악어클립으로 직결</li>
+<li><strong>보조배터리로 RPi4 + 라이다 + 카메라 + IMU를 동시에 못 돌린다.</strong>
+라이다 모터 기동 전류 스파이크가 다른 USB 장치를 리셋 (dmesg 확인)
+→ 라이다 전원선을 분리해 별도 급전하는 방안 시도, 결국 <strong>벽전원으로 개발</strong></li>
+<li>첫 장애물 회피 테스트 (<code>avoid_node</code>):
+<ul>
+<li>모터는 도는데 <strong>서보가 한쪽으로만 감</strong> → 조향 부호 문제</li>
+<li><strong>라이다를 뒤로 달았다는 걸 발견</strong> (바퀴가 장애물을 따라감)</li>
+<li>아주 가까이 와야만 감지 → 캘리브레이션 불일치</li>
+</ul>
+</li>
+</ul>
+<blockquote class="callout note" data-callout="note">
+<div class="callout-title">
+                  <div class="callout-icon"></div>
+                  <div class="callout-title-inner"><p>여기서 남은 자산 </p></div>
+                  
+                </div>
+<div class="callout-content">
+<p><code>autonomy_launch.py</code>가 <code>front_offset_deg:=180.0</code>, <code>avoid_steer_sign:=-1.0</code>을
+오버라이드하는 이유가 이거다. <strong>연습 섀시 전용 launch</strong>이고, 실차에 쓰면 안 된다.</p>
+</div>
+</blockquote>
+<h2 id="815-금--파이프라인-1차-완성-규정-재확인">8/15 (금) — 파이프라인 1차 완성, 규정 재확인<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#815-금--파이프라인-1차-완성-규정-재확인" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<ul>
+<li>신호등 영상 제작 (휴대폰으로 재생해 출발 신호로 씀) — <em>이때는 3구인 줄 알았다</em></li>
+<li>대회 규칙 전체 정리 (1장 내용)</li>
+<li><strong>인지/판단 3노드 커밋</strong>: <code>physicar_vision</code>(lane_follow + traffic_light + hsv_calibrate),
+<code>physicar_judgment</code>(최종 중재), <code>physicar_nav</code>(avoid를 조언 입력으로 격하)</li>
+<li>실기 통합 테스트: 더미 센서 데이터로 파이프라인 정상 확인, 실측 캘리브레이션값
+(<code>FRONT_OFFSET_DEG=180</code>, <code>AVOID_STEER_SIGN=-1.0</code>) 코드 반영</li>
+<li>저장소 public 전환 (8/25에 되돌림)</li>
+</ul>
+<h2 id="816-토--공식-소스-입수">8/16 (토) — 공식 소스 입수<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#816-토--공식-소스-입수" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>팀이 Physicar 내부 파일을 확보. 여기서 <strong>추측이 사실로 바뀐 것들</strong>:</p>
+<ul>
+<li><code>/opt/physicar/userdata/myapp.sh</code> <strong>배포 슬롯 확인</strong> → “SW 변경 금지” 규정과 무관하게
+팀 로직을 올릴 정식 경로가 있다는 게 확정</li>
+<li>안전 클램프가 드라이버에 하드코딩돼 있음을 소스로 확인 → 우리가 구현할 필요 없음</li>
+<li><code>/camera/image_raw</code> <strong>토픽 불일치 버그 발견/수정</strong></li>
+<li><code>real_autonomy_launch.py</code> 신설 (센서 드라이버를 띄우지 않는 실차/시뮬용 launch)</li>
+<li>60° / 90° / 120° 코너로 인지 재검증</li>
+</ul>
+<h2 id="818-월--설계-전환일">8/18 (월) — <strong>설계 전환일</strong><a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#818-월--설계-전환일" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>트랙이 공개되고 공식 웹 시뮬레이터(physicar.ai)에 처음 들어간 날. 하루에 가장 많은
+것이 결정됐다.</p>
+<p><strong>① end-to-end 학습을 검토하고 접었다.</strong>
+“장애물 없는 트랙을 end-to-end로 빠르게 돌다가, 센서가 장애물을 잡으면 통제권을
+넘겨받아 회피하고 다시 복귀” — 매력적이지만 <strong>도전 기회가 1회</strong>고 학습 데이터를 모을
+시간이 없다. → <strong>고전 방식 + 강한 파라미터화</strong>로 결정.</p>
+<p><strong>② 논문 4편 분석</strong> (F1TENTH/RoboRacer, ForzaETH Race Stack, Optimization-Based
+Autonomous Racing, Opponent Trajectory Prediction). 전부 <strong>전역 위치추정을 전제</strong>하고
+있어서 그대로는 못 쓴다는 것을 확인 → 3장의 결론으로 이어짐.</p>
+<p><strong>③ 통로 기반 플래너로 전환.</strong> <code>physicar_planner</code> 신설, 차선추종/회피 분리 구조 폐기.</p>
+<p><strong>④ 평가 인프라 구축.</strong> <code>YS_bench</code>(랩타임·이탈 자동 채점), <code>YS_perception_probe</code>(IPM
+거리 오차 실측), <code>YS_raceline</code>(오프라인 최적 경로), <code>traffic_light_node</code> 재작성
+(황색 제거, 램프 모양 blob 검출, 신호등 실제 위치로 ROI 이동)</p>
+<blockquote class="callout note" data-callout="note">
+<div class="callout-title">
+                  <div class="callout-icon"></div>
+                  <div class="callout-title-inner"><p>이날 도입한 작업 방식 — 세션 2개 분업 </p></div>
+                  
+                </div>
+<div class="callout-content">
+<p>개발 세션(로직 수정)과 시뮬 세션(실행·관찰 전담)을 나누고 <code>YS_sim_log.md</code> 파일로
+주고받게 했다. <strong>시뮬 세션은 소스를 절대 수정하지 않고, 원인 추정만 적는다.</strong>
+관찰자가 코드를 고치기 시작하면 무엇 때문에 좋아졌는지 알 수 없게 되기 때문.</p>
+</div>
+</blockquote>
+<h2 id="819-화--발진-버그와-트랙-실측">8/19 (화) — 발진 버그와 트랙 실측<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#819-화--발진-버그와-트랙-실측" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<ul>
+<li><strong>발진 버그 수정</strong> (2-3 ⑦절) — 램프 도입 + 정지 시 lookahead 과소 문제</li>
+<li><code>judgment_node</code> 재작성 — 회피/차선 중재 로직 제거, <strong>failsafe + 신호등 게이트만</strong> 남김</li>
+<li><code>YS_calibrate.py</code> — <strong>차가 서 있는 바닥</strong>에서 도로 색 경계값을 뽑아 launch 인자로
+출력. H·S·V 세 채널을 다 채점해서 <strong>어느 채널이 실제로 가르는지 이름을 대준다</strong></li>
+<li><code>YS_trace.py</code> — 명령 속도와 실제 속도를 한 시간축에 → <em>판단이 틀렸나, 명령이 안 갔나</em></li>
+<li><code>YS_run.sh</code> — 리셋·구동·채점·정리를 한 명령으로</li>
+<li><strong>트랙 실측 dump</strong> (3장의 숫자들)</li>
+</ul>
+<h2 id="820-수--백업과-기록">8/20 (수) — 백업과 기록<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#820-수--백업과-기록" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<ul>
+<li>웹 시뮬레이터 터미널 + ChatGPT로 디버깅한 결과를 <code>8.20자_로컬백업/</code>으로 회수</li>
+<li>랩미팅 발표용으로 <strong>디버그 화면 전부 캡처</strong> — 이 노트의 사진은 전부 이날 것</li>
+</ul>
+<p>이날 확인된 실패 모드 두 가지 (<code>/debug/road_mask</code>를 rqt로 직접 보면서):</p>
+<blockquote>
+<p><strong>세그멘테이션은 멀쩡했다.</strong> 아스팔트=흰색, 잔디·벽·콘=검정, 차선/중앙선도 도로로
+정상 포함. 문제는 <strong><code>scan_corridor()</code>가 검출된 도로 형상을 경로로 못 바꾸는 것</strong>이었다.</p>
+<ul>
+<li><strong>실패 모드 A</strong>: 화면 중앙(y=0)을 포함하는 구간만 도로로 인정 → <strong>코너가 심하면
+도로가 보이는데도 놓친다</strong></li>
+<li><strong>실패 모드 B</strong>: 차량 정면만 우연히 검은 영역에 걸리면 <strong>옆에 도로가 있어도
+“corridor 없음”으로 오판</strong></li>
+</ul>
+<p>결론: HSV/마스크는 안 고쳐도 된다. <strong>“화면 중앙과 이어진 도로만 유효”라는 가정을
+없애는 것</strong>이 우선.</p>
+</blockquote>
+<h3 id="코너-강인성-시험">코너 강인성 시험<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#코너-강인성-시험" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p><img src="../../_attachments/AMET2026-Physicar/2026-08-20-corner-robustness.png" width="auto" height="auto" alt/></p>
+<p><em>좌: raw camera + lidar / 중: road mask / 우: 시뮬레이터 topdown — 세 화면을 붙여 놓고 본다</em></p>
+<p><img src="../../_attachments/AMET2026-Physicar/2026-08-20-corner-robustness-2.png" width="auto" height="auto" alt/></p>
+<p><img src="../../_attachments/AMET2026-Physicar/2026-08-20-corner-robustness-3.png" width="auto" height="auto" alt/></p>
+<h3 id="노이즈라바콘차선-파선-무시-시험">노이즈(라바콘·차선 파선) 무시 시험<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#노이즈라바콘차선-파선-무시-시험" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p><img src="../../_attachments/AMET2026-Physicar/2026-08-20-noise-rejection.png" width="auto" height="auto" alt/></p>
+<p><em>라바콘을 지나며 중심 사슬이 자연스럽게 우회한다. 별도 회피 코드는 없다 — 통로가 좁아졌을 뿐</em></p>
+<p><img src="../../_attachments/AMET2026-Physicar/2026-08-20-noise-rejection-2.png" width="auto" height="auto" alt/></p>
+<p><img src="../../_attachments/AMET2026-Physicar/2026-08-20-noise-example.png" width="auto" height="auto" alt/></p>
+<p><img src="../../_attachments/AMET2026-Physicar/2026-08-20-noise-2.png" width="auto" height="auto" alt/></p>
+<p><img src="../../_attachments/AMET2026-Physicar/2026-08-20-noise-3.png" width="auto" height="auto" alt/></p>
+<p><img src="../../_attachments/AMET2026-Physicar/2026-08-20-noise-4.png" width="auto" height="auto" alt/></p>
+<p><img src="../../_attachments/AMET2026-Physicar/2026-08-20-noise-5.png" width="auto" height="auto" alt/></p>
+<p><img src="../../_attachments/AMET2026-Physicar/2026-08-20-noise-6.png" width="auto" height="auto" alt/></p>
+<p><img src="../../_attachments/AMET2026-Physicar/2026-08-20-noise-overall.png" width="auto" height="auto" alt/></p>
+<h3 id="주행-데모">주행 데모<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#주행-데모" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p><img src="../../_attachments/AMET2026-Physicar/2026-08-20-demo.gif" width="auto" height="auto" alt/></p>
+<h2 id="821--822-목금--인프라-이중화">8/21 ~ 8/22 (목~금) — 인프라 이중화<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#821--822-목금--인프라-이중화" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>대회장에서 인터넷과 데스크탑을 못 믿는다는 전제로, <strong>모든 것을 두 벌로</strong> 만들었다.</p>
+<ul>
+<li><strong>로컬 시뮬레이터 구축</strong>: 공식 시뮬레이터 컨테이너 이미지(8.4 GB, 전개 시 27.2 GB)를
+Docker로 로컬 기동. nginx + code-server 통합 UI를 <code>https://127.0.0.1:8443/</code>에
+올림 (PowerShell 실행 정책, 자체 인증서 등록 등 삽질 포함)</li>
+<li><strong>Tailscale 원격 접속</strong>: 노트북 → 데스크탑 (<code>https://100.79.41.23:8443/</code>)
+공유기 포트포워딩은 금지 — 시뮬레이터 스택은 인증이 거의 없다</li>
+<li><strong>RPi5 환경 추가 구성</strong> — 실차와 같은 <code>physicar_ws</code> 구조로 연습대 하나 더</li>
+<li><code>ys_joy_teleop</code> — 게임패드로 차를 몰 수 있게 (실차 공식 teleop과 같은 토픽 계약)</li>
+</ul>
+<p><img src="../../_attachments/AMET2026-Physicar/2026-08-21-path-planning.gif" width="auto" height="auto" alt/></p>
+<p><em>경로 생성 동작 (원본: <code>2026-08-21-path-planning.mp4</code>)</em></p>
+<h2 id="823--824-토일--인지-파이프라인-재설계">8/23 ~ 8/24 (토~일) — 인지 파이프라인 재설계<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#823--824-토일--인지-파이프라인-재설계" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>ChatGPT와 한 단계씩 상의하며 인지 계층을 <strong>7단계 로드맵</strong>으로 다시 세웠다.</p>
+<pre><code>camera
+ ① 도로/마킹 인식                       ✅
+ ② 실제 경기 트랙 식별                  ✅   PATH_OK / TURN_ONLY / REACQUIRE / LOST
+ ③ 신뢰 가능한 도로 중앙 Reference Path  ✅   path fitting / shape validation
+ ④ 장애물 구분                          ← 대회 출발 시점 진행 중
+      평면 무늬 vs 솟아 있는 물체 / 지면 접촉 위치 / 좌·우·점유폭·신뢰도
+ ⑤ 장애물 회피 (feasible corridor, local spline)
+ ⑥ 곡선 감속 / 직선 가속
+ ⑦ Tracking Controller
+</code></pre>
+<p>②의 상태기계(<code>PATH_OK / TURN_ONLY / REACQUIRE / LOST</code>)가 8/20에 찾은 실패 모드
+A·B에 대한 답이다 — <strong>“지금 보이는 길이 아까 믿던 그 길인가”를 명시적으로 판정</strong>한다.</p>
+<blockquote class="callout note" data-callout="note">
+<div class="callout-title">
+                  <div class="callout-icon"></div>
+                  <div class="callout-title-inner"><p>이후 진행 — ④⑤는 대회장에서 끝났다 </p></div>
+                  
+                </div>
+<div class="callout-content">
+<p>8/25<del>26 코엑스에서 ④ 장애물 구분(Stage-4/4B/4C)과 ⑤ 회피(Stage-5A</del>E)를 완성하고,
+⑦ Tracking Controller의 1차 배선까지 갔다. → <a href="#825-%ED%99%94--%EC%B0%A8%EB%9F%89-%EC%9D%B8%EC%88%98-%EC%8B%A4%EC%B0%A8-%EB%8D%B0%EC%9D%B4%ED%84%B0-%EC%88%98%EC%A7%91-%EC%9D%B8%EC%A7%80-" class="internal alias">8/25 (화) — 차량 인수, 실차 데이터 수집, 인지 ④</a></p>
+</div>
+</blockquote>
+<p><img src="../../_attachments/AMET2026-Physicar/2026-08-24-boundary-overlay.png" width="auto" height="auto" alt/></p>
+<p><em>①②③ 결과 오버레이 — 좌우 도로 경계(청록)와 중앙 마킹(파랑), 신뢰 지평선</em></p>
+<p><img src="../../_attachments/AMET2026-Physicar/2026-08-25-stage4-ground-warp.png" width="auto" height="auto" alt/></p>
+<p><em>④ Stage4 Ground Warp — 지면 평면으로 워프해 “솟아 있는 물체”를 평면 무늬와 분리한다.
+출발 직전 8/25 01:20 캡처</em></p>
+<ul>
+<li>로컬 시뮬레이터 부팅 고장 대응: 재부팅 직후 WSL이 Docker보다 늦게 떠서 nginx가 죽는다
+→ 로그온 45초 후 + 10분마다 도는 <strong>부팅 가드 예약작업</strong> 추가</li>
+</ul>
+<h3 id="대회차량-모사-ugv-완성--824-0039-부품-2345-조립-완료">대회차량 모사 UGV 완성 — 8/24 00:39 부품, 23:45 조립 완료<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#대회차량-모사-ugv-완성--824-0039-부품-2345-조립-완료" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>8/13에 만든 RPi4 연습 플랫폼과 별개로, <strong>실차와 센서를 맞춘 두 번째 UGV</strong>를 만들었다.
+8/21~22에 구성한 RPi5 환경이 올라갈 몸체다.
+목적은 하나 — <strong>실차 인수 전 마지막 리허설.</strong> 대회장에 가기 전에, 로직이 시뮬레이터가
+아니라 실제 하드웨어 위에서 도는지 확인하려고 만들었다.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th></th><th>1차 연습 플랫폼 (8/13)</th><th><strong>2차 UGV (8/24)</strong></th><th>실차 Physicar</th></tr></thead><tbody><tr><td>SBC</td><td>RPi <strong>4B</strong></td><td><strong>RPi 5</strong></td><td>RPi 5</td></tr><tr><td>라이다</td><td>RPLidar <strong>A1</strong></td><td><strong>RPLidar C1</strong></td><td>RPLidar C1</td></tr><tr><td>카메라</td><td>ELP USB (170° 어안)</td><td><strong>CSI 카메라 모듈</strong></td><td>CSI OV5647</td></tr><tr><td>섀시</td><td>1/12 RC (검정)</td><td>4WD 알루미늄 (녹색)</td><td>Physicar 전용</td></tr><tr><td>조향</td><td>애커만</td><td><strong>애커만</strong></td><td>애커만</td></tr><tr><td>구동</td><td>Arduino ESC/서보</td><td>Arduino ESC/서보</td><td>공식 확장보드</td></tr></tbody></table></div>
+<p><strong>라이다와 카메라가 실차와 같은 모델</strong>이 됐다는 게 핵심이다.</p>
+<ul>
+<li><strong>조향이 애커만이라 <code>/steering</code>(rad) 계약이 그대로 호환된다.</strong> 상위 로직은 어느
+플랫폼 위에 있는지 알 필요가 없다 — 8/13에 세운 “이름을 맞춰 두면 로직은 그대로
+이관된다”는 원칙이 여기서 값을 했다.</li>
+<li><strong>Arduino는 그대로 남겼다.</strong> ESC/서보 구동을 담당하고, 1차 플랫폼에서 쓰던
+<code>driver_node</code> + 시리얼 펌웨어를 재사용했다. RPi5로 올라간 건 상위 계층뿐이다.</li>
+<li><strong>1차 플랫폼의 고질병 두 가지가 여기서 다 해소됐다</strong> — ① 카메라가 USB에서 빠지면서
+라이다 기동 전류가 다른 장치를 리셋시키던 USB 허브 전력 부족이 사라졌고,
+② 카메라 화각이 실차 CSI와 같아졌다.</li>
+</ul>
+<p><img src="../../_attachments/AMET2026-Physicar/2026-08-24-ugv-parts-1.jpg" width="auto" height="auto" alt/></p>
+<p><em>부품 — 4WD 알루미늄 섀시 / RPi 5(액티브 쿨러) / Arduino / CSI 카메라 모듈(FFC 케이블) / RPLidar C1</em></p>
+<p><img src="../../_attachments/AMET2026-Physicar/2026-08-24-ugv-parts-2.jpg" width="auto" height="auto" alt/></p>
+<p><img src="../../_attachments/AMET2026-Physicar/2026-08-24-ugv-built-side.jpg" width="auto" height="auto" alt/></p>
+<p><em>조립 완료 (8/24 23:45) — 라이다는 상단 합판 마운트, RPi 5와 Arduino는 중앙</em></p>
+<p><img src="../../_attachments/AMET2026-Physicar/2026-08-24-ugv-built-front.jpg" width="auto" height="auto" alt/></p>
+<p><em>정면 — 카메라는 전방 하단 중앙, 라이다는 그 위. 실차의 센서 배치를 따랐다</em></p>
+<p><img src="../../_attachments/AMET2026-Physicar/2026-08-24-ugv-built-3.jpg" width="auto" height="auto" alt/></p>
+<h3 id="랩실-트랙-주행--824-0348--1355-14회">랩실 트랙 주행 — 8/24 03:48 ~ 13:55, 14회<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#랩실-트랙-주행--824-0348--1355-14회" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>출발 전날 랩실 트랙에서 이 UGV로 주행을 반복했다. 03:48 한 번, 12:04<del>12:30 다섯 번,
+13:30</del>13:55 여덟 번.</p>
+<blockquote class="callout note" data-callout="note">
+<div class="callout-title">
+                  <div class="callout-icon"></div>
+                  <div class="callout-title-inner"><p>여기서 돌린 건 corridor planner가 아니다 </p></div>
+                  
+                </div>
+<div class="callout-content">
+<p><strong>1차 플랫폼(8/13~15)에서 쓰던 코드를 그대로 재사용했다.</strong> 시뮬레이터에서 개발하던
+<code>physicar_planner</code>도, GPT와 재설계하던 7단계 파이프라인도 아니다.
+하드웨어가 새로 조립된 상태에서 <strong>일단 도는 것부터 확인</strong>하는 게 목적이었기 때문이다.</p>
+</div>
+</blockquote>
+<p><strong>결과 — 여러 바퀴를 연속으로 자율주행했다.</strong></p>
+<ul>
+<li>파라미터는 <strong>랩실 트랙 위에서 직접 재측정해서</strong> 넣었다 (<code>YS_calibrate.py</code>가 하려던
+바로 그것 — “차가 서 있는 바닥에서 경계값을 뽑는다”)</li>
+<li>실패할 때의 양상은 <strong>거의 항상 코너 이탈</strong>이었다. 통로를 잃고 서버리는 게 아니라,
+코너에서 밖으로 밀려 나갔다 → 조향 여력이 아니라 <strong>진입 속도</strong>의 문제에 가깝다</li>
+</ul>
+<p><img src="../../_attachments/AMET2026-Physicar/2026-08-24-ugv-track-01.gif" width="auto" height="auto" alt/></p>
+<p><em>03:48 · 47초 — 이날 가장 긴 주행. 여러 바퀴 연속 · ×6 배속</em></p>
+<p><img src="../../_attachments/AMET2026-Physicar/2026-08-24-ugv-track-02.gif" width="auto" height="auto" alt/></p>
+<p><em>원본 13초 · ×2 배속</em></p>
+<p><img src="../../_attachments/AMET2026-Physicar/2026-08-24-ugv-track-03.gif" width="auto" height="auto" alt/></p>
+<p><em>원본 11초 · ×2 배속</em></p>
+<p><img src="../../_attachments/AMET2026-Physicar/2026-08-24-ugv-track-04.gif" width="auto" height="auto" alt/></p>
+<p><em>원본 15초 · ×2 배속</em></p>
+<p><img src="../../_attachments/AMET2026-Physicar/2026-08-24-ugv-track-05.gif" width="auto" height="auto" alt/></p>
+<p><em>원본 2.0초 · ×2 배속</em></p>
+<p><img src="../../_attachments/AMET2026-Physicar/2026-08-24-ugv-track-06.gif" width="auto" height="auto" alt/></p>
+<p><em>원본 26초 · ×4 배속</em></p>
+<p><img src="../../_attachments/AMET2026-Physicar/2026-08-24-ugv-track-07.gif" width="auto" height="auto" alt/></p>
+<p><em>원본 12초 · ×2 배속</em></p>
+<p><img src="../../_attachments/AMET2026-Physicar/2026-08-24-ugv-track-08.gif" width="auto" height="auto" alt/></p>
+<p><em>원본 5.6초 · ×2 배속</em></p>
+<p><img src="../../_attachments/AMET2026-Physicar/2026-08-24-ugv-track-09.gif" width="auto" height="auto" alt/></p>
+<p><em>원본 24초 · ×4 배속</em></p>
+<p><img src="../../_attachments/AMET2026-Physicar/2026-08-24-ugv-track-10.gif" width="auto" height="auto" alt/></p>
+<p><em>원본 9.7초 · ×2 배속</em></p>
+<p><img src="../../_attachments/AMET2026-Physicar/2026-08-24-ugv-track-11.gif" width="auto" height="auto" alt/></p>
+<p><em>원본 2.5초 · ×2 배속</em></p>
+<p><img src="../../_attachments/AMET2026-Physicar/2026-08-24-ugv-track-12.gif" width="auto" height="auto" alt/></p>
+<p><em>13:53 · 38초 · ×6 배속</em></p>
+<p><img src="../../_attachments/AMET2026-Physicar/2026-08-24-ugv-track-13.gif" width="auto" height="auto" alt/></p>
+<p><em>원본 8.3초 · ×2 배속</em></p>
+<p><img src="../../_attachments/AMET2026-Physicar/2026-08-24-ugv-track-14.gif" width="auto" height="auto" alt/></p>
+<p><em>원본 18초 · ×3 배속</em></p>
+<h2 id="825-월-새벽--인수인계하고-출발">8/25 (월) 새벽 — 인수인계하고 출발<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#825-월-새벽--인수인계하고-출발" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<ul>
+<li>저장소 <strong>private 재전환</strong> (<code>deploy/</code>에 개인 PC 원격접속 정보가 들어가면서).
+규정상으로도 “다른 팀과 코드 공유 시 실격”이 있어 private이 안전한 쪽</li>
+<li><code>deploy/</code> 신설 — 노트북 / 시뮬호스트 / RPi5 각각의 환경 구축 스크립트</li>
+<li><strong><code>YS_HANDOVER.md</code> 작성</strong> — 노트북에서 개발을 이어받아 실차에 올리기까지 한 문서로</li>
+<li><code>ANSL_AMET2026.bundle</code> 생성 — <strong>인터넷 없이 clone 가능한 오프라인 저장소 사본</strong></li>
+<li>데스크탑을 켜 둔 채 HDMI만 빼고 출발</li>
+</ul>
+<blockquote class="callout warning" data-callout="warning">
+<div class="callout-title">
+                  <div class="callout-icon"></div>
+                  <div class="callout-title-inner"><p>출발 시점에 알고 있던 취약점 </p></div>
+                  
+                </div>
+<div class="callout-content">
+<p>원격 복구가 <strong>안 된다.</strong> 부팅 가드는 <code>LogonType=Interactive</code>라 로그온 세션이 없으면
+아예 돌지 않고, 계정에 암호가 없어(<code>LimitBlankPasswordUse=1</code>) <strong>RDP 로그인도 거부</strong>된다.
+→ 사고가 나면 <strong>랩실 사람에게 클릭을 부탁하는 것</strong>이 유일한 복구 경로.
+부탁 문구까지 문서에 써 뒀다.</p>
+</div>
+</blockquote>
+<hr/>
+<h1 id="5-대회-825--827">5. 대회 (8/25 ~ 8/27)<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#5-대회-825--827" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h1>
+<h2 id="가져간-것">가져간 것<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#가져간-것" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th></th><th></th></tr></thead><tbody><tr><td>코드</td><td>GitHub private 저장소 + <code>ANSL_AMET2026.bundle</code> (오프라인 사본)</td></tr><tr><td>시뮬레이터</td><td>Docker 이미지 8.4 GB + golden_snapshot (USB, <strong>exFAT 필수</strong>)</td></tr><tr><td>백업 경로</td><td>Tailscale로 집 데스크탑 원격 (<code>https://100.79.41.23:8443/</code>)</td></tr><tr><td>실차 배포</td><td><code>deploy/rpi5/YS_myapp.sh</code> → 실차 웹 UI(:5000) MyApp 패널 업로드</td></tr></tbody></table></div>
+<blockquote class="callout tip" data-callout="tip">
+<div class="callout-title">
+                  <div class="callout-icon"></div>
+                  <div class="callout-title-inner"><p>대회 출전은 이 코드로 하지 않았다 </p></div>
+                  
+                </div>
+<div class="callout-content">
+<p><strong>대회에서는 팀원이 개발한 E2E 로직을 적용해 참가했다.</strong>
+아래 “준비해 간 절차”와 §2~§3의 통로 기반 스택은 대회 당일 경로에 들어가지 않았다.</p>
+</div>
+</blockquote>
+<h2 id="대회장-도착-후-실행-순서-준비해-간-절차--실제로는-미실행">대회장 도착 후 실행 순서 (준비해 간 절차 — 실제로는 미실행)<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#대회장-도착-후-실행-순서-준비해-간-절차--실제로는-미실행" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<ol>
+<li>트랙이 갱신됐으면 <strong>가장 먼저</strong> <code>python3 tools/YS_track_dump.py --save</code>
+— 본선은 콘 위치만 바뀐다. 좌표를 다시 뽑아둔다</li>
+<li><code>python3 tools/YS_calibrate.py --explain</code> — <strong>차를 트랙 위에 세워두고</strong></li>
+<li><code>python3 tools/YS_steer_check.py</code> — 조향 부호와 라이다 장착각 실측</li>
+<li><code>aggression</code>을 <strong>2.0으로 낮게 시작해서 올린다</strong> (기본 4.0은 시뮬레이터 값)</li>
+<li><code>tools/YS_run.sh</code>로 한 바퀴 벤치마크</li>
+</ol>
+<blockquote class="callout warning" data-callout="warning">
+<div class="callout-title">
+                  <div class="callout-icon"></div>
+                  <div class="callout-title-inner"><p>가장 큰 미지수는 숫자가 아니었다 </p></div>
+                  
+                </div>
+<div class="callout-content">
+<p><strong>시뮬레이터에서 맞춘 색상값 중 대회장까지 살아남는 건 거의 없다.</strong>
+전시장 바닥은 잔디가 아니고, 보라색 경계벽은 존재하지 않고, 조명은 그 홀의 조명이다.
+시뮬레이터에서는 색상(H)이 도로와 주변을 갈랐다 — 잔디는 초록이고 도로는 아니니까.
+<strong>전시장에서 회색 트랙이 회색 바닥 위에 있으면 H로는 아무것도 안 갈린다.</strong>
+그건 임계값 문제가 아니라 <strong>규칙 자체를 바꿔야 하는 문제</strong>고,
+<code>YS_calibrate.py</code>가 그 경우를 명시적으로 경고하도록 만들어 뒀다.
+그때의 유일한 대안이 지우지 않고 남겨둔 <code>lane_follow_node.py</code>였다.</p>
+<p><strong>살아남는 건 규칙의 모양이지 숫자가 아니다.</strong></p>
+</div>
+</blockquote>
+<h2 id="출발-시점의-미해결-항목">출발 시점의 미해결 항목<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#출발-시점의-미해결-항목" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th>#</th><th>항목</th><th>상태</th></tr></thead><tbody><tr><td>1</td><td><strong>한 바퀴 완주</strong></td><td>시뮬레이터에서는 끝내 미달성. <strong>다만 8/24 실차 UGV에서 여러 바퀴 연속 주행으로 해결됐다</strong> (1차 플랫폼 코드 기준)</td></tr><tr><td>2</td><td><code>run.sh</code> 연결</td><td>시뮬레이터 Evaluation 진입점에서 우리 launch가 아직 안 불림</td></tr><tr><td>3</td><td>라이다 비상정지</td><td>미구현. <strong>플래닝 루프 바깥</strong>에 둘 것 — 카메라를 믿는 코드와 같은 경로에 있으면 안 된다</td></tr><tr><td>4</td><td>신호등 화각</td><td>출발 자세에서 신호등이 이미지 열 410~478(폭 480)에 걸쳐 거의 화면 밖. 카메라 팬(±30°)이 후보인데 미검증</td></tr><tr><td>5</td><td>인지 ④~⑦</td><td>7단계 로드맵의 ④부터가 진행 중이었다</td></tr><tr><td>6</td><td>구동 계층(랩 UGV)</td><td>계약만 확정. <strong>실차에서는 공식 드라이버가 뜨므로 대회 자체에는 영향 없음</strong></td></tr></tbody></table></div>
+<hr/>
+<h2 id="825-화--차량-인수-실차-데이터-수집-인지-">8/25 (화) — 차량 인수, 실차 데이터 수집, 인지 ④<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#825-화--차량-인수-실차-데이터-수집-인지-" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>12:00 실차 배포. 처음 만져 본 <strong>실물 Physicar</strong>.</p>
+<p><img src="../../_attachments/AMET2026-Physicar/2026-08-25-physicar-1.jpg" width="auto" height="auto" alt/></p>
+<p><em>Physicar 실차 — 3D 프린트 바디, 상단 RPLidar C1, 전방 중앙 CSI 카메라와 좌우 적외선 조명 2발.
+뒤로 연습 트랙이 보인다</em></p>
+<p><img src="../../_attachments/AMET2026-Physicar/2026-08-25-physicar-2.jpg" width="auto" height="auto" alt/></p>
+<p><img src="../../_attachments/AMET2026-Physicar/2026-08-25-physicar-3.jpg" width="auto" height="auto" alt/></p>
+<p><em>센서 배치를 정면에서 — 우리가 8/24에 만든 UGV가 따라 한 그 배치다</em></p>
+<h3 id="1046--1110--차를-받기-전에-만든-건-주행-코드가-아니라-기록-장치였다">10:46 ~ 11:10 — 차를 받기 전에 만든 건 주행 코드가 아니라 기록 장치였다<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#1046--1110--차를-받기-전에-만든-건-주행-코드가-아니라-기록-장치였다" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th>시각</th><th>만든 것</th><th>왜</th></tr></thead><tbody><tr><td>10:46</td><td><code>physicar_bringup/launch/camera_tf_launch.py</code> 신설, <code>package.xml</code>에 <code>tf2_ros</code> 추가</td><td><code>base_footprint → camera_link</code> 고정 TF를 <strong>현장 실측값으로</strong> 발행. 실차의 카메라·라이다·IMU·드라이버는 이미 시스템 서비스로 떠 있으니 <strong>TF 하나만 얹는다</strong> — 주행 launch와 독립이라 같이 띄워도 충돌하지 않는다</td></tr><tr><td>10:55 ~ 11:10</td><td><code>scripts/topics.env</code>, <code>record_track_bag.sh</code>, <code>run_record.sh</code></td><td>rosbag 수집 진입점. 토픽 목록은 <code>topics.env</code> <strong>한 곳에만</strong> 두고, 녹화 직전 <code>ros2 topic list</code>로 <strong>필수 토픽이 실제로 발행 중인지 사전 점검</strong>한 뒤 시작한다</td></tr></tbody></table></div>
+<p><code>run_record.sh</code>는 <strong>대회 공식 실행 방식(<code>source run.sh</code> 한 줄로 환경설정부터 주행까지)과
+같은 패턴</strong>으로 맞췄다 — 차를 모는 사람에게는 명령 한 줄만 알려주면 되게.</p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="bash" data-theme="github-light github-dark"><code data-language="bash" data-theme="github-light github-dark" style="display:grid;"><span data-line><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0;">./run_record.sh</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF;"> 05_flat_checker_straight</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;"> 0.105</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;"> 0.0</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;"> 0.1645</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;"> 0.0</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;"> 0.0</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;"> 0.0</span></span>
+<span data-line><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;">#               시나리오 이름              cam_x cam_y cam_z  r   p   y   (줄자·각도기 실측)</span></span></code></pre></figure>
+<p>녹화가 끝나면 <code>&lt;bag>.txt</code> 메모 템플릿(수동주행 / 대략적인 속도 / 장애물 위치 / <strong>조명 상태</strong> /
+특이사항)이 자동 생성된다. <strong>조명이 어땠는지는 bag에 안 들어가니까.</strong></p>
+<h3 id="1339-리허설-1620-본-수집--실차-7분치">13:39 리허설, 16:20 본 수집 — 실차 7분치<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#1339-리허설-1620-본-수집--실차-7분치" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th>bag</th><th>길이</th><th>메시지</th><th>성격</th></tr></thead><tbody><tr><td><code>rosbag2_2026_08_25-13_39_34</code></td><td>1.3초</td><td>469</td><td>스크립트가 도는지만 본 스모크 테스트</td></tr><tr><td><code>rosbag2_2026_08_25-16_20_56</code></td><td><strong>422초 (7분 2초)</strong></td><td><strong>152,282</strong></td><td>16:20:57 ~ 16:27:59 실주행 수집</td></tr></tbody></table></div>
+<p>16:20 bag 내역 — <strong>조종기로 몰면서</strong> 전 센서를 통째로 받았다.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th>토픽</th><th>개수</th><th></th></tr></thead><tbody><tr><td><code>/camera/image_raw</code> (+ <code>/compressed</code>)</td><td>6,329</td><td>≈15 Hz · 7분치</td></tr><tr><td><code>/imu</code> · <code>/imu/mag</code></td><td>21,102 · 21,098</td><td>50 Hz</td></tr><tr><td><code>/odom</code></td><td>12,660</td><td>Stage-4B 2뷰 워프가 쓰는 그 odom</td></tr><tr><td><code>/scan</code> · <code>/scan_filtered</code> · <code>/odom/laser</code></td><td>4,220 · 4,219 · 4,220</td><td>10 Hz</td></tr><tr><td><code>/speed</code> · <code>/steering</code></td><td>5,607 · 5,606</td><td>실제로 나간 명령</td></tr><tr><td><code>/teleop/status</code></td><td>12,659</td><td><strong>조종기 주행이다 — 자율주행 로그가 아니다</strong></td></tr><tr><td><code>/battery_state</code> · <code>/camera/pan</code> · <code>/camera/tilt</code></td><td>422 · 9 · 9</td><td></td></tr></tbody></table></div>
+<blockquote class="callout warning" data-callout="warning">
+<div class="callout-title">
+                  <div class="callout-icon"></div>
+                  <div class="callout-title-inner"><p>이 bag의 원본이 지금 없다 </p></div>
+                  
+                </div>
+<div class="callout-content">
+<p>노트북 작업본에 들어온 <code>.mcap</code>이 <strong>0바이트</strong>다. 같은 폴더의 <code>metadata.yaml</code>은 152,282개
+메시지와 422초를 그대로 기록하고 있으니 <strong>녹화는 성공했고 옮기는 과정에서 비었다.</strong>
+실차 7분 전센서 로그는 차를 반납한 이상 다시 못 만드는 자산이라 원본을 찾아와야 한다.
+(8/31 정리 때 “녹화가 실패한 것으로 보인다”고 적었던 건 <strong>틀렸다</strong> — 파일이 아니라
+사본이 비어 있었다.)</p>
+</div>
+</blockquote>
+<h3 id="1149--2227--인지--장애물-구분">11:49 ~ 22:27 — 인지 ④ 장애물 구분<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#1149--2227--인지--장애물-구분" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p><code>planner_node.py</code> 옆에 쌓인 <code>*.before_stageN_*</code> 백업 <strong>8/25 하루치만 34개</strong>가 그대로 작업 로그다.
+편집 직전에 이름을 붙여 백업하는 습관이라 파일명과 mtime만으로 그날의 시간표가 나온다.</p>
+<pre><code>11:49  nearest_distance      14:03  residual_map        14:33  roi_clip_diag
+15:13  seeded_silhouette     15:20  seed_structure      15:26  seed_gate
+15:36  analysis_mask         15:56  height_residual     16:02  height_residual_logging
+16:10  band_row              16:54  support             17:03  파라미터화(launch 인자)
+17:07  candidate_match       17:09  old_whole_candidate_match   17:17  candidate_history
+17:24  candidate_specific_residual
+17:30  frame_state           17:35  anchor_correspondence   17:40  anchor_primary
+17:44  seed_anchor           17:48  foot_anchor         18:28  packet_union
+19:23  temporal_cleanup      19:47  temporal_confirm    19:59  contact_footprint
+20:12  reference_normal      20:16  occupancy       ──▶ 여기서 ④ 끝, ⑤ 시작
+
+(⑤ 구간은 20:55 forbidden · 21:30 free_corridor · 22:27 planning_footprint으로 이어진다)
+</code></pre>
+<p><strong>출발 시점의 ④는 틀린 방식으로 돌고 있었다.</strong></p>
+<blockquote>
+<p>막힌 픽셀 하나하나에 <strong>그 픽셀이 놓인 스캔 행의 지면 거리</strong>를 그대로 부여했다.
+그러면 서 있는 물체 하나가 <strong>도로 위에 길게 누운 가짜 장애물</strong>이 된다.
+라바콘 한 개가 1 m짜리 벽이 되는 것이다.</p>
+</blockquote>
+<p>고친 방향은 §6①과 같은 계열이다 — <strong>모르는 것에 아직 값을 주지 않는다.</strong></p>
+<ol>
+<li><strong>Stage-4 — 이미지 영역에서 멈춘다.</strong> 신뢰된 Track ROI 안에서 “도로로 인식되지 않은”
+연결 영역만 찾는다. 여기서는 <strong>어떤 미터 값도 만들지 않는다.</strong>
+코드 주석에 그대로 적어 뒀다: <code>blocked=True</code>는 “장애물”이 아니라 **“도로로 인식되지
+않음”**이며, 별도의 물체·접지 판단 없이 장애물 기하를 붙여선 안 된다.</li>
+<li><strong>Stage-4B — 2뷰 지면 잔차(ground residual).</strong> odom으로 두 프레임 사이 이동을 알고
+있으니 이전 프레임을 <strong>평면 지면 가정으로 워프</strong>해서 현재와 겹친다.
+<strong>평면 무늬는 겹치고 솟은 물체는 안 겹친다.</strong> 그 어긋난 양이 높이의 증거다.
+기준선(baseline)은 <strong>0.10 ~ 0.30 m 이동했을 때만</strong> 쓴다 — 안 움직였으면 비교할 게 없고
+너무 움직이면 겹칠 게 없다.</li>
+<li><strong>Stage-4C — 접지점만 투영한다.</strong> 확정된 물체의 각 이미지 열에서 <strong>맨 아래 픽셀 하나</strong>만
+지면에 투영한다. 실루엣 전체는 <strong>절대</strong> 투영하지 않는다. 새 임계값을 하나도 안 넣고
+물체의 하단 윤곽만 얻는 방법이다.</li>
+<li>그 접지점들을 Reference Path 법선 좌표로 옮긴다 (<code>n>0</code> 왼쪽 / <code>n&lt;0</code> 오른쪽).
+결과가 점유 구간 <code>[occupied_n_min, occupied_n_max]</code> — <strong>차폭도 안전마진도 아직 없는
+순수 관측값.</strong></li>
+</ol>
+<p><img src="../../_attachments/AMET2026-Physicar/2026-08-25-stage4-ground-residual.png" width="auto" height="auto" alt/></p>
+<p><em>15:50 — Stage4 Ground Residual. 0 px(어두움) = 평면대로 겹침, 50+ px = 안 겹침.
+아직 지면 격자만 잡히고 물체가 안 뜬다</em></p>
+<p><img src="../../_attachments/AMET2026-Physicar/2026-08-25-stage4-ground-residual-2.png" width="auto" height="auto" alt/></p>
+<p><em>17:45 — 같은 화면. 정면 물체가 <strong>잔차 덩어리로 통째로 솟았다.</strong> 평면 무늬(주변 격자)와
+솟은 물체가 같은 척도에서 갈린다</em></p>
+<h3 id="2055--826-0019--인지--회피">20:55 ~ 8/26 00:19 — 인지 ⑤ 회피<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#2055--826-0019--인지--회피" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th>Stage</th><th>하는 일</th><th>지킨 원칙</th></tr></thead><tbody><tr><td><strong>5A</strong> 금지구간</td><td>관측 점유 구간을 <strong>차체 폭 절반씩 양쪽으로</strong> 부풀려 차량 중심이 들어가면 안 되는 구간을 만든다</td><td>안전마진은 아직 안 넣는다 — 순수 기하 충돌 구간부터</td></tr><tr><td><strong>5B</strong> 자유 통로</td><td>같은 프레임의 신뢰된 Track 경계를 장애물의 종방향 위치에서 보간해 좌/우 여유폭을 구한다</td><td><strong>경계 외삽 금지.</strong> 같은 프레임에서 실제로 본 것만</td></tr><tr><td><strong>5C</strong> 방향 선택</td><td>라바콘은 좌 또는 우 차로에 놓이지 한가운데 놓이지 않는다 → 반대쪽이 1순위</td><td>단, <strong>같은 프레임의 자유 통로가 열려 있다고 말할 때만</strong> 채택</td></tr><tr><td><strong>5D</strong> 목표 + latch</td><td>최소 기하 우회 목표를 잡고 <strong>plan latch</strong> — 한 번 방향이 정해지면 목표는 <strong>금지구간에서 멀어지는 쪽으로만</strong> 움직인다</td><td>프레임이 잠깐 물체를 좁게 봐도 <strong>이미 만든 회피량이 줄지 않는다</strong></td></tr><tr><td><strong>5E</strong> 여유 예산</td><td>남은 clearance budget 계산, 계획용 발자국을 <strong>콘 물리폭 0.135 m를 최소 바닥값으로</strong> union</td><td>Stage-4 원시 관측은 손대지 않는다 — 계획용 값만 따로</td></tr></tbody></table></div>
+<p>회피 <strong>해제</strong>는 인지가 아니라 <strong>odom 전진량</strong>으로 판정한다
+(<code>stage5_release_if_passed_obstacle()</code>). 물체가 물리적으로 뒤로 갔을 때만 RETURN 구간을
+만든다. <strong>“안 보이니까 지나갔다”고 판단하지 않는다.</strong></p>
+<h3 id="2206--2208--연습장-3회">22:06 ~ 22:08 — 연습장 3회<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#2206--2208--연습장-3회" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>공식 연습 트랙(PHYSICAR AI 매트, 초록 바닥 + 보라 도로, 녹색 라바콘)이 세미나실에 깔려
+있다. <strong>자율주행이 아니라 조종기로 몬 것</strong> — 인수한 차의 거동과 트랙 감을 보는 단계다.
+README에 적어둔 대로 <strong>연습장에는 펜스가 없다.</strong></p>
+<p><img src="../../_attachments/AMET2026-Physicar/2026-08-25-practice-01.gif" width="auto" height="auto" alt/></p>
+<p><em>원본 12초 · ×2 배속</em></p>
+<p><img src="../../_attachments/AMET2026-Physicar/2026-08-25-practice-02.gif" width="auto" height="auto" alt/></p>
+<p><em>원본 12초 · ×2 배속</em></p>
+<p><img src="../../_attachments/AMET2026-Physicar/2026-08-25-practice-03.gif" width="auto" height="auto" alt/></p>
+<p><em>원본 2.8초 · ×2 배속</em></p>
+<h2 id="826-수--0052-배선-0208-rpi5-최적화-대회장-트랙">8/26 (수) — 00:52 배선, 02:08 RPi5 최적화, 대회장 트랙<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#826-수--0052-배선-0208-rpi5-최적화-대회장-트랙" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<h3 id="0052--stage-6-처음으로-계획이-바퀴에-닿았다">00:52 — “Stage 6”, 처음으로 계획이 바퀴에 닿았다<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#0052--stage-6-처음으로-계획이-바퀴에-닿았다" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>여기까지의 Stage 3/4/5는 <strong>전부 진단(diagnostic)이었다.</strong> Reference Path도 회피 궤적도
+계산은 다 됐지만, <code>self.steering</code> / <code>self.target_speed</code>는 여전히 <strong>옛 단일 프레임 HSV
+통로 스캔</strong>에서만 왔다. 아무도 그 값을 읽지 않았다. 00:52에 그걸 연결했다.</p>
+<pre><code>매 프레임, 지금 실제로 쓸 수 있는 것 중 제일 위를 고른다
+
+  1) 살아 있고 신선한 Stage-5 회피 궤적  →  STAGE5_TRAJECTORY
+  2) Stage-3 Reference Path             →  REFERENCE_PATH
+  3) 옛 통로 스캔                        →  LEGACY_CORRIDOR   ← 안전망
+</code></pre>
+<p>궤적이 오래됐으면(0.4초) <strong>“없는 것”으로 처리</strong>해서 그냥 아래 단으로 떨어진다.
+<strong>새 코드가 실패해도 8/20에 데모까지 끝낸 옛 경로가 그대로 남는다.</strong></p>
+<p>이 배선을 위해 <code>corridor.py</code>에 들어간 것:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th>함수</th><th>하는 일</th></tr></thead><tbody><tr><td><code>reference_path_curvature()</code></td><td>적합된 Reference Path <code>y=f(d)</code>의 곡률 <code>κ = f''/(1+f'²)^{3/2}</code> — 이게 있어야 <code>speed_for()</code>에 곡선 반경을 줄 수 있다. <code>reference_path_lateral()</code>과 <strong>같은 외삽 금지 계약</strong></td></tr><tr><td><code>vehicle_point_to_odom()</code> / <code>odom_point_to_vehicle()</code></td><td>회피 궤적은 <strong>만들어진 시점의 차량 프레임</strong>에 있다. 조향 목표는 <strong>지금 프레임</strong>에서 골라야 하므로 한 번 더 변환</td></tr><tr><td><code>nearest_trajectory_point()</code></td><td>궤적 점들 중 lookahead 거리에 가장 가까운 점</td></tr></tbody></table></div>
+<blockquote class="callout note" data-callout="note">
+<div class="callout-title">
+                  <div class="callout-icon"></div>
+                  <div class="callout-title-inner"><p>미해결을 미해결이라고 적었다 </p></div>
+                  
+                </div>
+<div class="callout-content">
+<p>배선 함수 docstring에 **“AVOID_READY/NOT_READY 깜빡임은 여기서 해결하지 않는다.
+오래된 궤적은 그냥 없는 것으로 처리해 아래 단으로 떨어뜨린다”**고 명시했다.
+대회 전날 새벽에 “일단 됐다”로 덮지 않은 것.</p>
+</div>
+</blockquote>
+<h3 id="0204--0208--rpi5-최적화-파생본-physicar_planner_rpi5opt">02:04 ~ 02:08 — RPi5 최적화 파생본 (<code>physicar_planner_rpi5opt</code>)<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#0204--0208--rpi5-최적화-파생본-physicar_planner_rpi5opt" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>시뮬레이터와 노트북에서 돌던 걸 <strong>RPi5 한 대</strong> 위에서 돌려야 한다. 바꾼 건 딱 두 가지다.</p>
+<ol>
+<li><strong><code>process_scale</code> 파라미터</strong> — 입력 프레임을 축소한다.
+<code>1.0</code>이면 <code>cv2.resize</code> 자체를 건너뛰어 <strong>원래 동작과 완전히 동일</strong>하고,
+<code>intrinsics()</code>가 이미 실제 프레임 크기로 스케일되므로 <strong>다른 코드는 한 줄도 안 바뀐다.</strong>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="bash" data-theme="github-light github-dark"><code data-language="bash" data-theme="github-light github-dark" style="display:grid;"><span data-line><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0;">ros2</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF;"> launch</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF;"> physicar_planner</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF;"> planner_launch.py</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF;"> process_scale:=</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;">0.5</span></span></code></pre></figure>
+</li>
+<li><strong>디버그 이미지 발행을 구독자 수로 게이트</strong> — <code>get_subscription_count() > 0</code>일 때만
+<code>cv2_to_imgmsg</code>를 부른다. 아무도 rqt로 안 보고 있으면 인코딩 비용 자체가 사라진다.
+근거도 주석에 붙였다: <strong>이 발행들은 <code>stage5_avoidance_*</code> 상태에 전혀 기여하지 않으므로
+꺼도 거동이 안 바뀐다.</strong></li>
+</ol>
+<p><code>corridor.py</code>는 <strong>한 바이트도 안 바뀌었다.</strong> 최적화가 인지 로직을 건드리지 않았다는 뜻이다.</p>
+<h3 id="하루에-늘어난-코드">하루에 늘어난 코드<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#하루에-늘어난-코드" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th></th><th>출발 직전 (8/25 00:21)</th><th>Stage 6 (8/26 00:52)</th><th>RPi5 (8/26 02:07)</th></tr></thead><tbody><tr><td><code>planner_node.py</code></td><td>3,862줄</td><td><strong>10,814줄</strong></td><td>10,845줄</td></tr><tr><td><code>corridor.py</code></td><td>3,186줄</td><td><strong>5,118줄</strong></td><td>5,118줄</td></tr></tbody></table></div>
+<p><strong>약 24시간에 7,000줄.</strong> 대회 규정이 “무박 2일 자유개발”이라고 부르는 시간이 이것이다.</p>
+<h3 id="1153--1154--대회장-트랙-주행-6회">11:53 ~ 11:54 — 대회장 트랙 주행 6회<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#1153--1154--대회장-트랙-주행-6회" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>코엑스 전시장의 <strong>실제 대회 트랙</strong>. 모비스·HL클레무브 부스 사이, 관람객이 둘러선 상태.
+연습장과 달리 트랙 옆에 <strong>20 cm 펜스</strong>가 서 있다.</p>
+<p><img src="../../_attachments/AMET2026-Physicar/2026-08-26-venue-01.gif" width="auto" height="auto" alt/></p>
+<p><em>원본 11초 · ×2 배속</em></p>
+<p><img src="../../_attachments/AMET2026-Physicar/2026-08-26-venue-02.gif" width="auto" height="auto" alt/></p>
+<p><em>원본 12초 · ×2 배속</em></p>
+<p><img src="../../_attachments/AMET2026-Physicar/2026-08-26-venue-03.gif" width="auto" height="auto" alt/></p>
+<p><em>원본 13초 · ×2 배속</em></p>
+<p><img src="../../_attachments/AMET2026-Physicar/2026-08-26-venue-04.gif" width="auto" height="auto" alt/></p>
+<p><em>원본 4.3초 · ×2 배속</em></p>
+<p><img src="../../_attachments/AMET2026-Physicar/2026-08-26-venue-05.gif" width="auto" height="auto" alt/></p>
+<p><em>원본 25초 · ×4 배속</em></p>
+<p><img src="../../_attachments/AMET2026-Physicar/2026-08-26-venue-06.gif" width="auto" height="auto" alt/></p>
+<p><em>원본 9.1초 · ×2 배속</em></p>
+<p>17:00 차량 반납.</p>
+<h2 id="827-목--예선--본선--시상식">8/27 (목) — 예선 · 본선 · 시상식<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#827-목--예선--본선--시상식" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>10<del>12 예선 / 13</del>15 본선 / 15~ 시상식.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th></th><th>결과</th></tr></thead><tbody><tr><td>예선</td><td><strong>통과 → 본선 진출</strong></td></tr><tr><td>본선</td><td><strong>완주. 다만 패널티가 붙었다</strong></td></tr><tr><td>시상</td><td>수상하지 못함</td></tr></tbody></table></div>
+<p><strong>우리 팀 주행 영상.</strong> 관중석과 펜스가 둘러싼 본무대 트랙이다.</p>
+<p><img src="../../_attachments/AMET2026-Physicar/2026-08-29-run-01.gif" width="auto" height="auto" alt/></p>
+<p><em>42초 · ×6 배속</em></p>
+<p><img src="../../_attachments/AMET2026-Physicar/2026-08-29-run-02.gif" width="auto" height="auto" alt/></p>
+<p><em>55초 · ×8 배속</em></p>
+<p><img src="../../_attachments/AMET2026-Physicar/2026-08-29-run-03.gif" width="auto" height="auto" alt/></p>
+<p><em>84초 · ×12 배속</em></p>
+<p><img src="../../_attachments/AMET2026-Physicar/2026-08-27-team-1.jpg" width="auto" height="auto" alt/></p>
+<p><em>8/27 15:01, 시상식 직후. 뒤가 대회 트랙</em></p>
+<p><img src="../../_attachments/AMET2026-Physicar/2026-08-27-team-2.jpg" width="auto" height="auto" alt/></p>
+<p><img src="../../_attachments/AMET2026-Physicar/2026-08-27-team-3.jpg" width="auto" height="auto" alt/></p>
+<h2 id="대회-당일-작업-기록--2026-09-01-보강">대회 당일 작업 기록 — 2026-09-01 보강<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#대회-당일-작업-기록--2026-09-01-보강" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>8/31 정리 시점에는 <strong>8/25~28 세션 기록이 이 PC에 전혀 없었다.</strong> 그 자리를 비워 두고
+“노트북에서 가져오기로 했다”고만 적어 뒀는데, <strong>노트북 작업본이 도착해서 코드·rosbag·
+스크린샷의 타임스탬프로 채웠다</strong> (§5의 8/25 · 8/26 절). 세션 대화 로그는 여전히 없고,
+아래는 <strong>산출물의 시각과 내용에서 재구성한 기록</strong>이다.</p>
+<p>채워진 것:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th>8/31에 비어 있던 질문</th><th>답</th></tr></thead><tbody><tr><td>7단계 로드맵을 어디까지 올렸는가</td><td><strong>④ 장애물 구분 완료 · ⑤ 회피 완료 · ⑦ Tracking Controller 1차 배선까지.</strong> 8/26 00:52 “Stage 6”에서 처음으로 계획이 조향·속도에 연결됐다</td></tr><tr><td>대회장에서 뭘 했는가</td><td>오전에 rosbag 수집 파이프라인 → 16:20 실차 7분 전센서 수집 → 인지 ④ → ⑤ → 배선 → RPi5 최적화</td></tr><tr><td>코드 규모</td><td>하루에 <code>planner_node.py</code> 3,862 → 10,814줄</td></tr><tr><td>실차 데이터가 남았는가</td><td>남았다. 다만 <strong>사본이 0바이트</strong> (아래)</td></tr></tbody></table></div>
+<p>아직 못 채운 것:</p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" disabled/> <strong>본선 랩타임과 패널티 내역</strong> — 충돌 5초 / 이탈 5초 / 적색출발 10초 중 무엇이었는가</li>
+<li class="task-list-item"><input type="checkbox" disabled/> <strong>대회에 쓴 E2E 로직의 구조</strong> — <code>README_접속.md</code>가 보드의
+<code>~/physicar_ws/준형/README_E2E.md</code>를 “주행 관련은 전부 여기 있다”고 가리키는데
+<strong>그 파일이 작업본에 없다.</strong> 보드에서 받아와야 한다</li>
+<li class="task-list-item"><input type="checkbox" disabled/> 통로 스택이 대회 주행 경로에 안 들어간 경위 — 8/25~26에 한 것은 <strong>실차 데이터 수집과
+인지 ④⑤ 완성</strong>이었고, 그 결과가 예선/본선 주행에 연결됐는지는 별도 확인이 필요하다</li>
+<li class="task-list-item"><input type="checkbox" disabled/> <strong>16:20 bag 원본 복구</strong> — <code>.mcap</code> 0바이트. 실차 반납 후에는 재현 불가</li>
+<li class="task-list-item"><input type="checkbox" disabled/> <code>2026AMET/cd homephysicarphysicar_ws.txt</code> (8/25 21:49) — <code>/home/physicar/physicar_ws</code>에서
+<code>planner_node.py</code> 245~290행을 열어 본 흔적이 남아 있다. <strong>다만 랩실 RPi5 보드도
+계정명이 <code>physicar</code>라, 이 한 줄만으로는 실차인지 랩 보드인지 갈리지 않는다</strong></li>
+<li class="task-list-item"><input type="checkbox" disabled/> 노트북의 <code>~/.claude/projects/</code> 아래 8/25~27자 세션 로그 (작업본에 들어온 <code>session/</code>은
+8/18까지의 툴링 설정 기록이라 대회 당일과 무관하다)</li>
+</ul>
+<hr/>
+<h1 id="6-회고-재료">6. 회고 재료<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#6-회고-재료" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h1>
+<p>면접에서 물어볼 만한 것들만 추렸다.</p>
+<p><strong>① 규칙의 방향을 뒤집은 것</strong> — “초록을 막는다” → “도로를 명명한다”.
+모르는 표면을 장애물로 두는 쪽이 <strong>틀릴 때 안전한 방향</strong>이다. 벽을 트랙으로 알고
+3 m/s로 들이받고 나서 배웠다.</p>
+<p><strong>② 인계 지점을 없앤 것</strong> — 차선추종/회피 분리 구조를 통로 하나로 합쳤다.
+“제어권이 코너 한복판에서 넘어간다”는 문제를 <strong>모듈을 잘 만들어 푸는 대신 모듈 경계를
+없애서</strong> 풀었다.</p>
+<p><strong>③ 못 쓴다는 걸 증명하고 접은 것</strong> — 전역 레이싱라인. 펜스 20 cm vs 라이다 평면
+17 cm, 연습장엔 펜스 없음. <strong>하고 싶은 것과 할 수 있는 것을 숫자로 갈랐다.</strong></p>
+<p><strong>④ 발진 버그</strong> — 인지가 아니라 <strong>명령의 물리적 실현 가능성</strong>을 안 본 버그.
+“통로를 정확히 읽고, 어떤 차도 낼 수 없는 양을 요구했다”는 문장이 이 프로젝트에서
+제일 값진 한 줄.</p>
+<p><strong>⑤ 하드웨어에 이틀을 썼다</strong> — A3 사망, 보조배터리 전력 부족, 라이다 역방향 장착,
+GX12-2 커넥터 부재. <strong>개발 일정의 절반이 여기 갔다.</strong> 다음엔 부품 검증을 먼저 한다.</p>
+<p><strong>⑥ 마감 앞에서 되돌릴 자리를 남긴 것</strong> — 대회장 무박 2일에 <code>planner_node.py</code>를
+3,862줄에서 10,814줄로 불렸다. 그런데 그 코드는 — <strong>① 새 경로가 실패하면 8/20에 데모까지
+끝낸 옇 경로로 자동으로 떨어지고(3단 우선순위), ② 미해결(AVOID_READY 깜빡임)을 미해결이라고
+주석에 적어 두고, ③ 새벽 2시 성능 최적화에는 “거동이 안 바뀌는 이유”를 붙였다.</strong>
+급할수록 되돌릴 자리를 남긴다.</p>
+<hr/>
+<h2 id="참고">참고<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#참고" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<ul>
+<li><a href="../../30_Knowledge/Corridor-Planner-(physicar_planner)" class="internal alias" data-slug="30_Knowledge/Corridor-Planner-(physicar_planner)">Corridor Planner (physicar_planner)</a> — <code>corridor.py</code>/<code>planner_node.py</code> 상세 설계</li>
+<li><a href="../../20_Projects/DSC-Autonomous-Driving/DSC-Autonomous-Driving" class="internal alias" data-slug="20_Projects/DSC-Autonomous-Driving/DSC-Autonomous-Driving">DSC Autonomous Driving</a> — 같은 여름의 강화학습 기반 자율주행 프로젝트</li>
+<li>코드: <code>C:\2026AMET자율운행자동차대회\physicar_ws\src\</code> — <code>physicar_planner</code>,
+<code>physicar_judgment</code>, <code>physicar_vision</code>, <code>physicar_nav</code>, <code>physicar_driver</code>, <code>physicar_bringup</code></li>
+<li>문서: <code>physicar_ws/README.md</code>, <code>physicar_ws/YS_HANDOVER.md</code>, <code>deploy/README.md</code></li>
+<li>대회장 작업본: <code>C:\2026AMET자율운행자동차대회\노트북 작업본\</code>
+— <code>physicar_planner_stage5_final_20260826/</code> (00:19 stage5), <code>..._integrated/</code> (00:52 Stage 6),
+<code>physicar_planner_rpi5opt/</code> (02:07 RPi5), <code>rosbag.zip</code>, <code>rosbag2_2026_08_25-16_20_56/</code>,
+<code>PORTFOLIO_HANDOVER.md</code>, <code>README_접속.md</code></li>
+<li>GitHub: <code>github.com/yusik36/ANSL_AMET2026</code> (<strong>private</strong>, 2026-08-25 전환)</li>
+</ul></article><hr/><div class="page-footer"></div></div><div class="right sidebar"><div class="graph"><h3>그래프 뷰</h3><div class="graph-outer"><div class="graph-container" data-cfg="{&quot;drag&quot;:true,&quot;zoom&quot;:true,&quot;depth&quot;:1,&quot;scale&quot;:1.1,&quot;repelForce&quot;:0.5,&quot;centerForce&quot;:0.3,&quot;linkDistance&quot;:30,&quot;fontSize&quot;:0.6,&quot;opacityScale&quot;:1,&quot;showTags&quot;:true,&quot;removeTags&quot;:[],&quot;focusOnHover&quot;:false,&quot;enableRadial&quot;:false}"></div><button class="global-graph-icon" aria-label="Global Graph"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 55 55" fill="currentColor" xml:space="preserve"><path d="M49,0c-3.309,0-6,2.691-6,6c0,1.035,0.263,2.009,0.726,2.86l-9.829,9.829C32.542,17.634,30.846,17,29,17
+                s-3.542,0.634-4.898,1.688l-7.669-7.669C16.785,10.424,17,9.74,17,9c0-2.206-1.794-4-4-4S9,6.794,9,9s1.794,4,4,4
+                c0.74,0,1.424-0.215,2.019-0.567l7.669,7.669C21.634,21.458,21,23.154,21,25s0.634,3.542,1.688,4.897L10.024,42.562
+                C8.958,41.595,7.549,41,6,41c-3.309,0-6,2.691-6,6s2.691,6,6,6s6-2.691,6-6c0-1.035-0.263-2.009-0.726-2.86l12.829-12.829
+                c1.106,0.86,2.44,1.436,3.898,1.619v10.16c-2.833,0.478-5,2.942-5,5.91c0,3.309,2.691,6,6,6s6-2.691,6-6c0-2.967-2.167-5.431-5-5.91
+                v-10.16c1.458-0.183,2.792-0.759,3.898-1.619l7.669,7.669C41.215,39.576,41,40.26,41,41c0,2.206,1.794,4,4,4s4-1.794,4-4
+                s-1.794-4-4-4c-0.74,0-1.424,0.215-2.019,0.567l-7.669-7.669C36.366,28.542,37,26.846,37,25s-0.634-3.542-1.688-4.897l9.665-9.665
+                C46.042,11.405,47.451,12,49,12c3.309,0,6-2.691,6-6S52.309,0,49,0z M11,9c0-1.103,0.897-2,2-2s2,0.897,2,2s-0.897,2-2,2
+                S11,10.103,11,9z M6,51c-2.206,0-4-1.794-4-4s1.794-4,4-4s4,1.794,4,4S8.206,51,6,51z M33,49c0,2.206-1.794,4-4,4s-4-1.794-4-4
+                s1.794-4,4-4S33,46.794,33,49z M29,31c-3.309,0-6-2.691-6-6s2.691-6,6-6s6,2.691,6,6S32.309,31,29,31z M47,41c0,1.103-0.897,2-2,2
+                s-2-0.897-2-2s0.897-2,2-2S47,39.897,47,41z M49,10c-2.206,0-4-1.794-4-4s1.794-4,4-4s4,1.794,4,4S51.206,10,49,10z"></path></svg></button></div><div class="global-graph-outer"><div class="global-graph-container" data-cfg="{&quot;drag&quot;:true,&quot;zoom&quot;:true,&quot;depth&quot;:-1,&quot;scale&quot;:0.9,&quot;repelForce&quot;:0.5,&quot;centerForce&quot;:0.2,&quot;linkDistance&quot;:30,&quot;fontSize&quot;:0.6,&quot;opacityScale&quot;:1,&quot;showTags&quot;:true,&quot;removeTags&quot;:[],&quot;focusOnHover&quot;:true,&quot;enableRadial&quot;:true}"></div></div></div><div class="toc desktop-only"><button type="button" class="toc-header" aria-controls="toc-22" aria-expanded="true"><h3>목차</h3><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fold"><polyline points="6 9 12 15 18 9"></polyline></svg></button><ul id="list-1" class="toc-content overflow"><li class="depth-0"><a href="#2026-amet-자율주행-해커톤--physicar" data-for="2026-amet-자율주행-해커톤--physicar">2026 AMET 자율주행 해커톤 — Physicar</a></li><li class="depth-0"><a href="#1-대회-개요" data-for="1-대회-개요">1. 대회 개요</a></li><li class="depth-1"><a href="#기본-정보" data-for="기본-정보">기본 정보</a></li><li class="depth-1"><a href="#일정" data-for="일정">일정</a></li><li class="depth-1"><a href="#실차-스펙-physicar" data-for="실차-스펙-physicar">실차 스펙 (Physicar)</a></li><li class="depth-1"><a href="#규정에서-설계를-강제한-조항" data-for="규정에서-설계를-강제한-조항">규정에서 설계를 강제한 조항</a></li><li class="depth-1"><a href="#채점" data-for="채점">채점</a></li><li class="depth-1"><a href="#신호등" data-for="신호등">신호등</a></li><li class="depth-0"><a href="#2-개발-구조" data-for="2-개발-구조">2. 개발 구조</a></li><li class="depth-1"><a href="#2-1-한눈에" data-for="2-1-한눈에">2-1. 한눈에</a></li><li class="depth-1"><a href="#2-2-핵심-설계-판단--왜-통로corridor인가" data-for="2-2-핵심-설계-판단--왜-통로corridor인가">2-2. 핵심 설계 판단 — 왜 통로(corridor)인가</a></li><li class="depth-1"><a href="#2-3-이미지-한-장이-바퀴까지-가는-길" data-for="2-3-이미지-한-장이-바퀴까지-가는-길">2-3. 이미지 한 장이 바퀴까지 가는 길</a></li><li class="depth-2"><a href="#-원본-프레임" data-for="-원본-프레임">① 원본 프레임</a></li><li class="depth-2"><a href="#-주행가능-마스크--blocked_mask" data-for="-주행가능-마스크--blocked_mask">② 주행가능 마스크 — blocked_mask()</a></li><li class="depth-2"><a href="#-행별-자유구간--scan_corridor" data-for="-행별-자유구간--scan_corridor">③ 행별 자유구간 — scan_corridor()</a></li><li class="depth-2"><a href="#-도로-외곽선--중심-사슬" data-for="-도로-외곽선--중심-사슬">④ 도로 외곽선 / 중심 사슬</a></li><li class="depth-2"><a href="#-도달-가능-대역--reachable_band--survivable_band" data-for="-도달-가능-대역--reachable_band--survivable_band">⑤ 도달 가능 대역 — reachable_band() ∩ survivable_band()</a></li><li class="depth-2"><a href="#-목표점--조향--pick_target--pure_pursuit" data-for="-목표점--조향--pick_target--pure_pursuit">⑥ 목표점 + 조향 — pick_target() → pure_pursuit()</a></li><li class="depth-2"><a href="#-속도--corridor_curvature--speed_for--ramp" data-for="-속도--corridor_curvature--speed_for--ramp">⑦ 속도 — corridor_curvature() → speed_for() → ramp()</a></li><li class="depth-1"><a href="#2-4-judgment_node--최종-중재" data-for="2-4-judgment_node--최종-중재">2-4. judgment_node — 최종 중재</a></li><li class="depth-1"><a href="#2-5-인터페이스-계약" data-for="2-5-인터페이스-계약">2-5. 인터페이스 계약</a></li><li class="depth-1"><a href="#2-6-안전-클램프는-우리가-구현하지-않는다" data-for="2-6-안전-클램프는-우리가-구현하지-않는다">2-6. 안전 클램프는 우리가 구현하지 않는다</a></li><li class="depth-1"><a href="#2-7-하드웨어-없이-개발하기" data-for="2-7-하드웨어-없이-개발하기">2-7. 하드웨어 없이 개발하기</a></li><li class="depth-1"><a href="#2-8-계측-도구-toolsys_py" data-for="2-8-계측-도구-toolsys_py">2-8. 계측 도구 (tools/YS_*.py)</a></li><li class="depth-0"><a href="#3-포기한-것--전역-최적-레이싱라인" data-for="3-포기한-것--전역-최적-레이싱라인">3. 포기한 것 — 전역 최적 레이싱라인</a></li><li class="depth-1"><a href="#왜-매력적이었나" data-for="왜-매력적이었나">왜 매력적이었나</a></li><li class="depth-1"><a href="#왜-못-쓰나" data-for="왜-못-쓰나">왜 못 쓰나</a></li><li class="depth-1"><a href="#그래도-계산은-해봤다--트랙-실측-2026-08-19" data-for="그래도-계산은-해봤다--트랙-실측-2026-08-19">그래도 계산은 해봤다 — 트랙 실측 (2026-08-19)</a></li><li class="depth-0"><a href="#4-개발-흐름" data-for="4-개발-흐름">4. 개발 흐름</a></li><li class="depth-1"><a href="#813-수--플랫폼을-처음부터-만든다" data-for="813-수--플랫폼을-처음부터-만든다">8/13 (수) — 플랫폼을 처음부터 만든다</a></li><li class="depth-1"><a href="#814-목--하루를-전원-문제에-썼다" data-for="814-목--하루를-전원-문제에-썼다">8/14 (목) — 하루를 전원 문제에 썼다</a></li><li class="depth-1"><a href="#815-금--파이프라인-1차-완성-규정-재확인" data-for="815-금--파이프라인-1차-완성-규정-재확인">8/15 (금) — 파이프라인 1차 완성, 규정 재확인</a></li><li class="depth-1"><a href="#816-토--공식-소스-입수" data-for="816-토--공식-소스-입수">8/16 (토) — 공식 소스 입수</a></li><li class="depth-1"><a href="#818-월--설계-전환일" data-for="818-월--설계-전환일">8/18 (월) — 설계 전환일</a></li><li class="depth-1"><a href="#819-화--발진-버그와-트랙-실측" data-for="819-화--발진-버그와-트랙-실측">8/19 (화) — 발진 버그와 트랙 실측</a></li><li class="depth-1"><a href="#820-수--백업과-기록" data-for="820-수--백업과-기록">8/20 (수) — 백업과 기록</a></li><li class="depth-2"><a href="#코너-강인성-시험" data-for="코너-강인성-시험">코너 강인성 시험</a></li><li class="depth-2"><a href="#노이즈라바콘차선-파선-무시-시험" data-for="노이즈라바콘차선-파선-무시-시험">노이즈(라바콘·차선 파선) 무시 시험</a></li><li class="depth-2"><a href="#주행-데모" data-for="주행-데모">주행 데모</a></li><li class="depth-1"><a href="#821--822-목금--인프라-이중화" data-for="821--822-목금--인프라-이중화">8/21 ~ 8/22 (목~금) — 인프라 이중화</a></li><li class="depth-1"><a href="#823--824-토일--인지-파이프라인-재설계" data-for="823--824-토일--인지-파이프라인-재설계">8/23 ~ 8/24 (토~일) — 인지 파이프라인 재설계</a></li><li class="depth-2"><a href="#대회차량-모사-ugv-완성--824-0039-부품-2345-조립-완료" data-for="대회차량-모사-ugv-완성--824-0039-부품-2345-조립-완료">대회차량 모사 UGV 완성 — 8/24 00:39 부품, 23:45 조립 완료</a></li><li class="depth-2"><a href="#랩실-트랙-주행--824-0348--1355-14회" data-for="랩실-트랙-주행--824-0348--1355-14회">랩실 트랙 주행 — 8/24 03:48 ~ 13:55, 14회</a></li><li class="depth-1"><a href="#825-월-새벽--인수인계하고-출발" data-for="825-월-새벽--인수인계하고-출발">8/25 (월) 새벽 — 인수인계하고 출발</a></li><li class="depth-0"><a href="#5-대회-825--827" data-for="5-대회-825--827">5. 대회 (8/25 ~ 8/27)</a></li><li class="depth-1"><a href="#가져간-것" data-for="가져간-것">가져간 것</a></li><li class="depth-1"><a href="#대회장-도착-후-실행-순서-준비해-간-절차--실제로는-미실행" data-for="대회장-도착-후-실행-순서-준비해-간-절차--실제로는-미실행">대회장 도착 후 실행 순서 (준비해 간 절차 — 실제로는 미실행)</a></li><li class="depth-1"><a href="#출발-시점의-미해결-항목" data-for="출발-시점의-미해결-항목">출발 시점의 미해결 항목</a></li><li class="depth-1"><a href="#825-화--차량-인수-실차-데이터-수집-인지-" data-for="825-화--차량-인수-실차-데이터-수집-인지-">8/25 (화) — 차량 인수, 실차 데이터 수집, 인지 ④</a></li><li class="depth-2"><a href="#1046--1110--차를-받기-전에-만든-건-주행-코드가-아니라-기록-장치였다" data-for="1046--1110--차를-받기-전에-만든-건-주행-코드가-아니라-기록-장치였다">10:46 ~ 11:10 — 차를 받기 전에 만든 건 주행 코드가 아니라 기록 장치였다</a></li><li class="depth-2"><a href="#1339-리허설-1620-본-수집--실차-7분치" data-for="1339-리허설-1620-본-수집--실차-7분치">13:39 리허설, 16:20 본 수집 — 실차 7분치</a></li><li class="depth-2"><a href="#1149--2227--인지--장애물-구분" data-for="1149--2227--인지--장애물-구분">11:49 ~ 22:27 — 인지 ④ 장애물 구분</a></li><li class="depth-2"><a href="#2055--826-0019--인지--회피" data-for="2055--826-0019--인지--회피">20:55 ~ 8/26 00:19 — 인지 ⑤ 회피</a></li><li class="depth-2"><a href="#2206--2208--연습장-3회" data-for="2206--2208--연습장-3회">22:06 ~ 22:08 — 연습장 3회</a></li><li class="depth-1"><a href="#826-수--0052-배선-0208-rpi5-최적화-대회장-트랙" data-for="826-수--0052-배선-0208-rpi5-최적화-대회장-트랙">8/26 (수) — 00:52 배선, 02:08 RPi5 최적화, 대회장 트랙</a></li><li class="depth-2"><a href="#0052--stage-6-처음으로-계획이-바퀴에-닿았다" data-for="0052--stage-6-처음으로-계획이-바퀴에-닿았다">00:52 — “Stage 6”, 처음으로 계획이 바퀴에 닿았다</a></li><li class="depth-2"><a href="#0204--0208--rpi5-최적화-파생본-physicar_planner_rpi5opt" data-for="0204--0208--rpi5-최적화-파생본-physicar_planner_rpi5opt">02:04 ~ 02:08 — RPi5 최적화 파생본 (physicar_planner_rpi5opt)</a></li><li class="depth-2"><a href="#하루에-늘어난-코드" data-for="하루에-늘어난-코드">하루에 늘어난 코드</a></li><li class="depth-2"><a href="#1153--1154--대회장-트랙-주행-6회" data-for="1153--1154--대회장-트랙-주행-6회">11:53 ~ 11:54 — 대회장 트랙 주행 6회</a></li><li class="depth-1"><a href="#827-목--예선--본선--시상식" data-for="827-목--예선--본선--시상식">8/27 (목) — 예선 · 본선 · 시상식</a></li><li class="depth-1"><a href="#대회-당일-작업-기록--2026-09-01-보강" data-for="대회-당일-작업-기록--2026-09-01-보강">대회 당일 작업 기록 — 2026-09-01 보강</a></li><li class="depth-0"><a href="#6-회고-재료" data-for="6-회고-재료">6. 회고 재료</a></li><li class="depth-1"><a href="#참고" data-for="참고">참고</a></li><li class="overflow-end"></li></ul></div><div class="backlinks"><h3>백링크</h3><ul id="list-2" class="overflow"><li><a href="../../20_Projects/DSC-Autonomous-Driving/DSC-Autonomous-Driving" class="internal">DSC Autonomous Driving</a></li><li><a href="../../20_Projects/Minidrone-Workshop/Minidrone-Workshop" class="internal">Minidrone Workshop</a></li><li><a href="../../30_Knowledge/Corridor-Planner-(physicar_planner)" class="internal">Corridor Planner (physicar_planner)</a></li><li><a href="../../30_Knowledge/고전제어와-강화학습" class="internal">고전제어와 강화학습</a></li><li><a href="../../" class="internal">Research Direction</a></li><li class="overflow-end"></li></ul></div></div><footer class><p>Created with <a href="https://quartz.jzhao.xyz/">Quartz v4.5.2</a> © 2026</p><ul></ul></footer></div></div></body><script type="application/javascript">function n(){let t=this.parentElement;t.classList.toggle("is-collapsed");let e=t.getElementsByClassName("callout-content")[0];if(!e)return;let l=t.classList.contains("is-collapsed");e.style.gridTemplateRows=l?"0fr":"1fr"}function c(){let t=document.getElementsByClassName("callout is-collapsible");for(let e of t){let l=e.getElementsByClassName("callout-title")[0],s=e.getElementsByClassName("callout-content")[0];if(!l||!s)continue;l.addEventListener("click",n),window.addCleanup(()=>l.removeEventListener("click",n));let o=e.classList.contains("is-collapsed");s.style.gridTemplateRows=o?"0fr":"1fr"}}document.addEventListener("nav",c);
+</script><script type="module">function f(i,e){if(!i)return;function r(o){o.target===this&&(o.preventDefault(),o.stopPropagation(),e())}function t(o){o.key.startsWith("Esc")&&(o.preventDefault(),e())}i?.addEventListener("click",r),window.addCleanup(()=>i?.removeEventListener("click",r)),document.addEventListener("keydown",t),window.addCleanup(()=>document.removeEventListener("keydown",t))}function y(i){for(;i.firstChild;)i.removeChild(i.firstChild)}var h=class{constructor(e,r){this.container=e;this.content=r;this.setupEventListeners(),this.setupNavigationControls(),this.resetTransform()}isDragging=!1;startPan={x:0,y:0};currentPan={x:0,y:0};scale=1;MIN_SCALE=.5;MAX_SCALE=3;cleanups=[];setupEventListeners(){let e=this.onMouseDown.bind(this),r=this.onMouseMove.bind(this),t=this.onMouseUp.bind(this),o=this.resetTransform.bind(this);this.container.addEventListener("mousedown",e),document.addEventListener("mousemove",r),document.addEventListener("mouseup",t),window.addEventListener("resize",o),this.cleanups.push(()=>this.container.removeEventListener("mousedown",e),()=>document.removeEventListener("mousemove",r),()=>document.removeEventListener("mouseup",t),()=>window.removeEventListener("resize",o))}cleanup(){for(let e of this.cleanups)e()}setupNavigationControls(){let e=document.createElement("div");e.className="mermaid-controls";let r=this.createButton("+",()=>this.zoom(.1)),t=this.createButton("-",()=>this.zoom(-.1)),o=this.createButton("Reset",()=>this.resetTransform());e.appendChild(t),e.appendChild(o),e.appendChild(r),this.container.appendChild(e)}createButton(e,r){let t=document.createElement("button");return t.textContent=e,t.className="mermaid-control-button",t.addEventListener("click",r),window.addCleanup(()=>t.removeEventListener("click",r)),t}onMouseDown(e){e.button===0&&(this.isDragging=!0,this.startPan={x:e.clientX-this.currentPan.x,y:e.clientY-this.currentPan.y},this.container.style.cursor="grabbing")}onMouseMove(e){this.isDragging&&(e.preventDefault(),this.currentPan={x:e.clientX-this.startPan.x,y:e.clientY-this.startPan.y},this.updateTransform())}onMouseUp(){this.isDragging=!1,this.container.style.cursor="grab"}zoom(e){let r=Math.min(Math.max(this.scale+e,this.MIN_SCALE),this.MAX_SCALE),t=this.content.getBoundingClientRect(),o=t.width/2,n=t.height/2,c=r-this.scale;this.currentPan.x-=o*c,this.currentPan.y-=n*c,this.scale=r,this.updateTransform()}updateTransform(){this.content.style.transform=`translate(${this.currentPan.x}px, ${this.currentPan.y}px) scale(${this.scale})`}resetTransform(){this.scale=1;let e=this.content.querySelector("svg");this.currentPan={x:e.getBoundingClientRect().width/2,y:e.getBoundingClientRect().height/2},this.updateTransform()}},C=["--secondary","--tertiary","--gray","--light","--lightgray","--highlight","--dark","--darkgray","--codeFont"],E;document.addEventListener("nav",async()=>{let e=document.querySelector(".center").querySelectorAll("code.mermaid");if(e.length===0)return;E||=await import("https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.4.0/mermaid.esm.min.mjs");let r=E.default,t=new WeakMap;for(let n of e)t.set(n,n.innerText);async function o(){for(let s of e){s.removeAttribute("data-processed");let a=t.get(s);a&&(s.innerHTML=a)}let n=C.reduce((s,a)=>(s[a]=window.getComputedStyle(document.documentElement).getPropertyValue(a),s),{}),c=document.documentElement.getAttribute("saved-theme")==="dark";r.initialize({startOnLoad:!1,securityLevel:"loose",theme:c?"dark":"base",themeVariables:{fontFamily:n["--codeFont"],primaryColor:n["--light"],primaryTextColor:n["--darkgray"],primaryBorderColor:n["--tertiary"],lineColor:n["--darkgray"],secondaryColor:n["--secondary"],tertiaryColor:n["--tertiary"],clusterBkg:n["--light"],edgeLabelBackground:n["--highlight"]}}),await r.run({nodes:e})}await o(),document.addEventListener("themechange",o),window.addCleanup(()=>document.removeEventListener("themechange",o));for(let n=0;n<e.length;n++){let v=function(){let g=l.querySelector("#mermaid-space"),m=l.querySelector(".mermaid-content");if(!m)return;y(m);let w=c.querySelector("svg").cloneNode(!0);m.appendChild(w),l.classList.add("active"),g.style.cursor="grab",u=new h(g,m)},M=function(){l.classList.remove("active"),u?.cleanup(),u=null},c=e[n],s=c.parentElement,a=s.querySelector(".clipboard-button"),d=s.querySelector(".expand-button"),p=window.getComputedStyle(a),L=a.offsetWidth+parseFloat(p.marginLeft||"0")+parseFloat(p.marginRight||"0");d.style.right=`calc(${L}px + 0.3rem)`,s.prepend(d);let l=s.querySelector("#mermaid-container");if(!l)return;let u=null;d.addEventListener("click",v),f(l,M),window.addCleanup(()=>{u?.cleanup(),d.removeEventListener("click",v)})}});
+</script><script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/copy-tex.min.js" type="application/javascript"></script><script src="../../postscript.js" type="module"></script></html>

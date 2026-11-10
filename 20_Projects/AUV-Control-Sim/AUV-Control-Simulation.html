@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="ko" dir="ltr"><head><title>AUV Control Simulation</title><meta charset="utf-8"/><link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com"/><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto Sans KR:wght@400;700&amp;family=Noto Sans KR:ital,wght@0,400;0,600;1,400;1,600&amp;family=IBM Plex Mono:wght@400;600&amp;display=swap"/><link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin="anonymous"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta name="og:site_name" content="LabNote"/><meta property="og:title" content="AUV Control Simulation"/><meta property="og:type" content="website"/><meta name="twitter:card" content="summary_large_image"/><meta name="twitter:title" content="AUV Control Simulation"/><meta name="twitter:description" content="AUV Control Simulation 이 프로젝트가 채우는 로드맵 칸: pipeline classical compare → Research Direction 개요 / Overview 한 줄 요약: 제어공학특론(윤원근 교수)의 REMUS 100 AUV를 연구실에서 쓰는 시뮬레이터(HoloOcean) 위에 강의 모델과 똑같은 동역학으로 올리고, Simulink 제어기를 ROS 2로 붙인 환경."/><meta property="og:description" content="AUV Control Simulation 이 프로젝트가 채우는 로드맵 칸: pipeline classical compare → Research Direction 개요 / Overview 한 줄 요약: 제어공학특론(윤원근 교수)의 REMUS 100 AUV를 연구실에서 쓰는 시뮬레이터(HoloOcean) 위에 강의 모델과 똑같은 동역학으로 올리고, Simulink 제어기를 ROS 2로 붙인 환경."/><meta property="og:image:alt" content="AUV Control Simulation 이 프로젝트가 채우는 로드맵 칸: pipeline classical compare → Research Direction 개요 / Overview 한 줄 요약: 제어공학특론(윤원근 교수)의 REMUS 100 AUV를 연구실에서 쓰는 시뮬레이터(HoloOcean) 위에 강의 모델과 똑같은 동역학으로 올리고, Simulink 제어기를 ROS 2로 붙인 환경."/><meta property="og:image" content="https://yusik36.github.io/research-notes/static/og-image.png"/><meta property="og:image:url" content="https://yusik36.github.io/research-notes/static/og-image.png"/><meta name="twitter:image" content="https://yusik36.github.io/research-notes/static/og-image.png"/><meta property="og:image:type" content="image/.png"/><meta property="twitter:domain" content="yusik36.github.io/research-notes"/><meta property="og:url" content="https://yusik36.github.io/research-notes/20_Projects/AUV-Control-Sim/AUV-Control-Simulation"/><meta property="twitter:url" content="https://yusik36.github.io/research-notes/20_Projects/AUV-Control-Sim/AUV-Control-Simulation"/><link rel="icon" href="../../static/icon.png"/><meta name="description" content="AUV Control Simulation 이 프로젝트가 채우는 로드맵 칸: pipeline classical compare → Research Direction 개요 / Overview 한 줄 요약: 제어공학특론(윤원근 교수)의 REMUS 100 AUV를 연구실에서 쓰는 시뮬레이터(HoloOcean) 위에 강의 모델과 똑같은 동역학으로 올리고, Simulink 제어기를 ROS 2로 붙인 환경."/><meta name="generator" content="Quartz"/><link href="../../index.css" rel="stylesheet" type="text/css" spa-preserve/><style>.expand-button {
+  position: absolute;
+  display: flex;
+  float: right;
+  padding: 0.4rem;
+  margin: 0.3rem;
+  right: 0;
+  color: var(--gray);
+  border-color: var(--dark);
+  background-color: var(--light);
+  border: 1px solid;
+  border-radius: 5px;
+  opacity: 0;
+  transition: 0.2s;
+}
+.expand-button > svg {
+  fill: var(--light);
+  filter: contrast(0.3);
+}
+.expand-button:hover {
+  cursor: pointer;
+  border-color: var(--secondary);
+}
+.expand-button:focus {
+  outline: 0;
+}
+
+pre:hover > .expand-button {
+  opacity: 1;
+  transition: 0.2s;
+}
+
+#mermaid-container {
+  position: fixed;
+  contain: layout;
+  z-index: 999;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  display: none;
+  backdrop-filter: blur(4px);
+  background: rgba(0, 0, 0, 0.5);
+}
+#mermaid-container.active {
+  display: inline-block;
+}
+#mermaid-container > #mermaid-space {
+  border: 1px solid var(--lightgray);
+  background-color: var(--light);
+  border-radius: 5px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 80vh;
+  width: 80vw;
+  overflow: hidden;
+}
+#mermaid-container > #mermaid-space > .mermaid-content {
+  padding: 2rem;
+  position: relative;
+  transform-origin: 0 0;
+  transition: transform 0.1s ease;
+  overflow: visible;
+  min-height: 200px;
+  min-width: 200px;
+}
+#mermaid-container > #mermaid-space > .mermaid-content pre {
+  margin: 0;
+  border: none;
+}
+#mermaid-container > #mermaid-space > .mermaid-content svg {
+  max-width: none;
+  height: auto;
+}
+#mermaid-container > #mermaid-space > .mermaid-controls {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  gap: 8px;
+  padding: 8px;
+  background: var(--light);
+  border: 1px solid var(--lightgray);
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 2;
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 1px solid var(--lightgray);
+  background: var(--light);
+  color: var(--dark);
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  font-family: var(--bodyFont);
+  transition: all 0.2s ease;
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button:hover {
+  background: var(--lightgray);
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button:active {
+  transform: translateY(1px);
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button:nth-child(2) {
+  width: auto;
+  padding: 0 12px;
+  font-size: 14px;
+}
+/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VSb290IjoiQzpcXEFyY2hpdmVcXOyeoeuLpOq1rOumrFxcVVNU7J247YS0X+yngOybkOyEnFxcc2l0ZVxccXVhcnR6XFxjb21wb25lbnRzXFxzdHlsZXMiLCJzb3VyY2VzIjpbIm1lcm1haWQuaW5saW5lLnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDRTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTs7QUFFQTtFQUNFO0VBQ0E7O0FBR0Y7RUFDRTtFQUNBOztBQUdGO0VBQ0U7OztBQUtGO0VBQ0U7RUFDQTs7O0FBSUo7RUFDRTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBOztBQUVBO0VBQ0U7O0FBR0Y7RUFDRTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTs7QUFFQTtFQUNFO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBOztBQUVBO0VBQ0U7RUFDQTs7QUFHRjtFQUNFO0VBQ0E7O0FBSUo7RUFDRTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBOztBQUVBO0VBQ0U7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTs7QUFFQTtFQUNFOztBQUdGO0VBQ0U7O0FBSUY7RUFDRTtFQUNBO0VBQ0EiLCJzb3VyY2VzQ29udGVudCI6WyIuZXhwYW5kLWJ1dHRvbiB7XG4gIHBvc2l0aW9uOiBhYnNvbHV0ZTtcbiAgZGlzcGxheTogZmxleDtcbiAgZmxvYXQ6IHJpZ2h0O1xuICBwYWRkaW5nOiAwLjRyZW07XG4gIG1hcmdpbjogMC4zcmVtO1xuICByaWdodDogMDsgLy8gTk9URTogcmlnaHQgd2lsbCBiZSBzZXQgaW4gbWVybWFpZC5pbmxpbmUudHNcbiAgY29sb3I6IHZhcigtLWdyYXkpO1xuICBib3JkZXItY29sb3I6IHZhcigtLWRhcmspO1xuICBiYWNrZ3JvdW5kLWNvbG9yOiB2YXIoLS1saWdodCk7XG4gIGJvcmRlcjogMXB4IHNvbGlkO1xuICBib3JkZXItcmFkaXVzOiA1cHg7XG4gIG9wYWNpdHk6IDA7XG4gIHRyYW5zaXRpb246IDAuMnM7XG5cbiAgJiA+IHN2ZyB7XG4gICAgZmlsbDogdmFyKC0tbGlnaHQpO1xuICAgIGZpbHRlcjogY29udHJhc3QoMC4zKTtcbiAgfVxuXG4gICY6aG92ZXIge1xuICAgIGN1cnNvcjogcG9pbnRlcjtcbiAgICBib3JkZXItY29sb3I6IHZhcigtLXNlY29uZGFyeSk7XG4gIH1cblxuICAmOmZvY3VzIHtcbiAgICBvdXRsaW5lOiAwO1xuICB9XG59XG5cbnByZSB7XG4gICY6aG92ZXIgPiAuZXhwYW5kLWJ1dHRvbiB7XG4gICAgb3BhY2l0eTogMTtcbiAgICB0cmFuc2l0aW9uOiAwLjJzO1xuICB9XG59XG5cbiNtZXJtYWlkLWNvbnRhaW5lciB7XG4gIHBvc2l0aW9uOiBmaXhlZDtcbiAgY29udGFpbjogbGF5b3V0O1xuICB6LWluZGV4OiA5OTk7XG4gIGxlZnQ6IDA7XG4gIHRvcDogMDtcbiAgd2lkdGg6IDEwMHZ3O1xuICBoZWlnaHQ6IDEwMHZoO1xuICBvdmVyZmxvdzogaGlkZGVuO1xuICBkaXNwbGF5OiBub25lO1xuICBiYWNrZHJvcC1maWx0ZXI6IGJsdXIoNHB4KTtcbiAgYmFja2dyb3VuZDogcmdiYSgwLCAwLCAwLCAwLjUpO1xuXG4gICYuYWN0aXZlIHtcbiAgICBkaXNwbGF5OiBpbmxpbmUtYmxvY2s7XG4gIH1cblxuICAmID4gI21lcm1haWQtc3BhY2Uge1xuICAgIGJvcmRlcjogMXB4IHNvbGlkIHZhcigtLWxpZ2h0Z3JheSk7XG4gICAgYmFja2dyb3VuZC1jb2xvcjogdmFyKC0tbGlnaHQpO1xuICAgIGJvcmRlci1yYWRpdXM6IDVweDtcbiAgICBwb3NpdGlvbjogZml4ZWQ7XG4gICAgdG9wOiA1MCU7XG4gICAgbGVmdDogNTAlO1xuICAgIHRyYW5zZm9ybTogdHJhbnNsYXRlKC01MCUsIC01MCUpO1xuICAgIGhlaWdodDogODB2aDtcbiAgICB3aWR0aDogODB2dztcbiAgICBvdmVyZmxvdzogaGlkZGVuO1xuXG4gICAgJiA+IC5tZXJtYWlkLWNvbnRlbnQge1xuICAgICAgcGFkZGluZzogMnJlbTtcbiAgICAgIHBvc2l0aW9uOiByZWxhdGl2ZTtcbiAgICAgIHRyYW5zZm9ybS1vcmlnaW46IDAgMDtcbiAgICAgIHRyYW5zaXRpb246IHRyYW5zZm9ybSAwLjFzIGVhc2U7XG4gICAgICBvdmVyZmxvdzogdmlzaWJsZTtcbiAgICAgIG1pbi1oZWlnaHQ6IDIwMHB4O1xuICAgICAgbWluLXdpZHRoOiAyMDBweDtcblxuICAgICAgcHJlIHtcbiAgICAgICAgbWFyZ2luOiAwO1xuICAgICAgICBib3JkZXI6IG5vbmU7XG4gICAgICB9XG5cbiAgICAgIHN2ZyB7XG4gICAgICAgIG1heC13aWR0aDogbm9uZTtcbiAgICAgICAgaGVpZ2h0OiBhdXRvO1xuICAgICAgfVxuICAgIH1cblxuICAgICYgPiAubWVybWFpZC1jb250cm9scyB7XG4gICAgICBwb3NpdGlvbjogYWJzb2x1dGU7XG4gICAgICBib3R0b206IDIwcHg7XG4gICAgICByaWdodDogMjBweDtcbiAgICAgIGRpc3BsYXk6IGZsZXg7XG4gICAgICBnYXA6IDhweDtcbiAgICAgIHBhZGRpbmc6IDhweDtcbiAgICAgIGJhY2tncm91bmQ6IHZhcigtLWxpZ2h0KTtcbiAgICAgIGJvcmRlcjogMXB4IHNvbGlkIHZhcigtLWxpZ2h0Z3JheSk7XG4gICAgICBib3JkZXItcmFkaXVzOiA2cHg7XG4gICAgICBib3gtc2hhZG93OiAwIDJweCA0cHggcmdiYSgwLCAwLCAwLCAwLjEpO1xuICAgICAgei1pbmRleDogMjtcblxuICAgICAgLm1lcm1haWQtY29udHJvbC1idXR0b24ge1xuICAgICAgICBkaXNwbGF5OiBmbGV4O1xuICAgICAgICBhbGlnbi1pdGVtczogY2VudGVyO1xuICAgICAgICBqdXN0aWZ5LWNvbnRlbnQ6IGNlbnRlcjtcbiAgICAgICAgd2lkdGg6IDMycHg7XG4gICAgICAgIGhlaWdodDogMzJweDtcbiAgICAgICAgcGFkZGluZzogMDtcbiAgICAgICAgYm9yZGVyOiAxcHggc29saWQgdmFyKC0tbGlnaHRncmF5KTtcbiAgICAgICAgYmFja2dyb3VuZDogdmFyKC0tbGlnaHQpO1xuICAgICAgICBjb2xvcjogdmFyKC0tZGFyayk7XG4gICAgICAgIGJvcmRlci1yYWRpdXM6IDRweDtcbiAgICAgICAgY3Vyc29yOiBwb2ludGVyO1xuICAgICAgICBmb250LXNpemU6IDE2cHg7XG4gICAgICAgIGZvbnQtZmFtaWx5OiB2YXIoLS1ib2R5Rm9udCk7XG4gICAgICAgIHRyYW5zaXRpb246IGFsbCAwLjJzIGVhc2U7XG5cbiAgICAgICAgJjpob3ZlciB7XG4gICAgICAgICAgYmFja2dyb3VuZDogdmFyKC0tbGlnaHRncmF5KTtcbiAgICAgICAgfVxuXG4gICAgICAgICY6YWN0aXZlIHtcbiAgICAgICAgICB0cmFuc2Zvcm06IHRyYW5zbGF0ZVkoMXB4KTtcbiAgICAgICAgfVxuXG4gICAgICAgIC8vIFN0eWxlIHRoZSByZXNldCBidXR0b24gZGlmZmVyZW50bHlcbiAgICAgICAgJjpudGgtY2hpbGQoMikge1xuICAgICAgICAgIHdpZHRoOiBhdXRvO1xuICAgICAgICAgIHBhZGRpbmc6IDAgMTJweDtcbiAgICAgICAgICBmb250LXNpemU6IDE0cHg7XG4gICAgICAgIH1cbiAgICAgIH1cbiAgICB9XG4gIH1cbn1cbiJdfQ== */</style><link href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" rel="stylesheet" type="text/css" spa-preserve/><script src="../../prescript.js" type="application/javascript" spa-preserve></script><script type="application/javascript" spa-preserve>const fetchData = fetch("../../static/contentIndex.json").then(data => data.json())</script></head><body data-slug="20_Projects/AUV-Control-Sim/AUV-Control-Simulation"><div id="quartz-root" class="page"><div id="quartz-body"><div class="left sidebar"><h2 class="page-title"><a href="../..">LabNote</a></h2><div class="spacer mobile-only"></div><div class="flex-component" style="flex-direction: row; flex-wrap: nowrap; gap: 1rem;"><div style="flex-grow: 1; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><div class="search"><button class="search-button"><svg role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19.9 19.7"><title>Search</title><g class="search-path" fill="none"><path stroke-linecap="square" d="M18.5 18.3l-5.4-5.4"></path><circle cx="8" cy="8" r="7"></circle></g></svg><p>검색</p></button><div class="search-container"><div class="search-space"><input autocomplete="off" class="search-bar" name="search" type="text" aria-label="검색어를 입력하세요" placeholder="검색어를 입력하세요"/><div class="search-layout" data-preview="true"></div></div></div></div></div><div style="flex-grow: 0; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><button class="darkmode"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="dayIcon" x="0px" y="0px" viewBox="0 0 35 35" style="enable-background:new 0 0 35 35" xml:space="preserve" aria-label="다크 모드"><title>다크 모드</title><path d="M6,17.5C6,16.672,5.328,16,4.5,16h-3C0.672,16,0,16.672,0,17.5    S0.672,19,1.5,19h3C5.328,19,6,18.328,6,17.5z M7.5,26c-0.414,0-0.789,0.168-1.061,0.439l-2,2C4.168,28.711,4,29.086,4,29.5    C4,30.328,4.671,31,5.5,31c0.414,0,0.789-0.168,1.06-0.44l2-2C8.832,28.289,9,27.914,9,27.5C9,26.672,8.329,26,7.5,26z M17.5,6    C18.329,6,19,5.328,19,4.5v-3C19,0.672,18.329,0,17.5,0S16,0.672,16,1.5v3C16,5.328,16.671,6,17.5,6z M27.5,9    c0.414,0,0.789-0.168,1.06-0.439l2-2C30.832,6.289,31,5.914,31,5.5C31,4.672,30.329,4,29.5,4c-0.414,0-0.789,0.168-1.061,0.44    l-2,2C26.168,6.711,26,7.086,26,7.5C26,8.328,26.671,9,27.5,9z M6.439,8.561C6.711,8.832,7.086,9,7.5,9C8.328,9,9,8.328,9,7.5    c0-0.414-0.168-0.789-0.439-1.061l-2-2C6.289,4.168,5.914,4,5.5,4C4.672,4,4,4.672,4,5.5c0,0.414,0.168,0.789,0.439,1.06    L6.439,8.561z M33.5,16h-3c-0.828,0-1.5,0.672-1.5,1.5s0.672,1.5,1.5,1.5h3c0.828,0,1.5-0.672,1.5-1.5S34.328,16,33.5,16z     M28.561,26.439C28.289,26.168,27.914,26,27.5,26c-0.828,0-1.5,0.672-1.5,1.5c0,0.414,0.168,0.789,0.439,1.06l2,2    C28.711,30.832,29.086,31,29.5,31c0.828,0,1.5-0.672,1.5-1.5c0-0.414-0.168-0.789-0.439-1.061L28.561,26.439z M17.5,29    c-0.829,0-1.5,0.672-1.5,1.5v3c0,0.828,0.671,1.5,1.5,1.5s1.5-0.672,1.5-1.5v-3C19,29.672,18.329,29,17.5,29z M17.5,7    C11.71,7,7,11.71,7,17.5S11.71,28,17.5,28S28,23.29,28,17.5S23.29,7,17.5,7z M17.5,25c-4.136,0-7.5-3.364-7.5-7.5    c0-4.136,3.364-7.5,7.5-7.5c4.136,0,7.5,3.364,7.5,7.5C25,21.636,21.636,25,17.5,25z"></path></svg><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="nightIcon" x="0px" y="0px" viewBox="0 0 100 100" style="enable-background:new 0 0 100 100" xml:space="preserve" aria-label="라이트 모드"><title>라이트 모드</title><path d="M96.76,66.458c-0.853-0.852-2.15-1.064-3.23-0.534c-6.063,2.991-12.858,4.571-19.655,4.571  C62.022,70.495,50.88,65.88,42.5,57.5C29.043,44.043,25.658,23.536,34.076,6.47c0.532-1.08,0.318-2.379-0.534-3.23  c-0.851-0.852-2.15-1.064-3.23-0.534c-4.918,2.427-9.375,5.619-13.246,9.491c-9.447,9.447-14.65,22.008-14.65,35.369  c0,13.36,5.203,25.921,14.65,35.368s22.008,14.65,35.368,14.65c13.361,0,25.921-5.203,35.369-14.65  c3.872-3.871,7.064-8.328,9.491-13.246C97.826,68.608,97.611,67.309,96.76,66.458z"></path></svg></button></div><div style="flex-grow: 0; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><button class="readermode"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="readerIcon" fill="currentColor" stroke="currentColor" stroke-width="0.2" stroke-linecap="round" stroke-linejoin="round" width="64px" height="64px" viewBox="0 0 24 24" aria-label="리더 모드"><title>리더 모드</title><g transform="translate(-1.8, -1.8) scale(1.15, 1.2)"><path d="M8.9891247,2.5 C10.1384702,2.5 11.2209868,2.96705384 12.0049645,3.76669482 C12.7883914,2.96705384 13.8709081,2.5 15.0202536,2.5 L18.7549359,2.5 C19.1691495,2.5 19.5049359,2.83578644 19.5049359,3.25 L19.5046891,4.004 L21.2546891,4.00457396 C21.6343849,4.00457396 21.9481801,4.28672784 21.9978425,4.6528034 L22.0046891,4.75457396 L22.0046891,20.25 C22.0046891,20.6296958 21.7225353,20.943491 21.3564597,20.9931534 L21.2546891,21 L2.75468914,21 C2.37499337,21 2.06119817,20.7178461 2.01153575,20.3517706 L2.00468914,20.25 L2.00468914,4.75457396 C2.00468914,4.37487819 2.28684302,4.061083 2.65291858,4.01142057 L2.75468914,4.00457396 L4.50368914,4.004 L4.50444233,3.25 C4.50444233,2.87030423 4.78659621,2.55650904 5.15267177,2.50684662 L5.25444233,2.5 L8.9891247,2.5 Z M4.50368914,5.504 L3.50468914,5.504 L3.50468914,19.5 L10.9478955,19.4998273 C10.4513189,18.9207296 9.73864328,18.5588115 8.96709342,18.5065584 L8.77307039,18.5 L5.25444233,18.5 C4.87474657,18.5 4.56095137,18.2178461 4.51128895,17.8517706 L4.50444233,17.75 L4.50368914,5.504 Z M19.5049359,17.75 C19.5049359,18.1642136 19.1691495,18.5 18.7549359,18.5 L15.2363079,18.5 C14.3910149,18.5 13.5994408,18.8724714 13.0614828,19.4998273 L20.5046891,19.5 L20.5046891,5.504 L19.5046891,5.504 L19.5049359,17.75 Z M18.0059359,3.999 L15.0202536,4 L14.8259077,4.00692283 C13.9889509,4.06666544 13.2254227,4.50975805 12.7549359,5.212 L12.7549359,17.777 L12.7782651,17.7601316 C13.4923805,17.2719483 14.3447024,17 15.2363079,17 L18.0059359,16.999 L18.0056891,4.798 L18.0033792,4.75457396 L18.0056891,4.71 L18.0059359,3.999 Z M8.9891247,4 L6.00368914,3.999 L6.00599909,4.75457396 L6.00599909,4.75457396 L6.00368914,4.783 L6.00368914,16.999 L8.77307039,17 C9.57551536,17 10.3461406,17.2202781 11.0128313,17.6202194 L11.2536891,17.776 L11.2536891,5.211 C10.8200889,4.56369974 10.1361548,4.13636104 9.37521067,4.02745763 L9.18347055,4.00692283 L8.9891247,4 Z"></path></g></svg></button></div></div><div class="explorer" data-behavior="link" data-collapsed="collapsed" data-savestate="true" data-data-fns="{&quot;order&quot;:[&quot;filter&quot;,&quot;map&quot;,&quot;sort&quot;],&quot;sortFn&quot;:&quot;(a,b)=>!a.isFolder&amp;&amp;!b.isFolder||a.isFolder&amp;&amp;b.isFolder?a.displayName.localeCompare(b.displayName,void 0,{numeric:!0,sensitivity:\&quot;base\&quot;}):!a.isFolder&amp;&amp;b.isFolder?1:-1&quot;,&quot;filterFn&quot;:&quot;node=>node.slugSegment!==\&quot;tags\&quot;&quot;,&quot;mapFn&quot;:&quot;node=>node&quot;}"><button type="button" class="explorer-toggle mobile-explorer hide-until-loaded" data-mobile="true" aria-controls="explorer-112"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide-menu"><line x1="4" x2="20" y1="12" y2="12"></line><line x1="4" x2="20" y1="6" y2="6"></line><line x1="4" x2="20" y1="18" y2="18"></line></svg></button><button type="button" class="title-button explorer-toggle desktop-explorer" data-mobile="false" aria-expanded="true"><h2>탐색기</h2><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="5 8 14 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fold"><polyline points="6 9 12 15 18 9"></polyline></svg></button><div id="explorer-112" class="explorer-content" aria-expanded="false" role="group"><ul class="explorer-ul overflow" id="list-0"><li class="overflow-end"></li></ul></div><template id="template-file"><li><a href="#"></a></li></template><template id="template-folder"><li><div class="folder-container"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="5 8 14 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="folder-icon"><polyline points="6 9 12 15 18 9"></polyline></svg><div><button class="folder-button"><span class="folder-title"></span></button></div></div><div class="folder-outer"><ul class="content"></ul></div></li></template></div></div><div class="center"><div class="page-header"><div class="popover-hint"><nav class="breadcrumb-container" aria-label="breadcrumbs"><div class="breadcrumb-element"><a href="../../">Home</a><p> ❯ </p></div><div class="breadcrumb-element"><a href="../../20_Projects/">20_Projects</a><p> ❯ </p></div><div class="breadcrumb-element"><a href="../../20_Projects/AUV-Control-Sim/">AUV Control Sim</a><p> ❯ </p></div><div class="breadcrumb-element"><a href>AUV Control Simulation</a></div></nav><h1 class="article-title">AUV Control Simulation</h1><p show-comma="true" class="content-meta"><time datetime="2026-09-26T15:00:00.000Z">2026년 9월 27일</time><span>18 min read</span></p><ul class="tags"><li><a href="../../tags/simulation" class="internal tag-link">simulation</a></li><li><a href="../../tags/modeling" class="internal tag-link">modeling</a></li><li><a href="../../tags/naval-architecture" class="internal tag-link">naval-architecture</a></li><li><a href="../../tags/ros2" class="internal tag-link">ros2</a></li><li><a href="../../tags/matlab" class="internal tag-link">matlab</a></li><li><a href="../../tags/simulink" class="internal tag-link">simulink</a></li><li><a href="../../tags/python" class="internal tag-link">python</a></li></ul></div></div><article class="popover-hint"><h1 id="auv-control-simulation">AUV Control Simulation<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#auv-control-simulation" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h1>
+<blockquote>
+<p>이 프로젝트가 채우는 로드맵 칸: <code>pipeline</code> <code>classical</code> <code>compare</code> → <a href="../../Research-Direction" class="internal alias" data-slug="Research-Direction">Research Direction</a></p>
+</blockquote>
+<h2 id="개요--overview">개요 / Overview<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#개요--overview" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>한 줄 요약: <strong>제어공학특론(윤원근 교수)의 REMUS 100 AUV를 연구실에서 쓰는 시뮬레이터(HoloOcean) 위에 강의 모델과 똑같은 동역학으로 올리고, Simulink 제어기를 ROS 2로 붙인 환경.</strong></p>
+<ul>
+<li>강의 학습이 1차 목적 — 환경 만들기 자체가 강의 공부다 (<a href="../../30_Knowledge/6-DOF-Marine-Craft-Model" class="internal alias" data-slug="30_Knowledge/6-DOF-Marine-Craft-Model">6-DOF Marine Craft Model</a> · <a href="../../30_Knowledge/Transport-Theorem" class="internal alias" data-slug="30_Knowledge/Transport-Theorem">Transport Theorem</a> · <a href="../../30_Knowledge/Hydrodynamic-and-Restoring-Forces" class="internal alias" data-slug="30_Knowledge/Hydrodynamic-and-Restoring-Forces">Hydrodynamic and Restoring Forces</a>)</li>
+<li>2차 목적은 <code>compare</code> — 같은 플랜트·같은 task를 <strong>고전제어(Simulink)와 RL(Isaac Lab에서 학습)로 풀고 HoloOcean에서 비교</strong></li>
+<li>플랫폼: REMUS 100 → 나중에 Delphin2</li>
+</ul>
+<h2 id="목표--goal">목표 / Goal<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#목표--goal" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th>목표</th><th>기준</th><th>상태</th></tr></thead><tbody><tr><td>강의 모델과 같은 동역학</td><td>MSS 최신판 <code>remus100.m</code> 대비 RMS ≤ 2 % (AC-3)</td><td>✅ 최악 0.69 % @50 Hz</td></tr><tr><td>Simulink 제어기를 폐루프로</td><td>ROS 2 lockstep, 스텝 누락·중복 0</td><td>✅</td></tr><tr><td>강의 모델을 그대로 HoloOcean에서</td><td>강의 <code>Remus100_Model.slx</code> 사본</td><td>✅ 원본 대비 0.34 %</td></tr><tr><td>Delphin2 를 같은 무대에</td><td>배포본 <code>Delphin2.m</code> 이식 + 실시간 게인 조절 모델</td><td>✅ 이식 3e-14, holo vs local ψ 0.14°</td></tr><tr><td>노드를 켜 둔 채 Stop/Run 반복</td><td>리셋 cmd (k = −1)</td><td>✅ 5회 재시작 최대차 5e-20</td></tr><tr><td>강의 실습 재현</td><td>3강 trim, 4강 제어기 — <strong>제어기는 강의 따라 직접 설계</strong></td><td>⬜ 다음</td></tr><tr><td>RL 비교</td><td>Isaac Lab 학습 → HoloOcean 비교</td><td>⬜ 나중</td></tr></tbody></table></div>
+<h2 id="사용-기술--stack">사용 기술 / Stack<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#사용-기술--stack" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th>구분</th><th>내용</th></tr></thead><tbody><tr><td>시뮬레이터</td><td><strong>HoloOcean 2.3.0</strong> (BYU FRoSt Lab, Unreal Engine 5) — 렌더링·적분만</td></tr><tr><td>동역학</td><td><strong>MSS 최신판 <code>remus100.m</code></strong> (Fossen, commit 8bdf35a) 을 Python으로 이식</td></tr><tr><td>통신</td><td>ROS 2 <strong>Jazzy</strong> — Python 쪽 RoboStack(pixi), MATLAB 쪽 R2025b 내장</td></tr><tr><td>제어기</td><td>MATLAB/Simulink R2025b (ROS Toolbox)</td></tr><tr><td>Python</td><td>HoloOcean venv 3.11 / ROS 환경 3.12 (pixi)</td></tr><tr><td>하드웨어</td><td>RTX 4070 12 GB, Ryzen 7 7700X, RAM 31 GB, Windows 11</td></tr></tbody></table></div>
+<h2 id="구조">구조<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#구조" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<pre><code> [Simulink]                                   (MATLAB R2025b, ROS 2 Jazzy 내장)
+    │ ① cmd_k = [k, δr, δs, n]  ── /remus100/cmd ──▶
+    │ ④ state_{k+1}             ◀── /remus100/state ── [k t u v w p q r x y z φ θ ψ]
+ [holo_ros2_node.py]                          (pixi ROS 2 Jazzy, rclpy)  ← 직접 만든 bridge
+    │ ② MSS remus100 → ν̇ → a_world = R(ν̇ + ω×v)
+    │ ③ env.act + env.tick  (HoloOcean Python API, 공유 메모리 — ROS 아님)
+ [HoloOcean / Unreal]  가속도 적분 + 렌더링
+</code></pre>
+<ul>
+<li><strong>HoloOcean 자체는 ROS 기반이 아니다.</strong> ROS 2는 bridge 노드에만 있다 (BYU 공식 <code>holoocean-ros</code> 도 같은 구조)</li>
+<li><strong>동역학은 Unreal 물리가 아니라 Python의 MSS 식이 계산</strong>한다. custom dynamics 모드에선 Unreal이 중력·부력·감쇠를 걸지 않는다</li>
+<li><strong>lockstep</strong>: 노드는 같은 k의 cmd가 올 때까지 tick하지 않는다 → state 하나당 cmd 하나, 재현성 보장</li>
+</ul>
+<h2 id="현재-구현-범위--무엇이-참값이고-무엇이-빠졌나-2026-09-29-정리">현재 구현 범위 — 무엇이 참값이고 무엇이 빠졌나 (2026-09-29 정리)<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#현재-구현-범위--무엇이-참값이고-무엇이-빠졌나-2026-09-29-정리" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<blockquote class="callout tip" data-callout="tip">
+<div class="callout-title">
+                  <div class="callout-icon"></div>
+                  <div class="callout-title-inner"><p>한 줄로 </p></div>
+                  
+                </div>
+<div class="callout-content">
+<p>지금까지 만든 것은 <strong>“Simulink ↔ 시뮬레이터 연동” 과 “그 연동이 결과를 왜곡하지 않는다는 검증”</strong> 까지다.
+제어기는 <strong>참값 상태</strong>를 받는다 — IMU 를 포함해 <strong>센서 노드는 하나도 없다.</strong></p>
+</div>
+</blockquote>
+<pre><code>[Simulink 제어기]   attitude_pid / Step/Controller  (자리표시)
+      │  cmd   = [k, 입력...]                    Float64MultiArray
+      ▼  state = [k, t, u v w p q r, x y z φ θ ψ]  ← 참값
+[ROS 2 Jazzy]       /&lt;vehicle>/cmd, /&lt;vehicle>/state (+ /clock)
+      ▼
+[holo_ros2_node.py] MSS·Delphin2 식(Python 이식)으로 ν̇ → world 가속도
+      ▼
+[HoloOcean/Unreal]  가속도 적분(50 Hz) + 3D 렌더링
+      ▲
+      └ DynamicsSensor = 참값 상태를 그대로 읽는 가상 센서 (센서 아님)
+</code></pre>
+<h3 id="검증된-것">검증된 것<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#검증된-것" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th>층</th><th>한 일</th><th>검증</th></tr></thead><tbody><tr><td>동역학</td><td>MSS <code>remus100.m</code>, 배포본 <code>Delphin2.m</code> Python 이식</td><td>MATLAB 대비 5e-13 / 3e-14</td></tr><tr><td>시뮬레이터 연결</td><td>world 가속도 변환 (<code>ω×v</code> 누락 버그 수정)</td><td>MSS 대비 최악 0.69 % @50 Hz</td></tr><tr><td>통신</td><td>ROS 2 lockstep (k 번호), 리셋</td><td>스텝 누락·중복 0, 재시작 반복 동일</td></tr><tr><td>Simulink</td><td>ROS 2 블록 방식 / <code>HoloOceanPlant</code> 방식, local 비교 모델</td><td>holo vs local ψ 0.14°</td></tr></tbody></table></div>
+<h3 id="아직-실제와-다른-것--놓치기-쉬운-7가지">아직 실제와 다른 것 — 놓치기 쉬운 7가지<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#아직-실제와-다른-것--놓치기-쉬운-7가지" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ol>
+<li><strong>센서가 없다 — 참값, 잡음 0, 지연 0.</strong> 실제 IMU 의 잡음·bias·주기 차이가 없고, 위치도 DVL 적분이 아니라 정답. → 지금 제어기는 <strong>추정기(EKF) 없이도 도는 이상적 조건</strong></li>
+<li><strong>통신이 이상적 — lockstep.</strong> 시뮬레이터가 제어기를 <strong>기다려 준다</strong>. 실제 기체는 안 기다린다 (센서는 제 주기대로, 늦으면 늦는 대로). Pacing 1x 는 화면 속도일 뿐 비동기 환경 흉내가 아님.
+<code>HoloOceanPlant</code> 의 blocking 은 <strong>시뮬레이션 전용 편의</strong> (코드 생성 불가) — 실제 실험 구조에 더 가까운 건 ROS 2 블록 방식(<code>remus100_holo_loop</code>)</li>
+<li><strong>메시지가 표준이 아니다.</strong> 전부 <code>Float64MultiArray</code>. 실제 로봇은 <code>sensor_msgs/Imu</code>, <code>nav_msgs/Odometry</code> 등 표준 메시지</li>
+<li><strong>구동기가 없다 (Delphin).</strong> 힘·모멘트 직접 입력 — 추진기 rpm·추력 곡선·지연·할당 없음, 포화는 제어기 안 ±30 N·m 뿐. Remus 는 핀·rpm 포화(±20°, 1525 rpm)는 있지만 지연 없음</li>
+<li><strong>환경이 비어 있다.</strong> 조류·파도·해저/장애물 상호작용 없음 (수심 150 m 빈 물). 중력·부력은 Unreal 이 아니라 <strong>MSS 식의 복원력 항</strong></li>
+<li><strong>검증 범위는 “HoloOcean = MSS 식” 까지.</strong> MSS 식이 실제 기체와 맞는지는 미검증 (Delphin2 <code>Ixx = 1.8</code> 은 “Assumed value”). 화면 외형은 TorpedoAUV</li>
+<li><strong>제어기는 자리표시.</strong> 게인 설계 근거 없음 — 제어 성능은 아무것도 보장 안 됨</li>
+</ol>
+<blockquote class="callout note" data-callout="note">
+<div class="callout-title">
+                  <div class="callout-icon"></div>
+                  <div class="callout-title-inner"><p>보강 (2026-09-29) — 7칸 루프, 센서별 원리·주기·HoloOcean 옵션, 오차 8종, 시계 3개, 지연→위상 여유, 좌표 규약 3개, 채점용 truth 분리, 단계별 확인 방법 </p></div>
+                  
+                </div>
+<div class="callout-content">
+<p>→ <a href="../../30_Knowledge/시뮬레이션-환경-현실성" class="internal alias" data-slug="30_Knowledge/시뮬레이션-환경-현실성">시뮬레이션 환경 현실성</a></p>
+</div>
+</blockquote>
+<blockquote class="callout tip" data-callout="tip">
+<div class="callout-title">
+                  <div class="callout-icon"></div>
+                  <div class="callout-title-inner"><p>이 무대의 의미 </p></div>
+                  
+                </div>
+<div class="callout-content">
+<p>연동·동역학은 검증됐으니, 앞으로 결과가 이상하면 <strong>새로 얹은 부분(센서·추정기·제어기)만 의심</strong>하면 된다.</p>
+</div>
+</blockquote>
+<h3 id="실제-실험에-가까워지는-순서-제안">실제 실험에 가까워지는 순서 (제안)<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#실제-실험에-가까워지는-순서-제안" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th>단계</th><th>할 일</th><th>효과</th></tr></thead><tbody><tr><td>1</td><td>강의 따라 제어기 설계 (local)</td><td>지금 계획</td></tr><tr><td>2</td><td>노드에서 <strong>IMU·DVL·수심계를 표준 메시지로</strong> 발행 (HoloOcean 센서 + 잡음)</td><td>참값 → 센서</td></tr><tr><td>3</td><td>추정기(EKF)로 상태를 만들어 제어기에 넣기</td><td>수중 항법 — ANSL 주제와 직결</td></tr><tr><td>4</td><td>lockstep 끄고 비동기·실시간 실행, 지연·주기 흔들림 확인</td><td>실제 통신 조건</td></tr><tr><td>5</td><td>추진기 모델·할당 추가 (4강 Part 2)</td><td>실제 구동 조건</td></tr></tbody></table></div>
+<h2 id="파일-지도">파일 지도<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#파일-지도" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<h3 id="시뮬레이터-설치본-건드리지-않음--csim">시뮬레이터 설치본 (건드리지 않음) — <code>C:\sim\</code><a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#시뮬레이터-설치본-건드리지-않음--csim" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th>경로</th><th>내용</th></tr></thead><tbody><tr><td><code>C:\sim\holoocean\.venv</code></td><td>Python 3.11 venv — HoloOcean만 쓸 때</td></tr><tr><td><code>C:\sim\holoocean\HoloOcean</code></td><td>저장소 (shallow, <code>upstream</code> remote 제거됨)</td></tr><tr><td><code>C:\sim\holoocean\worlds\2.3.0\worlds\Ocean</code></td><td>월드 패키지, scenario JSON 20개</td></tr><tr><td><code>C:\sim\holoocean\smoke_torpedo.py</code>, <code>template_manual.py</code></td><td>설치 확인용 (⚠️ HoloOcean 원본 FossenInterface 사용 → <code>ω×v</code> 버그 있음)</td></tr><tr><td><code>C:\sim\holoocean\finish_install.ps1</code></td><td>재설치 스크립트</td></tr><tr><td><code>C:\sim\ros2_jazzy\pixi.toml</code></td><td>ROS 2 Jazzy 환경 정의 (+ holoocean 클라이언트 pip 설치됨)</td></tr><tr><td><code>...\worlds\...\Ocean\Windows\Holodeck\Saved\Logs\HolodeckLog.txt</code></td><td>Unreal 로그</td></tr></tbody></table></div>
+<h3 id="프로젝트-코드--carchive제어공학특론holoocean_env-readmemd-있음">프로젝트 코드 — <code>C:\Archive\제어공학특론\holoocean_env\</code> (README.md 있음)<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#프로젝트-코드--carchive제어공학특론holoocean_env-readmemd-있음" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th>파일</th><th>역할</th></tr></thead><tbody><tr><td><code>remus100_mss.py</code></td><td><code>remus100.m</code> + 보조 함수 이식 (spheroid, imlay61, Dmtrx, forceLiftDrag, crossFlowDrag/cylinderDrag, gRvect …)</td></tr><tr><td><code>holo_bridge.py</code></td><td>DynamicsSensor ↔ Fossen NED 변환, <code>accel_command()</code> (ω×v 포함), 초기 자세/속도 변환</td></tr><tr><td><code>metrics.py</code></td><td>AC-3 지표 (하한 포함)</td></tr><tr><td><code>validate_offline.py</code> / <code>validate_holoocean.py</code></td><td>L1·L2 / L3 검증</td></tr><tr><td><code>holo_ros2_node.py</code></td><td>ROS 2 bridge 노드 (<code>--hz --init --init-file --depth --duration --render</code>)</td></tr><tr><td><code>simulink/build_remus100_holo_loop.m</code> → <code>remus100_holo_loop.slx</code></td><td>ROS 2 블록 폐루프 모델 (Gate + Enabled Subsystem)</td></tr><tr><td><code>simulink/run_holo_loop.m</code></td><td>노드 실행 → 모델 sim → 비교. <code>cfg.mode</code> 0 계단 / 1 depth·heading 예제 / 2 강의 입력</td></tr><tr><td><code>simulink/test_lecture_inputs.m</code></td><td>강의 입력(mode 2) vs 강의 원본 비교</td></tr><tr><td><code>simulink/make_lecture_holo_copy.m</code> → <code>Remus100_Model_holo.slx</code></td><td>강의 모델 사본, plant = HoloOcean</td></tr><tr><td><code>simulink/HoloOceanPlant.m</code></td><td>사본의 plant 블록 (MATLAB System, ros2 API, blocking)</td></tr><tr><td><code>simulink/run_lecture_holo.m</code></td><td>노드 실행 → 사본 sim → 원본 비교 → Scope</td></tr><tr><td><code>simulink/start_holo_node.m</code></td><td>노드 백그라운드 실행 + 준비 대기 (<code>clear</code> 하면 종료). 5번째 인자 <code>'delphin2'</code></td></tr><tr><td><code>delphin2.py</code></td><td>배포본 <code>Delphin2.m</code> 이식. 노드 <code>--vehicle delphin2</code> → <code>/delphin2/state</code>, <code>/delphin2/cmd = [k, X Y Z K M N]</code></td></tr><tr><td><code>simulink/build_delphin_attitude.m</code> → <code>Delphin_attitude_holo.slx</code> / <code>_local.slx</code></td><td>Delphin2 자세 PID + Knob. plant = HoloOcean / Simulink. ⚠️ 09-29 에 GUI 로 Scope 를 고쳤으므로 재실행하면 덮어씀</td></tr><tr><td><code>simulink/run_delphin_holo.m</code></td><td>Delphin 노드 띄우고 holo 모델 열기</td></tr><tr><td><code>out/</code></td><td>검증 결과 txt/csv/mat, 노드 로그 <code>holo_ros2_node.log</code></td></tr></tbody></table></div>
+<h3 id="기준강의-자료">기준·강의 자료<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#기준강의-자료" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th>경로</th><th>내용</th></tr></thead><tbody><tr><td><code>C:\Archive\제어공학특론\MSS_latest\CRAFT\AUV\models\remus100.m</code></td><td><strong>기준 모델</strong> (MSS commit 8bdf35a)</td></tr><tr><td><code>C:\Archive\제어공학특론\MSS\VESSELS\remus100.m</code></td><td>2021 구판 — 기준으로 쓰지 말 것</td></tr><tr><td><code>C:\Archive\제어공학특론\validation\remus100_ref\</code></td><td>기준 궤적 <code>out/mss_*.csv</code>, 차이 분해 <code>RESULTS.md</code></td></tr><tr><td><code>C:\Archive\제어공학특론\실습자료\Remus_practice\</code></td><td>강의 배포본 (<code>Remus100_Model.slx</code>, <code>trim_u_2mps.mat</code>) — <strong>원본 수정 금지</strong></td></tr><tr><td><code>C:\Archive\제어공학특론\.omc\research\simulator-survey-20260927.md</code></td><td>시뮬레이터 선정 조사</td></tr></tbody></table></div>
+<h2 id="다시-시작하는-법-체크리스트">다시 시작하는 법 (체크리스트)<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#다시-시작하는-법-체크리스트" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<ol>
+<li><strong>MATLAB</strong> 을 열고 (MCP로 쓸 거면 <code>shareMATLABSession</code>) 폴더 이동
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="matlab" data-theme="github-light github-dark"><code data-language="matlab" data-theme="github-light github-dark" style="display:grid;"><span data-line><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">cd</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF;"> C:\Archive\제어공학특론\holoocean_env\simulink</span></span></code></pre></figure>
+</li>
+<li>강의 모델 사본을 HoloOcean으로 돌려보기 — 동작 확인용 한 줄
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="matlab" data-theme="github-light github-dark"><code data-language="matlab" data-theme="github-light github-dark" style="display:grid;"><span data-line><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">render = </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;">true</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">; run_lecture_holo</span></span></code></pre></figure>
+→ Unreal 창이 뜨고 50 s 입력 재현, 끝에 원본 대비 %와 Scope. <strong>최악 0.34 %</strong> 나오면 환경 정상</li>
+<li>사본을 ▶ 로 직접 돌리려면 노드를 먼저 띄운다
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="matlab" data-theme="github-light github-dark"><code data-language="matlab" data-theme="github-light github-dark" style="display:grid;"><span data-line><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">load(</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF;">'..\..\실습자료\Remus_practice</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;">\t</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF;">rim_u_2mps.mat'</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">);</span></span>
+<span data-line><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">[~, node] = start_holo_node(</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;">50</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">, x0, </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;">true</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">);</span></span>
+<span data-line><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;">% 사본 모델에서 ▶ … 끝나면</span></span>
+<span data-line><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">clear</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF;"> node</span></span></code></pre></figure>
+</li>
+<li>내 제어기 넣기 — 두 가지 틀
+<ul>
+<li>강의 구조 그대로: <code>Remus100_Model_holo.slx</code> 에서 Signal Builder 쪽을 제어기로 바꿈 (plant 블록 출력 = 12 상태)</li>
+<li>ROS 2 블록 구조: <code>remus100_holo_loop.slx</code> 의 <code>Step/Controller</code> 안 (입력 t, η, ν / 출력 [δr; δs; n]) → <code>cfg.mode</code> 추가 또는 서브시스템 교체
+4-1. <strong>Delphin2 자세 PID</strong> (MATLAB)</li>
+</ul>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="matlab" data-theme="github-light github-dark"><code data-language="matlab" data-theme="github-light github-dark" style="display:grid;"><span data-line><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">run_delphin_holo          </span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;">% 노드 + holo 모델 → Run → Knob 조절 → Stop (반복 가능) → 끝: clear nodeCleanup</span></span></code></pre></figure>
+노드 없이 연습: <code>Delphin_attitude_local.slx</code> 바로 Run. 내 제어기는 <code>attitude_pid</code> 자리 (입력 x 12 / 출력 tau 6)</li>
+<li>노드만 따로 (Windows PowerShell)
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="powershell" data-theme="github-light github-dark"><code data-language="powershell" data-theme="github-light github-dark" style="display:grid;"><span data-line><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">&amp;</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF;"> &quot;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">$</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;">env:</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">LOCALAPPDATA</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF;">\pixi\bin\pixi.exe&quot;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;"> run </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">--</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">manifest</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">path C:\sim\ros2_jazzy\pixi.toml python C:\Archive\제어공학특론\holoocean_env\holo_ros2_node.py </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">--</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">render</span></span></code></pre></figure>
+</li>
+<li>문제 생기면: <code>holoocean_env\out\holo_ros2_node.log</code> → Unreal <code>HolodeckLog.txt</code> → <code>ros2 topic list</code> (pixi 환경에서)</li>
+</ol>
+<h3 id="꼭-지킬-것">꼭 지킬 것<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#꼭-지킬-것" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ul>
+<li><strong>Ts 와 노드 <code>--hz</code> 를 맞춘다</strong> (기본 50 Hz ↔ Ts 0.02). 다르면 제어기 이산 적분과 사본 시계가 틀어진다</li>
+<li>노드는 반드시 <strong><code>pixi run</code></strong> 으로 (python.exe 직접 실행 → <code>AMENT_PREFIX_PATH</code> 오류)</li>
+<li><code>run_holo_loop</code> 뒤엔 base <code>Ts = 0.02</code> 가 남는다 → 강의 원본을 돌리기 전 <code>Ts = 0.01</code></li>
+<li>첫 실행 <code>Timed out waiting for binary to load</code> 는 셰이더 캐시 — 다시 실행</li>
+<li>강의 원본(<code>실습자료\</code>)은 수정하지 않는다. 사본에서 작업</li>
+<li><code>smoke_torpedo.py</code> 같은 HoloOcean <strong>원본 FossenInterface</strong> 예제에는 <code>ω×v</code> 버그가 남아 있다 — 검증용으로 쓰지 말 것</li>
+<li><strong>Knob 에 묶인 Constant 의 Value 는 숫자로.</strong> 변수 이름이면 Knob 연결이 끊긴다 (09-29 θ Knob)</li>
+<li><code>HoloOceanPlant</code> 모델은 노드를 켜 둔 채 Stop/Run 반복 가능 (Run 마다 리셋). ROS 2 블록 모델 <code>remus100_holo_loop</code> 은 리셋을 안 보내므로 실행마다 노드 새로</li>
+<li>Delphin 모델에 들어 있는 PID·게인은 <strong>통신 확인용 자리표시</strong> — 설계 근거 없음. 제어 성능 결과로 쓰지 말 것</li>
+</ul>
+<h2 id="진행-흐름--timeline">진행 흐름 / Timeline<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#진행-흐름--timeline" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<ul>
+<li><strong>2026-09-26</strong> — 강의 AUV를 RL 실습 플랫폼으로 쓰기로. 처음엔 Gazebo + ROS 2 (캡스톤 스택) 계획</li>
+<li><strong>2026-09-27 오전</strong> — Gazebo 제외, 문헌 조사 후 <strong>검증 = HoloOcean 2.0, 학습 = Isaac Lab</strong> 결정. 기준 = MSS 최신판. 강의판·Python판과의 차이 6개 분해</li>
+<li><strong>2026-09-27 오후</strong> — HoloOcean 설치 · MSS 동역학 이식 · <code>ω×v</code> 버그 수정 · ROS 2 lockstep · 강의 모델 사본까지 → 2026-09-27</li>
+<li><strong>2026-09-28</strong> — Delphin2 이식, <code>--vehicle delphin2</code>, 자세 PID 실시간 게인 조절 모델 holo/local (daily 노트 없음 — 기록은 2026-09-29 에 재구성)</li>
+<li><strong>2026-09-29</strong> — 모델 구조 정리, θ Knob 끊김·재실행 교착 수정(리셋 기능), claude-mem 기록 복구. 방향 정리: 무대는 검증 완료, 제어기는 강의 따라 직접 → 2026-09-29</li>
+<li><strong>2026-10-18</strong> 수직 기동 대화에서 연구 아이디어가 나옴. 정지 임무에서 해류와 구동기 구성에 따라 유리한 선체 자세가 달라질 수 있다는 것. Delphin2 계수로 검산하면 수평 해류에서는 누운 자세가 약 28배 유리하고, 선 자세는 복원 모멘트 약 47 N·m를 계속 버텨야 함 → <a href="../../30_Knowledge/정위치-유지-자세-선택" class="internal alias" data-slug="30_Knowledge/정위치-유지-자세-선택">정위치 유지 자세 선택</a> · 2026-10-18</li>
+</ul>
+<h2 id="내-역할--my-contribution">내 역할 / My contribution<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#내-역할--my-contribution" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th>남의 것 (도구로 사용)</th><th>이 프로젝트에서 만든 것</th></tr></thead><tbody><tr><td>HoloOcean 2.3.0 (BYU FRoSt Lab)</td><td>MSS <code>remus100.m</code> 의 Python 이식 + 3단 검증 (L1 5e-13)</td></tr><tr><td>MSS toolbox <code>remus100.m</code> (Fossen)</td><td>HoloOcean <code>FossenInterface</code> 의 <code>ω×v</code> 누락 발견·수정</td></tr><tr><td>RoboStack ROS 2 Jazzy, MATLAB ROS Toolbox</td><td>ROS 2 bridge 노드 + lockstep 프로토콜 (k 번호 매칭)</td></tr><tr><td>강의 배포본 <code>Remus100_Model.slx</code> (윤원근 교수, TA)</td><td>Simulink 폐루프 모델, <code>HoloOceanPlant</code> System object, 강의 모델 사본</td></tr><tr><td>강의 배포본 <code>Delphin2.m</code>, <code>Delphin_Model2_Full.slx</code> (개루프)</td><td>Delphin2 이식, holo/local 자세 PID 모델, 리셋 프로토콜</td></tr></tbody></table></div>
+<h2 id="결과--outcome">결과 / Outcome<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#결과--outcome" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<ul>
+<li>HoloOcean 안 REMUS 100 = MSS 최신판과 <strong>최악 0.69 % (50 Hz) / 0.29 % (100 Hz)</strong> — 남은 오차는 Unreal 1차 적분뿐</li>
+<li>Simulink ↔ HoloOcean ROS 2 lockstep: 추가 오차 0, 스텝 누락·중복 0, 실시간 2.2~3.2배</li>
+<li>강의 50 s 입력 재현: 원본 대비 <strong>0.34 %</strong></li>
+</ul>
+<p><img src="../../_attachments/AUV-Control-Sim/2026-09-27-lecture-vs-holoocean.png" width="auto" height="auto" alt/></p>
+<p>Delphin2 자세 제어 실시간 Knob 조작 (HoloOcean, 1배속):
+<img src="../../_attachments/AUV-Control-Sim/2026-10-15-delphin-attitude-holo.gif" width="auto" height="auto" alt/></p>
+<h2 id="배운-것--takeaways">배운 것 / Takeaways<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#배운-것--takeaways" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<ul>
+<li><strong>Transport theorem이 코드 버그로 나타난다.</strong> body frame 미분 <code>ν̇</code> 를 world 적분기에 넘길 땐 <code>ω×v</code> 를 더해야 한다. 직진에선 안 보이고 선회에서만 틀어진다 → <a href="../../30_Knowledge/Transport-Theorem" class="internal alias" data-slug="30_Knowledge/Transport-Theorem">Transport Theorem</a></li>
+<li><strong>시뮬레이터 신뢰성 = 동역학 검증.</strong> 층을 나눠(L1 이식 / L2 적분 방식 / L3 실제) 오차 출처를 하나씩 분리하면 “남은 오차가 어디서 오는지” 까지 말할 수 있다</li>
+<li><strong>lockstep 은 설계로 만든다.</strong> ROS 2는 기본적으로 비동기라 스텝 번호를 메시지에 넣고 서로 기다리게 해야 결정론적이 된다. 제어기가 Simulink 시계를 쓰는지(강의 모델) 메시지 시간을 쓰는지에 따라 방법이 달라진다</li>
+<li>HoloOcean 은 ROS 기반이 아니다 — Python API 가 주인인 Gym 스타일</li>
+</ul>
+<h2 id="관련-노트">관련 노트<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#관련-노트" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<ul>
+<li><a href="../../30_Knowledge/6-DOF-Marine-Craft-Model" class="internal alias" data-slug="30_Knowledge/6-DOF-Marine-Craft-Model">6-DOF Marine Craft Model</a> · <a href="../../30_Knowledge/Transport-Theorem" class="internal alias" data-slug="30_Knowledge/Transport-Theorem">Transport Theorem</a> · <a href="../../30_Knowledge/Hydrodynamic-and-Restoring-Forces" class="internal alias" data-slug="30_Knowledge/Hydrodynamic-and-Restoring-Forces">Hydrodynamic and Restoring Forces</a> · <a href="../../30_Knowledge/Rigid-Body-Kinetics" class="internal alias" data-slug="30_Knowledge/Rigid-Body-Kinetics">Rigid-Body Kinetics</a></li>
+<li><a href="../../00_Inbox/DDS" class="internal" data-slug="00_Inbox/DDS">DDS</a> — ROS 2 통신 계층</li>
+<li><a href="../../30_Knowledge/고전제어와-강화학습" class="internal alias" data-slug="30_Knowledge/고전제어와-강화학습">고전제어와 강화학습</a> · <a href="../../30_Knowledge/강화학습" class="internal alias" data-slug="30_Knowledge/강화학습">강화학습</a> · <a href="../../30_Knowledge/Sim-to-Real" class="internal" data-slug="30_Knowledge/Sim-to-Real">Sim-to-Real</a> — <code>compare</code> 로 이어질 자리</li>
+<li><a href="../../20_Projects/ROS2-USV-TermProject/ROS2-USV-Term-Project" class="internal alias" data-slug="20_Projects/ROS2-USV-TermProject/ROS2-USV-Term-Project">ROS2 USV Term Project</a> — Gazebo + ros_gz_bridge 로 했던 이전 방식과 비교</li>
+<li><a href="../../20_Projects/Capstone-Otter-USV/Capstone-Otter-USV" class="internal alias" data-slug="20_Projects/Capstone-Otter-USV/Capstone-Otter-USV">Capstone Otter USV</a> — MILS → HILS 경험</li>
+<li><a href="../../30_Knowledge/정위치-유지-자세-선택" class="internal alias" data-slug="30_Knowledge/정위치-유지-자세-선택">정위치 유지 자세 선택</a>: 이 무대에서 돌려 볼 수 있는 후속 연구 아이디어 (자세를 최적화 변수로 두는 station keeping)</li>
+</ul></article><hr/><div class="page-footer"></div></div><div class="right sidebar"><div class="graph"><h3>그래프 뷰</h3><div class="graph-outer"><div class="graph-container" data-cfg="{&quot;drag&quot;:true,&quot;zoom&quot;:true,&quot;depth&quot;:1,&quot;scale&quot;:1.1,&quot;repelForce&quot;:0.5,&quot;centerForce&quot;:0.3,&quot;linkDistance&quot;:30,&quot;fontSize&quot;:0.6,&quot;opacityScale&quot;:1,&quot;showTags&quot;:true,&quot;removeTags&quot;:[],&quot;focusOnHover&quot;:false,&quot;enableRadial&quot;:false}"></div><button class="global-graph-icon" aria-label="Global Graph"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 55 55" fill="currentColor" xml:space="preserve"><path d="M49,0c-3.309,0-6,2.691-6,6c0,1.035,0.263,2.009,0.726,2.86l-9.829,9.829C32.542,17.634,30.846,17,29,17
+                s-3.542,0.634-4.898,1.688l-7.669-7.669C16.785,10.424,17,9.74,17,9c0-2.206-1.794-4-4-4S9,6.794,9,9s1.794,4,4,4
+                c0.74,0,1.424-0.215,2.019-0.567l7.669,7.669C21.634,21.458,21,23.154,21,25s0.634,3.542,1.688,4.897L10.024,42.562
+                C8.958,41.595,7.549,41,6,41c-3.309,0-6,2.691-6,6s2.691,6,6,6s6-2.691,6-6c0-1.035-0.263-2.009-0.726-2.86l12.829-12.829
+                c1.106,0.86,2.44,1.436,3.898,1.619v10.16c-2.833,0.478-5,2.942-5,5.91c0,3.309,2.691,6,6,6s6-2.691,6-6c0-2.967-2.167-5.431-5-5.91
+                v-10.16c1.458-0.183,2.792-0.759,3.898-1.619l7.669,7.669C41.215,39.576,41,40.26,41,41c0,2.206,1.794,4,4,4s4-1.794,4-4
+                s-1.794-4-4-4c-0.74,0-1.424,0.215-2.019,0.567l-7.669-7.669C36.366,28.542,37,26.846,37,25s-0.634-3.542-1.688-4.897l9.665-9.665
+                C46.042,11.405,47.451,12,49,12c3.309,0,6-2.691,6-6S52.309,0,49,0z M11,9c0-1.103,0.897-2,2-2s2,0.897,2,2s-0.897,2-2,2
+                S11,10.103,11,9z M6,51c-2.206,0-4-1.794-4-4s1.794-4,4-4s4,1.794,4,4S8.206,51,6,51z M33,49c0,2.206-1.794,4-4,4s-4-1.794-4-4
+                s1.794-4,4-4S33,46.794,33,49z M29,31c-3.309,0-6-2.691-6-6s2.691-6,6-6s6,2.691,6,6S32.309,31,29,31z M47,41c0,1.103-0.897,2-2,2
+                s-2-0.897-2-2s0.897-2,2-2S47,39.897,47,41z M49,10c-2.206,0-4-1.794-4-4s1.794-4,4-4s4,1.794,4,4S51.206,10,49,10z"></path></svg></button></div><div class="global-graph-outer"><div class="global-graph-container" data-cfg="{&quot;drag&quot;:true,&quot;zoom&quot;:true,&quot;depth&quot;:-1,&quot;scale&quot;:0.9,&quot;repelForce&quot;:0.5,&quot;centerForce&quot;:0.2,&quot;linkDistance&quot;:30,&quot;fontSize&quot;:0.6,&quot;opacityScale&quot;:1,&quot;showTags&quot;:true,&quot;removeTags&quot;:[],&quot;focusOnHover&quot;:true,&quot;enableRadial&quot;:true}"></div></div></div><div class="toc desktop-only"><button type="button" class="toc-header" aria-controls="toc-54" aria-expanded="true"><h3>목차</h3><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fold"><polyline points="6 9 12 15 18 9"></polyline></svg></button><ul id="list-1" class="toc-content overflow"><li class="depth-0"><a href="#auv-control-simulation" data-for="auv-control-simulation">AUV Control Simulation</a></li><li class="depth-1"><a href="#개요--overview" data-for="개요--overview">개요 / Overview</a></li><li class="depth-1"><a href="#목표--goal" data-for="목표--goal">목표 / Goal</a></li><li class="depth-1"><a href="#사용-기술--stack" data-for="사용-기술--stack">사용 기술 / Stack</a></li><li class="depth-1"><a href="#구조" data-for="구조">구조</a></li><li class="depth-1"><a href="#현재-구현-범위--무엇이-참값이고-무엇이-빠졌나-2026-09-29-정리" data-for="현재-구현-범위--무엇이-참값이고-무엇이-빠졌나-2026-09-29-정리">현재 구현 범위 — 무엇이 참값이고 무엇이 빠졌나 (2026-09-29 정리)</a></li><li class="depth-2"><a href="#검증된-것" data-for="검증된-것">검증된 것</a></li><li class="depth-2"><a href="#아직-실제와-다른-것--놓치기-쉬운-7가지" data-for="아직-실제와-다른-것--놓치기-쉬운-7가지">아직 실제와 다른 것 — 놓치기 쉬운 7가지</a></li><li class="depth-2"><a href="#실제-실험에-가까워지는-순서-제안" data-for="실제-실험에-가까워지는-순서-제안">실제 실험에 가까워지는 순서 (제안)</a></li><li class="depth-1"><a href="#파일-지도" data-for="파일-지도">파일 지도</a></li><li class="depth-2"><a href="#시뮬레이터-설치본-건드리지-않음--csim" data-for="시뮬레이터-설치본-건드리지-않음--csim">시뮬레이터 설치본 (건드리지 않음) — C:\sim\</a></li><li class="depth-2"><a href="#프로젝트-코드--carchive제어공학특론holoocean_env-readmemd-있음" data-for="프로젝트-코드--carchive제어공학특론holoocean_env-readmemd-있음">프로젝트 코드 — C:\Archive\제어공학특론\holoocean_env\ (README.md 있음)</a></li><li class="depth-2"><a href="#기준강의-자료" data-for="기준강의-자료">기준·강의 자료</a></li><li class="depth-1"><a href="#다시-시작하는-법-체크리스트" data-for="다시-시작하는-법-체크리스트">다시 시작하는 법 (체크리스트)</a></li><li class="depth-2"><a href="#꼭-지킬-것" data-for="꼭-지킬-것">꼭 지킬 것</a></li><li class="depth-1"><a href="#진행-흐름--timeline" data-for="진행-흐름--timeline">진행 흐름 / Timeline</a></li><li class="depth-1"><a href="#내-역할--my-contribution" data-for="내-역할--my-contribution">내 역할 / My contribution</a></li><li class="depth-1"><a href="#결과--outcome" data-for="결과--outcome">결과 / Outcome</a></li><li class="depth-1"><a href="#배운-것--takeaways" data-for="배운-것--takeaways">배운 것 / Takeaways</a></li><li class="depth-1"><a href="#관련-노트" data-for="관련-노트">관련 노트</a></li><li class="overflow-end"></li></ul></div><div class="backlinks"><h3>백링크</h3><ul id="list-2" class="overflow"><li><a href="../../10_Daily/2026-09-27" class="internal">2026-09-27</a></li><li><a href="../../10_Daily/2026-09-29" class="internal">2026-09-29</a></li><li><a href="../../10_Daily/2026-10-15" class="internal">2026-10-15</a></li><li><a href="../../10_Daily/2026-10-18" class="internal">2026-10-18</a></li><li><a href="../../10_Daily/2026-10-19" class="internal">2026-10-19</a></li><li><a href="../../10_Daily/2026-10-21" class="internal">2026-10-21</a></li><li><a href="../../10_Daily/2026-10-23" class="internal">2026-10-23</a></li><li><a href="../../10_Daily/2026-10-29" class="internal">2026-10-29</a></li><li><a href="../../10_Daily/2026-11-03" class="internal">2026-11-03</a></li><li><a href="../../10_Daily/2026-11-04" class="internal">2026-11-04</a></li><li><a href="../../10_Daily/2026-11-05" class="internal">2026-11-05</a></li><li><a href="../../30_Knowledge/Transport-Theorem" class="internal">Transport Theorem</a></li><li><a href="../../30_Knowledge/시뮬레이션-환경-현실성" class="internal">시뮬레이션 환경 현실성</a></li><li><a href="../../30_Knowledge/정위치-유지-자세-선택" class="internal">정위치 유지 자세 선택</a></li><li><a href="../../" class="internal">Research Direction</a></li><li class="overflow-end"></li></ul></div></div><footer class><p>Created with <a href="https://quartz.jzhao.xyz/">Quartz v4.5.2</a> © 2026</p><ul></ul></footer></div></div></body><script type="application/javascript">function n(){let t=this.parentElement;t.classList.toggle("is-collapsed");let e=t.getElementsByClassName("callout-content")[0];if(!e)return;let l=t.classList.contains("is-collapsed");e.style.gridTemplateRows=l?"0fr":"1fr"}function c(){let t=document.getElementsByClassName("callout is-collapsible");for(let e of t){let l=e.getElementsByClassName("callout-title")[0],s=e.getElementsByClassName("callout-content")[0];if(!l||!s)continue;l.addEventListener("click",n),window.addCleanup(()=>l.removeEventListener("click",n));let o=e.classList.contains("is-collapsed");s.style.gridTemplateRows=o?"0fr":"1fr"}}document.addEventListener("nav",c);
+</script><script type="module">function f(i,e){if(!i)return;function r(o){o.target===this&&(o.preventDefault(),o.stopPropagation(),e())}function t(o){o.key.startsWith("Esc")&&(o.preventDefault(),e())}i?.addEventListener("click",r),window.addCleanup(()=>i?.removeEventListener("click",r)),document.addEventListener("keydown",t),window.addCleanup(()=>document.removeEventListener("keydown",t))}function y(i){for(;i.firstChild;)i.removeChild(i.firstChild)}var h=class{constructor(e,r){this.container=e;this.content=r;this.setupEventListeners(),this.setupNavigationControls(),this.resetTransform()}isDragging=!1;startPan={x:0,y:0};currentPan={x:0,y:0};scale=1;MIN_SCALE=.5;MAX_SCALE=3;cleanups=[];setupEventListeners(){let e=this.onMouseDown.bind(this),r=this.onMouseMove.bind(this),t=this.onMouseUp.bind(this),o=this.resetTransform.bind(this);this.container.addEventListener("mousedown",e),document.addEventListener("mousemove",r),document.addEventListener("mouseup",t),window.addEventListener("resize",o),this.cleanups.push(()=>this.container.removeEventListener("mousedown",e),()=>document.removeEventListener("mousemove",r),()=>document.removeEventListener("mouseup",t),()=>window.removeEventListener("resize",o))}cleanup(){for(let e of this.cleanups)e()}setupNavigationControls(){let e=document.createElement("div");e.className="mermaid-controls";let r=this.createButton("+",()=>this.zoom(.1)),t=this.createButton("-",()=>this.zoom(-.1)),o=this.createButton("Reset",()=>this.resetTransform());e.appendChild(t),e.appendChild(o),e.appendChild(r),this.container.appendChild(e)}createButton(e,r){let t=document.createElement("button");return t.textContent=e,t.className="mermaid-control-button",t.addEventListener("click",r),window.addCleanup(()=>t.removeEventListener("click",r)),t}onMouseDown(e){e.button===0&&(this.isDragging=!0,this.startPan={x:e.clientX-this.currentPan.x,y:e.clientY-this.currentPan.y},this.container.style.cursor="grabbing")}onMouseMove(e){this.isDragging&&(e.preventDefault(),this.currentPan={x:e.clientX-this.startPan.x,y:e.clientY-this.startPan.y},this.updateTransform())}onMouseUp(){this.isDragging=!1,this.container.style.cursor="grab"}zoom(e){let r=Math.min(Math.max(this.scale+e,this.MIN_SCALE),this.MAX_SCALE),t=this.content.getBoundingClientRect(),o=t.width/2,n=t.height/2,c=r-this.scale;this.currentPan.x-=o*c,this.currentPan.y-=n*c,this.scale=r,this.updateTransform()}updateTransform(){this.content.style.transform=`translate(${this.currentPan.x}px, ${this.currentPan.y}px) scale(${this.scale})`}resetTransform(){this.scale=1;let e=this.content.querySelector("svg");this.currentPan={x:e.getBoundingClientRect().width/2,y:e.getBoundingClientRect().height/2},this.updateTransform()}},C=["--secondary","--tertiary","--gray","--light","--lightgray","--highlight","--dark","--darkgray","--codeFont"],E;document.addEventListener("nav",async()=>{let e=document.querySelector(".center").querySelectorAll("code.mermaid");if(e.length===0)return;E||=await import("https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.4.0/mermaid.esm.min.mjs");let r=E.default,t=new WeakMap;for(let n of e)t.set(n,n.innerText);async function o(){for(let s of e){s.removeAttribute("data-processed");let a=t.get(s);a&&(s.innerHTML=a)}let n=C.reduce((s,a)=>(s[a]=window.getComputedStyle(document.documentElement).getPropertyValue(a),s),{}),c=document.documentElement.getAttribute("saved-theme")==="dark";r.initialize({startOnLoad:!1,securityLevel:"loose",theme:c?"dark":"base",themeVariables:{fontFamily:n["--codeFont"],primaryColor:n["--light"],primaryTextColor:n["--darkgray"],primaryBorderColor:n["--tertiary"],lineColor:n["--darkgray"],secondaryColor:n["--secondary"],tertiaryColor:n["--tertiary"],clusterBkg:n["--light"],edgeLabelBackground:n["--highlight"]}}),await r.run({nodes:e})}await o(),document.addEventListener("themechange",o),window.addCleanup(()=>document.removeEventListener("themechange",o));for(let n=0;n<e.length;n++){let v=function(){let g=l.querySelector("#mermaid-space"),m=l.querySelector(".mermaid-content");if(!m)return;y(m);let w=c.querySelector("svg").cloneNode(!0);m.appendChild(w),l.classList.add("active"),g.style.cursor="grab",u=new h(g,m)},M=function(){l.classList.remove("active"),u?.cleanup(),u=null},c=e[n],s=c.parentElement,a=s.querySelector(".clipboard-button"),d=s.querySelector(".expand-button"),p=window.getComputedStyle(a),L=a.offsetWidth+parseFloat(p.marginLeft||"0")+parseFloat(p.marginRight||"0");d.style.right=`calc(${L}px + 0.3rem)`,s.prepend(d);let l=s.querySelector("#mermaid-container");if(!l)return;let u=null;d.addEventListener("click",v),f(l,M),window.addCleanup(()=>{u?.cleanup(),d.removeEventListener("click",v)})}});
+</script><script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/copy-tex.min.js" type="application/javascript"></script><script src="../../postscript.js" type="module"></script></html>
